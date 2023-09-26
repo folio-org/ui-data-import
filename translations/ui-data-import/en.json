@@ -1135,6 +1135,7 @@
   "modal.cancelUpload.confirm": "Yes, delete",
   "validation.enterValue": "Please enter a value",
   "jobSummarySourceFileLabel": "Source file: ",
+  "jobSummarySourceFileUnavailable": "Unavailable",
   "logViewer.partOfTotal": "{number} of {total}",
   "logViewer.invoice": "Invoice",
   "logViewer.invoiceLine": "Invoice line",

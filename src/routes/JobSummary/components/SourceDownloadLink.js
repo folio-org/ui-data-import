@@ -31,16 +31,20 @@ export const SourceDownloadLink = ({
         if (url) {
           setDownloadURL(url);
         }
-      } catch (err) {
-        callout.sendCallout({
-          message: (
-            <FormattedMessage
-              id="ui-data-import.downloadLinkRequestError"
-            />
-          ),
-          type: 'error',
-          timeout: 0,
-        });
+      } catch (error) {
+        if (error.message === '404') {
+          setDownloadURL(error.message);
+        } else {
+          callout.sendCallout({
+            message: (
+              <FormattedMessage
+                id="ui-data-import.downloadLinkRequestError"
+              />
+            ),
+            type: 'error',
+            timeout: 0,
+          });
+        }
       }
     };
     if (downloadUrl === null && executionId) {
@@ -64,9 +68,16 @@ export const SourceDownloadLink = ({
             id="ui-data-import.jobSummarySourceFileLabel"
           />
         </strong>
-        <TextLink href={downloadUrl}>
-          {trimLeadNumbers(fileName)}
-        </TextLink>
+        { downloadUrl !== '404' ?
+          <TextLink href={downloadUrl}>
+            {trimLeadNumbers(fileName)}
+          </TextLink> :
+          <strong>
+            <FormattedMessage
+              id="ui-data-import.jobSummarySourceFileUnavailable"
+            />
+          </strong>
+        }
       </div>
     </Layout>
   );

@@ -8,9 +8,10 @@ import { SourceDownloadLink } from './SourceDownloadLink';
 import '../../../utils/multipartUpload';
 
 const mockResponse = jest.fn();
+const mocklinkMethod = jest.fn(() => Promise.resolve(mockResponse()));
 jest.mock('../../../utils/multipartUpload', () => ({
   ...jest.requireActual('../../../utils/multipartUpload'),
-  getObjectStorageDownloadURL: () => Promise.resolve(mockResponse())
+  getObjectStorageDownloadURL: mocklinkMethod
 }));
 
 jest.mock('@folio/stripes/components', () => ({
@@ -23,7 +24,7 @@ jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useOkapiKy: () => ({}),
   useCallout: jest.fn(() => ({
-    sendCallout: jest.fn()
+    sendCallout: jest.fn(() => {})
   })),
 }));
 
@@ -57,5 +58,13 @@ describe('SourceDownloadLinkComponent', () => {
 
     const link = await findByRole('link');
     expect(link.href).toBe('http://www.testurl/');
+  });
+
+  it('renders unavailable message if the url is unavailable', async () => {
+    mockResponse.mockResolvedValue('Not found');
+    mocklinkMethod.mockRejectedValue(new Error({ message: '404' }));
+    const { findByText } = await renderSourceDownloadLink({});
+    const message = await findByText('Unavailable');
+    expect(message).toBeInTheDocument();
   });
 });

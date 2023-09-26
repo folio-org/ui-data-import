@@ -93,7 +93,6 @@ export class DataFetcher extends Component {
       shouldRefreshRemote: () => false,
       throwErrors: false,
     },
-    splitConfiguration: {}
   });
 
   static propTypes = {
