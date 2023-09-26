@@ -9,14 +9,18 @@ import {
 import {
   withStripes,
   stripesShape,
+  withOkapiKy,
+  CalloutContext
 } from '@folio/stripes/core';
 import { createUrl } from '@folio/stripes-data-transfer-components';
 
 import { FILE_STATUSES } from '../../utils';
+import { getStorageConfiguration } from '../../utils/multipartUpload';
 import * as API from '../../utils/upload';
 import { UploadingJobsContext } from '.';
 
 @withStripes
+@withOkapiKy
 export class UploadingJobsContextProvider extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
@@ -26,6 +30,7 @@ export class UploadingJobsContextProvider extends Component {
     ]).isRequired,
   };
 
+  static contextType = CalloutContext;
   constructor(props) {
     super(props);
 
@@ -33,7 +38,31 @@ export class UploadingJobsContextProvider extends Component {
       uploadDefinition: {},
       updateUploadDefinition: this.updateUploadDefinition,
       deleteUploadDefinition: this.deleteUploadDefinition,
+      uploadConfiguration: {},
     };
+  }
+
+  getUploadConfiguration = async () => {
+    try {
+      const { okapiKy } = this.props;
+      const { splitStatus } = await getStorageConfiguration(okapiKy);
+      this.setState({
+        uploadConfiguration: {
+          canUseObjectStorage: splitStatus
+        }
+      });
+    } catch (error) {
+      const { sendCallout } = this.context;
+      sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-data-import.uploadConfigurationError" />
+      });
+      this.setState({
+        uploadConfiguration: {
+          canUseObjectStorage: false
+        }
+      });
+    }
   }
 
   deleteUploadDefinition = async () => {
