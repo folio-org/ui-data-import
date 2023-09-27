@@ -7,11 +7,27 @@ import '../../../../test/jest/__mock__';
 import { SourceDownloadLink } from './SourceDownloadLink';
 import '../../../utils/multipartUpload';
 
+// the indirectly used ky library extends JS Errors with JS mockHTTPError.
+// this is used to simulate how we handle a 404 response.
+class mockHTTPError extends Error {
+	constructor(response) {
+		super(
+			response.status
+		);
+		this.name = 'HTTPError';
+		this.response = response;
+	}
+}
+
 const mockResponse = jest.fn();
-const mocklinkMethod = jest.fn(() => Promise.resolve(mockResponse()));
 jest.mock('../../../utils/multipartUpload', () => ({
   ...jest.requireActual('../../../utils/multipartUpload'),
-  getObjectStorageDownloadURL: mocklinkMethod
+  getObjectStorageDownloadURL: (ky, id) => {
+    if (id === 'file-removed') {
+      throw (new mockHTTPError({ status: '404'}));
+    }
+    return Promise.resolve(mockResponse())
+  }
 }));
 
 jest.mock('@folio/stripes/components', () => ({
@@ -22,7 +38,7 @@ jest.mock('@folio/stripes/components', () => ({
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
-  useOkapiKy: () => ({}),
+  useOkapiKy: jest.fn(() => {}),
   useCallout: jest.fn(() => ({
     sendCallout: jest.fn(() => {})
   })),
@@ -39,14 +55,14 @@ describe('SourceDownloadLinkComponent', () => {
 
   it('renders a loading spinner..', async () => {
     mockResponse.mockResolvedValue({ url: 'testUrl' });
-    const { getByText } = await renderSourceDownloadLink({});
+    const { getByText } = await renderSourceDownloadLink({ id:'testId1' });
 
     expect(getByText('Loading')).toBeInTheDocument();
   });
 
   it('renders the filename in the link', async () => {
     mockResponse.mockResolvedValue({ url: 'testUrl' });
-    const { findByText } = await renderSourceDownloadLink({});
+    const { findByText } = await renderSourceDownloadLink({ id:'testId2' });
 
     const text = await findByText('testFilename');
     expect(text).toBeDefined();
@@ -54,7 +70,7 @@ describe('SourceDownloadLinkComponent', () => {
 
   it('renders the provided url to the link href', async () => {
     mockResponse.mockResolvedValue({ url: 'http://www.testUrl' });
-    const { findByRole } = await renderSourceDownloadLink({});
+    const { findByRole } = await renderSourceDownloadLink({ id:'testId3' });
 
     const link = await findByRole('link');
     expect(link.href).toBe('http://www.testurl/');
@@ -62,8 +78,7 @@ describe('SourceDownloadLinkComponent', () => {
 
   it('renders unavailable message if the url is unavailable', async () => {
     mockResponse.mockResolvedValue('Not found');
-    mocklinkMethod.mockRejectedValue(new Error({ message: '404' }));
-    const { findByText } = await renderSourceDownloadLink({});
+    const { findByText } = await renderSourceDownloadLink({ id:'file-removed' });
     const message = await findByText('Unavailable');
     expect(message).toBeInTheDocument();
   });
