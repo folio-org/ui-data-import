@@ -126,9 +126,9 @@ describe('MultipartUploader class', () => {
   const errorHandler = jest.fn((fileKey, error) => console.log(error));
   const progressHandler = jest.fn();
   const successHandler = jest.fn();
-  const createMultipartUploader = (size = 31457280) => new MultipartUploader(
+  const createMultipartUploader = (size = 31457280, fileKey = 'test1') => new MultipartUploader(
     testId,
-    { file1: {
+    { [fileKey]: {
       file: getFileOfSize(size),
       size
     } },
@@ -185,7 +185,8 @@ describe('MultipartUploader class', () => {
 
   it('cancelation', async () => {
     let readystatechange;
-    uploader = createMultipartUploader(51457280);
+    const testKey = 'testFileKey';
+    uploader = createMultipartUploader(51457280, testKey);
     uploader.init();
     await waitFor(() => expect(mockXHR.addEventListener).toHaveBeenCalled());
     readystatechange = mockXHR.addEventListener.mock.calls[0][1];
@@ -194,18 +195,19 @@ describe('MultipartUploader class', () => {
     mockXHR.status = 0;
     await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2));
     readystatechange = mockXHR.addEventListener.mock.calls[2][1];
-    uploader.abort();
+    uploader.abort(testKey);
     const abort = mockXHR.upload.addEventListener.mock.calls[3][1];
     abort();
     readystatechange();
-    expect(uploader.abortSignal).toBe(true);
+    expect(uploader.abortSignal[testKey]).toBe(true);
     await waitFor(() => expect(successHandler).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(errorHandler).toHaveBeenCalledTimes(0));
   });
 
   it('error handler', async () => {
     let readystatechange;
-    uploader = createMultipartUploader(51457280);
+    const testKey = 'testFileKey2';
+    uploader = createMultipartUploader(51457280, testKey);
     uploader.init();
     await waitFor(() => expect(mockXHR.addEventListener).toHaveBeenCalled());
     readystatechange = mockXHR.addEventListener.mock.calls[0][1];
@@ -216,7 +218,7 @@ describe('MultipartUploader class', () => {
     await waitFor(() => expect(mockXHR.open).toHaveBeenCalledTimes(2));
     readystatechange = mockXHR.addEventListener.mock.calls[2][1];
     readystatechange();
-    expect(uploader.abortSignal).toBe(false);
+    expect(uploader.abortSignal[testKey]).toBe(false);
     await waitFor(() => expect(successHandler).toHaveBeenCalledTimes(0));
     await waitFor(() => expect(errorHandler).toHaveBeenCalledTimes(1));
   });
