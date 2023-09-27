@@ -236,7 +236,11 @@ export class UploadingJobsDisplay extends Component {
 
   cancelCurrentFileUpload() {
     if (this.currentFileUploadXhr) {
-      this.currentFileUploadXhr.abort();
+      if (this.selectedFile !== null) {
+        this.currentFileUploadXhr.abort(this.selectedFile);
+      } else {
+        this.currentFileUploaderXhr.abort();
+      }
     }
   }
 

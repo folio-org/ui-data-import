@@ -51,51 +51,65 @@ export class MultipartUploader {
     this.errorHandler = errorHandler;
     this.progressHandler = progressHandler;
     this.successHandler = successHandler;
-    this.xhr = null;
+    this.xhr = this.createDefaultKeyedObject(this.files, null);
     this.uploadDefinitionId = uploadDefinitionId;
-    this.abortSignal = false;
-    this.totalFileSize = 0;
-    this.totalUploadProgress = 0;
+    this.abortSignal = this.createDefaultKeyedObject(this.files, false);
+    this.totalFileSize = this.createDefaultKeyedObject(this.files, 0);
+    this.totalUploadProgress = this.createDefaultKeyedObject(this.files, 0);
     this.intl = intl;
   }
 
-  updateProgress = (value) => { this.totalUploadProgress += value; }
-
-  abort = () => {
-    this.xhr?.abort();
-    this.abortSignal = true;
+  createDefaultKeyedObject = (obj, defaultValue) => {
+    const res = {};
+    Object.keys(obj).forEach((k) => { res[k] = defaultValue; });
+    return res;
   }
 
-  handleProgress = (event) => {
+  updateProgress = (key, value) => { this.totalUploadProgress[key] += value; }
+
+  abort = (key) => {
+    if (key) {
+      this.xhr[key]?.abort();
+      this.abortSignal[key] = true;
+    } else {
+      Object.keys(this.xhr).forEach(k => {
+        this.xhr[k]?.abort();
+        this.abortSignal[k] = true;
+      });
+    }
+  }
+
+  handleProgress = (fileKey, event) => {
     const { loaded, total } = event;
     const newEvent = {
       ...event,
-      loaded: this.totalUploadProgress + event.loaded,
-      total: this.totalFileSize
+      loaded: this.totalUploadProgress[fileKey] + event.loaded,
+      total: this.totalFileSize[fileKey]
     };
-    this.progressHandler(this.currentFileKey, newEvent);
+    this.progressHandler(fileKey, newEvent);
     if (loaded === total) {
-      this.updateProgress(loaded);
+      this.updateProgress(fileKey, loaded);
     }
   }
 
   uploadPart = (part, url, fileKey) => {
     return new Promise((resolve, reject) => {
-      this.xhr = new XMLHttpRequest();
-      this.xhr.open('PUT', url, true);
-      this.xhr.upload.addEventListener('progress', this.handleProgress);
-      this.xhr.upload.addEventListener('abort', () => {
-        this.abortSignal = true;
+      this.xhr[fileKey] = new XMLHttpRequest();
+      const currentXhr = this.xhr[fileKey];
+      currentXhr.open('PUT', url, true);
+      currentXhr.upload.addEventListener('progress', (e) => this.handleProgress(fileKey, e));
+      currentXhr.upload.addEventListener('abort', () => {
+        this.abortSignal[fileKey] = true;
       });
-      this.xhr.addEventListener('readystatechange', () => {
+      currentXhr.addEventListener('readystatechange', () => {
         const {
           status,
           responseText,
-        } = this.xhr;
+        } = this.xhr[fileKey];
 
         try {
           if (status === 200) {
-            const eTag = this.xhr.getResponseHeader('ETag');
+            const eTag = this.xhr[fileKey].getResponseHeader('ETag');
             resolve(eTag);
             return;
           } else if (status === 0) {
@@ -109,16 +123,15 @@ export class MultipartUploader {
           reject(error);
         }
       });
-      this.xhr.addEventListener('error', () => {
-        this.abortSignal = true;
+      currentXhr.addEventListener('error', () => {
+        this.abortSignal[fileKey] = true;
         this.errorHandler(fileKey, new Error(this.intl.formatMessage({ id: 'ui-data-import.upload.invalid' })));
       });
-      this.xhr.send(part);
+      currentXhr.send(part);
     });
   };
 
   sliceAndUploadParts = async (file, fileKey) => {
-    this.currentFileKey = fileKey;
     let currentByte = 0;
     let currentPartNumber = 1;
     let _uploadKey;
@@ -127,7 +140,7 @@ export class MultipartUploader {
     this.totalFileSize = file.size;
     const eTags = [];
     const totalParts = Math.ceil(file.size / CHUNK_SIZE);
-    while (currentByte < file.size && !this.abortSignal) {
+    while (currentByte < file.size && !this.abortSignal[fileKey]) {
       const adjustedEnd = Math.min(file.size, currentByte + CHUNK_SIZE);
       const chunk = file.file.slice(currentByte, adjustedEnd);
       try {
@@ -142,21 +155,20 @@ export class MultipartUploader {
           _uploadURL = url;
         }
 
-        const eTag = await this.uploadPart(chunk, _uploadURL, currentPartNumber, totalParts, fileKey);
+        const eTag = await this.uploadPart(chunk, _uploadURL, fileKey, currentPartNumber, totalParts);
         eTags.push(eTag);
         currentPartNumber += 1;
         currentByte += CHUNK_SIZE;
       } catch (error) {
         if (error.message !== 'userCancelled') this.errorHandler(fileKey, error);
-        this.abortSignal = true;
+        this.abortSignal[fileKey] = true;
         break;
       }
     }
-    if (this.abortSignal) return;
+    if (this.abortSignal[fileKey]) return;
     await finishUpload(eTags, _uploadKey, _uploadId, this.uploadDefinitionId, file.id, this.ky);
     const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };
     this.successHandler(finishResponse, fileKey, true);
-    this.currentFileKey = null;
   };
 
   init = () => {
