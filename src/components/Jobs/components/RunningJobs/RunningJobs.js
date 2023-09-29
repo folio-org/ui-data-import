@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { get } from 'lodash';
+import { get, isArray } from 'lodash';
 
 import {
   sortRunningJobs,
@@ -15,8 +15,12 @@ export class RunningJobs extends PureComponent {
 
   prepareJobsData() {
     const jobStatuses = [JOB_STATUSES.RUNNING];
-    const jobs = [...get(this.context, ['jobs'], [])]
-      .filter(({ uiStatus }) => jobStatuses.includes(uiStatus));
+    const jobRecords = get(this.context, ['jobs'], []);
+    let jobs = [];
+    if (isArray(jobRecords)) {
+      jobs = [...jobRecords]
+        .filter(({ uiStatus }) => jobStatuses.includes(uiStatus));
+    }
 
     return sortRunningJobs(jobs);
   }
