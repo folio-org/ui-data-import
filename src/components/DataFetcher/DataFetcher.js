@@ -115,6 +115,12 @@ export class DataFetcher extends Component {
           PropTypes.shape({ jobExecutions: PropTypes.arrayOf(jobExecutionPropTypes).isRequired }),
         ).isRequired,
       }),
+      splitStatus: PropTypes.shape({
+        hasLoaded: PropTypes.bool,
+        records: PropTypes.arrayOf(
+          PropTypes.shape({ splitStatus: PropTypes.bool.isRequired }),
+        ).isRequired,
+      }),
     }).isRequired,
     updateInterval: PropTypes.number, // milliseconds
   };
@@ -128,11 +134,21 @@ export class DataFetcher extends Component {
     },
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     const { resources:{ splitStatus } } = this.props;
     const { statusLoaded } = this.state;
     this.mounted = true;
     this.initialFetchPending = false;
+    if (!statusLoaded && splitStatus?.hasLoaded) {
+      this.setState({ statusLoaded: true }, () => {
+        if (!this.initialFetchPending) this.initialize();
+      });
+    }
+  }
+
+  componentDidUpdate(props, state) {
+    const { resources:{ splitStatus } } = props;
+    const { statusLoaded } = state;
     if (!statusLoaded && splitStatus?.hasLoaded) {
       this.setState({ statusLoaded: true }, () => {
         if (!this.initialFetchPending) this.initialize();
@@ -174,6 +190,7 @@ export class DataFetcher extends Component {
       .reduce((res, resourceMutator) => res.concat(this.fetchResourceData(resourceMutator)), []);
 
     try {
+      this.initialFetchPending = true;
       await Promise.all(fetchResourcesPromises);
       this.mapResourcesToState();
     } catch (error) {
