@@ -21,6 +21,18 @@ import '../../../../test/jest/__mock__';
 import { STATUS_CODES } from '../../../utils';
 
 import { ViewJobProfile } from '../ViewJobProfile';
+import { UploadingJobsContext } from '../../../components';
+
+const uploadContext = (canUseObjectStorage) => (
+  {
+    uploadDefinition: {
+      id: 'testUploadDefinitionId'
+    },
+    uploadConfiguration: {
+      canUseObjectStorage,
+    }
+  }
+);
 
 global.fetch = jest.fn();
 
@@ -72,6 +84,8 @@ const viewJobProfileProps = (profile, actionMenuItems) => ({
             lastName: 'lastName',
           },
           status: 'ERROR',
+          jobPartNumber: 1,
+          totalJobParts: 20,
         }],
       }],
       hasLoaded: true,
@@ -96,20 +110,23 @@ const renderViewJobProfile = ({
   location,
   resources,
   actionMenuItems,
+  context = uploadContext(false)
 }) => {
   const component = () => (
     <Router>
-      <ViewJobProfile
-        resources={resources}
-        location={location}
-        match={match}
-        history={history}
-        tagsEnabled
-        onClose={noop}
-        onDelete={noop}
-        actionMenuItems={actionMenuItems}
-        stripes={stripes}
-      />
+      <UploadingJobsContext.Provider value={context}>
+        <ViewJobProfile
+          resources={resources}
+          location={location}
+          match={match}
+          history={history}
+          tagsEnabled
+          onClose={noop}
+          onDelete={noop}
+          actionMenuItems={actionMenuItems}
+          stripes={stripes}
+        />
+      </UploadingJobsContext.Provider>
     </Router>
   );
 
