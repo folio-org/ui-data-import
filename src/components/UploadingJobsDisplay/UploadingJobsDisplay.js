@@ -3,7 +3,7 @@ import React, {
   createRef,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import {
   isEmpty,
@@ -16,6 +16,7 @@ import {
 import {
   withStripes,
   stripesShape,
+  withOkapiKy,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -43,12 +44,14 @@ import {
 } from '../../utils';
 import * as API from '../../utils/upload';
 import { createJobProfiles } from '../../settings/JobProfiles';
-
+import { MultipartUploader } from '../../utils/multipartUpload';
 import css from './UploadingJobsDisplay.css';
 import sharedCss from '../../shared.css';
 
 @withRouter
 @withStripes
+@withOkapiKy
+@injectIntl
 export class UploadingJobsDisplay extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
@@ -65,6 +68,10 @@ export class UploadingJobsDisplay extends Component {
       }).isRequired,
       PropTypes.string.isRequired,
     ]),
+    okapiKy: PropTypes.func,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func
+    }).isRequired,
   };
 
   static contextType = UploadingJobsContext;
@@ -74,6 +81,7 @@ export class UploadingJobsDisplay extends Component {
   state = {
     files: {},
     hasLoaded: false,
+    configurationLoaded: typeof this.context.uploadConfiguration.canUseObjectStorage !== 'undefined',
     renderLeaveModal: false,
     renderCancelUploadFileModal: false,
     recordsLoadingInProgress: false,
@@ -91,8 +99,19 @@ export class UploadingJobsDisplay extends Component {
 
     this.setPageLeaveHandler();
     this.mapFilesToState();
-    await this.uploadJobs();
-    this.updateJobProfilesComponent();
+    if (this.state.configurationLoaded) {
+      await this.uploadJobs();
+      this.updateJobProfilesComponent();
+    }
+  }
+
+  componentDidUpdate(props, state) {
+    const { configurationLoaded } = state;
+    const { uploadConfiguration } = this.context;
+    if (!configurationLoaded && typeof uploadConfiguration.canUseObjectStorage !== 'undefined') {
+      this.setState({ configurationLoaded: true });
+      this.handleUploadJobs();
+    }
   }
 
   componentWillUnmount() {
@@ -103,6 +122,11 @@ export class UploadingJobsDisplay extends Component {
 
   calloutRef = createRef();
   selectedFile = null;
+
+  handleUploadJobs = async () => {
+    await this.uploadJobs();
+    this.updateJobProfilesComponent();
+  }
 
   mapFilesToState() {
     const {
@@ -169,13 +193,13 @@ export class UploadingJobsDisplay extends Component {
   get filesUploading() {
     const { files } = this.state;
 
-    return !this.isSnapshotMode && some(files, file => file.status === FILE_STATUSES.UPLOADING);
+    return !this.isSnapshotMode && some(files, file => file.status === FILE_STATUSES.UPLOADING || file.status === FILE_STATUSES.UPLOADING_CANCELLABLE);
   }
 
   renderSnapshotData() {
-    const { uploadDefinition: { fileDefinitions } } = this.context;
+    const { uploadDefinition: { fileDefinitions }, uploadConfiguration } = this.context;
 
-    this.setState({ files: API.mapFilesToUI(fileDefinitions) });
+    this.setState({ files: API.mapFilesToUI(fileDefinitions, uploadConfiguration?.canUseObjectStorage) });
   }
 
   async fetchUploadDefinition() {
@@ -191,12 +215,17 @@ export class UploadingJobsDisplay extends Component {
   }
 
   async uploadJobs() {
+    const { uploadConfiguration } = this.context;
     try {
       await this.fetchUploadDefinition();
 
       if (this.isSnapshotMode) {
         this.renderSnapshotData();
+        return;
+      }
 
+      if (uploadConfiguration.canUseObjectStorage) {
+        this.multipartUpload();
         return;
       }
 
@@ -208,13 +237,32 @@ export class UploadingJobsDisplay extends Component {
 
   cancelCurrentFileUpload() {
     if (this.currentFileUploadXhr) {
-      this.currentFileUploadXhr.abort();
+      if (this.selectedFile !== null) {
+        this.currentFileUploadXhr.abort(this.selectedFile);
+      } else {
+        this.currentFileUploaderXhr.abort();
+      }
     }
+  }
+
+  multipartUpload() {
+    const { uploadDefinition } = this.context;
+    const { files } = this.state;
+    const { okapiKy, intl } = this.props;
+    this.currentFileUploadXhr = new MultipartUploader(
+      uploadDefinition.id,
+      files,
+      okapiKy,
+      this.handleFileUploadFail,
+      this.onFileUploadProgress,
+      this.handleFileUploadSuccess,
+      intl,
+    );
+    this.currentFileUploadXhr.init();
   }
 
   async uploadFiles() {
     const { files } = this.state;
-
     for (const fileKey of Object.keys(files)) {
       try {
         // cancel current and next file uploads if component is unmounted
@@ -410,6 +458,11 @@ export class UploadingJobsDisplay extends Component {
     }, resolve);
   });
 
+  cancelAndDeleteUpload = () => {
+    this.cancelCurrentFileUpload();
+    this.handleDeleteFile();
+  };
+
   renderFiles() {
     const { files } = this.state;
 
@@ -448,7 +501,7 @@ export class UploadingJobsDisplay extends Component {
           errorMsgTranslationID={errorMsgTranslationID}
           uploadedDate={uploadedDate}
           onCancelImport={this.openCancelUploadModal}
-          onDelete={this.handleDeleteFile}
+          onDelete={status === FILE_STATUSES.UPLOADING_CANCELLABLE ? this.cancelAndDeleteUpload : this.handleDeleteFile}
         />
       );
     });
@@ -576,7 +629,7 @@ export class UploadingJobsDisplay extends Component {
               message={<FormattedMessage id="ui-data-import.modal.cancelUpload.message" />}
               confirmLabel={<FormattedMessage id="ui-data-import.modal.cancelUpload.confirm" />}
               cancelLabel={<FormattedMessage id="ui-data-import.modal.cancelUpload.cancel" />}
-              onConfirm={this.handleDeleteFile}
+              onConfirm={this.cancelAndDeleteUpload}
               onCancel={this.closeCancelUploadModal}
             />
           </Pane>
