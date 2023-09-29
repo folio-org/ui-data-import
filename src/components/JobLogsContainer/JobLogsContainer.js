@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -11,6 +11,7 @@ import {
   stripesShape,
   withStripes,
 } from '@folio/stripes/core';
+import { UploadingJobsContext } from '../UploadingJobsContextProvider/UploadingJobsContext';
 
 import {
   DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
@@ -43,11 +44,19 @@ const JobLogsContainer = props => {
     formatNumber,
   } = useIntl();
   const location = useLocation();
-
+  const { uploadConfiguration } = useContext(UploadingJobsContext);
   const hasDeletePermission = stripes.hasPerm(permissions.DELETE_LOGS);
 
+  const getVisibleColumns = () => {
+    const baseColumns = [...DEFAULT_JOB_LOG_COLUMNS];
+    if (uploadConfiguration?.canUseObjectStorage) {
+      baseColumns.splice(3, 0, 'jobParts');
+    }
+    return hasDeletePermission ? ['selected', ...baseColumns] : baseColumns;
+  };
+
   const customProperties = {
-    visibleColumns: hasDeletePermission ? ['selected', ...DEFAULT_JOB_LOG_COLUMNS] : DEFAULT_JOB_LOG_COLUMNS,
+    visibleColumns: getVisibleColumns(),
     columnWidths: DEFAULT_JOB_LOG_COLUMNS_WIDTHS,
   };
 
@@ -69,6 +78,7 @@ const JobLogsContainer = props => {
       fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),
       jobProfileName: jobProfileNameCellFormatter,
+      jobParts: record => formatMessage({ id: 'ui-data-import.logViewer.partOfTotal' }, { number: record.jobPartNumber, total: record.totalJobParts }),
     },
   };
 
