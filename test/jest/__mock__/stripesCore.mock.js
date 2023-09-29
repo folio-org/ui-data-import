@@ -77,10 +77,25 @@ const mockStripesCore = () => {
 
   const useNamespace = () => ['@folio/data-import'];
 
+  const mockKy = jest.fn(() => ({
+    json: () => {
+      return Promise.resolve({ splitStatus: true });
+    },
+  }));
+
+  const mockOkapiKy = {
+    get: mockKy,
+  };
+
+  const withOkapiKy = (Component) => {
+    return (props) => (<Component {...props} okapiKy={mockOkapiKy} />);
+  };
+
   return {
     stripesConnect,
     withStripes,
     withRoot,
+    withOkapiKy,
     IfPermission,
     AppContextMenu,
     useStripes,

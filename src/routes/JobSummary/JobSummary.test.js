@@ -16,17 +16,29 @@ import { Harness } from '../../../test/helpers';
 import '../../../test/jest/__mock__';
 
 import { JobSummary } from './JobSummary';
-
+import { UploadingJobsContext } from '../../components';
 import { PREVIOUS_LOCATIONS_KEY } from '../../utils';
 
 jest.mock('./components', () => ({
   ...jest.requireActual('./components'),
+  SourceDownloadLink: () => 'SourceDownloadLink',
   SummaryTable: () => 'SummaryTable',
   RecordsTable: () => 'RecordsTable',
 }));
 
 const history = createMemoryHistory();
 history.push = jest.fn();
+const multipartUploadContext = {
+  uploadConfiguration: {
+    canUseObjectStorage: true
+  }
+};
+
+const defaultUploadContext = {
+  uploadConfiguration: {
+    canUseObjectStorage: false
+  }
+};
 
 const getJobExecutionsResources = (dataType, jobExecutionsId = 'testId') => ({
   jobExecutions: {
@@ -70,19 +82,21 @@ const mutator = {
 };
 const stripesMock = buildStripes();
 
-const renderJobSummary = ({ dataType = 'MARC', resources }) => {
+const renderJobSummary = ({ dataType = 'MARC', resources, context = defaultUploadContext }) => {
   const component = (
     <Router>
-      <JobSummary
-        resources={resources || getResources(dataType)}
-        mutator={mutator}
-        location={{
-          search: '',
-          pathname: '',
-        }}
-        history={history}
-        stripes={stripesMock}
-      />
+      <UploadingJobsContext.Provider value={context}>
+        <JobSummary
+          resources={resources || getResources(dataType)}
+          mutator={mutator}
+          location={{
+            search: '',
+            pathname: '',
+          }}
+          history={{ push: () => {} }}
+          stripes={stripesMock}
+        />
+      </UploadingJobsContext.Provider>
     </Router>
   );
 
@@ -190,5 +204,11 @@ describe('Job summary page', () => {
     rerender(component('testJobExecutionsId'));
 
     expect(mutator.jobLog.GET).toHaveBeenCalled();
+  });
+
+  it('should render a download link if multipart capability is present', () => {
+    const { getByText } = renderJobSummary({ context: multipartUploadContext });
+
+    expect(getByText('SourceDownloadLink')).toBeInTheDocument();
   });
 });

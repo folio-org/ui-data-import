@@ -18,7 +18,7 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
+import ViewAllLogs, { ViewAllLogsManifest, getLogsQuery, getLogsPath } from './ViewAllLogs';
 
 import { SORT_MAP } from './constants';
 import { NO_FILE_NAME } from '../../utils';
@@ -609,5 +609,29 @@ describe('ViewAllLogs component', () => {
       const query = ViewAllLogsManifest.records.params(null, null, queryData);
       expect(expectedSortBy).toEqual(query.sortBy);
     });
+  });
+});
+
+describe('ViewAllLogs - getLogsPath function', () => {
+  it('returns expected path if multipart functionality is available', () => {
+    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true } } })).toBeDefined();
+  });
+
+  it('returns undefined path if splitStatus has not responded yet', () => {
+    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: false } } })).not.toBeDefined();
+  });
+});
+
+describe('ViewAllLogs - getLogsQuery function', () => {
+  it('returns expected query if multipart functionality is available', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{ splitStatus: true }] } } })).toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
+  });
+
+  it('returns expected query if multipart functionality is not available', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{ splitStatus: false }] } } })).not.toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
+  });
+
+  it('returns empty query if multipart check has not responded yet', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: {} })).toEqual({});
   });
 });
