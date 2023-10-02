@@ -46,6 +46,9 @@ const mutator = buildMutator({
   },
   jobProfiles: {
     GET: noop,
+  },
+  splitStatus: {
+    GET: noop,
   }
 });
 
@@ -128,6 +131,10 @@ const getResources = query => ({
     },
     totalRecords: 100,
   },
+  splitStatus: {
+    hasLoaded: true,
+    records: [{ splitStatus: true }]
+  }
 });
 
 jest.mock('@folio/stripes/components', () => ({
@@ -158,6 +165,16 @@ jest.mock('@folio/stripes/components', () => ({
 const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
 
 const stripes = buildStripes();
+const mockFunctionalManifestProps = (loaded, splitStatus) => (
+  {
+    resources: {
+      splitStatus: {
+        hasLoaded: loaded,
+        records: [{ splitStatus: splitStatus }]
+      }
+    }
+  }
+)
 
 const renderViewAllLogs = query => {
   const component = (
@@ -559,7 +576,12 @@ describe('ViewAllLogs component', () => {
           },
         };
 
-        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        const query = ViewAllLogsManifest.records.params(
+          null,
+          null,
+          queryData,
+          null,
+          mockFunctionalManifestProps(true, true));
         expect(query.hrId).toEqual(expectedQuery);
       });
     });
@@ -579,7 +601,12 @@ describe('ViewAllLogs component', () => {
           },
         };
 
-        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        const query = ViewAllLogsManifest.records.params(
+          null,
+          null,
+          queryData,
+          null,
+          mockFunctionalManifestProps(true, true));
         expect(query).toMatchObject(expected);
       });
     });
@@ -594,7 +621,12 @@ describe('ViewAllLogs component', () => {
         },
       };
 
-      const query = ViewAllLogsManifest.records.params(null, null, queryData);
+      const query = ViewAllLogsManifest.records.params(
+        null,
+        null,
+        queryData,
+        null,
+        mockFunctionalManifestProps(true, true));
       expect(expectedSortBy).toEqual(query.sortBy);
     });
 
@@ -606,7 +638,12 @@ describe('ViewAllLogs component', () => {
         },
       };
 
-      const query = ViewAllLogsManifest.records.params(null, null, queryData);
+      const query = ViewAllLogsManifest.records.params(
+        null,
+        null,
+        queryData,
+        null,
+        mockFunctionalManifestProps(true, true));
       expect(expectedSortBy).toEqual(query.sortBy);
     });
   });
