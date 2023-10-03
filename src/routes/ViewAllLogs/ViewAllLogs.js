@@ -482,7 +482,6 @@ class ViewAllLogs extends Component {
       checkboxDisabled: isLogsDeletionInProgress,
     });
     const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
-    const hasDeletePermission = stripes.hasPerm(DELETE_LOGS);
 
     return (
       <div data-test-logs-list>

@@ -170,11 +170,11 @@ const mockFunctionalManifestProps = (loaded, splitStatus) => (
     resources: {
       splitStatus: {
         hasLoaded: loaded,
-        records: [{ splitStatus: splitStatus }]
+        records: [{ splitStatus }]
       }
     }
   }
-)
+);
 
 const renderViewAllLogs = query => {
   const component = (
@@ -581,7 +581,8 @@ describe('ViewAllLogs component', () => {
           null,
           queryData,
           null,
-          mockFunctionalManifestProps(true, true));
+          mockFunctionalManifestProps(true, true)
+        );
         expect(query.hrId).toEqual(expectedQuery);
       });
     });
@@ -606,7 +607,8 @@ describe('ViewAllLogs component', () => {
           null,
           queryData,
           null,
-          mockFunctionalManifestProps(true, true));
+          mockFunctionalManifestProps(true, true)
+        );
         expect(query).toMatchObject(expected);
       });
     });
@@ -626,7 +628,8 @@ describe('ViewAllLogs component', () => {
         null,
         queryData,
         null,
-        mockFunctionalManifestProps(true, true));
+        mockFunctionalManifestProps(true, true)
+      );
       expect(expectedSortBy).toEqual(query.sortBy);
     });
 
@@ -643,7 +646,8 @@ describe('ViewAllLogs component', () => {
         null,
         queryData,
         null,
-        mockFunctionalManifestProps(true, true));
+        mockFunctionalManifestProps(true, true)
+      );
       expect(expectedSortBy).toEqual(query.sortBy);
     });
   });

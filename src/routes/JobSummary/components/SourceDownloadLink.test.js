@@ -9,14 +9,14 @@ import '../../../utils/multipartUpload';
 
 // the indirectly used ky library extends JS Errors with JS mockHTTPError.
 // this is used to simulate how we handle a 404 response.
-class mockHTTPError extends Error {
-	constructor(response) {
-		super(
-			response.status
-		);
-		this.name = 'HTTPError';
-		this.response = response;
-	}
+class MockHTTPError extends Error {
+  constructor(response) {
+    super(
+      response.status
+    );
+    this.name = 'HTTPError';
+    this.response = response;
+  }
 }
 
 const mockResponse = jest.fn();
@@ -24,9 +24,9 @@ jest.mock('../../../utils/multipartUpload', () => ({
   ...jest.requireActual('../../../utils/multipartUpload'),
   getObjectStorageDownloadURL: (ky, id) => {
     if (id === 'file-removed') {
-      throw (new mockHTTPError({ status: '404'}));
+      throw (new MockHTTPError({ status: '404' }));
     }
-    return Promise.resolve(mockResponse())
+    return Promise.resolve(mockResponse());
   }
 }));
 

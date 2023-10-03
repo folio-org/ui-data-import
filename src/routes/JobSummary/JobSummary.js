@@ -211,8 +211,8 @@ const JobSummaryComponent = props => {
                   executionId={id}
                   fileName={jobExecutionsRecords[0]?.fileName}
                 />
-                </Col>
-              )}
+              </Col>
+            )}
           </Row>
           <hr />
           {!isErrorsOnly && (

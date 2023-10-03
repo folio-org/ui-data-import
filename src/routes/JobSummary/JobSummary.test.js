@@ -93,7 +93,7 @@ const renderJobSummary = ({ dataType = 'MARC', resources, context = defaultUploa
             search: '',
             pathname: '',
           }}
-          history={{ push: () => {} }}
+          history={history}
           stripes={stripesMock}
         />
       </UploadingJobsContext.Provider>
