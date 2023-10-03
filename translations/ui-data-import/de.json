@@ -1153,5 +1153,18 @@
     "jobProgress.partsFailed": "Failed: {amount}",
     "uploadError": "There was a problem uploading the file. Please try again",
     "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
-    "logViewer.partOfTotal": "{number} of {total}"
+    "logViewer.partOfTotal": "{number} of {total}",
+    "modal.cancelRunningSplitJob.header": "Cancel multipart import job?",
+    "modal.cancelRunningSplitJob.message": "Are you sure that you want <b>to cancel this multipart import job?</b>",
+    "modal.cancelRunningSplitJob.message.pleaseNote": "<b>Please note:</b>",
+    "modal.cancelRunningSplitJob.message.noRestart": "Cancelled jobs cannot be restarted.",
+    "modal.cancelRunningSplitJob.message.noRevert": "Records created or updated before the job is cancelled cannot be reverted",
+    "modal.cancelRunningSplitJob.message.jobParts": "<b>{current} of {total}</b> job parts have already been processed and will <b>not be cancelled</b>",
+    "modal.cancelRunningSplitJob.message.remaining": "<b>{remaining}</b> remaining job parts including any that are currently in progress and all that have not yet started <b>will be cancelled.</b>",
+    "downloadLinkRequestError": "There was a problem retrieving the download URL",
+    "processing": "Processing your request to run the job",
+    "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
+    "jobParts": "Job parts",
+    "jobSummarySourceFileLabel": "Source file: ",
+    "jobSummarySourceFileUnavailable": "Unavailable"
 }
