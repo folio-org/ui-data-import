@@ -8,6 +8,7 @@
 * Render details of composite jobs in on consolidated running job cards (UIDATIMP-1466)
 * Display a link to download a slice from the automated splitting process (UIDATIMP-1510)
 * Cancel upload/running a split job (UIDATIMP-1469)
+
 ### Features added:
 * Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
 * Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
