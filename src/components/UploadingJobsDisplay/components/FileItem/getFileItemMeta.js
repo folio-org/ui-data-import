@@ -105,7 +105,7 @@ export const getFileItemMeta = ({
                   data-test-delete-button
                   icon="trash"
                   size="small"
-                  ariaLabel={label}
+                  aria-label={label}
                   className={css.icon}
                   onClick={cancelImport}
                 />

@@ -79,6 +79,16 @@ const {
   ERROR,
 } = FILE_STATUSES;
 
+const jobPartsCellFormatter = record => (
+  <FormattedMessage
+    id="ui-data-import.logViewer.partOfTotal"
+    values={{
+      number: record.jobPartNumber,
+      total: record.totalJobParts
+    }}
+  />
+);
+
 const ViewJobProfileComponent = props => {
   const {
     resources,
@@ -310,15 +320,7 @@ const ViewJobProfileComponent = props => {
   const jobsUsingThisProfileFormatter = {
     ...listTemplate({}),
     fileName: record => fileNameCellFormatter(record, location),
-    jobParts: record => (
-      <FormattedMessage
-        id="ui-data-import.logViewer.partOfTotal"
-        values={{
-          number: record.jobPartNumber,
-          total: record.totalJobParts
-        }}
-      />
-    )
+    jobParts: jobPartsCellFormatter
   };
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
   const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);
