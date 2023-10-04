@@ -35,6 +35,13 @@
 * leverage jest-config-stripes for all jest and testing-library packages (UIDATIMP-1508)
 * *BREAKING* bump `react-intl` to `v6.4.4` (UIDATIMP-1520)
 * Bump the major versions of @folio/plugin-find-organization optionalDependencies (UIDATIMP-1532)
+* Implement file upload to S3 (UIDATIMP-1460)
+* Perform rough split on front-end for multipart Upload (UIDATIMP-1468)
+* Notify users that large files will be split (UIDATIMP-1463)
+* Retrieve backend configuration for splitting in UI (UIDATIMP-1462)
+* Render details of composite jobs in on consolidated running job cards (UIDATIMP-1466)
+* Display a link to download a slice from the automated splitting process (UIDATIMP-1510)
+* Cancel upload/running a split job (UIDATIMP-1469)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)
