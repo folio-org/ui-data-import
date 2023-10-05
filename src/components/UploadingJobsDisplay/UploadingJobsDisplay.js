@@ -89,7 +89,7 @@ export class UploadingJobsDisplay extends Component {
     actionMenuItems: ['run'],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.mounted = true;
     this.fileRemovalMap = {
       [FILE_STATUSES.DELETING]: this.deleteFileAPI,
@@ -100,8 +100,7 @@ export class UploadingJobsDisplay extends Component {
     this.setPageLeaveHandler();
     this.mapFilesToState();
     if (this.state.configurationLoaded) {
-      await this.uploadJobs();
-      this.updateJobProfilesComponent();
+      this.handleUploadJobs();
     }
   }
 
@@ -245,8 +244,9 @@ export class UploadingJobsDisplay extends Component {
     }
   }
 
-  multipartUpload() {
-    const { uploadDefinition } = this.context;
+  multipartUpload = async () => {
+    const { updateUploadDefinition } = this.context;
+    const uploadDefinition = await updateUploadDefinition();
     const { files } = this.state;
     const { okapiKy, intl } = this.props;
     this.currentFileUploadXhr = new MultipartUploader(
