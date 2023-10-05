@@ -168,7 +168,7 @@
       }
     ],
     "okapiInterfaces": {
-      "data-import": "3.0",
+      "data-import": "3.1",
       "source-manager-job-executions": "3.0",
       "data-import-converter-storage": "1.2"
     },
