@@ -147,7 +147,7 @@ export class DataFetcher extends Component {
   }
 
   componentDidUpdate(props, state) {
-    const { resources:{ splitStatus } } = props;
+    const { resources:{ splitStatus } } = this.props;
     const { statusLoaded } = state;
     if (!statusLoaded && splitStatus?.hasLoaded) {
       this.setState({ statusLoaded: true }, () => {
