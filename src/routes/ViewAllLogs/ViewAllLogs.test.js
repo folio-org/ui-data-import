@@ -8,7 +8,7 @@ import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import { buildMutator } from '@folio/stripes-data-transfer-components/test/helpers';
-import { ModuleHierarchyProvider } from '@folio/stripes/core';
+
 
 import {
   renderWithIntl,
@@ -16,6 +16,7 @@ import {
   buildStripes,
 } from '../../../test/jest/helpers';
 import '../../../test/jest/__mock__';
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
 import ViewAllLogs, { ViewAllLogsManifest, getLogsQuery, getLogsPath } from './ViewAllLogs';
 
