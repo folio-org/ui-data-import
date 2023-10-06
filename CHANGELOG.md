@@ -1,6 +1,15 @@
 # Change history for ui-data-import
 
-## **6.0.10** (in progress)
+## **6.0.11** IN-PROGRESS
+
+
+## [6.0.10](https://github.com/folio-org/ui-data-import/tree/v6.0.10) (2023-10-06)
+
+### Features added:
+* Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
+* Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
+* Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
+* Avoid private paths in stripes-core imports (UIDATIMP-1414)
 * Implement file upload to S3 (UIDATIMP-1460)
 * Perform rough split on front-end for multipart Upload (UIDATIMP-1468)
 * Notify users that large files will be split (UIDATIMP-1463)
@@ -9,16 +18,10 @@
 * Display a link to download a slice from the automated splitting process (UIDATIMP-1510)
 * Cancel upload/running a split job (UIDATIMP-1469)
 
-### Features added:
-* Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
-* Create hotlink from file name in job profile detail view to job log details (UIDATIMP-1356)
-* Add accessibility testing to automated tests in ui-data-import (UIDATIMP-1372)
-* Avoid private paths in stripes-core imports (UIDATIMP-1414)
-
 ## [6.0.9](https://github.com/folio-org/ui-data-import/tree/v6.0.9) (2023-07-31)
 
 ### Bugs fixed:
-* Allow to handle text/plain content type when error occurs (UIDATIMP-1465
+* Allow to handle text/plain content type when error occurs (UIDATIMP-1465)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 
