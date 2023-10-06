@@ -127,6 +127,46 @@ describe('FileItem component', () => {
     });
   });
 
+  describe('when status is UPLOADING-CANCELLABLE', () => {
+    it('should be rendered with no axe errors', async () => {
+      const { container } = renderFileItem({ status: FILE_STATUSES.UPLOADING_CANCELLABLE });
+
+      await runAxeTest({ rootNode: container });
+    });
+
+    describe('heading', () => {
+      it('should render the file name', () => {
+        const { getByText } = renderFileItem({ status: FILE_STATUSES.UPLOADING_CANCELLABLE });
+
+        expect(getByText(fileName)).toBeDefined();
+      });
+
+      it('should render the delete button', () => {
+        const { container } = renderFileItem({ status: FILE_STATUSES.UPLOADING_CANCELLABLE });
+
+        const deleteButtonElement = container.querySelector('[ data-test-delete-button="true"]');
+
+        expect(deleteButtonElement).toBeDefined();
+      });
+
+      describe('when clicking on Delete button', () => {
+        it('should call a function to open the modal window', () => {
+          const onCancelImport = jest.fn();
+          const { container } = renderFileItem({
+            status: FILE_STATUSES.UPLOADING_CANCELLABLE,
+            onCancelImport,
+          });
+
+          const cancelButtonElement = container.querySelector('[ data-test-delete-button="true"]');
+
+          fireEvent.click(cancelButtonElement);
+
+          expect(onCancelImport.mock.calls.length).toEqual(1);
+        });
+      });
+    });
+  });
+
   describe('when status is UPLOADED', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderFileItem({ status: FILE_STATUSES.UPLOADED });

@@ -18,8 +18,10 @@ import { Jobs } from './Jobs';
 
 import { JOB_STATUSES } from '../../utils';
 import * as API from '../../utils/upload';
+import * as multipartAPI from '../../utils/multipartUpload';
 
 const mockDeleteFile = jest.spyOn(API, 'deleteFile').mockResolvedValue(true);
+const mockCancelMultipartJob = jest.spyOn(multipartAPI, 'cancelMultipartJob').mockResolvedValue(true);
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -27,8 +29,10 @@ jest.mock('@folio/stripes/components', () => ({
     open,
     onCancel,
     onConfirm,
+    heading,
   }) => (open ? (
     <div>
+      <span>{heading}</span>
       <span>Confirmation Modal</span>
       <button
         type="button"
@@ -48,7 +52,6 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 const mockConsoleError = jest.spyOn(console, 'error');
-
 global.fetch = jest.fn();
 
 const runningJobs = [
@@ -73,9 +76,65 @@ const runningJobs = [
   },
 ];
 
+const runningCompositeJobs = [{
+  id: 'f4e1e42f-7c9b-45be-898f-25d8c563bf13',
+  hrId: 10,
+  parentJobId: 'f4e1e42f-7c9b-45be-898f-25d8c563bf13',
+  subordinationType: 'COMPOSITE_PARENT',
+  jobProfileInfo: {
+    id: '80898dee-449f-44dd-9c8e-37d5eb469b1d',
+    name: 'Default - Create Holdings and SRS MARC Holdings',
+    dataType: 'MARC',
+    hidden: false
+  },
+  sourcePath: '500 records.mrc',
+  fileName: '500 records.mrc',
+  runBy: {
+    firstName: 'DIKU',
+    lastName: 'ADMINISTRATOR'
+  },
+  progress: {
+    jobExecutionId: 'f4e1e42f-7c9b-45be-898f-25d8c563bf13',
+    current: 504,
+    total: 500
+  },
+  startedDate: '2023-06-16T18:22:18.484+00:00',
+  completedDate: '2023-06-16T18:50:11.105+00:00',
+  status: 'PROCESSING_IN_PROGRESS',
+  uiStatus: 'RUNNING',
+  userId: 'eb9e217c-0dcf-47ed-b3f0-22a928702631',
+  jobPartNumber: 1,
+  totalJobParts: 1,
+  compositeDetails: {
+    processingInProgressState: {
+      chunksCount: 5,
+      totalRecordsCount: 2500,
+      currentlyProcessedCount: 832
+    },
+    committedState: {
+      chunksCount: 3,
+      totalRecordsCount: 1500,
+      currentlyProcessedCount: 1500
+    },
+    errorState: {
+      chunksCount: 2,
+      totalRecordsCount: 1000,
+      currentlyProcessedCount: 1000
+    }
+  },
+  totalRecordsInFile: 200
+}
+];
+
 const defaultContext = {
   hasLoaded: true,
   jobs: runningJobs,
+  logs: [],
+};
+
+const compositeContext = {
+  hasLoaded: true,
+  jobs: runningCompositeJobs,
   logs: [],
 };
 
@@ -87,6 +146,16 @@ const initialStore = {
 };
 
 const renderJobs = (context = defaultContext) => {
+  const component = (
+    <DataFetcherContext.Provider value={context}>
+      <Jobs />
+    </DataFetcherContext.Provider>
+  );
+
+  return renderWithIntl(renderWithRedux(component, initialStore), translationsProperties);
+};
+
+const renderCompositeJobs = (context = compositeContext) => {
   const component = (
     <DataFetcherContext.Provider value={context}>
       <Jobs />
@@ -236,6 +305,185 @@ describe('Jobs component', () => {
         fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
 
         expect(mockDeleteFile).toHaveBeenCalledTimes(1);
+        await waitFor(() => expect(mockConsoleError).toHaveBeenCalledWith(error));
+      });
+    });
+  });
+});
+
+// Composite jobs tests..
+describe('Composite jobs - Jobs component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    delete global.fetch;
+  });
+
+  it('Composite jobs - should be rendered with no axe errors', async () => {
+    const { container } = renderCompositeJobs();
+
+    await runAxeTest({ rootNode: container });
+  });
+
+  it('Composite jobs - should contain "Running" section', () => {
+    const { getByText } = renderCompositeJobs();
+
+    expect(getByText('Running')).toBeInTheDocument();
+  });
+
+  it('Composite jobs -  "Running" section accordion should be open by default', () => {
+    const { getByRole } = renderCompositeJobs();
+
+    expect(getByRole('button', { name: /running/i, expanded: true }));
+  });
+
+  describe('Composite jobs - "Running" section', () => {
+    it('should have correct amount of running job cards', () => {
+      const { getAllByRole } = renderCompositeJobs();
+      // Composite cards display a nested list of progress data that has 3 items...
+      // we expect 3 more items per card.
+      expect(getAllByRole('listitem').length).toBe(runningJobs.length + runningJobs.length * 3);
+    });
+
+    it('Composite jobs - should display appropriate message when there are no running jobs', () => {
+      const { getByText } = renderCompositeJobs({
+        ...defaultContext,
+        jobs: [],
+      });
+
+      expect(getByText('No running jobs to show')).toBeInTheDocument();
+    });
+
+    describe('Composite jobs - Job card', () => {
+      let jobCard;
+
+      beforeEach(() => {
+        const { getAllByRole } = renderCompositeJobs();
+        jobCard = getAllByRole('listitem')[0];
+      });
+
+      it('Composite jobs - should display job profile name', () => {
+        const jobProfileName = runningCompositeJobs[0].jobProfileInfo.name;
+
+        expect(within(jobCard).getByText(jobProfileName)).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display file name', () => {
+        const fileName = runningCompositeJobs[0].fileName;
+
+        expect(within(jobCard).getByText(fileName)).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display total number of records', () => {
+        const totalRecords = runningCompositeJobs[0].totalRecordsInFile;
+
+        expect(within(jobCard).getByText(`${totalRecords} records`)).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display user full name', () => {
+        const {
+          firstName,
+          lastName,
+        } = runningCompositeJobs[0].runBy;
+        const fullName = `${firstName} ${lastName}`;
+
+        expect(within(jobCard).getByText(fullName, { exact: false })).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display number of processed slices', () => {
+        expect(within(jobCard).getByText(/processed/)).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display number of remaining slices', () => {
+        expect(within(jobCard).getByText(/remaining/)).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display number of completed slices', () => {
+        expect(within(jobCard).getByText('Completed: 3')).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display number of slices completed with error', () => {
+        expect(within(jobCard).getByText('Completed with errors: 2')).toBeInTheDocument();
+      });
+
+      it('Composite jobs - should display number of failed', () => {
+        expect(within(jobCard).getByText('Failed: 2')).toBeInTheDocument();
+      });
+    });
+
+    describe('Composite jobs - When delete button on running job card is clicked', () => {
+      it('Composite jobs - cancel import job modal should be opened', async () => {
+        const {
+          getByRole,
+          getByText,
+        } = renderCompositeJobs();
+
+        fireEvent.click(getByRole('button', { name: /delete/i }));
+
+        await waitFor(() => expect(getByText('Confirmation Modal')).toBeInTheDocument());
+      });
+
+      it('Composite jobs - correct text should be rendered on the job card', () => {
+        const {
+          getByText,
+          getByRole,
+        } = renderCompositeJobs();
+
+        fireEvent.click(getByRole('button', { name: /delete/i }));
+
+        expect(getByText('has been stopped', { exact: false })).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Composite jobs - Opened cancel import job modal', () => {
+    it('Composite jobs - should be closed when cancel button is clicked', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderCompositeJobs();
+
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+      fireEvent.click(getByRole('button', { name: 'No, do not cancel import' }));
+
+      await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
+    });
+
+    it('Composite jobs - display correct modal label header', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderCompositeJobs();
+
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+
+      await waitFor(() => expect(queryByText(/multipart/)).toBeInTheDocument());
+    });
+
+    it('Composite jobs - should be closed when confirm button is clicked', async () => {
+      const {
+        getByRole,
+        queryByText,
+      } = renderCompositeJobs();
+
+      fireEvent.click(getByRole('button', { name: /delete/i }));
+      fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
+
+      await waitFor(() => expect(queryByText('Confirmation Modal')).not.toBeInTheDocument());
+    });
+
+    describe('Composite jobs - when there is a deletion error while cancelling job', () => {
+      it('Composite jobs - console.error should be called', async () => {
+        const error = new Error('Something went wrong. Try again.');
+        mockCancelMultipartJob.mockRejectedValueOnce(error);
+        const { getByRole } = renderCompositeJobs();
+
+        fireEvent.click(getByRole('button', { name: /delete/i }));
+        fireEvent.click(getByRole('button', { name: 'Yes, cancel import job' }));
+
+        expect(mockCancelMultipartJob).toHaveBeenCalledTimes(1);
         await waitFor(() => expect(mockConsoleError).toHaveBeenCalledWith(error));
       });
     });

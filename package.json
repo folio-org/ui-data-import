@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "6.0.9",
+  "version": "6.0.10",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -20,6 +20,9 @@
     "lintfix": "eslint . --fix",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-data-import ./translations/ui-data-import/compiled"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "devDependencies": {
     "@babel/core": "^7.17.12",
@@ -92,7 +95,8 @@
     "redux": "^4.0.5"
   },
   "resolutions": {
-    "moment": "~2.29.4"
+    "moment": "~2.29.4",
+    "@rehooks/local-storage": "2.4.4"
   },
   "optionalDependencies": {
     "@folio/plugin-find-organization": "^4.0.0"
@@ -182,7 +186,7 @@
       }
     ],
     "okapiInterfaces": {
-      "data-import": "3.0",
+      "data-import": "3.1",
       "source-manager-job-executions": "3.0",
       "data-import-converter-storage": "1.2"
     },

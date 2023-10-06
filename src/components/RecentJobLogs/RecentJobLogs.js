@@ -45,7 +45,7 @@ export const RecentJobLogs = ({
           hasLoaded={haveLogsLoaded}
           contentData={logs}
           formatter={listProps.resultsFormatter}
-          mclProps={{ nonInteractiveHeaders: ['selected'] }}
+          mclProps={{ nonInteractiveHeaders: ['selected', 'jobParts'] }}
           {...listProps}
         />
       )}

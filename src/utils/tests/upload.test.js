@@ -5,6 +5,7 @@ import {
   deleteFile,
   deleteUploadDefinition,
   getLatestUploadDefinition,
+  mapFilesToUI,
 } from '../upload';
 
 jest.mock('@folio/stripes-data-transfer-components');
@@ -198,5 +199,22 @@ describe('getLatestUploadDefinition function', () => {
       expect(e.ok).toBeFalsy();
       expect(e.status).toBe(400);
     }
+  });
+});
+
+describe('mapFilesToUI', () => {
+  it('Given an undefined status value, and canUseObjectStorage: true, sets status to "UPLOADING-CANCELLABLE"', () => {
+    const files = mapFilesToUI([{ name: 'testfile', lastModified: '202021122' }], true);
+    expect(files.testfile202021122).toHaveProperty('status', 'UPLOADING-CANCELLABLE');
+  });
+
+  it('Given an undefined status value, and canUseObjectStorage: false, sets status to "UPLOADING"', () => {
+    const files = mapFilesToUI([{ name: 'testfile', lastModified: '202021122' }], false);
+    expect(files.testfile202021122).toHaveProperty('status', 'UPLOADING');
+  });
+
+  it('Given empty parameters, returns an empty object', () => {
+    const files = mapFilesToUI();
+    expect(files).toEqual({});
   });
 });
