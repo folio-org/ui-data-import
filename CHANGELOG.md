@@ -1,7 +1,9 @@
 # Change history for ui-data-import
 
-## **6.0.11** IN-PROGRESS
+## **6.0.12** (IN PROGRESS)
 
+## [6.0.11](https://github.com/folio-org/ui-data-import/tree/v6.0.11) (2023-10-10)
+* Restore missing permissions from DITF merge
 
 ## [6.0.10](https://github.com/folio-org/ui-data-import/tree/v6.0.10) (2023-10-06)
 
