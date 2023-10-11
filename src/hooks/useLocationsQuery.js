@@ -1,16 +1,15 @@
 import { useQuery } from 'react-query';
 
-import {
-  useOkapiKy,
-  useNamespace,
-} from '@folio/stripes/core';
+import { useNamespace } from '@folio/stripes/core';
 
-export const useLocationsQuery = () => {
-  const ky = useOkapiKy();
+import { useTenantKy } from './useTenantKy';
+
+export const useLocationsQuery = ({ tenantId } = {}) => {
+  const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'locations' });
 
   const query = useQuery({
-    queryKey: [namespace],
+    queryKey: [namespace, tenantId],
     queryFn: () => ky.get('locations').json(),
   });
 

@@ -1,19 +1,18 @@
 import { useQuery } from 'react-query';
 
-import {
-  useNamespace,
-  useOkapiKy,
-} from '@folio/stripes/core';
+import { useNamespace } from '@folio/stripes/core';
 
-export const useInventoryHoldingsByIdQuery = (holdingsIds = []) => {
-  const ky = useOkapiKy();
+import { useTenantKy } from './useTenantKy';
+
+export const useInventoryHoldingsByIdQuery = (holdingsIds = [], { tenantId } = {}) => {
+  const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'holdingsById' });
 
   const queryIds = holdingsIds.join(' or ');
 
   const query = useQuery(
     {
-      queryKey: [namespace, queryIds],
+      queryKey: [namespace, queryIds, tenantId],
       queryFn: () => ky.get(`holdings-storage/holdings?query=id==(${queryIds})`).json(),
       enabled: !!queryIds,
     }

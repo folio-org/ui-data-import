@@ -868,3 +868,5 @@ export const STATUS_CODES = {
   CONFLICT: 409,
   INTERNAL_SERVER_ERROR: 500,
 };
+
+export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
