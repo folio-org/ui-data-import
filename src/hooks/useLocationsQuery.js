@@ -4,12 +4,12 @@ import { useNamespace } from '@folio/stripes/core';
 
 import { useTenantKy } from './useTenantKy';
 
-export const useLocationsQuery = ({ tenantId } = {}) => {
-  const ky = useTenantKy({ tenantId });
+export const useLocationsQuery = ({ tenant } = {}) => {
+  const ky = useTenantKy({ tenant });
   const [namespace] = useNamespace({ key: 'locations' });
 
   const query = useQuery({
-    queryKey: [namespace, tenantId],
+    queryKey: [namespace, tenant],
     queryFn: () => ky.get('locations').json(),
   });
 

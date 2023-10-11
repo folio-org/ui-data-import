@@ -4,13 +4,13 @@ import { useNamespace } from '@folio/stripes/core';
 
 import { useTenantKy } from '../hooks';
 
-export const useSRSRecordQuery = (recordId, { tenantId } = {}) => {
-  const ky = useTenantKy({ tenantId });
+export const useSRSRecordQuery = (recordId, { tenant } = {}) => {
+  const ky = useTenantKy({ tenant });
   const [namespace] = useNamespace({ key: 'srsRecord' });
 
   return useQuery(
     {
-      queryKey: [namespace, recordId, tenantId],
+      queryKey: [namespace, recordId, tenant],
       queryFn: () => ky.get(`source-storage/records/${recordId}`).json(),
       enabled: !!recordId,
     }

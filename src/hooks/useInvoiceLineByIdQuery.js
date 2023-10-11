@@ -4,13 +4,13 @@ import { useNamespace } from '@folio/stripes/core';
 
 import { useTenantKy } from './useTenantKy';
 
-export const useInvoiceLineByIdQuery = (invoiceLineId = null, { tenantId } = {}) => {
-  const ky = useTenantKy({ tenantId });
+export const useInvoiceLineByIdQuery = (invoiceLineId = null, { tenant } = {}) => {
+  const ky = useTenantKy({ tenant });
   const [namespace] = useNamespace({ key: 'invoiceLineById' });
 
   return useQuery(
     {
-      queryKey: [namespace, invoiceLineId, tenantId],
+      queryKey: [namespace, invoiceLineId, tenant],
       queryFn: () => ky.get(`invoice-storage/invoice-lines/${invoiceLineId}`).json(),
       enabled: !!invoiceLineId,
     }

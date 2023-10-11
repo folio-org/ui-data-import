@@ -26,11 +26,11 @@ describe('useTenantKy', () => {
   });
 
   it('should set provided okapi tenant header and return \'ky\' client', async () => {
-    const tenantId = 'college';
-    const { result } = renderHook(() => useTenantKy({ tenantId }));
+    const tenant = 'college';
+    const { result } = renderHook(() => useTenantKy({ tenant }));
 
     expect(result.current).toBe(kyMock);
-    expect(reqMock.headers.set).toHaveBeenCalledWith(OKAPI_TENANT_HEADER, tenantId);
+    expect(reqMock.headers.set).toHaveBeenCalledWith(OKAPI_TENANT_HEADER, tenant);
   });
 
   it('should use current tenant in the headers if there is no provided tenant ID', async () => {
