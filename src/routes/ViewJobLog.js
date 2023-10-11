@@ -58,7 +58,7 @@ export const ViewJobLog = () => {
     isLoading: isJobLogLoading,
     data: jobLogData = {},
   } = useJobLogRecordsQuery(logId, instanceLineIdParam || recordId);
-  const { data: srsRecordData } = useSRSRecordQuery(recordId, { tenant: jobLogData?.sourceRecordTenantId});
+  const { data: srsRecordData } = useSRSRecordQuery(recordId, { tenant: jobLogData?.sourceRecordTenantId });
   const { data: instancesData } = useInventoryInstancesByIdQuery(instancesIds, { tenant: jobLogData?.relatedInstanceInfo?.tenantId });
   const { data: holdingsData } = useInventoryHoldingsByIdQuery(holdingsIds, { tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
   const { data: itemsData } = useInventoryItemsByIdQuery(itemsIds, { tenant: jobLogData?.relatedItemInfo?.tenantId });

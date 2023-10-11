@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import { useNamespace } from '@folio/stripes/core';
 
-import { useTenantKy } from '../hooks';
+import { useTenantKy } from './useTenantKy';
 
 export const useSRSRecordQuery = (recordId, { tenant } = {}) => {
   const ky = useTenantKy({ tenant });
