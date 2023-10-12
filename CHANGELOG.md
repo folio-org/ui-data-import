@@ -35,6 +35,7 @@
 * leverage jest-config-stripes for all jest and testing-library packages (UIDATIMP-1508)
 * *BREAKING* bump `react-intl` to `v6.4.4` (UIDATIMP-1520)
 * Bump the major versions of @folio/plugin-find-organization optionalDependencies (UIDATIMP-1532)
+* Fetch Job summary data with for a particular tenant id (UIDATIMP-1540)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)
