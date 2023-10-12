@@ -5,4 +5,5 @@ export const UploadingJobsContext = createContext({
   uploadDefinition: {},
   updateUploadDefinition: noop,
   deleteUploadDefinition: noop,
+  uploadConfiguration: {},
 });

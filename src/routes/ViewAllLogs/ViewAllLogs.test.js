@@ -18,7 +18,7 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import ViewAllLogs, { ViewAllLogsManifest } from './ViewAllLogs';
+import ViewAllLogs, { ViewAllLogsManifest, getLogsQuery, getLogsPath } from './ViewAllLogs';
 
 import { SORT_MAP } from './constants';
 import { NO_FILE_NAME } from '../../utils';
@@ -45,6 +45,9 @@ const mutator = buildMutator({
     GET: noop,
   },
   jobProfiles: {
+    GET: noop,
+  },
+  splitStatus: {
     GET: noop,
   }
 });
@@ -128,6 +131,10 @@ const getResources = query => ({
     },
     totalRecords: 100,
   },
+  splitStatus: {
+    hasLoaded: true,
+    records: [{ splitStatus: true }]
+  }
 });
 
 jest.mock('@folio/stripes/components', () => ({
@@ -158,6 +165,16 @@ jest.mock('@folio/stripes/components', () => ({
 const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
 
 const stripes = buildStripes();
+const mockFunctionalManifestProps = (loaded, splitStatus) => (
+  {
+    resources: {
+      splitStatus: {
+        hasLoaded: loaded,
+        records: [{ splitStatus }]
+      }
+    }
+  }
+);
 
 const renderViewAllLogs = query => {
   const component = (
@@ -559,7 +576,13 @@ describe('ViewAllLogs component', () => {
           },
         };
 
-        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        const query = ViewAllLogsManifest.records.params(
+          null,
+          null,
+          queryData,
+          null,
+          mockFunctionalManifestProps(true, true)
+        );
         expect(query.hrId).toEqual(expectedQuery);
       });
     });
@@ -579,7 +602,13 @@ describe('ViewAllLogs component', () => {
           },
         };
 
-        const query = ViewAllLogsManifest.records.params(null, null, queryData);
+        const query = ViewAllLogsManifest.records.params(
+          null,
+          null,
+          queryData,
+          null,
+          mockFunctionalManifestProps(true, true)
+        );
         expect(query).toMatchObject(expected);
       });
     });
@@ -594,7 +623,13 @@ describe('ViewAllLogs component', () => {
         },
       };
 
-      const query = ViewAllLogsManifest.records.params(null, null, queryData);
+      const query = ViewAllLogsManifest.records.params(
+        null,
+        null,
+        queryData,
+        null,
+        mockFunctionalManifestProps(true, true)
+      );
       expect(expectedSortBy).toEqual(query.sortBy);
     });
 
@@ -606,8 +641,38 @@ describe('ViewAllLogs component', () => {
         },
       };
 
-      const query = ViewAllLogsManifest.records.params(null, null, queryData);
+      const query = ViewAllLogsManifest.records.params(
+        null,
+        null,
+        queryData,
+        null,
+        mockFunctionalManifestProps(true, true)
+      );
       expect(expectedSortBy).toEqual(query.sortBy);
     });
+  });
+});
+
+describe('ViewAllLogs - getLogsPath function', () => {
+  it('returns expected path if multipart functionality is available', () => {
+    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true } } })).toBeDefined();
+  });
+
+  it('returns undefined path if splitStatus has not responded yet', () => {
+    expect(getLogsPath(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: false } } })).not.toBeDefined();
+  });
+});
+
+describe('ViewAllLogs - getLogsQuery function', () => {
+  it('returns expected query if multipart functionality is available', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{ splitStatus: true }] } } })).toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
+  });
+
+  it('returns expected query if multipart functionality is not available', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: { splitStatus: { hasLoaded: true, records: [{ splitStatus: false }] } } })).not.toHaveProperty('subordinationTypeNotAny', ['COMPOSITE_PARENT']);
+  });
+
+  it('returns empty query if multipart check has not responded yet', () => {
+    expect(getLogsQuery(null, null, { query: {} }, null, { resources: {} })).toEqual({});
   });
 });

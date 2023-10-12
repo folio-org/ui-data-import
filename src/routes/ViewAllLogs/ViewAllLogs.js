@@ -32,7 +32,7 @@ import { listTemplate } from '@folio/stripes-data-transfer-components';
 
 import ViewAllLogsFilters from './ViewAllLogsFilters';
 import { searchableIndexes } from './ViewAllLogsSearchConfig';
-import { ActionMenu } from '../../components';
+import { ActionMenu, UploadingJobsContext } from '../../components';
 import packageInfo from '../../../package';
 import {
   checkboxListShape,
@@ -60,6 +60,7 @@ import {
   getFilters,
   getSort
 } from './ViewAllLogsUtils';
+import { requestConfiguration } from '../../utils/multipartUpload';
 
 const {
   COMMITTED,
@@ -81,6 +82,44 @@ const INITIAL_QUERY = {
   qindex: '',
 };
 
+export const getLogsPath = (_q, _p, _r, _l, props) => {
+  return props.resources.splitStatus?.hasLoaded ? 'metadata-provider/jobExecutions' : undefined;
+};
+
+export const getLogsQuery = (_q, _p, resourceData, _l, props) => {
+  const {
+    qindex,
+    filters,
+    query,
+    sort,
+  } = resourceData.query || {};
+
+  const { resources : { splitStatus } } = props;
+
+  const queryValue = getQuery(query, qindex);
+  const filtersValues = getFilters(filters);
+  const sortValue = getSort(sort);
+
+  if (!filtersValues[FILTERS.ERRORS]) {
+    filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
+  }
+
+  let adjustedQueryValue = { ...queryValue };
+  if (splitStatus?.hasLoaded) {
+    if (splitStatus.records[0].splitStatus) {
+      adjustedQueryValue = { ...adjustedQueryValue, subordinationTypeNotAny: ['COMPOSITE_PARENT'] };
+    }
+  } else {
+    return {};
+  }
+
+  return {
+    ...adjustedQueryValue,
+    ...filtersValues,
+    ...sortValue,
+  };
+};
+
 export const ViewAllLogsManifest = Object.freeze({
   initializedFilterConfig: { initialValue: false },
   query: {
@@ -95,29 +134,8 @@ export const ViewAllLogsManifest = Object.freeze({
     resultOffset: '%{resultOffset}',
     records: 'jobExecutions',
     recordsRequired: '%{resultCount}',
-    path: 'metadata-provider/jobExecutions',
-    params: (queryParams, pathComponents, resourceData) => {
-      const {
-        qindex,
-        filters,
-        query,
-        sort,
-      } = resourceData.query || {};
-
-      const queryValue = getQuery(query, qindex);
-      const filtersValues = getFilters(filters);
-      const sortValue = getSort(sort);
-
-      if (!filtersValues[FILTERS.ERRORS]) {
-        filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
-      }
-
-      return {
-        ...queryValue,
-        ...filtersValues,
-        ...sortValue,
-      };
-    },
+    path: getLogsPath,
+    params: getLogsQuery,
     perRequest: RESULT_COUNT_INCREMENT,
     throwErrors: false,
     shouldRefresh: () => true,
@@ -139,6 +157,11 @@ export const ViewAllLogsManifest = Object.freeze({
     accumulate: true,
     perRequest: JOB_PROFILES_LIMIT_PER_REQUEST,
   },
+  splitStatus: {
+    type: 'okapi',
+    path: requestConfiguration,
+    throwErrors: false,
+  }
 });
 
 @withCheckboxList({ pageKey: PAGE_KEYS.VIEW_ALL })
@@ -164,6 +187,8 @@ class ViewAllLogs extends Component {
     actionMenuItems: PropTypes.arrayOf(PropTypes.string),
     refreshRemote: PropTypes.func,
   };
+
+  static contextType = UploadingJobsContext;
 
   static defaultProps = {
     browseOnly: false,
@@ -192,6 +217,8 @@ class ViewAllLogs extends Component {
     this.handleFilterChange = handleFilterChange.bind(this);
     this.changeSearchIndex = changeSearchIndex.bind(this);
     this.renderActionMenu = this.renderActionMenu.bind(this);
+    this.getVisibleColumns = this.getVisibleColumns.bind(this);
+    this.setLogsList = this.setLogsList.bind(this);
     this.setLogsList();
   }
 
@@ -368,6 +395,17 @@ class ViewAllLogs extends Component {
     return selectedRecords.size === 0;
   }
 
+  getVisibleColumns = () => {
+    const { stripes } = this.props;
+    const { uploadConfiguration } = this.context;
+    const hasDeletePermission = stripes.hasPerm(permissions.DELETE_LOGS);
+    const baseColumns = [...DEFAULT_JOB_LOG_COLUMNS];
+    if (uploadConfiguration?.canUseObjectStorage) {
+      baseColumns.splice(3, 0, 'jobParts');
+    }
+    return hasDeletePermission ? ['selected', ...baseColumns] : baseColumns;
+  };
+
   getResultsFormatter() {
     const {
       intl: {
@@ -394,6 +432,7 @@ class ViewAllLogs extends Component {
       fileName: record => fileNameCellFormatter(record, location),
       status: statusCellFormatter(formatMessage),
       jobProfileName: jobProfileNameCellFormatter,
+      jobParts: record => formatMessage({ id: 'ui-data-import.logViewer.partOfTotal' }, { number: record.jobPartNumber, total: record.totalJobParts }),
     };
   }
 
@@ -443,7 +482,6 @@ class ViewAllLogs extends Component {
       checkboxDisabled: isLogsDeletionInProgress,
     });
     const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
-    const hasDeletePermission = stripes.hasPerm(DELETE_LOGS);
 
     return (
       <div data-test-logs-list>
@@ -453,10 +491,7 @@ class ViewAllLogs extends Component {
           baseRoute={packageInfo.stripes.route}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
-          visibleColumns={hasDeletePermission
-            ? ['selected', ...DEFAULT_JOB_LOG_COLUMNS]
-            : DEFAULT_JOB_LOG_COLUMNS
-          }
+          visibleColumns={this.getVisibleColumns()}
           columnMapping={columnMapping}
           resultsFormatter={resultsFormatter}
           resultRowFormatter={DefaultMCLRowFormatter}
@@ -498,7 +533,7 @@ class ViewAllLogs extends Component {
           resultsOnMarkPosition={this.onMarkPosition}
           resultsOnResetMarkedPosition={this.resetMarkedPosition}
           resultsCachedPosition={itemToView}
-          nonInteractiveHeaders={['selected']}
+          nonInteractiveHeaders={['selected', 'jobParts']}
         />
         <ConfirmationModal
           id="delete-selected-logs-modal"

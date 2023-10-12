@@ -2,9 +2,10 @@ import React, {
   useState,
   useRef,
   useContext,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -19,6 +20,8 @@ import {
   Callout,
   PaneHeader,
   AccordionStatus,
+  Icon,
+  SRStatus
 } from '@folio/stripes/components';
 import {
   withTags,
@@ -67,12 +70,24 @@ import {
   STATUS_CODES,
 } from '../../../utils';
 
+import RunJobModal from './RunJobModal';
+
 import sharedCss from '../../../shared.css';
 
 const {
   COMMITTED,
   ERROR,
 } = FILE_STATUSES;
+
+const jobPartsCellFormatter = record => (
+  <FormattedMessage
+    id="ui-data-import.logViewer.partOfTotal"
+    values={{
+      number: record.jobPartNumber,
+      total: record.totalJobParts
+    }}
+  />
+);
 
 const ViewJobProfileComponent = props => {
   const {
@@ -93,9 +108,27 @@ const ViewJobProfileComponent = props => {
   const [showRunConfirmation, setShowRunConfirmation] = useState(false);
   const [isDeletionInProgress, setDeletionInProgress] = useState(false);
   const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(false);
+  const [processingRequest, setProcessingRequest] = useState(false);
 
   const calloutRef = useRef(null);
-  const { uploadDefinition } = useContext(UploadingJobsContext);
+  const sRStatusRef = useRef(null);
+  const { uploadDefinition, uploadConfiguration } = useContext(UploadingJobsContext);
+  const { formatMessage } = useIntl();
+  const objectStorageConfiguration = uploadConfiguration?.canUseObjectStorage;
+  const visibleColumns = useMemo(() => {
+    const defaultVisibleColumns = [
+      'fileName',
+      'hrId',
+      'completedDate',
+      'runBy',
+    ];
+    if (objectStorageConfiguration) {
+      const columns = [...defaultVisibleColumns];
+      columns.splice(2, 0, 'jobParts');
+      return columns;
+    }
+    return defaultVisibleColumns;
+  }, [objectStorageConfiguration]);
 
   const jobProfileData = () => {
     const jobProfile = resources.jobProfileView || {};
@@ -175,7 +208,8 @@ const ViewJobProfileComponent = props => {
 
   const handleRun = async record => {
     setIsConfirmButtonDisabled(true);
-
+    setProcessingRequest(true);
+    sRStatusRef.current?.sendMessage(formatMessage({ id: 'ui-data-import.processing' }));
     await handleLoadRecords(record);
   };
 
@@ -286,6 +320,7 @@ const ViewJobProfileComponent = props => {
   const jobsUsingThisProfileFormatter = {
     ...listTemplate({}),
     fileName: record => fileNameCellFormatter(record, location),
+    jobParts: jobPartsCellFormatter
   };
   const tagsEntityLink = `data-import-profiles/jobProfiles/${jobProfileRecord.id}`;
   const isSettingsEnabled = stripes.hasPerm(permissions.SETTINGS_MANAGE) || stripes.hasPerm(permissions.SETTINGS_VIEW_ONLY);
@@ -313,6 +348,7 @@ const ViewJobProfileComponent = props => {
         >
           {jobProfileRecord.name}
         </Headline>
+        <SRStatus ref={sRStatusRef} />
         <AccordionStatus ref={accordionStatusRef}>
           <AccordionSet>
             <Accordion label={<FormattedMessage id="ui-data-import.summary" />}>
@@ -374,14 +410,12 @@ const ViewJobProfileComponent = props => {
                     hrId: <FormattedMessage id="ui-data-import.settings.jobProfiles.jobID" />,
                     completedDate: <FormattedMessage id="ui-data-import.jobCompletedDate" />,
                     runBy: <FormattedMessage id="ui-data-import.runBy" />,
+                    jobParts: <FormattedMessage id="ui-data-import.jobParts" />
                   }}
-                  visibleColumns={[
-                    'fileName',
-                    'hrId',
-                    'completedDate',
-                    'runBy',
-                  ]}
+                  visibleColumns={visibleColumns}
                   formatter={jobsUsingThisProfileFormatter}
+                  nonInteractiveHeaders={['jobParts']}
+                  width="100%"
                 />
               ) : (
                 <Preloader
@@ -412,20 +446,35 @@ const ViewJobProfileComponent = props => {
           onConfirm={() => handleDelete(jobProfileRecord)}
           onCancel={hideDeleteConfirmation}
         />
-        <ConfirmationModal
+        <RunJobModal
           id="run-job-profile-modal"
           open={showRunConfirmation}
           heading={<FormattedMessage id="ui-data-import.modal.jobProfile.run.header" />}
           message={(
-            <FormattedMessage
-              id="ui-data-import.modal.jobProfile.run.message"
-              values={{ name: jobProfileRecord.name }}
-            />
+            <>
+              <FormattedMessage
+                id="ui-data-import.modal.jobProfile.run.message"
+                values={{ name: jobProfileRecord.name }}
+              />
+              { uploadConfiguration?.canUseObjectStorage && (
+                <>
+                  &nbsp;
+                  <FormattedMessage
+                    id="ui-data-import.modal.jobProfile.run.largeFileSplitting"
+                  />
+                </>
+              )}
+            </>
           )}
-          confirmLabel={<FormattedMessage id="ui-data-import.run" />}
+          confirmLabel={processingRequest ? (
+            <Icon icon="spinner-ellipsis">
+              <span className="sr-only"><FormattedMessage id="ui-data-import.processing" /></span>
+            </Icon>) :
+            <FormattedMessage id="ui-data-import.run" />}
           onCancel={() => setShowRunConfirmation(false)}
           onConfirm={() => handleRun(jobProfileRecord)}
           isConfirmButtonDisabled={isConfirmButtonDisabled}
+          isCancelButtonDisabled={processingRequest}
         />
         <Callout ref={calloutRef} />
       </Pane>

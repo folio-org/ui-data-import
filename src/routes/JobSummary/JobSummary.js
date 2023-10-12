@@ -1,6 +1,7 @@
 import React, {
   useEffect,
-  useRef
+  useRef,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -26,6 +27,8 @@ import {
   Paneset,
   Row,
   Col,
+  Layout,
+  TextLink,
 } from '@folio/stripes/components';
 import css from '@folio/stripes-data-transfer-components/lib/SearchAndSortPane/SearchAndSortPane.css';
 import sharedCss from '../../shared.css';
@@ -33,6 +36,7 @@ import sharedCss from '../../shared.css';
 import {
   SummaryTable,
   RecordsTable,
+  SourceDownloadLink,
 } from './components';
 
 import {
@@ -40,7 +44,10 @@ import {
   storage,
   PREVIOUS_LOCATIONS_KEY,
   PER_REQUEST_LIMIT,
+  trimLeadNumbers,
 } from '../../utils';
+
+import { UploadingJobsContext } from '../../components';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -87,7 +94,7 @@ const JobSummaryComponent = props => {
   const isErrorsOnly = !!query.errorsOnly;
 
   const { id } = useParams();
-
+  const { uploadConfiguration } = useContext(UploadingJobsContext);
   // persist previous jobExecutionsId
   const previousJobExecutionsIdRef = useRef(jobExecutionsId);
 
@@ -137,13 +144,12 @@ const JobSummaryComponent = props => {
   };
 
   const jobProfileLink = (
-    <Link to={{
+    <TextLink to={{
       pathname: `/settings/data-import/job-profiles/view/${jobProfileId}`,
       search: '?sort=name',
-    }}
-    >
+    }}>
       {jobProfileName}
-    </Link>
+    </TextLink>
   );
 
   const renderHeader = renderProps => {
@@ -153,7 +159,7 @@ const JobSummaryComponent = props => {
         iconKey={isEdifactType ? FOLIO_RECORD_TYPES.INVOICE.iconKey : 'app'}
         app="data-import"
       >
-        <>{jobExecutionsRecords[0]?.fileName}</>
+        <>{trimLeadNumbers(jobExecutionsRecords[0]?.fileName)}</>
       </SettingsLabel>
     );
     const firstMenu = (
@@ -196,11 +202,24 @@ const JobSummaryComponent = props => {
         <div className={classNames(css.paneBody, sharedCss.sideMargins)}>
           <Row style={{ padding: '14px' }} center="xs">
             <Col sm={6}>
-              <FormattedMessage
-                id="ui-data-import.jobProfileNameLink"
-                values={{ jobProfileLink }}
-              />
+              <Layout className="padding-all-gutter flex centerContent">
+                <div>
+                  <strong>
+                    <FormattedMessage id="ui-data-import.jobProfileName" />
+                    :&nbsp;
+                  </strong>
+                  { jobProfileLink }
+                </div>
+              </Layout>
             </Col>
+            {uploadConfiguration?.canUseObjectStorage && (
+              <Col sm={6}>
+                <SourceDownloadLink
+                  executionId={id}
+                  fileName={jobExecutionsRecords[0]?.fileName}
+                />
+              </Col>
+            )}
           </Row>
           <hr />
           {!isErrorsOnly && (
