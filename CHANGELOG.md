@@ -42,6 +42,7 @@
 * Render details of composite jobs in on consolidated running job cards (UIDATIMP-1466)
 * Display a link to download a slice from the automated splitting process (UIDATIMP-1510)
 * Cancel upload/running a split job (UIDATIMP-1469)
+* Fetch Job summary data with for a particular tenant id (UIDATIMP-1540)
 
 ### Bugs fixed:
 * Fix all the failed accessibility tests in ui-data-import (UIDATIMP-1393)

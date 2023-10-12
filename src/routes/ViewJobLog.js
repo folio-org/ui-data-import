@@ -58,16 +58,16 @@ export const ViewJobLog = () => {
     isLoading: isJobLogLoading,
     data: jobLogData = {},
   } = useJobLogRecordsQuery(logId, instanceLineIdParam || recordId);
-  const { data: srsRecordData } = useSRSRecordQuery(recordId);
-  const { data: instancesData } = useInventoryInstancesByIdQuery(instancesIds);
-  const { data: holdingsData } = useInventoryHoldingsByIdQuery(holdingsIds);
-  const { data: itemsData } = useInventoryItemsByIdQuery(itemsIds);
-  const { data: orderData } = useOrderByIdQuery(orderId);
-  const { data: poLinesData } = usePOLinesByIdQuery(poLinesIds);
-  const { data: invoicesData } = useInvoicesByIdQuery(invoicesIds);
-  const { data: invoiceLineData } = useInvoiceLineByIdQuery(invoiceLineId);
-  const { data: authoritiesData } = useAuthoritiesByIdQuery(authoritiesIds);
-  const { data: locationsData = [] } = useLocationsQuery();
+  const { data: srsRecordData } = useSRSRecordQuery(recordId, { tenant: jobLogData?.sourceRecordTenantId });
+  const { data: instancesData } = useInventoryInstancesByIdQuery(instancesIds, { tenant: jobLogData?.relatedInstanceInfo?.tenantId });
+  const { data: holdingsData } = useInventoryHoldingsByIdQuery(holdingsIds, { tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
+  const { data: itemsData } = useInventoryItemsByIdQuery(itemsIds, { tenant: jobLogData?.relatedItemInfo?.tenantId });
+  const { data: orderData } = useOrderByIdQuery(orderId, { tenant: jobLogData?.relatedPoLineInfo?.tenantId });
+  const { data: poLinesData } = usePOLinesByIdQuery(poLinesIds, { tenant: jobLogData?.relatedPoLineInfo?.tenantId });
+  const { data: invoicesData } = useInvoicesByIdQuery(invoicesIds, { tenant: jobLogData?.relatedInvoiceInfo?.tenantId });
+  const { data: invoiceLineData } = useInvoiceLineByIdQuery(invoiceLineId, { tenant: jobLogData?.relatedInvoiceInfo?.tenantId });
+  const { data: authoritiesData } = useAuthoritiesByIdQuery(authoritiesIds, { tenant: jobLogData?.relatedAuthorityInfo?.tenantId });
+  const { data: locationsData = [] } = useLocationsQuery({ tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
 
   useEffect(() => {
     if (!isJobLogLoading && !isJobLogError) {
