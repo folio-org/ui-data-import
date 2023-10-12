@@ -1,5 +1,7 @@
 import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
+import '../../../test/jest/__mock__';
+
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { useTenantKy } from '../useTenantKy';
