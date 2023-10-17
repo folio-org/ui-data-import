@@ -1,6 +1,9 @@
 # Change history for ui-data-import
 
-## **6.0.12** (IN PROGRESS)
+## **6.0.13** (IN PROGRESS)
+
+## [6.0.12](https://github.com/folio-org/ui-data-import/tree/v6.0.12) (2023-10-17)
+* Resolve issue with "Invalid Date" appearing on completed upload cards (UIDATIMP-1545)
 
 ## [6.0.11](https://github.com/folio-org/ui-data-import/tree/v6.0.11) (2023-10-10)
 * Restore missing permissions from DITF merge
@@ -19,7 +22,6 @@
 * Render details of composite jobs in on consolidated running job cards (UIDATIMP-1466)
 * Display a link to download a slice from the automated splitting process (UIDATIMP-1510)
 * Cancel upload/running a split job (UIDATIMP-1469)
-* Resolve issue with "Invalid Date" appearing on completed upload cards (UIDATIMP-1545)
 
 ## [6.0.9](https://github.com/folio-org/ui-data-import/tree/v6.0.9) (2023-07-31)
 
