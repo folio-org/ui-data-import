@@ -19,6 +19,7 @@
 * Render details of composite jobs in on consolidated running job cards (UIDATIMP-1466)
 * Display a link to download a slice from the automated splitting process (UIDATIMP-1510)
 * Cancel upload/running a split job (UIDATIMP-1469)
+* Resolve issue with "Invalid Date" appearing on completed upload cards (UIDATIMP-1545)
 
 ## [6.0.9](https://github.com/folio-org/ui-data-import/tree/v6.0.9) (2023-07-31)
 
