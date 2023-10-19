@@ -190,14 +190,14 @@ describe('SearchAndSort component', () => {
     historyPushMock.mockClear();
   });
 
-  it('should be rendered with no axe errors', () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderSearchAndSort(searchAndSortProps({
       parentResources: resources(1, false),
       isFullScreen: true,
       route: `${pathname}/create`,
     }));
 
-    runAxeTest({ rootNode: container });
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', () => {
