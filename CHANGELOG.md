@@ -1,6 +1,15 @@
 # Change history for ui-data-import
 
-## **7.0.0** (in progress)
+## **7.0.1** (in progress)
+
+### Features added:
+* Adjust the record options in Central tenant action profiles (UIDATIMP-1546)
+
+### Bugs fixed:
+* Align stripes dependencies (UIDATIMP-1550)
+* Remove 'Something went wrong' message after clicking on the link in holdings and item column (UIDATIMP-1551)
+
+## [7.0.0](https://github.com/folio-org/ui-data-import/tree/v7.0.0) (2023-10-13)
 
 ### Features added:
 * Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
@@ -51,6 +60,7 @@
 * JSON screen: Record type tabs do not fit into header box size (UIDATIMP-1442)
 * Order field mapping profile: Fix Acquisitions units field label (UIDATIMP-1444)
 * Log page "Authority" tab of imported Marc Authority record is not displaying record's details (UIDATIMP-1458)
+* Fix potential "Invalid Date" on completed file upload cards (UIDATIMP-1544)
 
 ## [6.0.8](https://github.com/folio-org/ui-data-import/tree/v6.0.8) (2023-04-04)
 

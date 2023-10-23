@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useStripes } from '@folio/stripes/core';
+
 import {
   getRecordActionStatusLabel,
   getHotlinkCellFormatter,
@@ -12,6 +14,8 @@ export const ItemCell = ({
   sortedItemData,
   instanceId,
 }) => {
+  const { okapi: { tenant } } = useStripes();
+
   const itemsInfoCell = sortedItemData?.map((sortedItems, itemIndex) => {
     const groupOfItems = sortedItems?.map((item, index) => {
       const entityLabel = getRecordActionStatusLabel(item.actionStatus);
@@ -28,7 +32,7 @@ export const ItemCell = ({
 
       return (
         <span key={index}>
-          {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item')}
+          {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item', tenant)}
           {!isDiscarded && hrId ? ` (${hrId})` : ''}
           <br />
         </span>
