@@ -14,7 +14,7 @@ export const ItemCell = ({
   sortedItemData,
   instanceId,
 }) => {
-  const stripes = useStripes();
+  const { okapi: { tenant } } = useStripes();
 
   const itemsInfoCell = sortedItemData?.map((sortedItems, itemIndex) => {
     const groupOfItems = sortedItems?.map((item, index) => {
@@ -32,7 +32,7 @@ export const ItemCell = ({
 
       return (
         <span key={index}>
-          {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item', stripes)}
+          {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'item', tenant)}
           {!isDiscarded && hrId ? ` (${hrId})` : ''}
           <br />
         </span>

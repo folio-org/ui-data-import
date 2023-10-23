@@ -17,7 +17,7 @@ export const HoldingsCell = ({
   itemInfo,
   locations,
 }) => {
-  const stripes = useStripes();
+  const { okapi: { tenant } } = useStripes();
 
   const holdingsInfoCell = holdingsInfo?.map((holdings, index) => {
     const entityLabel = getRecordActionStatusLabel(holdings.actionStatus);
@@ -38,7 +38,7 @@ export const HoldingsCell = ({
 
     return (
       <div key={index} style={{ paddingBottom: '7px' }}>
-        {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings', stripes)}
+        {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings', tenant)}
         {!isDiscarded && locationCode ? ` (${locationCode})` : ''}
         {spacing}
       </div>
