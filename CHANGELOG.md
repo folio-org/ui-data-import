@@ -5,7 +5,7 @@
 ### Bugs fixed:
 * Align stripes dependencies (UIDATIMP-1550)
 
-## **7.0.0** (in progress)
+## [7.0.0](https://github.com/folio-org/ui-data-import/tree/v7.0.0) (2023-10-13)
 
 ### Features added:
 * Landing page: Create hotlink from job profile name in log to the job profile details (UIDATIMP-1355)
