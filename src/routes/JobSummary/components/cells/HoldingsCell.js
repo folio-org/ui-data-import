@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useStripes } from '@folio/stripes/core';
+
 import {
   getRecordActionStatusLabel,
   getHotlinkCellFormatter,
@@ -15,6 +17,8 @@ export const HoldingsCell = ({
   itemInfo,
   locations,
 }) => {
+  const stripes = useStripes();
+
   const holdingsInfoCell = holdingsInfo?.map((holdings, index) => {
     const entityLabel = getRecordActionStatusLabel(holdings.actionStatus);
     const holdingsId = holdings.id;
@@ -34,7 +38,7 @@ export const HoldingsCell = ({
 
     return (
       <div key={index} style={{ paddingBottom: '7px' }}>
-        {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings')}
+        {getHotlinkCellFormatter(isHotlink, entityLabel, path, 'holdings', stripes)}
         {!isDiscarded && locationCode ? ` (${locationCode})` : ''}
         {spacing}
       </div>
