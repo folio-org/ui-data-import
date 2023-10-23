@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **7.0.1** (in progress)
+
+### Bugs fixed:
+* Align stripes dependencies (UIDATIMP-1550)
+
 ## **7.0.0** (in progress)
 
 ### Features added:
