@@ -22,16 +22,13 @@ export const BaseLineCell = ({ children }) => (
   </div>
 );
 
-export const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity, stripes) => {
+export const getHotlinkCellFormatter = (isHotlink, entityLabel, path, entity) => {
   if (isHotlink) {
     return (
       <BaseLineCell>
         <TextLink
           data-test-entity-name={entity}
-          to={{
-            pathname: path,
-            state: { tenantTo: stripes?.okapi?.tenant }
-          }}
+          to={path}
         >
           {entityLabel}
         </TextLink>
