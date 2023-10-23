@@ -16,6 +16,10 @@ import {
 } from 'lodash';
 
 import {
+  useStripes,
+  checkIfUserInCentralTenant,
+} from '@folio/stripes/core';
+import {
   Headline,
   TextArea,
   TextField,
@@ -67,6 +71,7 @@ export const ActionProfilesFormComponent = ({
   const [action, setAction] = useState(profile.action || '');
   const [folioRecord, setFolioRecord] = useState(profile.folioRecord || '');
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
+  const stripes = useStripes();
 
   const addedRelations = form.getState().values.addedRelations || [];
   const deletedRelations = form.getState().values.deletedRelations || [];
@@ -121,24 +126,33 @@ export const ActionProfilesFormComponent = ({
     }));
 
   const getFilteredFolioRecordTypes = () => {
+    const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+    const RECORD_TYPES = isUserInCentralTenant
+      ? pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
+        ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INSTANCE.type,
+        ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
+        ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
+      ])
+      : ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES;
+
     switch (action) {
       case ACTION_TYPES_SELECT.MODIFY.type: {
-        return pick(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type);
+        return pick(RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type);
       }
       case ACTION_TYPES_SELECT.UPDATE.type: {
-        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
+        return omit(RECORD_TYPES, [
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.ORDER.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.INVOICE.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
         ]);
       }
       case ACTION_TYPES_SELECT.CREATE.type:
-        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, [
+        return omit(RECORD_TYPES, [
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
         ]);
       default: {
-        return omit(ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type);
+        return omit(RECORD_TYPES, ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type);
       }
     }
   };
