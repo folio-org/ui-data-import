@@ -36,5 +36,6 @@ export const buildStripes = (otherProperties = {}) => ({
     },
   },
   withOkapi: true,
+  checkIfUserInCentralTenant: jest.fn(() => false),
   ...otherProperties,
 });
