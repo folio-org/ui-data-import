@@ -167,7 +167,6 @@ describe('ProfileTree component', () => {
     delete global.fetch;
   });
 
-  // long timeout because this often fails in CI
   it('should be rendered with no axe errors', async () => {
     const { container } = renderProfileTree(profileTreeProps({
       allowUnlink: false,
@@ -175,7 +174,7 @@ describe('ProfileTree component', () => {
     }));
 
     await runAxeTest({ rootNode: container });
-  }, 10000);
+  });
 
   describe('when clicking on delete button', () => {
     it('modal window shod be closed', async () => {

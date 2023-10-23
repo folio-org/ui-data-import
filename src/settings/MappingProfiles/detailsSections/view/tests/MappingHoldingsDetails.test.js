@@ -25,7 +25,7 @@ describe('MappingHoldingsDetails view component', () => {
     const { container } = renderMappingHoldingsDetails();
 
     await runAxeTest({ rootNode: container });
-  }, 10000);
+  });
 
   it('should have correct sections', () => {
     const { getByRole } = renderMappingHoldingsDetails();
