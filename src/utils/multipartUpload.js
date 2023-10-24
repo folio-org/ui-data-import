@@ -167,7 +167,7 @@ export class MultipartUploader {
     }
     if (this.abortSignal[fileKey]) return;
     await finishUpload(eTags, _uploadKey, _uploadId, this.uploadDefinitionId, file.id, this.ky);
-    const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toLocaleDateString(), name: _uploadKey }] };
+    const finishResponse = { fileDefinitions:[{ uiKey: fileKey, uploadedDate: new Date().toISOString(), name: _uploadKey }] };
     this.successHandler(finishResponse, fileKey, true);
   };
 
