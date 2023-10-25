@@ -13,9 +13,16 @@ import {
   Field,
   change,
 } from 'redux-form';
-import { omit } from 'lodash';
+import {
+  omit,
+  pick,
+} from 'lodash';
 
 import stripesForm from '@folio/stripes/form';
+import {
+  useStripes,
+  checkIfUserInCentralTenant,
+} from '@folio/stripes/core';
 import {
   Headline,
   AccordionSet,
@@ -81,7 +88,7 @@ import styles from './MappingProfiles.css';
 
 export const formName = 'mappingProfilesForm';
 
-const MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES = {
+const INITIAL_FOLIO_RECORD_TYPES = {
   ...omit(FOLIO_RECORD_TYPES, [
     FOLIO_RECORD_TYPES.AUTHORITY.type,
     FOLIO_RECORD_TYPES.ITEMS.type,
@@ -128,9 +135,20 @@ export const MappingProfilesFormComponent = ({
   const [deletedRelations, setDeletedRelations] = useState([]);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
+  const stripes = useStripes();
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
   const setMappingDetailsToForm = newMappingDetails => {
     dispatch(change(formName, 'profile.mappingDetails', newMappingDetails));
   };
+
+
+  const MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES = isUserInCentralTenant ?
+    pick(INITIAL_FOLIO_RECORD_TYPES, [
+      FOLIO_RECORD_TYPES.INSTANCE.type,
+      FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
+      FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
+    ]) : INITIAL_FOLIO_RECORD_TYPES;
 
   // set initial mappingDetails
   useEffect(() => {
