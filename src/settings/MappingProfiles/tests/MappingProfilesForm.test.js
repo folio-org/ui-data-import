@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {
   act,
   fireEvent,
+  within,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { noop } from 'lodash';
 
@@ -27,6 +28,8 @@ import {
   LAYER_TYPES,
   PROFILE_TYPES,
 } from '../../../utils';
+
+const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
 
 const mappingDetailsProp = getInitialDetails(FOLIO_RECORD_TYPES.INVOICE.type);
 const metadataMock = {
@@ -134,6 +137,62 @@ describe('MappingProfilesForm component', () => {
     const { getByText } = renderMappingProfilesForm(mappingProfilesFormProps);
 
     expect(getByText(`Edit ${mappingProfileName}`)).toBeInTheDocument();
+  });
+
+  describe('when user is non-consortial tenant', () => {
+    it('should render all folio record types', () => {
+      const { container } = renderMappingProfilesForm(mappingProfilesFormProps);
+
+      const folioRecordTypesContainer = container.querySelector('[data-test-folio-record-type-field="true"]');
+
+      expect(within(folioRecordTypesContainer).getByText('Instance')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Holdings')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Item')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Order')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Invoice')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Bibliographic')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Holdings')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Authority')).toBeInTheDocument();
+    });
+  });
+
+  describe('when user is in central tenant', () => {
+    it('should render "Instance", "MARC Bibliographic" and "MARC Authority" folio record types', () => {
+      spyOnCheckIfUserInCentralTenant.mockReturnValue(true);
+
+      const { container } = renderMappingProfilesForm(mappingProfilesFormProps);
+
+      const folioRecordTypesContainer = container.querySelector('[data-test-folio-record-type-field="true"]');
+
+      expect(within(folioRecordTypesContainer).queryByText('Holdings')).not.toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).queryByText('Item')).not.toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).queryByText('Order')).not.toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).queryByText('Invoice')).not.toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).queryByText('MARC Holdings')).not.toBeInTheDocument();
+
+      expect(within(folioRecordTypesContainer).getByText('Instance')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Bibliographic')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Authority')).toBeInTheDocument();
+    });
+  });
+
+  describe('when user is in member tenant', () => {
+    it('should render all folio record types', () => {
+      spyOnCheckIfUserInCentralTenant.mockReturnValue(false);
+
+      const { container } = renderMappingProfilesForm(mappingProfilesFormProps);
+
+      const folioRecordTypesContainer = container.querySelector('[data-test-folio-record-type-field="true"]');
+
+      expect(within(folioRecordTypesContainer).getByText('Instance')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Holdings')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Item')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Order')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('Invoice')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Bibliographic')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Holdings')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).getByText('MARC Authority')).toBeInTheDocument();
+    });
   });
 
   describe('when "Folio record type" is "Marc Bibliographic"', () => {

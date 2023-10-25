@@ -4,6 +4,7 @@
 
 ### Features added:
 * Adjust the record options in Central tenant action profiles (UIDATIMP-1546)
+* Adjust the record options in Central tenant field mapping profiles (UIDATIMP-1553)
 
 ### Bugs fixed:
 * Align stripes dependencies (UIDATIMP-1550)
