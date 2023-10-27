@@ -10,6 +10,8 @@ import '../../../../test/jest/__mock__';
 
 import { RecordSelect } from './RecordSelect';
 
+const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
+
 const renderRecordSelect = ({ isLocalLTR }) => {
   const component = (
     <RecordSelect
@@ -29,14 +31,48 @@ describe('RecordSelect component', () => {
     await runAxeTest({ rootNode: container });
   });
 
-  it('Records should be rendered', () => {
-    const { getByText } = renderRecordSelect({ isLocalLTR: false });
+  describe('when user is non-consortial tenant', () => {
+    it('should render all record types', () => {
+      const { getByText } = renderRecordSelect({ isLocalLTR: false });
 
-    expect(getByText('Instance')).toBeDefined();
-    expect(getByText('Holdings')).toBeDefined();
-    expect(getByText('Item')).toBeDefined();
-    expect(getByText('MARC Bibliographic')).toBeDefined();
-    expect(getByText('MARC Authority')).toBeDefined();
+      expect(getByText('Instance')).toBeInTheDocument();
+      expect(getByText('Holdings')).toBeInTheDocument();
+      expect(getByText('Item')).toBeInTheDocument();
+      expect(getByText('MARC Bibliographic')).toBeInTheDocument();
+      expect(getByText('MARC Authority')).toBeInTheDocument();
+    });
+  });
+
+  describe('when user is in central tenant', () => {
+    it('should render "Instance", "MARC Bibliographic" and "MARC Authority" record types', () => {
+      spyOnCheckIfUserInCentralTenant.mockReturnValue(true);
+
+      const {
+        getByText,
+        queryByText,
+      } = renderRecordSelect({ isLocalLTR: false });
+
+      expect(queryByText('Holdings')).not.toBeInTheDocument();
+      expect(queryByText('Item')).not.toBeInTheDocument();
+
+      expect(getByText('Instance')).toBeInTheDocument();
+      expect(getByText('MARC Bibliographic')).toBeInTheDocument();
+      expect(getByText('MARC Authority')).toBeInTheDocument();
+    });
+  });
+
+  describe('when user is in member tenant', () => {
+    it('should render all record types', () => {
+      spyOnCheckIfUserInCentralTenant.mockReturnValue(false);
+
+      const { getByText } = renderRecordSelect({ isLocalLTR: false });
+
+      expect(getByText('Instance')).toBeInTheDocument();
+      expect(getByText('Holdings')).toBeInTheDocument();
+      expect(getByText('Item')).toBeInTheDocument();
+      expect(getByText('MARC Bibliographic')).toBeInTheDocument();
+      expect(getByText('MARC Authority')).toBeInTheDocument();
+    });
   });
 
   describe('when current language is RTL', () => {

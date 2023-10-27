@@ -6,7 +6,6 @@ import React, {
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { isEmpty } from 'lodash';
 
@@ -147,7 +146,8 @@ const JobSummaryComponent = props => {
     <TextLink to={{
       pathname: `/settings/data-import/job-profiles/view/${jobProfileId}`,
       search: '?sort=name',
-    }}>
+    }}
+    >
       {jobProfileName}
     </TextLink>
   );

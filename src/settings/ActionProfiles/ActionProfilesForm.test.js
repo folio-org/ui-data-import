@@ -19,6 +19,8 @@ import { ActionProfilesFormComponent } from './ActionProfilesForm';
 
 import { LAYER_TYPES } from '../../utils';
 
+const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
+
 const history = createMemoryHistory();
 
 history.push = jest.fn();
@@ -141,6 +143,53 @@ describe('ActionProfilesForm component', () => {
         fireEvent.change(nameInput, { target: { value: 'testName' } });
 
         expect(nameInput.value).toBe('testName');
+      });
+    });
+
+    describe('when user is non-consortial tenant', () => {
+      it('should render all record types', () => {
+        const { container } = renderActionProfilesForm(actionProfilesFormProps());
+
+        expect(container.querySelector('[value="INSTANCE"]')).toBeDefined();
+        expect(container.querySelector('[value="HOLDINGS"]')).toBeDefined();
+        expect(container.querySelector('[value="ITEM"]')).toBeDefined();
+        expect(container.querySelector('[value="ORDER"]')).toBeDefined();
+        expect(container.querySelector('[value="INVOICE"]')).toBeDefined();
+        expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).toBeDefined();
+        expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDefined();
+      });
+    });
+
+    describe('when user is in central tenant', () => {
+      it('should render "Instance", "MARC Bibliographic" and "MARC Authority" record types', () => {
+        spyOnCheckIfUserInCentralTenant.mockReturnValue(true);
+
+        const { container } = renderActionProfilesForm(actionProfilesFormProps());
+
+        expect(container.querySelector('[value="INSTANCE"]')).toBeDefined();
+        expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).toBeDefined();
+        expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDefined();
+
+        expect(container.querySelector('[value="HOLDINGS"]')).not.toBeInTheDocument();
+        expect(container.querySelector('[value="ITEM"]')).not.toBeInTheDocument();
+        expect(container.querySelector('[value="ORDER"]')).not.toBeInTheDocument();
+        expect(container.querySelector('[value="INVOICE"]')).not.toBeInTheDocument();
+      });
+    });
+
+    describe('when user is in member tenant', () => {
+      it('should render all record types', () => {
+        spyOnCheckIfUserInCentralTenant.mockReturnValue(false);
+
+        const { container } = renderActionProfilesForm(actionProfilesFormProps());
+
+        expect(container.querySelector('[value="INSTANCE"]')).toBeDefined();
+        expect(container.querySelector('[value="HOLDINGS"]')).toBeDefined();
+        expect(container.querySelector('[value="ITEM"]')).toBeDefined();
+        expect(container.querySelector('[value="ORDER"]')).toBeDefined();
+        expect(container.querySelector('[value="INVOICE"]')).toBeDefined();
+        expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).toBeDefined();
+        expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDefined();
       });
     });
 
