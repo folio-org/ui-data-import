@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **7.0.2** (in progress)
+
+### Bugs fixed:
+* The '[number of records] - records found' subtitle is displayed after clicking on the textLink error counter (UIDATIMP-1549)
+
 ## [7.0.1](https://github.com/folio-org/ui-data-import/tree/v7.0.1) (2023-10-27)
 
 ### Features added:

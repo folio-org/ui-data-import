@@ -69,11 +69,11 @@ const jobLogEntriesResources = {
 const jobLogResources = {
   jobLog: { records: [{}] },
 };
-const getResources = (dataType, jobExecutionsId) => ({
+const getResources = ({ dataType, jobExecutionsId, isErrorsOnly = false }) => ({
   ...getJobExecutionsResources(dataType, jobExecutionsId),
   ...jobLogEntriesResources,
   ...jobLogResources,
-  query: { errorsOnly: false },
+  query: { errorsOnly: isErrorsOnly },
   resultCount: 1,
 });
 
@@ -82,12 +82,17 @@ const mutator = {
 };
 const stripesMock = buildStripes();
 
-const renderJobSummary = ({ dataType = 'MARC', resources, context = defaultUploadContext }) => {
+const renderJobSummary = ({
+  dataType = 'MARC',
+  isErrorsOnly = false,
+  resources,
+  context = defaultUploadContext,
+}) => {
   const component = (
     <Router>
       <UploadingJobsContext.Provider value={context}>
         <JobSummary
-          resources={resources || getResources(dataType)}
+          resources={resources || getResources({ dataType, isErrorsOnly })}
           mutator={mutator}
           location={{
             search: '',
@@ -131,6 +136,12 @@ describe('Job summary page', () => {
       const { getByText } = renderJobSummary({});
 
       expect(getByText(/1 record found/i)).toBeDefined();
+    });
+
+    it('should render total count of errors if it is filtered down by errors', () => {
+      const { getByText } = renderJobSummary({ isErrorsOnly: true });
+
+      expect(getByText(/1 error found/i)).toBeDefined();
     });
 
     it('should render hrId', () => {
@@ -186,7 +197,7 @@ describe('Job summary page', () => {
       >
         <Router>
           <JobSummary
-            resources={getResources('MARC', jobExecutionsId)}
+            resources={getResources({ dataType: 'MARC', jobExecutionsId })}
             mutator={mutator}
             location={{
               search: '',
