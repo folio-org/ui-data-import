@@ -154,6 +154,7 @@ const JobSummaryComponent = props => {
 
   const renderHeader = renderProps => {
     const resultCountMessageId = 'stripes-smart-components.searchResultsCountHeader';
+    const errorsCountMessageId = 'ui-data-import.errorsCountHeader';
     const label = (
       <SettingsLabel
         iconKey={isEdifactType ? FOLIO_RECORD_TYPES.INVOICE.iconKey : 'app'}
@@ -179,7 +180,7 @@ const JobSummaryComponent = props => {
               values={{ hrId: jobExecutionsHrId }}
             />
             <FormattedMessage
-              id={resultCountMessageId}
+              id={!isErrorsOnly ? resultCountMessageId : errorsCountMessageId}
               values={{ count: getSource().totalCount() }}
             />
           </>
