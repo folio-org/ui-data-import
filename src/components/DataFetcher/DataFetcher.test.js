@@ -32,6 +32,7 @@ const buildMutator = (resetFn, getFn) => ({
 
 const resources = buildResources({
   resourceName: 'logs',
+  hasLoaded: true,
   records: [{
     jobExecutions: [{
       id: '1',
@@ -57,6 +58,9 @@ const resources = buildResources({
     splitStatus: {
       hasLoaded: true,
       records: [{ splitStatus: true }]
+    },
+    jobs: {
+      hasLoaded: true,
     }
   }
 });
