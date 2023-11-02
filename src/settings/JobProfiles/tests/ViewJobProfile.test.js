@@ -20,7 +20,7 @@ import '../../../../test/jest/__mock__';
 
 import { STATUS_CODES } from '../../../utils';
 
-import { ViewJobProfile } from '../ViewJobProfile';
+import { ViewJobProfile, getAssociatedJobsURL } from '../ViewJobProfile';
 import { UploadingJobsContext } from '../../../components';
 
 const uploadContext = (canUseObjectStorage) => (
@@ -365,6 +365,29 @@ describe('ViewJobProfile component', () => {
       fireEvent.click(cancelButton[0]);
 
       await waitFor(() => expect(queryByText('Are you sure you want to run this job?')).not.toBeInTheDocument());
+    });
+  });
+
+  describe('getAssociatedJobsURL', () => {
+    const splittingTrueResources = { splitStatus: { isPending: false, records: [{ splitStatus: true }] } };
+    const splittingFalseResources = { splitStatus: { isPending: false, records: [{ splitStatus: false }] } };
+    const undefinedResources = {};
+    const undefinedResourcesEmpty = { splitStatus: { isPending: false, records: [] } };
+
+    it('returns splitting URL when splitting is active', () => {
+      expect(getAssociatedJobsURL(splittingTrueResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual('splittingTrueUrl');
+    });
+
+    it('returns non-splitting URL when splitting is inactive', () => {
+      expect(getAssociatedJobsURL(splittingFalseResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual('splittingFalseUrl');
+    });
+
+    it('returns undefined when resource isn\'t ready', () => {
+      expect(getAssociatedJobsURL(undefinedResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual(undefined);
+    });
+
+    it('returns undefined when resource returns empty', () => {
+      expect(getAssociatedJobsURL(undefinedResourcesEmpty, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual(undefined);
     });
   });
 });
