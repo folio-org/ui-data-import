@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * The '[number of records] - records found' subtitle is displayed after clicking on the textLink error counter (UIDATIMP-1549)
+* Job profiles view - Jobs using this profile displaying multiple entries for single-part jobs. (UIDATIMP-1562)
 
 ## [7.0.1](https://github.com/folio-org/ui-data-import/tree/v7.0.1) (2023-10-27)
 
