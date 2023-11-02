@@ -71,6 +71,7 @@ import {
 } from '../../../utils';
 
 import RunJobModal from './RunJobModal';
+import { requestConfiguration } from '../../../utils/multipartUpload';
 
 import sharedCss from '../../../shared.css';
 
@@ -78,6 +79,18 @@ const {
   COMMITTED,
   ERROR,
 } = FILE_STATUSES;
+
+export function getAssociatedJobsURL(resources, splittingURL, nonSplitting) {
+  const { splitStatus } = resources;
+  if (!splitStatus?.isPending) {
+    if (splitStatus?.records[0]?.splitStatus) {
+      return splittingURL;
+    } else if (splitStatus?.records[0]?.splitStatus === false) {
+      return nonSplitting;
+    }
+  }
+  return undefined;
+}
 
 const jobPartsCellFormatter = record => (
   <FormattedMessage
@@ -509,17 +522,30 @@ ViewJobProfileComponent.manifest = Object.freeze({
   },
   jobsUsingThisProfile: {
     type: 'okapi',
-    path: (_q, _p) => {
+    path: (_q, _p, _l, _log, _props) => {
       const { id } = _p;
 
-      return createUrlFromArray('metadata-provider/jobExecutions', [
+      const commonQueryParams = [
         `statusAny=${COMMITTED}`,
         `statusAny=${ERROR}`,
         `profileIdAny=${id}`,
         'limit=25',
         'sortBy=completed_date,desc',
+      ];
+
+      const nonSplittingJobsURL = createUrlFromArray('metadata-provider/jobExecutions', commonQueryParams);
+      const splittingJobsURL = createUrlFromArray('metadata-provider/jobExecutions', [...commonQueryParams,
+        'subordinationTypeNotAny=COMPOSITE_PARENT'
       ]);
+
+      return getAssociatedJobsURL(_props.resources, splittingJobsURL, nonSplittingJobsURL);
     },
+    throwErrors: false,
+  },
+  splitStatus: {
+    type: 'okapi',
+    path: requestConfiguration,
+    shouldRefreshRemote: () => false,
     throwErrors: false,
   },
 });
