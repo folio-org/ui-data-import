@@ -369,8 +369,10 @@ describe('ViewJobProfile component', () => {
   });
 
   describe('getAssociatedJobsURL', () => {
-    const splittingTrueResources = { splitStatus: { records: [{ splitStatus: true }] } };
-    const splittingFalseResources = { splitStatus: { records: [{ splitStatus: false }] } };
+    const splittingTrueResources = { splitStatus: { isPending: false, records: [{ splitStatus: true }] } };
+    const splittingFalseResources = { splitStatus: { isPending: false, records: [{ splitStatus: false }] } };
+    const undefinedResources = {}
+    const undefinedResourcesEmpty = { splitStatus: { isPending: false, records: [] } };
 
     it('returns splitting URL when splitting is active', () => {
       expect(getAssociatedJobsURL(splittingTrueResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual('splittingTrueUrl');
@@ -378,6 +380,14 @@ describe('ViewJobProfile component', () => {
 
     it('returns non-splitting URL when splitting is inactive', () => {
       expect(getAssociatedJobsURL(splittingFalseResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual('splittingFalseUrl');
+    });
+
+    it('returns undefined when resource isn\'t ready', () => {
+      expect(getAssociatedJobsURL(undefinedResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual(undefined);
+    });
+
+    it('returns undefined when resource returns empty', () => {
+      expect(getAssociatedJobsURL(undefinedResourcesEmpty, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual(undefined);
     });
   });
 });
