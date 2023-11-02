@@ -218,7 +218,7 @@ export class DataFetcher extends Component {
   mapResourcesToState(isEmpty) {
     const { resources: { jobs, logs } } = this.props;
 
-    const contextData = { hasLoaded: (jobs.hasLoaded && logs.hasLoaded)};
+    const contextData = { hasLoaded: (jobs.hasLoaded && logs.hasLoaded) };
 
     forEach({ jobs, logs }, (resourceValue, resourceName) => {
       contextData[resourceName] = isEmpty ? [] : get(resourceValue, ['records', 0, 'jobExecutions'], []);
