@@ -109,11 +109,13 @@ export class DataFetcher extends Component {
         records: PropTypes.arrayOf(
           PropTypes.shape({ jobExecutions: PropTypes.arrayOf(jobExecutionPropTypes).isRequired }),
         ).isRequired,
+        hasLoaded: PropTypes.bool,
       }),
       logs: PropTypes.shape({
         records: PropTypes.arrayOf(
           PropTypes.shape({ jobExecutions: PropTypes.arrayOf(jobExecutionPropTypes).isRequired }),
         ).isRequired,
+        hasLoaded: PropTypes.bool,
       }),
       splitStatus: PropTypes.shape({
         hasLoaded: PropTypes.bool,
@@ -216,7 +218,7 @@ export class DataFetcher extends Component {
   mapResourcesToState(isEmpty) {
     const { resources: { jobs, logs } } = this.props;
 
-    const contextData = { hasLoaded: true };
+    const contextData = { hasLoaded: (jobs.hasLoaded && logs.hasLoaded)};
 
     forEach({ jobs, logs }, (resourceValue, resourceName) => {
       contextData[resourceName] = isEmpty ? [] : get(resourceValue, ['records', 0, 'jobExecutions'], []);
