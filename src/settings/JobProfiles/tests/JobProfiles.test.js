@@ -21,6 +21,7 @@ import {
 import {
   createJobProfiles,
   jobProfilesShape,
+  getAssociatedJobsURL,
 } from '../JobProfiles';
 
 const history = createMemoryHistory();
@@ -242,6 +243,19 @@ describe('JobProfiles component', () => {
       fireEvent.click(closeButton);
 
       expect(getByText('Are you sure?')).toBeInTheDocument();
+    });
+  });
+
+  describe('getAssociatedJobsURL', () => {
+    const splittingTrueResources = { splitStatus: { records: [{ splitStatus: true }] } };
+    const splittingFalseResources = { splitStatus: { records: [{ splitStatus: false }] } };
+
+    it('returns splitting URL when splitting is active', () => {
+      expect(getAssociatedJobsURL(splittingTrueResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual('splittingTrueUrl');
+    });
+
+    it('returns non-splitting URL when splitting is inactive', () => {
+      expect(getAssociatedJobsURL(splittingFalseResources, 'splittingTrueUrl', 'splittingFalseUrl')).toEqual('splittingFalseUrl');
     });
   });
 });
