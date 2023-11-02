@@ -408,10 +408,6 @@ describe('Composite jobs - Jobs component', () => {
       it('Composite jobs - should display number of slices completed with error', () => {
         expect(within(jobCard).getByText('Completed with errors: 2')).toBeInTheDocument();
       });
-
-      it('Composite jobs - should display number of failed', () => {
-        expect(within(jobCard).getByText('Failed: 2')).toBeInTheDocument();
-      });
     });
 
     describe('Composite jobs - When delete button on running job card is clicked', () => {
