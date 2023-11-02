@@ -371,7 +371,7 @@ describe('ViewJobProfile component', () => {
   describe('getAssociatedJobsURL', () => {
     const splittingTrueResources = { splitStatus: { isPending: false, records: [{ splitStatus: true }] } };
     const splittingFalseResources = { splitStatus: { isPending: false, records: [{ splitStatus: false }] } };
-    const undefinedResources = {}
+    const undefinedResources = {};
     const undefinedResourcesEmpty = { splitStatus: { isPending: false, records: [] } };
 
     it('returns splitting URL when splitting is active', () => {
