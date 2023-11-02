@@ -95,7 +95,7 @@ const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, tot
         id="ui-data-import.jobProgress.partsProcessed"
         tagName="div"
         values={{
-          current: completedSliceAmount,
+          current: failedSliceAmount + completedSliceAmount,
           total: totalSliceAmount,
         }}
       />
@@ -112,13 +112,6 @@ const renderCompositeDetails = (jobEntry, previousProgress = { processed: 0, tot
             id="ui-data-import.jobProgress.partsCompletedWithErrors"
             tagName="div"
             values={{ amount: erroredSliceAmount }}
-          />
-        </li>
-        <li className={css.listItem}>
-          <FormattedMessage
-            id="ui-data-import.jobProgress.partsFailed"
-            tagName="div"
-            values={{ amount: failedSliceAmount }}
           />
         </li>
       </ul>

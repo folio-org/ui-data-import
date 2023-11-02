@@ -345,7 +345,7 @@ describe('Composite jobs - Jobs component', () => {
       const { getAllByRole } = renderCompositeJobs();
       // Composite cards display a nested list of progress data that has 3 items...
       // we expect 3 more items per card.
-      expect(getAllByRole('listitem').length).toBe(runningJobs.length + runningJobs.length * 3);
+      expect(getAllByRole('listitem').length).toBe(runningJobs.length + runningJobs.length * 2);
     });
 
     it('Composite jobs - should display appropriate message when there are no running jobs', () => {
@@ -407,10 +407,6 @@ describe('Composite jobs - Jobs component', () => {
 
       it('Composite jobs - should display number of slices completed with error', () => {
         expect(within(jobCard).getByText('Completed with errors: 2')).toBeInTheDocument();
-      });
-
-      it('Composite jobs - should display number of failed', () => {
-        expect(within(jobCard).getByText('Failed: 2')).toBeInTheDocument();
       });
     });
 
