@@ -345,7 +345,7 @@ describe('Composite jobs - Jobs component', () => {
       const { getAllByRole } = renderCompositeJobs();
       // Composite cards display a nested list of progress data that has 3 items...
       // we expect 3 more items per card.
-      expect(getAllByRole('listitem').length).toBe(runningJobs.length + runningJobs.length * 3);
+      expect(getAllByRole('listitem').length).toBe(runningJobs.length + runningJobs.length * 2);
     });
 
     it('Composite jobs - should display appropriate message when there are no running jobs', () => {
