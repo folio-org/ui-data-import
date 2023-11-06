@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Nowy profil zadań",
     "settings.matchProfiles.new": "Nowy profil dopasowania",
     "import-log": "Importuj log dla rekordu <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, one {błąd} few {błędy} many {błędy} other {błędy}}",
     "modal.matchProfile.delete.header": "Usunąć \"{name}\" profil dopasowania?",
     "modal.matchProfile.delete.message": "Usunąć profil dopasowania?",
     "settings.matchProfiles.exceptionModal.label": "Nie można usunąć profilu dopasowania",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

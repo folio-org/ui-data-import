@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Nový profil úlohy",
     "settings.matchProfiles.new": "Profil nové shody",
     "import-log": "Import protokolu pro záznam <b>{recordOrder} ({recordTitle}</b>)",
-    "errorsCount": "{count, plural, one {chyba} few {chyb} many {chyb} other {chyby}}",
     "modal.matchProfile.delete.header": "Smazat profil shody \"{name}\"?",
     "modal.matchProfile.delete.message": "Smazat profil shody?",
     "settings.matchProfiles.exceptionModal.label": "Nelze smazat profil shody",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "Vyskytl se problém při načítání stavu systému. Velké soubory nebudou rozděleny!",
     "jobParts": "Části úlohy",
     "jobSummarySourceFileLabel": "Zdrojový soubor:",
-    "jobSummarySourceFileUnavailable": "Nedostupný"
+    "jobSummarySourceFileUnavailable": "Nedostupný",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

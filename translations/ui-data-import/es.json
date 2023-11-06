@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Nuevo perfil de trabajo",
     "settings.matchProfiles.new": "Nuevo perfil de coincidencia",
     "import-log": "Importar Log para el proceso <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, one {error} other {errores}}",
     "modal.matchProfile.delete.header": "Eliminar perfil de coincidencia \"{name}\"?",
     "modal.matchProfile.delete.message": "Eliminar perfil de coincidencia?",
     "settings.matchProfiles.exceptionModal.label": "No se puede eliminar el perfil de coincidencia",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

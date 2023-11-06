@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Nouveau profil de tâche",
     "settings.matchProfiles.new": "Nouveau profil de correspondance",
     "import-log": "Importer le journal pour l'enregistrement <b> {recordOrder} ( {recordTitle} ) </b>",
-    "errorsCount": "{count, plural, one {erreur} other {erreurs}}",
     "modal.matchProfile.delete.header": "Supprimer le profil de correspondance \" {name} \"?",
     "modal.matchProfile.delete.message": "Supprimer le profil de correspondance?",
     "settings.matchProfiles.exceptionModal.label": "Impossible de supprimer le profil de correspondance",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

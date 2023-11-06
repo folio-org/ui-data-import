@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Novo perfil de trabalho",
     "settings.matchProfiles.new": "Novo perfil de correspondência",
     "import-log": "Log de importação para registro <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, one {# erro} other {# erros}}",
     "modal.matchProfile.delete.header": "Excluir o perfil de correspondência \"{name}\"?",
     "modal.matchProfile.delete.message": "Excluir perfil de correspondência?",
     "settings.matchProfiles.exceptionModal.label": "Não é possível excluir o perfil de correspondência",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "Ocorreu um problema ao recuperar o status do sistema. Arquivos grandes não serão divididos!",
     "jobParts": "Partes do trabalho",
     "jobSummarySourceFileLabel": "Arquivo de origem: ",
-    "jobSummarySourceFileUnavailable": "Indisponível"
+    "jobSummarySourceFileUnavailable": "Indisponível",
+    "errorsCountHeader": "{count, plural, one {# erro encontrado} other {# erros encontrados}}"
 }

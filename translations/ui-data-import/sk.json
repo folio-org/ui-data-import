@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "New job profile",
     "settings.matchProfiles.new": "New match profile",
     "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, one {# error} other {# errors}}",
     "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
     "modal.matchProfile.delete.message": "Delete match profile?",
     "settings.matchProfiles.exceptionModal.label": "Cannot delete match profile",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "Pri načítavaní stavu systému sa vyskytol problém. Veľké súbory nebudú rozdelené!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

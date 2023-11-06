@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Nuovo profilo di procedura",
     "settings.matchProfiles.new": "Nuovo profilo di corrispondenza",
     "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, one {errore} other {errori}}",
     "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
     "modal.matchProfile.delete.message": "Eliminare il profilo di corrispondenza?",
     "settings.matchProfiles.exceptionModal.label": "Impossibile eliminare il profilo di corrispondenza",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }
