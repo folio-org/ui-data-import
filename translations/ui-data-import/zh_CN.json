@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "新任务配置文件",
     "settings.matchProfiles.new": "新匹配配置文件",
     "import-log": "导入记录<b> {recordOrder} （ {recordTitle} ）</b>的日志",
-    "errorsCount": "{count, plural, other {错误}}",
     "modal.matchProfile.delete.header": "删除“ {name} ”匹配配置文件？",
     "modal.matchProfile.delete.message": "删除匹配配置文件？",
     "settings.matchProfiles.exceptionModal.label": "无法删除匹配配置文件",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "检索系统状态时出现问题。大文件不会被分拆！",
     "jobParts": "任务部分",
     "jobSummarySourceFileLabel": "源文件：",
-    "jobSummarySourceFileUnavailable": "不可用"
+    "jobSummarySourceFileUnavailable": "不可用",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

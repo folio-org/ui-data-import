@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Новый профиль задания",
     "settings.matchProfiles.new": "New match profile",
     "import-log": "Import Log for Record <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, one {Ошибка} few {Ошибок} many {Ошибки} other {Ошибки}}",
     "modal.matchProfile.delete.header": "Delete \"{name}\" match profile?",
     "modal.matchProfile.delete.message": "Delete match profile?",
     "settings.matchProfiles.exceptionModal.label": "Cannot delete match profile",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

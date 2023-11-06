@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "Neues Jobprofil",
     "settings.matchProfiles.new": "Neues Matchprofil",
     "import-log": "Importprotokoll für Datensatz <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, one {Fehler} other {Fehler}}",
     "modal.matchProfile.delete.header": "Matchprofil \"{name}\" löschen?",
     "modal.matchProfile.delete.message": "Matchprofil löschen?",
     "settings.matchProfiles.exceptionModal.label": "Matchprofil kann nicht gelöscht werden",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

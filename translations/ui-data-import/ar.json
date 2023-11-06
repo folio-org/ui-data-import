@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "بروفايل مهمة جديد",
     "settings.matchProfiles.new": "وضع مطابقة جديد",
     "import-log": "استيراد السجل للتسجيلة <b>{recordOrder} ({recordTitle})</b>",
-    "errorsCount": "{count, plural, zero {} one {# خطأ} two {} few {} many {} other {# خطأ}}",
     "modal.matchProfile.delete.header": "حذف وضع المطابقة \"{name}\"؟",
     "modal.matchProfile.delete.message": "حذف وضع المطابقة؟",
     "settings.matchProfiles.exceptionModal.label": "لا يمكن حذف وضع المطابقة",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }

@@ -118,7 +118,6 @@
     "settings.jobProfiles.new": "新增任務概要",
     "settings.matchProfiles.new": "新匹配配置文件",
     "import-log": "导入记录<b> {recordOrder} （ {recordTitle} ）</b>的日志",
-    "errorsCount": "{count, plural, other {錯誤}}",
     "modal.matchProfile.delete.header": "删除“ {name} ”匹配配置文件？",
     "modal.matchProfile.delete.message": "删除匹配配置文件？",
     "settings.matchProfiles.exceptionModal.label": "无法删除匹配配置文件",
@@ -1166,5 +1165,6 @@
     "uploadConfigurationError": "There was a problem retrieving system status. Large files will not be split!",
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
-    "jobSummarySourceFileUnavailable": "Unavailable"
+    "jobSummarySourceFileUnavailable": "Unavailable",
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
 }
