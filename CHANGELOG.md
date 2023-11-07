@@ -1,10 +1,14 @@
 # Change history for ui-data-import
 
-## **7.0.2** (in progress)
+## **7.0.3** (in progress)
 
 ### Bugs fixed:
 * The '[number of records] - records found' subtitle is displayed after clicking on the textLink error counter (UIDATIMP-1549)
 * Display loading spinners while running jobs and job log displays are loading. (UIDATIMP-1557)
+
+## [7.0.2](https://github.com/folio-org/ui-data-import/tree/v7.0.2) (2023-11-07)
+
+### Bugs fixed:
 * Totals inaccurate on running composite job cards. Removed the 'failed jobs' display in those items and included erroneous jobs in the calculation of 'processed' job parts. (UIDATIMP-1563)
 * Job profiles view - Jobs using this profile displaying multiple entries for single-part jobs. (UIDATIMP-1562)
 
