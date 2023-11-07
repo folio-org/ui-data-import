@@ -195,6 +195,7 @@ export const RecordsTable = ({
         holdingsData,
         itemData,
       } = getRelatedInfo(jobLogRecords, sourceRecordId);
+      const instanceId = instanceData?.idList[0];
 
       const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
 
@@ -228,8 +229,16 @@ export const RecordsTable = ({
         );
       }
 
+      if (isEmpty(holdingsData)) {
+        return (
+          <ItemCell
+            sortedItemData={[itemData]}
+            instanceId={instanceId}
+          />
+        );
+      }
+
       const itemInfo = itemData ? [...itemData] : [{}];
-      const instanceId = instanceData?.idList[0];
 
       holdingsData?.forEach(holdings => {
         const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
