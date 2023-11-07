@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **7.0.2** (in progress)
+## [7.0.2](https://github.com/folio-org/ui-data-import/tree/v7.0.2) (2023-11-07)
 
 ### Bugs fixed:
 * Totals inaccurate on running composite job cards. Removed the 'failed jobs' display in those items and included erroneous jobs in the calculation of 'processed' job parts. (UIDATIMP-1563)
