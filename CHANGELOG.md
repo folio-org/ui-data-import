@@ -5,6 +5,7 @@
 ### Bugs fixed:
 * The '[number of records] - records found' subtitle is displayed after clicking on the textLink error counter (UIDATIMP-1549)
 * Display loading spinners while running jobs and job log displays are loading. (UIDATIMP-1557)
+* Invalid log when attempting to create item without SRS and Instance. (UIDATIMP-1564)
 
 ## [7.0.2](https://github.com/folio-org/ui-data-import/tree/v7.0.2) (2023-11-07)
 
