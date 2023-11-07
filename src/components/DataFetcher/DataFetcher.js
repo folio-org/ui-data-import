@@ -62,7 +62,7 @@ const compositeLogsUrl = createUrlFromArray('metadata-provider/jobExecutions', [
 
 export function getJobSplittingURL(resources, splittingURL, nonSplitting) {
   const { split_status: splitStatus } = resources;
-  if (!splitStatus?.isPending) {
+  if (splitStatus?.records.length > 0 || !splitStatus?.isPending) {
     if (splitStatus?.records[0]?.splitStatus) {
       return splittingURL;
     } else if (splitStatus?.records[0]?.splitStatus === false) {
@@ -143,7 +143,9 @@ export class DataFetcher extends Component {
     this.initialFetchPending = false;
     if (!statusLoaded && splitStatus?.hasLoaded) {
       this.setState({ statusLoaded: true }, () => {
-        if (!this.initialFetchPending) this.initialize();
+        if (!this.initialFetchPending) {
+          this.initialize();
+        }
       });
     }
   }
@@ -153,7 +155,9 @@ export class DataFetcher extends Component {
     const { statusLoaded } = state;
     if (!statusLoaded && splitStatus?.hasLoaded) {
       this.setState({ statusLoaded: true }, () => {
-        if (!this.initialFetchPending) this.initialize();
+        if (!this.initialFetchPending) {
+          this.initialize();
+        }
       });
     }
   }
