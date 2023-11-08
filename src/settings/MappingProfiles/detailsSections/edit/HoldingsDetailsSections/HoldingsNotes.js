@@ -26,11 +26,9 @@ import {
   getBoolSubfieldName,
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
+  getWrapperSourceLink,
 } from '../../utils';
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,
@@ -42,6 +40,7 @@ export const HoldingsNotes = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   return (
     <Accordion
@@ -82,7 +81,7 @@ export const HoldingsNotes = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.HOLDINGS_NOTE_TYPES,
+                          wrapperSourceLink: getWrapperSourceLink('HOLDINGS_NOTE_TYPES', requestLimit),
                           wrapperSourcePath: 'holdingsNoteTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
@@ -130,4 +129,5 @@ HoldingsNotes.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

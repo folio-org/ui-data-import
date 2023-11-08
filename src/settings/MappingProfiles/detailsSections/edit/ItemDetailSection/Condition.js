@@ -19,11 +19,9 @@ import {
 import {
   getAcceptedValuesPath,
   getFieldName,
+  getWrapperSourceLink,
 } from '../../utils';
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   validateMARCWithDate,
   okapiShape,
@@ -32,6 +30,7 @@ import {
 export const Condition = ({
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   return (
     <Accordion
@@ -96,7 +95,7 @@ export const Condition = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ITEM_DAMAGE_STATUS,
+              wrapperSourceLink: getWrapperSourceLink('ITEM_DAMAGE_STATUS', requestLimit),
               wrapperSourcePath: 'itemDamageStatuses',
             }]}
             isRemoveValueAllowed
@@ -126,4 +125,5 @@ export const Condition = ({
 Condition.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

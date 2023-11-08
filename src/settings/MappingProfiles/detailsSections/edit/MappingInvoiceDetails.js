@@ -41,6 +41,7 @@ export const MappingInvoiceDetails = ({
   setReferenceTables,
   getMappingSubfieldsFieldValue,
   okapi,
+  requestLimit,
 }) => {
   const [selectedVendor, setSelectedVendor] = useState({});
   const [accountingCodeOptions, setAccountingCodeOptions] = useState([]);
@@ -94,12 +95,14 @@ export const MappingInvoiceDetails = ({
       <InvoiceInformation
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <InvoiceAdjustments
         initialFields={initialFields}
         mappingFields={mappingDetails?.mappingFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <VendorInformation
         filledVendorId={filledVendorId}
@@ -128,6 +131,7 @@ export const MappingInvoiceDetails = ({
         getMappingSubfieldsFieldValue={getMappingSubfieldsFieldValue}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <InvoiceLineAdjustments
         invoiceLinesFieldIndex={INVOICE_LINES_FIELD_INDEX}
@@ -146,4 +150,5 @@ MappingInvoiceDetails.propTypes = {
   getMappingSubfieldsFieldValue: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   mappingDetails: PropTypes.object,
+  requestLimit: PropTypes.number,
 };

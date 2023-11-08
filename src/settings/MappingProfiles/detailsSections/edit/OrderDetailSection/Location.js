@@ -23,15 +23,13 @@ import {
   useFieldMappingRefValues,
 } from '../../hooks';
 
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   clearSubfieldValue,
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
+  getWrapperSourceLink,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
   onAdd,
@@ -49,6 +47,7 @@ export const Location = ({
   initialFields,
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const LOCATIONS_INDEX = 57;
   const LOCATION_FIELDS_MAP = {
@@ -143,7 +142,7 @@ export const Location = ({
                   optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                   wrapperSources={[{
-                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOCATIONS,
+                    wrapperSourceLink: getWrapperSourceLink('LOCATIONS', requestLimit),
                     wrapperSourcePath: 'locations'
                   }]}
                   setAcceptedValues={setReferenceTables}
@@ -190,4 +189,5 @@ Location.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
+  requestLimit: PropTypes.number,
 };

@@ -33,13 +33,13 @@ import {
 import {
   TRANSLATION_ID_PREFIX,
   CREATE_INVENTORY_TYPES,
-  WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
   clearFieldValue,
   getAcceptedValuesPath,
   getBoolFieldName,
   getFieldName,
+  getWrapperSourceLink,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
@@ -53,6 +53,7 @@ import {
 export const EResourcesDetails = ({
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const MATERIAL_TYPE_INDEX = 68;
   const E_RESOURCES_DETAILS_FIELDS_MAP = {
@@ -199,7 +200,7 @@ export const EResourcesDetails = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.MATERIAL_TYPES,
+              wrapperSourceLink: getWrapperSourceLink('MATERIAL_TYPES', requestLimit),
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -267,4 +268,5 @@ export const EResourcesDetails = ({
 EResourcesDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
+  requestLimit: PropTypes.number,
 };

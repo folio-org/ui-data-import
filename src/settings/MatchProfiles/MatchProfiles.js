@@ -364,6 +364,7 @@ export class MatchProfiles extends Component {
     if (!isEqual(prevProps.resources.modules, this.props.resources.modules)
       && !isEmpty(this.props.resources.modules.records)) {
       const {
+        stripes,
         stripes: { okapi },
         resources: { modules: { records } },
       } = this.props;
@@ -385,7 +386,7 @@ export class MatchProfiles extends Component {
       await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
       await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
       await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
-      await getIdentifierTypes(okapi).then(identifierTypes => this.setState({ identifierTypes }));
+      await getIdentifierTypes(stripes).then(identifierTypes => this.setState({ identifierTypes }));
     }
   }
 

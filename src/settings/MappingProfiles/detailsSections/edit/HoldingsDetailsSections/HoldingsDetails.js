@@ -25,11 +25,9 @@ import {
   getSubfieldName,
   getRepeatableFieldName,
   getAcceptedValuesPath,
+  getWrapperSourceLink,
 } from '../../utils';
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,
@@ -43,6 +41,7 @@ export const HoldingsDetails = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   return (
     <Accordion
@@ -280,7 +279,7 @@ export const HoldingsDetails = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ILL_POLICIES,
+              wrapperSourceLink: getWrapperSourceLink('ILL_POLICIES', requestLimit),
               wrapperSourcePath: 'illPolicies',
             }]}
             isRemoveValueAllowed
@@ -332,4 +331,5 @@ HoldingsDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

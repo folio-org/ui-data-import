@@ -24,11 +24,9 @@ import {
   getSubfieldName,
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
+  getWrapperSourceLink,
 } from '../../utils';
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   mappingProfileSubfieldShape,
   okapiShape,
@@ -41,6 +39,7 @@ export const InstanceRelationship = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   return (
     <Accordion
@@ -96,7 +95,7 @@ export const InstanceRelationship = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.INSTANCE_RELATIONSHIP_TYPES,
+                          wrapperSourceLink: getWrapperSourceLink('INSTANCE_RELATIONSHIP_TYPES', requestLimit),
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
@@ -158,7 +157,7 @@ export const InstanceRelationship = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.INSTANCE_RELATIONSHIP_TYPES,
+                          wrapperSourceLink: getWrapperSourceLink('INSTANCE_RELATIONSHIP_TYPES', requestLimit),
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
                         setAcceptedValues={setReferenceTables}
@@ -183,4 +182,5 @@ InstanceRelationship.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

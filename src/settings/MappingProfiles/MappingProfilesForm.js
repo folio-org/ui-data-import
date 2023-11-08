@@ -297,6 +297,7 @@ export const MappingProfilesFormComponent = ({
     getMappingSubfieldsFieldValue,
     setReferenceTables: setFormFieldValue,
     okapi,
+    requestLimit: stripes.config.maxUnpagedResourceCount,
   };
 
   const MARCDetailsProps = {

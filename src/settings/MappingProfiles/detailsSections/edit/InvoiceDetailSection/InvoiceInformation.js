@@ -23,11 +23,9 @@ import {
   getAcceptedValuesPath,
   getSubfieldName,
   renderFieldLabelWithInfo,
+  getWrapperSourceLink,
 } from '../../utils';
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   composeValidators,
   LOCK_TOTAL_FIELD,
@@ -39,6 +37,7 @@ import {
 export const InvoiceInformation = ({
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const INVOICE_INFO_FIELDS_MAP = {
     INVOICE_DATE: getFieldName(0),
@@ -136,7 +135,7 @@ export const InvoiceInformation = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ACQUISITIONS_UNITS,
+              wrapperSourceLink: getWrapperSourceLink('ACQUISITIONS_UNITS', requestLimit),
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             isRemoveValueAllowed
@@ -160,7 +159,7 @@ export const InvoiceInformation = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ADDRESSES,
+              wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
               wrapperSourcePath: 'configs',
             }]}
             isRemoveValueAllowed
@@ -187,7 +186,7 @@ export const InvoiceInformation = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.BATCH_GROUPS,
+              wrapperSourceLink: getWrapperSourceLink('BATCH_GROUPS', requestLimit),
               wrapperSourcePath: 'batchGroups',
             }]}
             isRemoveValueAllowed
@@ -262,4 +261,5 @@ export const InvoiceInformation = ({
 InvoiceInformation.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

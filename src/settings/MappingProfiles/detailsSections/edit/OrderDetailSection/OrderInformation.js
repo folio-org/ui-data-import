@@ -43,6 +43,7 @@ import {
   getBoolFieldName,
   getFieldName,
   getSubfieldName,
+  getWrapperSourceLink,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
@@ -51,7 +52,6 @@ import {
   DEFAULT_PO_LINES_LIMIT_VALUE,
   PO_STATUS,
   TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
   BOOLEAN_ACTIONS,
@@ -77,6 +77,7 @@ const OrderInformationComponent = ({
   },
   mutator,
   okapi,
+  requestLimit,
 }) => {
   const ORDER_INFO_FIELDS_MAP = {
     PO_STATUS: getFieldName(0),
@@ -279,7 +280,7 @@ const OrderInformationComponent = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.PREFIXES,
+              wrapperSourceLink: getWrapperSourceLink('PREFIXES', requestLimit),
               wrapperSourcePath: 'prefixes',
             }]}
             okapi={okapi}
@@ -307,7 +308,7 @@ const OrderInformationComponent = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.SUFFIXES,
+              wrapperSourceLink: getWrapperSourceLink('SUFFIXES', requestLimit),
               wrapperSourcePath: 'suffixes',
             }]}
             okapi={okapi}
@@ -349,7 +350,7 @@ const OrderInformationComponent = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ACQUISITIONS_UNITS,
+              wrapperSourceLink: getWrapperSourceLink('ACQUISITIONS_UNITS', requestLimit),
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -380,7 +381,7 @@ const OrderInformationComponent = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ADDRESSES,
+              wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -412,7 +413,7 @@ const OrderInformationComponent = ({
             parsedOptionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ADDRESSES,
+              wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
               wrapperSourcePath: 'configs',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -516,6 +517,7 @@ OrderInformationComponent.propTypes = {
   mutator: PropTypes.object.isRequired,
   okapi: PropTypes.object.isRequired,
   onOrganizationSelect: PropTypes.func,
+  requestLimit: PropTypes.number,
 };
 
 OrderInformationComponent.defaultProps = { onOrganizationSelect: null };

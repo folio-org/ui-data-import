@@ -34,11 +34,9 @@ import {
   getRepeatableFieldName,
   getAcceptedValuesPath,
   getRepeatableAcceptedValuesPath,
+  getWrapperSourceLink,
 } from '../../utils';
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const AdministrativeData = ({
   statisticalCodes,
@@ -47,6 +45,7 @@ export const AdministrativeData = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   const validateDatepickerFieldValue = useCallback(
     value => validateMARCWithDate(value, false),
@@ -142,7 +141,7 @@ export const AdministrativeData = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.INSTANCE_STATUSES,
+              wrapperSourceLink: getWrapperSourceLink('INSTANCE_STATUSES', requestLimit),
               wrapperSourcePath: 'instanceStatuses',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -201,10 +200,10 @@ export const AdministrativeData = ({
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSourcesFn="statisticalCodeTypeName"
                         wrapperSources={[{
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.STATISTICAL_CODES,
+                          wrapperSourceLink: getWrapperSourceLink('STATISTICAL_CODES', requestLimit),
                           wrapperSourcePath: 'statisticalCodes',
                         }, {
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.STATISTICAL_CODE_TYPES,
+                          wrapperSourceLink: getWrapperSourceLink('STATISTICAL_CODE_TYPES', requestLimit),
                           wrapperSourcePath: 'statisticalCodeTypes',
                         }]}
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
@@ -275,4 +274,5 @@ AdministrativeData.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

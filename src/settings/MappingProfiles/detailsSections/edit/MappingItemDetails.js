@@ -27,6 +27,7 @@ export const MappingItemDetails = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   const formerIds = getRefValuesFromTables(referenceTables, 'formerIds');
   const statisticalCodeIds = getRefValuesFromTables(referenceTables, 'statisticalCodeIds');
@@ -46,10 +47,12 @@ export const MappingItemDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <ItemData
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <EnumerationData
         yearCaption={yearCaption}
@@ -60,6 +63,7 @@ export const MappingItemDetails = ({
       <Condition
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <ItemNotes
         notes={notes}
@@ -67,6 +71,7 @@ export const MappingItemDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <LoanAndAvailability
         circulationNotes={circulationNotes}
@@ -74,10 +79,12 @@ export const MappingItemDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <Location
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <ElectronicAccess
         electronicAccess={electronicAccess}
@@ -85,6 +92,7 @@ export const MappingItemDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
     </AccordionSet>
   );
@@ -96,4 +104,5 @@ MappingItemDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

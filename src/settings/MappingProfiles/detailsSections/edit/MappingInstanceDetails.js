@@ -31,6 +31,7 @@ export const MappingInstanceDetails = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   const statisticalCodes = getRefValuesFromTables(referenceTables, 'statisticalCodeIds');
   const administrativeNotes = getRefValuesFromTables(referenceTables, 'administrativeNotes');
@@ -68,6 +69,7 @@ export const MappingInstanceDetails = ({
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <TitleData
           alternativeTitles={alternativeTitles}
@@ -97,6 +99,7 @@ export const MappingInstanceDetails = ({
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <InstanceNotes
           notes={notes}
@@ -105,6 +108,7 @@ export const MappingInstanceDetails = ({
         <ElectronicAccess
           electronicAccess={electronicAccess}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <Subject
           subjects={subjects}
@@ -119,6 +123,7 @@ export const MappingInstanceDetails = ({
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <RelatedInstances />
       </AccordionSet>
@@ -132,4 +137,5 @@ MappingInstanceDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

@@ -782,7 +782,7 @@ export const PAGE_KEYS = {
   VIEW_ALL: 'viewAllPageSelectedRecords',
 };
 
-export const PER_REQUEST_LIMIT = 1000;
+export const PER_REQUEST_LIMIT = 3000;
 
 export const TWO_DIGIT = '2-digit';
 export const NUMERIC = 'numeric';

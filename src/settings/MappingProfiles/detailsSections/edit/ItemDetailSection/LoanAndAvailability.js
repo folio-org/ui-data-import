@@ -28,14 +28,12 @@ import {
   getFieldName,
   getRepeatableFieldName,
   getSubfieldName,
+  getWrapperSourceLink,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
-import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   createOptionsList,
   ITEM_STATUS_OPTIONS,
@@ -50,6 +48,7 @@ export const LoanAndAvailability = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -103,7 +102,7 @@ export const LoanAndAvailability = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOAN_TYPES,
+              wrapperSourceLink: getWrapperSourceLink('LOAN_TYPES', requestLimit),
               wrapperSourcePath: 'loantypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -125,7 +124,7 @@ export const LoanAndAvailability = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOAN_TYPES,
+              wrapperSourceLink: getWrapperSourceLink('LOAN_TYPES', requestLimit),
               wrapperSourcePath: 'loantypes',
             }]}
             isRemoveValueAllowed
@@ -233,4 +232,5 @@ LoanAndAvailability.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

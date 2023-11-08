@@ -25,6 +25,7 @@ export const MappingOrderDetails = ({
   initialFields,
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const [vendorAccountNumbers, setVendorAccountNumbers] = useState([]);
 
@@ -43,6 +44,7 @@ export const MappingOrderDetails = ({
         setReferenceTables={setReferenceTables}
         onOrganizationSelect={onOrganizationSelect}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <Accordion
         id="order-line-information"
@@ -52,10 +54,12 @@ export const MappingOrderDetails = ({
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <POLineDetails
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <Vendor
           accountNumbers={vendorAccountNumbers}
@@ -71,20 +75,24 @@ export const MappingOrderDetails = ({
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <Location
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <PhysicalResourceDetails
           initialFields={initialFields}
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
         <EResourcesDetails
           setReferenceTables={setReferenceTables}
           okapi={okapi}
+          requestLimit={requestLimit}
         />
       </Accordion>
     </AccordionSet>
@@ -95,4 +103,5 @@ MappingOrderDetails.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
+  requestLimit: PropTypes.number,
 };
