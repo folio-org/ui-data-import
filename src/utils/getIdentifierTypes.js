@@ -1,5 +1,5 @@
 import { createOkapiHeaders } from '@folio/stripes-data-transfer-components';
-import { getWrapperSourceLink } from '../settings/MappingProfiles/detailsSections/utils';
+import { getWrapperSourceLink } from './getWrapperSourceLink';
 
 export const getIdentifierTypes = async (stripes) => {
   const {

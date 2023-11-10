@@ -24,12 +24,12 @@ import {
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
-  getWrapperSourceLink,
   onAdd,
   onRemove,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   okapiShape,
   mappingProfileSubfieldShape,
 } from '../../../../../utils';

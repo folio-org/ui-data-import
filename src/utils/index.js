@@ -39,3 +39,4 @@ export * from './permissions';
 export * from './showActionMenu';
 export * from './storage';
 export * from './multipartUpload';
+export * from './getWrapperSourceLink';

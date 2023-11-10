@@ -18,11 +18,13 @@ import {
 import {
   getAcceptedValuesPath,
   getFieldName,
-  getWrapperSourceLink,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  getWrapperSourceLink,
+  okapiShape,
+} from '../../../../../utils';
 
 export const ItemData = ({
   setReferenceTables,

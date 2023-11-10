@@ -14,12 +14,10 @@ import {
 
 import { AcceptedValuesField } from '../../../../../components';
 
-import {
-  getSubfieldName,
-  getWrapperSourceLink,
-} from '../../utils';
+import { getSubfieldName } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';

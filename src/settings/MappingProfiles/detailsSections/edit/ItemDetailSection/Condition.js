@@ -19,10 +19,10 @@ import {
 import {
   getAcceptedValuesPath,
   getFieldName,
-  getWrapperSourceLink,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   validateMARCWithDate,
   okapiShape,
 } from '../../../../../utils';

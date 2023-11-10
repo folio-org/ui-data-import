@@ -28,13 +28,13 @@ import {
   getFieldName,
   getRepeatableFieldName,
   getSubfieldName,
-  getWrapperSourceLink,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   createOptionsList,
   ITEM_STATUS_OPTIONS,
   ITEM_CIRCULATION_NOTES_OPTIONS,

@@ -9,7 +9,10 @@ import {
   Col,
   TextField,
 } from '@folio/stripes/components';
-import { okapiShape } from '../../../../../utils';
+import {
+  getWrapperSourceLink,
+  okapiShape,
+} from '../../../../../utils';
 
 import {
   AcceptedValuesField,
@@ -19,7 +22,6 @@ import {
 import {
   getAcceptedValuesPath,
   getFieldName,
-  getWrapperSourceLink,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';

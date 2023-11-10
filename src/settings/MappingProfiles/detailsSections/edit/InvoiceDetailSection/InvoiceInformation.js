@@ -23,10 +23,10 @@ import {
   getAcceptedValuesPath,
   getSubfieldName,
   renderFieldLabelWithInfo,
-  getWrapperSourceLink,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   composeValidators,
   LOCK_TOTAL_FIELD,
   okapiShape,

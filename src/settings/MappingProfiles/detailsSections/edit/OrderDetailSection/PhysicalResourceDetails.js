@@ -39,12 +39,12 @@ import {
   getAcceptedValuesPath,
   getFieldName,
   getSubfieldName,
-  getWrapperSourceLink,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   MATERIAL_SUPPLIER_FIELD,
   validateMARCWithDate,
   VOLUMES_FIELD,

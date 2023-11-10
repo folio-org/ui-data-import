@@ -35,9 +35,9 @@ import {
   getAcceptedValuesPath,
   getFieldName,
   getBoolFieldName,
-  getWrapperSourceLink,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   AUTOMATIC_EXPORT_FIELD,
   BOOLEAN_ACTIONS,
   BOOLEAN_STRING_VALUES,

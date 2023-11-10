@@ -26,7 +26,6 @@ import {
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
-  getWrapperSourceLink,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
   onAdd,
@@ -34,6 +33,7 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   CURRENCY_FIELD,
   FUND_DISTRIBUTION_FIELD,
 } from '../../../../../utils';

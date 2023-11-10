@@ -5,7 +5,7 @@
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
 
-## **7.0.3** (in progress)
+## [7.0.3](https://github.com/folio-org/ui-data-import/tree/v7.0.3) (2023-11-09)
 
 ### Bugs fixed:
 * The '[number of records] - records found' subtitle is displayed after clicking on the textLink error counter (UIDATIMP-1549)

@@ -14,10 +14,12 @@ import { AcceptedValuesField } from '../../../../../components';
 import {
   getAcceptedValuesPath,
   getFieldName,
-  getWrapperSourceLink,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { okapiShape } from '../../../../../utils';
+import {
+  getWrapperSourceLink,
+  okapiShape,
+} from '../../../../../utils';
 
 export const Location = ({
   setReferenceTables,

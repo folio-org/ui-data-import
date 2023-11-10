@@ -26,10 +26,10 @@ import {
   getBoolSubfieldName,
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
-  getWrapperSourceLink,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';

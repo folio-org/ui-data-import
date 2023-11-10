@@ -29,7 +29,6 @@ import {
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
-  getWrapperSourceLink,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
   onAdd,
@@ -38,6 +37,7 @@ import {
 } from '../../utils';
 
 import {
+  getWrapperSourceLink,
   LOCATIONS_FIELD,
   QUANTITY_PHYSICAL_FIELD,
   QUANTITY_ELECTRONIC_FIELD,

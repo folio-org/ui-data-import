@@ -41,10 +41,10 @@ import {
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
   getInnerRepeatableFieldPath,
-  getWrapperSourceLink,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   createOptionsList,
   okapiShape,
   PRORATE_OPTIONS,

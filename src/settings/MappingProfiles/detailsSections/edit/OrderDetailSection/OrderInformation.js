@@ -43,7 +43,6 @@ import {
   getBoolFieldName,
   getFieldName,
   getSubfieldName,
-  getWrapperSourceLink,
   onAdd,
   onRemove,
   renderFieldLabelWithInfo,
@@ -54,6 +53,7 @@ import {
   TRANSLATION_ID_PREFIX,
 } from '../../constants';
 import {
+  getWrapperSourceLink,
   BOOLEAN_ACTIONS,
   validateRequiredField,
   validateIntegers,

@@ -32,13 +32,13 @@ import {
   getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
-  getWrapperSourceLink,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
   onAdd,
   onRemove,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   CONTRIBUTORS_FIELD,
   PRODUCT_IDS_FIELD,
   validateMARCWithDate,

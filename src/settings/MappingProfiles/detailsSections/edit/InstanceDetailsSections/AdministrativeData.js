@@ -21,6 +21,7 @@ import {
 } from '../../../../../components';
 
 import {
+  getWrapperSourceLink,
   validateMARCWithDate,
   mappingProfileSubfieldShape,
   okapiShape,
@@ -34,7 +35,6 @@ import {
   getRepeatableFieldName,
   getAcceptedValuesPath,
   getRepeatableAcceptedValuesPath,
-  getWrapperSourceLink,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 

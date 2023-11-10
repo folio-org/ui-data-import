@@ -33,10 +33,10 @@ import {
   getInnerRepeatableFieldPath,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
-  getWrapperSourceLink,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getWrapperSourceLink,
   MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES,
   FUND_DISTRIBUTION_SOURCE,
   okapiShape,

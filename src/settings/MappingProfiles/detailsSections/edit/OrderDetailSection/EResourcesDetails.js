@@ -39,10 +39,10 @@ import {
   getAcceptedValuesPath,
   getBoolFieldName,
   getFieldName,
-  getWrapperSourceLink,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   ACCESS_PROVIDER_FIELD,
   ACTIVATION_STATUS_FIELD,
   BOOLEAN_ACTIONS,
