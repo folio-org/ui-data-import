@@ -27,7 +27,6 @@ import {
   TRANSLATION_ID_PREFIX,
   ORDER_FORMATS,
   RECEIPT_STATUS,
-  WRAPPER_SOURCE_LINKS,
   RECEIVING_WORKFLOW,
   PAYMENT_STATUS,
 } from '../../constants';
@@ -38,6 +37,7 @@ import {
   getBoolFieldName,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   AUTOMATIC_EXPORT_FIELD,
   BOOLEAN_ACTIONS,
   BOOLEAN_STRING_VALUES,
@@ -47,6 +47,7 @@ import {
 export const POLineDetails = ({
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const PO_LINE_DETAILS_FIELDS_MAP = {
     ACQ_METHOD: 29,
@@ -155,7 +156,7 @@ export const POLineDetails = ({
             optionLabel="value"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.ACQUISITION_METHODS,
+              wrapperSourceLink: getWrapperSourceLink('ACQUISITION_METHODS', requestLimit),
               wrapperSourcePath: 'acquisitionMethods',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -339,4 +340,5 @@ export const POLineDetails = ({
 POLineDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
+  requestLimit: PropTypes.number,
 };

@@ -1,15 +1,18 @@
 import { createOkapiHeaders } from '@folio/stripes-data-transfer-components';
-import { WRAPPER_SOURCE_LINKS } from '../settings/MappingProfiles/detailsSections/constants';
+import { getWrapperSourceLink } from './getWrapperSourceLink';
 
-export const getIdentifierTypes = async (okapi) => {
-  const { url } = okapi;
+export const getIdentifierTypes = async (stripes) => {
+  const {
+    config,
+    okapi: { url },
+  } = stripes;
 
   try {
-    const path = `${url}${WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES}`;
+    const path = `${url}${getWrapperSourceLink('IDENTIFIER_TYPES', config.maxUnpagedResourceCount)}`;
     const response = await fetch(path,
       {
         headers: {
-          ...createOkapiHeaders(okapi),
+          ...createOkapiHeaders(stripes.okapi),
           'Content-Type': 'application/json',
         },
       });

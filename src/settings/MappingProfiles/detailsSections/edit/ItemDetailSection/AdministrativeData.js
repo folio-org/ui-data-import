@@ -28,11 +28,9 @@ import {
   getRepeatableFieldName,
   getRepeatableAcceptedValuesPath,
 } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
-import {
+  getWrapperSourceLink,
   mappingProfileSubfieldShape,
   okapiShape,
 } from '../../../../../utils';
@@ -45,6 +43,7 @@ export const AdministrativeData = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   return (
     <Accordion
@@ -200,10 +199,10 @@ export const AdministrativeData = ({
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSourcesFn="statisticalCodeTypeName"
                         wrapperSources={[{
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.STATISTICAL_CODES,
+                          wrapperSourceLink: getWrapperSourceLink('STATISTICAL_CODES', requestLimit),
                           wrapperSourcePath: 'statisticalCodes',
                         }, {
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.STATISTICAL_CODE_TYPES,
+                          wrapperSourceLink: getWrapperSourceLink('STATISTICAL_CODE_TYPES', requestLimit),
                           wrapperSourcePath: 'statisticalCodeTypes',
                         }]}
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
@@ -276,4 +275,5 @@ AdministrativeData.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

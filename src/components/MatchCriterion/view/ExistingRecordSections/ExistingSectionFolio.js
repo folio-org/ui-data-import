@@ -36,8 +36,7 @@ const ExistingSectionFolio = memo(({
   const [identifierTypes, setIdentifierTypes] = useState([]);
 
   useEffect(() => {
-    const { okapi } = stripes;
-    getIdentifierTypes(okapi).then((data) => setIdentifierTypes(data));
+    getIdentifierTypes(stripes).then((data) => setIdentifierTypes(data));
   }, [stripes]);
 
   return (

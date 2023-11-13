@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **7.1.0** (in progress)
+
+### Bugs fixed:
+* Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
+
 ## [7.0.3](https://github.com/folio-org/ui-data-import/tree/v7.0.3) (2023-11-09)
 
 ### Bugs fixed:

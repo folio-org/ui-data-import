@@ -33,7 +33,6 @@ import {
   FIELD_NAME_PREFIX,
   CREATE_INVENTORY_TYPES,
   TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
   clearFieldValue,
@@ -45,6 +44,7 @@ import {
   renderFieldLabelWithInfo,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   MATERIAL_SUPPLIER_FIELD,
   validateMARCWithDate,
   VOLUMES_FIELD,
@@ -54,6 +54,7 @@ export const PhysicalResourceDetails = ({
   initialFields,
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const MATERIAL_TYPE_INDEX = 62;
   const VOLUMES_INDEX = 63;
@@ -211,7 +212,7 @@ export const PhysicalResourceDetails = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.MATERIAL_TYPES,
+              wrapperSourceLink: getWrapperSourceLink('MATERIAL_TYPES', requestLimit),
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -252,4 +253,5 @@ PhysicalResourceDetails.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
+  requestLimit: PropTypes.number,
 };

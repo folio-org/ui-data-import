@@ -15,15 +15,16 @@ import {
   getAcceptedValuesPath,
   getFieldName,
 } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
-import { okapiShape } from '../../../../../utils';
+  getWrapperSourceLink,
+  okapiShape,
+} from '../../../../../utils';
 
 export const Location = ({
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   return (
     <Accordion
@@ -43,7 +44,7 @@ export const Location = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOCATIONS,
+              wrapperSourceLink: getWrapperSourceLink('LOCATIONS', requestLimit),
               wrapperSourcePath: 'locations',
             }]}
             isRemoveValueAllowed
@@ -65,7 +66,7 @@ export const Location = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.LOCATIONS,
+              wrapperSourceLink: getWrapperSourceLink('LOCATIONS', requestLimit),
               wrapperSourcePath: 'locations',
             }]}
             isRemoveValueAllowed
@@ -83,4 +84,5 @@ export const Location = ({
 Location.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

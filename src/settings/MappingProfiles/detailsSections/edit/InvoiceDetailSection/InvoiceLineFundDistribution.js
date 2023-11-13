@@ -34,11 +34,9 @@ import {
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
 } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
-import {
+  getWrapperSourceLink,
   MAPPING_FUND_DISTRIBUTION_FIELD_SOURCES,
   FUND_DISTRIBUTION_SOURCE,
   okapiShape,
@@ -51,6 +49,7 @@ export const InvoiceLineFundDistribution = ({
   getMappingSubfieldsFieldValue,
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const FUND_DISTRIBUTIONS_FIELD_INDEX = 14;
   const INVOICE_LINE_FUND_DISTRIBUTION_FIELDS_MAP = {
@@ -122,7 +121,7 @@ export const InvoiceLineFundDistribution = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.FUNDS,
+                          wrapperSourceLink: getWrapperSourceLink('FUNDS', requestLimit),
                           wrapperSourcePath: 'funds',
                         }]}
                         optionTemplate="**name** (**code**)"
@@ -141,7 +140,7 @@ export const InvoiceLineFundDistribution = ({
                         optionLabel="name"
                         wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                         wrapperSources={[{
-                          wrapperSourceLink: WRAPPER_SOURCE_LINKS.EXPENSE_CLASSES,
+                          wrapperSourceLink: getWrapperSourceLink('EXPENSE_CLASSES', requestLimit),
                           wrapperSourcePath: 'expenseClasses',
                         }]}
                         setAcceptedValues={setReferenceTables}
@@ -190,4 +189,5 @@ InvoiceLineFundDistribution.propTypes = {
   getMappingSubfieldsFieldValue: PropTypes.func.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

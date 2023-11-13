@@ -42,11 +42,9 @@ import {
   handleRepeatableFieldAndActionClean,
   getInnerRepeatableFieldPath,
 } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
-import {
+  getWrapperSourceLink,
   createOptionsList,
   okapiShape,
   PRORATE_OPTIONS,
@@ -65,6 +63,7 @@ export const InvoiceAdjustments = ({
   mappingFields,
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const INVOICE_ADJUSTMENTS_FIELD_INDEX = 15;
   const PRO_RATE_FIELD_INDEX = 3;
@@ -142,7 +141,7 @@ export const InvoiceAdjustments = ({
                 optionLabel="name"
                 wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                 wrapperSources={[{
-                  wrapperSourceLink: WRAPPER_SOURCE_LINKS.FUNDS,
+                  wrapperSourceLink: getWrapperSourceLink('FUNDS', requestLimit),
                   wrapperSourcePath: 'funds',
                 }]}
                 optionTemplate="**name** (**code**)"
@@ -161,7 +160,7 @@ export const InvoiceAdjustments = ({
                 optionLabel="name"
                 wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                 wrapperSources={[{
-                  wrapperSourceLink: WRAPPER_SOURCE_LINKS.EXPENSE_CLASSES,
+                  wrapperSourceLink: getWrapperSourceLink('EXPENSE_CLASSES', requestLimit),
                   wrapperSourcePath: 'expenseClasses',
                 }]}
                 setAcceptedValues={setReferenceTables}
@@ -358,4 +357,5 @@ InvoiceAdjustments.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   mappingFields: PropTypes.arrayOf(PropTypes.object),
+  requestLimit: PropTypes.number,
 };

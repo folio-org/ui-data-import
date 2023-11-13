@@ -25,6 +25,7 @@ export const MappingHoldingsDetails = ({
   setReferenceTables,
   getRepeatableFieldAction,
   okapi,
+  requestLimit,
 }) => {
   const formerIds = getRefValuesFromTables(referenceTables, 'formerIds');
   const statisticalCodeIds = getRefValuesFromTables(referenceTables, 'statisticalCodeIds');
@@ -46,10 +47,12 @@ export const MappingHoldingsDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <Location
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <HoldingsDetails
         holdingsStatements={holdingsStatements}
@@ -59,6 +62,7 @@ export const MappingHoldingsDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <HoldingsNotes
         notes={notes}
@@ -66,6 +70,7 @@ export const MappingHoldingsDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <ElectronicAccess
         electronicAccess={electronicAccess}
@@ -73,6 +78,7 @@ export const MappingHoldingsDetails = ({
         initialFields={initialFields}
         setReferenceTables={setReferenceTables}
         okapi={okapi}
+        requestLimit={requestLimit}
       />
       <ReceivingHistory
         receivingHistory={receivingHistory}
@@ -90,4 +96,5 @@ MappingHoldingsDetails.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   getRepeatableFieldAction: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

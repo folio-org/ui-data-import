@@ -20,15 +20,16 @@ import {
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
+import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
-} from '../../constants';
-import { okapiShape } from '../../../../../utils';
+  getWrapperSourceLink,
+  okapiShape,
+} from '../../../../../utils';
 
 export const ItemData = ({
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const materialTypeLabel = renderFieldLabelWithInfo(
     `${TRANSLATION_ID_PREFIX}.item.itemData.field.materialType`,
@@ -53,7 +54,7 @@ export const ItemData = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.MATERIAL_TYPES,
+              wrapperSourceLink: getWrapperSourceLink('MATERIAL_TYPES', requestLimit),
               wrapperSourcePath: 'mtypes',
             }]}
             setAcceptedValues={setReferenceTables}
@@ -92,7 +93,7 @@ export const ItemData = ({
             optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
-              wrapperSourceLink: WRAPPER_SOURCE_LINKS.CALL_NUMBER_TYPES,
+              wrapperSourceLink: getWrapperSourceLink('CALL_NUMBER_TYPES', requestLimit),
               wrapperSourcePath: 'callNumberTypes',
             }]}
             isRemoveValueAllowed
@@ -186,4 +187,5 @@ export const ItemData = ({
 ItemData.propTypes = {
   setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
+  requestLimit: PropTypes.number,
 };

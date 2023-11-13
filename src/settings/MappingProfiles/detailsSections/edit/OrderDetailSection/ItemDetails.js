@@ -25,7 +25,6 @@ import { useFieldMappingRefValues } from '../../hooks';
 import {
   ALLOWED_PROD_ID_TYPE_NAMES,
   TRANSLATION_ID_PREFIX,
-  WRAPPER_SOURCE_LINKS,
 } from '../../constants';
 import {
   boolAcceptedValuesOptions,
@@ -39,6 +38,7 @@ import {
   onRemove,
 } from '../../utils';
 import {
+  getWrapperSourceLink,
   CONTRIBUTORS_FIELD,
   PRODUCT_IDS_FIELD,
   validateMARCWithDate,
@@ -49,6 +49,7 @@ export const ItemDetails = ({
   initialFields,
   setReferenceTables,
   okapi,
+  requestLimit,
 }) => {
   const ITEM_DETAILS_FIELDS_MAP = {
     TITLE: getFieldName(16),
@@ -287,7 +288,7 @@ export const ItemDetails = ({
                   optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                   wrapperSources={[{
-                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.CONTRIBUTOR_NAME_TYPES,
+                    wrapperSourceLink: getWrapperSourceLink('CONTRIBUTOR_NAME_TYPES', requestLimit),
                     wrapperSourcePath: 'contributorNameTypes'
                   }]}
                   setAcceptedValues={setReferenceTables}
@@ -340,7 +341,7 @@ export const ItemDetails = ({
                   optionLabel="name"
                   wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                   wrapperSources={[{
-                    wrapperSourceLink: WRAPPER_SOURCE_LINKS.IDENTIFIER_TYPES,
+                    wrapperSourceLink: getWrapperSourceLink('IDENTIFIER_TYPES', requestLimit),
                     wrapperSourcePath: 'identifierTypes'
                   }]}
                   setAcceptedValues={setReferenceTables}
@@ -375,4 +376,5 @@ ItemDetails.propTypes = {
   initialFields: PropTypes.object.isRequired,
   setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
+  requestLimit: PropTypes.number,
 };
