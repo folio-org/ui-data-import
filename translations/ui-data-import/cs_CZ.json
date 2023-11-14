@@ -24,7 +24,7 @@
     "today": "dnes",
     "settings.index.paneTitle": "Import dat",
     "settings.profiles": "Profily",
-    "settings.learnMore": "Zjistěte více",
+    "settings.learnMore": "Zjistit více",
     "settings.profilesInfo": "Čtyři typy profilů umožňují vytvářet a centrálně spravovat úlohy, shody, akce a mapování polí pro více úloh. Při aktualizaci profilu se automaticky aktualizují všechny úlohy, které jej obsahují.",
     "settings.other": "Ostatní",
     "undo": "Vrátit",
@@ -1166,5 +1166,5 @@
     "jobParts": "Části úlohy",
     "jobSummarySourceFileLabel": "Zdrojový soubor:",
     "jobSummarySourceFileUnavailable": "Nedostupný",
-    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
+    "errorsCountHeader": "{count, plural, one {nalezena # chyba} few {nalezeny # chyby} many {nalezeno # chyb} other {nalezeno # chyb}}"
 }
