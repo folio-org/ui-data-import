@@ -87,7 +87,7 @@ export const ProfileTree = memo(({
 
   const isSnakeCase = str => str && str.includes('_');
 
-  const getLines = (lines, currentType, order, reactTo = null) => lines.map((item, index) => ({
+  const massageAddedProfiles = (lines, currentType, order, reactTo = null) => lines.map((item, index) => ({
     id: item.content.id,
     contentType: snakeCase(currentType).slice(0, -1).toLocaleUpperCase(),
     reactTo,
@@ -96,8 +96,10 @@ export const ProfileTree = memo(({
     childSnapshotWrappers: item.childSnapshotWrappers || [],
   }));
 
-  const findRelIndex = (relations, masterId, line) => {
-    return relations.findIndex(rel => rel.masterProfileId === masterId && rel.detailProfileId === line.content.id);
+  const findRelIndex = (relations, masterId, line, reactTo) => {
+    return relations.findIndex(rel => rel.masterProfileId === masterId
+      && rel.detailProfileId === line.content.id
+      && rel.reactTo === reactTo);
   };
 
   const composeRelations = ({
@@ -117,7 +119,7 @@ export const ProfileTree = memo(({
       detailProfileId: item.content.id,
       detailWrapperId,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
-      order: item.order || order + index,
+      order: item.order ?? order + index,
     };
 
     if (masterId === PROFILE_TYPES.MATCH_PROFILE) {
@@ -134,46 +136,67 @@ export const ProfileTree = memo(({
   });
 
   const link = ({
-    initialData,
-    setInitialData,
+    initialData: profilesInSection,
+    setInitialData: setSectionData,
     lines,
     masterId,
     masterWrapperId,
     masterType,
-    detailType,
+    detailType: addedProfileType,
     reactTo,
     localDataKey,
   }) => {
-    const order = initialData.length ? (last(initialData).order + 1) : 0;
+    // get order for newly added lines
+    const order = profilesInSection.length ? (last(profilesInSection).order + 1) : 0;
+
+    // filter match profiles so linked profile is not the same as parent profile
     const linesToAdd = lines.filter(line => line.content.id !== masterId);
-    const newData = [...initialData, ...getLines(linesToAdd, detailType, order, reactTo)];
-    const profileTreeData = [...profileTreeContent];
 
     if (linesToAdd && linesToAdd.length) {
       const relsToAdd = [...addedRelations, ...composeRelations({
         lines: linesToAdd,
         masterId,
         masterType,
-        detailType,
+        detailType: addedProfileType,
         masterWrapperId,
         detailWrapperId: null,
         reactTo,
         order,
       })];
 
+      // set added relations to form field
       onLink(relsToAdd);
+
+      //set added relations to component state
       setAddedRelations(relsToAdd);
     }
 
-    const currentProfileTreeContent = set({}, localDataKey, newData);
+    const massagedAddedProfiles = massageAddedProfiles(linesToAdd, addedProfileType, order, reactTo);
 
-    dispatch(setCurrentProfileTreeContent(currentProfileTreeContent));
-    dispatch(setProfileTreeContent([...profileTreeData, ...linesToAdd]));
-    setInitialData(newData);
+    const sectionData = [...profilesInSection, ...massagedAddedProfiles];
+    const sectionDataForStorage = set({}, localDataKey, sectionData);
+
+    dispatch(setCurrentProfileTreeContent(sectionDataForStorage));
+    dispatch(setProfileTreeContent([...profileTreeContent, ...massagedAddedProfiles]));
+    setSectionData(sectionData);
   };
 
+  const removeLineAndUpdateOrder = (lines, indexOfRemovedLine) => lines.reduce((accumulator, currentValue) => {
+      const { order } = currentValue;
+
+      if (order < indexOfRemovedLine) return [...accumulator, currentValue];
+
+      // remove line from array
+      if (order === indexOfRemovedLine) return [...accumulator];
+
+      // decrease order value for rest of lines in array
+      if (order > indexOfRemovedLine) return [...accumulator, {...currentValue, order: order - 1}];
+    },
+    [],
+  );
+
   const unlink = ({
-    parentData,
+    parentData: sectionData,
     setParentData,
     line,
     masterId,
@@ -184,12 +207,16 @@ export const ProfileTree = memo(({
     reactTo,
     localDataKey,
   }) => {
-    const index = parentData.findIndex(item => item.content.id === line.content.id);
-    const newIdx = findRelIndex(addedRelations, masterId, line);
-    const profileTreeData = [...profileTreeContent];
+    // find unlinking profile index in section
+    const index = sectionData.findIndex(item => item.content.id === line.content.id);
 
-    if (newIdx < 0) {
-      const newRels = composeRelations({
+    //check whether the unlinking profile was added during editing
+    const indexOfUnlinkedProfileInAddedProfiles = findRelIndex(addedRelations, masterId, line, reactTo);
+
+    const isUnlinkingInitialData = indexOfUnlinkedProfileInAddedProfiles < 0;
+
+    if (isUnlinkingInitialData) {
+      const relsToDel = [...deletedRelations, ...composeRelations({
         lines: [line],
         masterId,
         masterType,
@@ -197,23 +224,26 @@ export const ProfileTree = memo(({
         masterWrapperId,
         detailWrapperId,
         reactTo,
-      });
-      const relsToDel = [...deletedRelations, ...newRels];
+      })];
 
+      // set deleted relations to form field
       onUnlink(relsToDel);
+
+      //set unlinked relations to component state
       setDeletedRelations(relsToDel);
     } else {
-      const relsToAdd = [...addedRelations];
+      // remove unlinked line and update order value for added relations
+      const relsToAdd = removeLineAndUpdateOrder([...addedRelations], indexOfUnlinkedProfileInAddedProfiles);
 
-      relsToAdd.splice(newIdx, 1);
+      // set added relations to form field
       onLink(relsToAdd);
+
+      //set added relations to component state
       setAddedRelations(relsToAdd);
     }
 
-    const newData = [...parentData];
-
-    newData.splice(index, 1);
-    setParentData(newData);
+    const newSectionData = removeLineAndUpdateOrder([...sectionData], index);
+    setParentData(newSectionData);
 
     const getNewProfileTreeData = function buildData(array, lineToCompare) {
       return array.filter(item => {
@@ -225,10 +255,10 @@ export const ProfileTree = memo(({
       });
     };
 
-    const currentProfileTreeContent = set({}, localDataKey, newData);
+    const sectionDataForStorage = set({}, localDataKey, newSectionData);
 
-    dispatch(setCurrentProfileTreeContent(currentProfileTreeContent));
-    dispatch(setProfileTreeContent(getNewProfileTreeData(profileTreeData, line)));
+    dispatch(setCurrentProfileTreeContent(sectionDataForStorage));
+    dispatch(setProfileTreeContent(getNewProfileTreeData([...profileTreeContent], line)));
   };
 
   return (
