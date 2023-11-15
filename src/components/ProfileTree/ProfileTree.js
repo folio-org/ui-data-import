@@ -167,7 +167,7 @@ export const ProfileTree = memo(({
       // set added relations to form field
       onLink(relsToAdd);
 
-      //set added relations to component state
+      // set added relations to component state
       setAddedRelations(relsToAdd);
     }
 
@@ -182,18 +182,17 @@ export const ProfileTree = memo(({
   };
 
   const removeLineAndUpdateOrder = (lines, indexOfRemovedLine) => lines.reduce((accumulator, currentValue) => {
-      const { order } = currentValue;
+    const { order } = currentValue;
 
-      if (order < indexOfRemovedLine) return [...accumulator, currentValue];
+    if (order < indexOfRemovedLine) return [...accumulator, currentValue];
 
-      // remove line from array
-      if (order === indexOfRemovedLine) return [...accumulator];
+    // remove line from array
+    if (order === indexOfRemovedLine) return [...accumulator];
 
-      // decrease order value for rest of lines in array
-      if (order > indexOfRemovedLine) return [...accumulator, {...currentValue, order: order - 1}];
-    },
-    [],
-  );
+    // decrease order value for rest of lines in array
+    return [...accumulator, { ...currentValue, order: order - 1 }];
+  },
+  []);
 
   const unlink = ({
     parentData: sectionData,
@@ -210,7 +209,7 @@ export const ProfileTree = memo(({
     // find unlinking profile index in section
     const index = sectionData.findIndex(item => item.content.id === line.content.id);
 
-    //check whether the unlinking profile was added during editing
+    // check whether the unlinking profile was added during editing
     const indexOfUnlinkedProfileInAddedProfiles = findRelIndex(addedRelations, masterId, line, reactTo);
 
     const isUnlinkingInitialData = indexOfUnlinkedProfileInAddedProfiles < 0;
@@ -229,7 +228,7 @@ export const ProfileTree = memo(({
       // set deleted relations to form field
       onUnlink(relsToDel);
 
-      //set unlinked relations to component state
+      // set unlinked relations to component state
       setDeletedRelations(relsToDel);
     } else {
       // remove unlinked line and update order value for added relations
@@ -238,7 +237,7 @@ export const ProfileTree = memo(({
       // set added relations to form field
       onLink(relsToAdd);
 
-      //set added relations to component state
+      // set added relations to component state
       setAddedRelations(relsToAdd);
     }
 
