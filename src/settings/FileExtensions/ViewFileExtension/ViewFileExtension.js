@@ -16,6 +16,7 @@ import {
   NoValue,
   ConfirmationModal,
   PaneHeader,
+  Checkbox,
 } from '@folio/stripes/components';
 import { EndOfItem } from '@folio/stripes-data-transfer-components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -218,17 +219,13 @@ export class ViewFileExtension extends Component {
             </Col>
             {record.importBlocked && (
               <Col xs={4}>
-                <label htmlFor="import-blocked">
-                  <input
-                    id="import-blocked"
-                    className={sharedCss.checkbox}
-                    data-test-import-blocked
-                    type="checkbox"
-                    checked
-                    disabled
-                  />
-                  &nbsp;<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />
-                </label>
+                <Checkbox
+                  label={<FormattedMessage id="ui-data-import.settings.fileExtension.blockImport" />}
+                  checked
+                  disabled
+                  inline
+                  readOnly
+                />
               </Col>
             )}
             {!record.importBlocked && (
