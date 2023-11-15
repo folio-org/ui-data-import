@@ -123,9 +123,9 @@ export class ListView extends Component {
   }
 
   setList() {
-    const { setList } = this.props;
-
-    setList(this.entityList);
+    if (this.props.setList) {
+      this.props.setList(this.entityList);
+    }
   }
 
   transitionToParams = params => {

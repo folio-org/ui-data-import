@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import {
-  get,
-  omit,
-} from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { CheckboxHeader } from '@folio/stripes-data-transfer-components';
 
 import { ListView } from '../../components';
 import { ViewActionProfile } from './ViewActionProfile';
@@ -17,8 +11,6 @@ import { CreateActionProfile } from './CreateActionProfile';
 import { EditActionProfile } from './EditActionProfile';
 
 import {
-  withCheckboxList,
-  checkboxListShape,
   getSortQuery,
   getSearchQuery,
   ENTITY_KEYS,
@@ -84,7 +76,6 @@ export const actionProfilesShape = {
     'updatedBy',
   ],
   columnWidths: {
-    isChecked: '35px',
     name: '300px',
     action: '200px',
     tags: '150px',
@@ -108,45 +99,11 @@ export const actionProfilesShape = {
       };
     }
 
-    if (props && props.checkboxList) {
-      const {
-        checkboxList: {
-          isAllSelected,
-          handleSelectAllCheckbox,
-        },
-      } = props;
-
-      headers = {
-        ...headers,
-        selected: (
-          <CheckboxHeader
-            checked={isAllSelected}
-            onChange={handleSelectAllCheckbox}
-          />
-        ),
-      };
-    }
-
     return headers;
   },
 };
 
-const mapStateToProps = state => {
-  const {
-    hasLoaded = false,
-    records: [record = {}] = [],
-  } = get(state, 'folio_data_import_action_profile', {});
-  const selectedRecord = {
-    hasLoaded,
-    record: omit(record, 'metadata', 'userInfo'),
-  };
-
-  return { selectedRecord };
-};
-
-@withCheckboxList()
 @stripesConnect
-@connect(mapStateToProps)
 export class ActionProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -192,9 +149,6 @@ export class ActionProfiles extends Component {
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
-    selectedRecord: PropTypes.object.isRequired,
-    checkboxList: checkboxListShape.isRequired,
-    setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
     ENTITY_KEY: PropTypes.string,
@@ -216,15 +170,9 @@ export class ActionProfiles extends Component {
     ENTITY_KEY: ENTITY_KEYS.ACTION_PROFILES,
     INITIAL_RESULT_COUNT,
     RESULT_COUNT_INCREMENT,
-    actionMenuItems: [
-      'addNew',
-      'exportSelected',
-      'selectAll',
-      'deselectAll',
-    ],
-    nonInteractiveHeaders: ['selected'],
-    visibleColumns: ['selected', ...actionProfilesShape.visibleColumns],
-    columnWidths: { selected: '40px', name: '430px' },
+    actionMenuItems: ['addNew'],
+    visibleColumns: actionProfilesShape.visibleColumns,
+    columnWidths: { name: '430px' },
     ViewRecordComponent: ViewActionProfile,
     CreateRecordComponent: CreateActionProfile,
     EditRecordComponent: EditActionProfile,
