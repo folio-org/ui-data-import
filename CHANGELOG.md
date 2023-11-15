@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
+* Action profiles links to wrong job profile. (UIDATIMP-1568)
 * Fix inconsistent behavior during editing job profiles (UIDATIMP-1530)
 
 ## [7.0.3](https://github.com/folio-org/ui-data-import/tree/v7.0.3) (2023-11-09)
