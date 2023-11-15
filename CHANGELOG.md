@@ -2,6 +2,9 @@
 
 ## **7.1.0** (in progress)
 
+### Features added:
+* Action profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1497)
+
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
 * Action profiles links to wrong job profile. (UIDATIMP-1568)
