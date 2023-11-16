@@ -26,8 +26,6 @@ import {
   QUICKMARK_DERIVE_CREATE_HOLDINGS_ACTION_ID,
 } from '../../utils';
 
-const testSet = new Set(['testId1']);
-
 const history = createMemoryHistory();
 
 history.push = jest.fn();
@@ -94,19 +92,6 @@ const actionProfilesProps = {
   unlink: true,
   match: { path: 'data-import-profiles/actionProfiles' },
   label:  <span>Action Profiles</span>,
-  selectedRecord: {
-    record: null,
-    hasLoaded: false,
-  },
-  checkboxList: {
-    selectedRecords: testSet,
-    isAllSelected: false,
-    selectRecord: noop,
-    selectAll: noop,
-    deselectAll: noop,
-    handleSelectAllCheckbox: noop,
-  },
-  setList: noop,
   detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
 
@@ -115,9 +100,6 @@ const renderActionProfiles = ({
   unlink,
   match,
   label,
-  selectedRecord,
-  checkboxList,
-  setList,
   detailProps,
 }) => {
   const component = () => (
@@ -131,9 +113,6 @@ const renderActionProfiles = ({
           match={match}
           history={history}
           label={label}
-          selectedRecord={selectedRecord}
-          checkboxList={checkboxList}
-          setList={setList}
           detailProps={detailProps}
           initialValues={{}}
         />
