@@ -87,8 +87,6 @@ const mutator = buildMutator({
   },
 });
 
-const testSet = new Set();
-
 const mappingProfilesProps = {
   location: {
     search: '?sort=name',
@@ -97,19 +95,6 @@ const mappingProfilesProps = {
   unlink: true,
   match: { path: '/settings/data-import/mapping-profiles' },
   label: <span>Field mapping profiles</span>,
-  selectedRecord: {
-    record: {},
-    hasLoaded: false,
-  },
-  checkboxList: {
-    selectedRecords: testSet,
-    isAllSelected: false,
-    selectRecord: noop,
-    selectAll: noop,
-    deselectAll: noop,
-    handleSelectAllCheckbox: noop,
-  },
-  setList: noop,
   detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
 
@@ -118,9 +103,6 @@ const renderMappingProfiles = ({
   unlink,
   match,
   label,
-  selectedRecord,
-  checkboxList,
-  setList,
   detailProps,
 }) => {
   const component = () => (
@@ -134,9 +116,6 @@ const renderMappingProfiles = ({
           match={match}
           history={history}
           label={label}
-          selectedRecord={selectedRecord}
-          checkboxList={checkboxList}
-          setList={setList}
           detailProps={detailProps}
           initialValues={{}}
         />
