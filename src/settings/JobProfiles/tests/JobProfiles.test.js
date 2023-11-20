@@ -161,10 +161,9 @@ describe('JobProfiles component', () => {
   });
 
   it('should have correct columns order', () => {
-    const { debug, getAllByRole } = renderJobProfiles(jobProfilesProps);
+    const { getAllByRole } = renderJobProfiles(jobProfilesProps);
 
     const headers = getAllByRole('columnheader');
-    debug(headers);
 
     expect(headers[0]).toHaveTextContent('Name');
     expect(headers[1]).toHaveTextContent('Tags');
