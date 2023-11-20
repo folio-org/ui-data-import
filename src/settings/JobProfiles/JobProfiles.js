@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
-import {
-  get,
-  omit,
-} from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { CheckboxHeader } from '@folio/stripes-data-transfer-components';
 
 import { ListView } from '../../components';
 import {
@@ -19,8 +13,6 @@ import {
 } from '.';
 
 import {
-  withCheckboxList,
-  checkboxListShape,
   getSortQuery,
   getSearchQuery,
   ENTITY_KEYS,
@@ -78,7 +70,6 @@ export const jobProfilesShape = {
     'updatedBy',
   ],
   columnWidths: {
-    isChecked: '35px',
     name: '300px',
     tags: '150px',
     updated: '100px',
@@ -100,25 +91,6 @@ export const jobProfilesShape = {
       };
     }
 
-    if (props && props.checkboxList) {
-      const {
-        checkboxList: {
-          isAllSelected,
-          handleSelectAllCheckbox,
-        },
-      } = props;
-
-      headers = {
-        ...headers,
-        selected: (
-          <CheckboxHeader
-            checked={isAllSelected}
-            onChange={handleSelectAllCheckbox}
-          />
-        ),
-      };
-    }
-
     return headers;
   },
 };
@@ -128,29 +100,13 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
   const visibleColumns = chooseJobProfile
     ? jobProfilesShape.visibleColumns
     : [
-      'selected',
       'name',
       'tags',
       'updated',
       'updatedBy',
     ];
-  const columnWidths = { selected: '40px', name: '430px' };
+  const columnWidths = { name: '430px' };
 
-  const mapStateToProps = state => {
-    const {
-      hasLoaded = false,
-      records: [record = {}] = [],
-    } = get(state, 'folio_data_import_job_profile', {});
-    const selectedRecord = {
-      hasLoaded,
-      record: omit(record, 'metadata', 'userInfo'),
-    };
-
-    return { selectedRecord };
-  };
-
-  @withCheckboxList()
-  @connect(mapStateToProps)
   @stripesConnect
   @withRouter
   class JobProfiles extends Component {
@@ -216,9 +172,6 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
       history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
       label: PropTypes.node.isRequired,
-      selectedRecord: PropTypes.object,
-      checkboxList: checkboxListShape.isRequired,
-      setList: PropTypes.func.isRequired,
       showSingleResult: PropTypes.bool,
       objectName: PropTypes.string,
       ENTITY_KEY: PropTypes.string,
@@ -243,13 +196,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
       withNewRecordButton: true,
       INITIAL_RESULT_COUNT,
       RESULT_COUNT_INCREMENT,
-      actionMenuItems: [
-        'addNew',
-        'exportSelected',
-        'selectAll',
-        'deselectAll',
-      ],
-      nonInteractiveHeaders: ['selected'],
+      actionMenuItems: ['addNew'],
       visibleColumns,
       columnWidths,
       ViewRecordComponent: ViewJobProfile,
