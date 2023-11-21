@@ -81,34 +81,18 @@ const resources = {
 };
 
 const jobProfilesProps = {
-  checkBoxList: {
-    selectedRecords: new Set(),
-    isAllChecked: false,
-    selectAll: noop,
-    deselectAll: noop,
-    selectedRecord: noop,
-    handleSelectAllCheckbox: noop,
-  },
   match: { path: '/settings/data-import/job-profiles' },
   location: {
     pathname: '/settings/data-import/job-profiles',
     search: '?sort=name',
   },
-  selectedRecord: {
-    record: {},
-    hasLoaded: false,
-  },
   refreshRemote: noop,
   label: <span>Job Profiles</span>,
-  setList: noop,
   detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
 const renderJobProfiles = ({
   match,
   location,
-  selectedRecord,
-  setList,
-  checkBoxList,
   label,
   refreshRemote,
   detailProps,
@@ -124,9 +108,6 @@ const renderJobProfiles = ({
           history={history}
           match={match}
           location={location}
-          selectedRecord={selectedRecord}
-          setList={setList}
-          checkboxList={checkBoxList}
           label={label}
           unlink
           stripes={stripes}
@@ -184,10 +165,10 @@ describe('JobProfiles component', () => {
 
     const headers = getAllByRole('columnheader');
 
-    expect(headers[1]).toHaveTextContent('Name');
-    expect(headers[2]).toHaveTextContent('Tags');
-    expect(headers[3]).toHaveTextContent('Updated');
-    expect(headers[4]).toHaveTextContent('Updated by');
+    expect(headers[0]).toHaveTextContent('Name');
+    expect(headers[1]).toHaveTextContent('Tags');
+    expect(headers[2]).toHaveTextContent('Updated');
+    expect(headers[3]).toHaveTextContent('Updated by');
   });
 
   describe('"Form" section', () => {
@@ -208,18 +189,6 @@ describe('JobProfiles component', () => {
 
         expect(getByRole('button', { name: /search/i })).toBeEnabled();
       });
-    });
-  });
-
-  describe('when "select all" checkbox is clicked', () => {
-    it('should change its state to be selected', () => {
-      const { getByRole } = renderJobProfiles(jobProfilesProps);
-
-      const selectAll = getByRole('checkbox', { name: /select all items/i });
-
-      fireEvent.click(selectAll);
-
-      expect(selectAll).toBeChecked();
     });
   });
 
