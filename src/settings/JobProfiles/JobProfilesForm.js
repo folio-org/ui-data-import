@@ -67,13 +67,17 @@ export const fetchAssociations = async (okapi, profileId) => {
   const { url } = okapi;
   const baseUrl = `${url}/data-import-profiles/profileAssociations/${profileId}/details`;
 
-  const response = await fetch(
-    createUrl(baseUrl, { masterType: ASSOCIATION_TYPES.actionProfiles }, false),
-    { headers: { ...createOkapiHeaders(okapi) } },
-  );
-  const body = await response.json();
+  try {
+    const response = await fetch(
+      createUrl(baseUrl, { masterType: ASSOCIATION_TYPES.actionProfiles }, false),
+      { headers: { ...createOkapiHeaders(okapi) } },
+    );
+    const body = await response.json();
 
-  return get(body, 'childSnapshotWrappers', []);
+    return get(body, 'childSnapshotWrappers', []);
+  } catch (error) {
+    return error;
+  }
 };
 
 const getFlattenProfileTreeContent = function buildData(array) {
@@ -239,19 +243,23 @@ export const JobProfilesFormComponent = memo(({
       .filter(record => record.contentType === PROFILE_TYPES.ACTION_PROFILE)
       .map(record => fetchAssociations(okapi, record.content.id));
 
-    const associations = await Promise.all(requests);
+    Promise.all(requests)
+      .then(async (associations) => {
+        if (associations.some(isEmpty)) {
+          showModal(true);
+        } else {
+          const record = await handleSubmit(event);
 
-    if (associations.some(isEmpty)) {
-      showModal(true);
-    } else {
-      const record = await handleSubmit(event);
-
-      if (record) {
-        clearStorage();
-        form.reset();
-        transitionToParams({ _path: `${baseUrl}/view/${record.id}` });
-      }
-    }
+          if (record) {
+            clearStorage();
+            form.reset();
+            transitionToParams({ _path: `${baseUrl}/view/${record.id}` });
+          }
+        }
+      })
+      .catch(error => {
+        return error;
+      });
   };
 
   return (
