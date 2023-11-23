@@ -99,7 +99,7 @@ export const ProfileTree = memo(({
   const findRelIndex = (relations, masterId, line, reactTo) => {
     return relations.findIndex(rel => rel.masterProfileId === masterId
       && rel.detailProfileId === line.content.id
-      && rel.reactTo === reactTo);
+      && line.reactTo === reactTo);
   };
 
   const composeRelations = ({
@@ -119,7 +119,7 @@ export const ProfileTree = memo(({
       detailProfileId: item.content.id,
       detailWrapperId,
       detailProfileType: isSnakeCase(detailType) ? detailType : snakeCase(detailType).slice(0, -1).toLocaleUpperCase(),
-      order: item.order ?? order + index,
+      order: item.order || order + index,
     };
 
     if (masterId === PROFILE_TYPES.MATCH_PROFILE) {
@@ -181,19 +181,6 @@ export const ProfileTree = memo(({
     setSectionData(sectionData);
   };
 
-  const removeLineAndUpdateOrder = (lines, indexOfRemovedLine) => lines.reduce((accumulator, currentValue) => {
-    const { order } = currentValue;
-
-    if (order < indexOfRemovedLine) return [...accumulator, currentValue];
-
-    // remove line from array
-    if (order === indexOfRemovedLine) return [...accumulator];
-
-    // decrease order value for rest of lines in array
-    return [...accumulator, { ...currentValue, order: order - 1 }];
-  },
-  []);
-
   const unlink = ({
     parentData: sectionData,
     setParentData,
@@ -231,8 +218,9 @@ export const ProfileTree = memo(({
       // set unlinked relations to component state
       setDeletedRelations(relsToDel);
     } else {
-      // remove unlinked line and update order value for added relations
-      const relsToAdd = removeLineAndUpdateOrder([...addedRelations], indexOfUnlinkedProfileInAddedProfiles);
+      const relsToAdd = [...addedRelations];
+
+      relsToAdd.splice(indexOfUnlinkedProfileInAddedProfiles, 1);
 
       // set added relations to form field
       onLink(relsToAdd);
@@ -241,7 +229,10 @@ export const ProfileTree = memo(({
       setAddedRelations(relsToAdd);
     }
 
-    const newSectionData = removeLineAndUpdateOrder([...sectionData], index);
+    const newSectionData = [...sectionData];
+
+    newSectionData.splice(index, 1);
+
     setParentData(newSectionData);
 
     const getNewProfileTreeData = function buildData(array, lineToCompare) {
