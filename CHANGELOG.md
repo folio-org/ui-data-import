@@ -9,18 +9,14 @@
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
+* Fix inconsistent behavior during editing job profiles (UIDATIMP-1530)
+* Order field is nor populated during linking/unlinking profiles to job profile (UIDATIMP-1571)
+* When error occurs during saving edited job profile page crashes (UIDATIMP-1572)
 
-## **7.0.4** (in progress)
+## [7.0.4](https://github.com/folio-org/ui-data-import/tree/v7.0.4) (2023-11-24)
 
 ### Bugs fixed:
 * Action profiles links to wrong job profile. (UIDATIMP-1568)
-* Fix inconsistent behavior during editing job profiles (UIDATIMP-1530)
-* Order field is nor populated during linking/unlinking profiles to job profile (UIDATIMP-1571)
-
-## **7.0.4** (in progress)
-
-### Bugs fixed:
-* When error occurs during saving edited job profile page crashes (UIDATIMP-1572)
 
 ## [7.0.3](https://github.com/folio-org/ui-data-import/tree/v7.0.3) (2023-11-09)
 
