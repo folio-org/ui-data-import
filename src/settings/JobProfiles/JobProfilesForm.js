@@ -118,8 +118,11 @@ export const JobProfilesFormComponent = memo(({
     [resources.profileSnapshots.records],
   );
   const profileWrapperId = useMemo(
-    () => resources.profileSnapshots?.records.at(-1)?.profileWrapperId || null,
-    [resources.profileSnapshots.records],
+    () => {
+      const lastRecord = resources.profileSnapshots?.records.at(-1);
+      return (!isLayerCreate && lastRecord) ? lastRecord?.profileWrapperId : null;
+    },
+    [isLayerCreate, resources.profileSnapshots.records],
   );
 
   const dispatch = useDispatch();
