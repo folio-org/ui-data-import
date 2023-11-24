@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **7.0.4** (in progress)
+## [7.0.4](https://github.com/folio-org/ui-data-import/tree/v7.0.4) (2023-11-24)
 
 ### Bugs fixed:
 * Action profiles links to wrong job profile. (UIDATIMP-1568)
