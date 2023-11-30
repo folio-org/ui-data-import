@@ -107,10 +107,12 @@ export const fillCellWithNoValues = (itemData, isErrorColumn = false) => {
     error: "Error",
     hrid: "",
   }];
-  This array always contains one item with status 'DISCARDED' and nas no holdingsId.
+  This array always contains one item with status 'DISCARDED' and has no holdingsId and has error message.
 */
-export const isGeneralItemsError = (itemData, itemStatus) => {
-  return itemData?.length === 1 && !itemData[0].holdingsId && itemStatus === RECORD_ACTION_STATUS.DISCARDED;
+export const isGeneralItemsError = (itemData = [], itemStatus) => {
+  const [item] = itemData;
+
+  return itemData.length === 1 && !item.holdingsId && itemStatus === RECORD_ACTION_STATUS.DISCARDED && item.error;
 };
 
 export const getRelatedInfo = (jobLogRecords, sourceRecordId) => {
