@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.0.5](https://github.com/folio-org/ui-data-import/tree/v7.0.5) (2023-12-06)
+
+### Bugs fixed:
+* Log summary table display errors when Items and Holdings are discarded (UIDATIMP-1573)
+
 ## [7.0.4](https://github.com/folio-org/ui-data-import/tree/v7.0.4) (2023-11-24)
 
 ### Bugs fixed:

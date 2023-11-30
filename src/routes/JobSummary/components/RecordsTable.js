@@ -197,7 +197,7 @@ export const RecordsTable = ({
       } = getRelatedInfo(jobLogRecords, sourceRecordId);
       const instanceId = instanceData?.idList[0];
 
-      const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
+      const isGeneralItemError = isGeneralItemsError(itemActionStatus, itemData);
 
       if (isGeneralItemError) {
         return (
@@ -330,7 +330,7 @@ export const RecordsTable = ({
         itemData,
       } = getRelatedInfo(jobLogRecords, sourceRecordId);
 
-      const isGeneralItemError = isGeneralItemsError(itemData, itemActionStatus);
+      const isGeneralItemError = isGeneralItemsError(itemActionStatus, itemData);
 
       if (isGeneralItemError) {
         return (
