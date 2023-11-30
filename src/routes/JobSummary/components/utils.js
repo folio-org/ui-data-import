@@ -109,7 +109,7 @@ export const fillCellWithNoValues = (itemData, isErrorColumn = false) => {
   }];
   This array always contains one item with status 'DISCARDED' and has no holdingsId and has error message.
 */
-export const isGeneralItemsError = (itemData = [], itemStatus) => {
+export const isGeneralItemsError = (itemStatus, itemData = []) => {
   const [item] = itemData;
 
   return itemData.length === 1 && !item.holdingsId && itemStatus === RECORD_ACTION_STATUS.DISCARDED && item.error;
