@@ -422,7 +422,7 @@ export const ACQ_DATA_RESOURCE_PATHS = [
 
 export const HOLDINGS_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
-  'holdingsrecord.json',
+  'holdings-storage/holdingsRecord.json',
 ];
 
 export const ITEM_RESOURCE_PATHS = [
