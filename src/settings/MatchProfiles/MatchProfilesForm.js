@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -146,12 +147,16 @@ export const MatchProfilesFormComponent = memo(({
   const { formatMessage } = useIntl();
 
   const { profile } = initialValues;
+  // correct match profile -> go next
+  // console.log({ initialValues });
+  // console.log({ profile });
   const {
     existingRecordType: initialExistingRecordType,
     incomingRecordType: initialIncomingRecordType,
     name,
     matchDetails,
   } = profile;
+  console.log({ matchDetails });
   const associatedJobProfiles = profile.parentProfiles || [];
   const associatedJobProfilesAmount = associatedJobProfiles.length;
 
@@ -162,10 +167,14 @@ export const MatchProfilesFormComponent = memo(({
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
   const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecordType]);
-  const [existingRecord, setExistingRecord] = useState(FOLIO_RECORD_TYPES[initialExistingRecordType]);
+  const [existingRecord, setExistingRecord] = useState({});
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
+
+  useEffect(() => {
+    setExistingRecord(FOLIO_RECORD_TYPES[initialExistingRecordType]);
+  }, [initialExistingRecordType]);
 
   const isSubmitDisabled = pristine || submitting;
   const newLabel = <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
@@ -271,6 +280,10 @@ export const MatchProfilesFormComponent = memo(({
   const existingRecordLabel = !isEmpty(existingRecord)
     ? formatMessage({ id: existingRecord.captionId })
     : '';
+
+  // console.log({ existingRecordFields });
+
+  // console.log(getInitialFields());
 
   return (
     <EditKeyShortcutsWrapper onSubmit={onSubmit}>

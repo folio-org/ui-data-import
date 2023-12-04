@@ -33,6 +33,7 @@ export const ExistingSectionFolio = ({
   };
 
   const handleExistingRecordSelect = (newValue, fieldProps) => {
+    console.log('here');
     const fieldToChange = `profile.matchDetails[${repeatableIndex}].existingMatchExpression.fields`;
     const fieldId = existingRecordFields.find(item => item.value === newValue)?.id;
     const fieldFromConfig = fieldsConfig.find(item => item.id === fieldId && item.recordType === existingRecordType);
@@ -56,18 +57,22 @@ export const ExistingSectionFolio = ({
 
   const formatExistingRecordValue = useCallback(
     value => {
+      console.log(value);
       if (!value) return '';
 
       const valueFromState = formValues.profile.matchDetails[repeatableIndex].existingMatchExpression.fields;
+      console.log({ valueFromState });
 
       const fieldValue = valueFromState[0].value;
       const fieldFromConfig = fieldsConfig.find(item => item.value === fieldValue && item.recordType === existingRecordType);
+      console.log({ fieldFromConfig });
 
       if (fieldFromConfig?.fromResources) {
         return last(valueFromState).value;
       }
 
       const existingRecordField = existingRecordFields.find(item => item.id === fieldFromConfig?.id)?.value;
+      console.log({ existingRecordField });
 
       return existingRecordField || '';
     },
