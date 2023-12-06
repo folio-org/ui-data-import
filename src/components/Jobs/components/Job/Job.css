@@ -26,7 +26,7 @@
 
   &.deletingInProgress {
     border-color: var(--danger);
-    background-color: color(var(--error) alpha(-90%));
+    background-color: oklch(from var(--error) l c h / 10%);
 
     & .deleteIcon {
       display: none;
@@ -36,7 +36,7 @@
   .fileItemDanger {
     padding-right: 60px;
     border-color: var(--danger);
-    background-color: color(var(--error) alpha(-90%));
+    background-color: oklch(from var(--error) l c h / 10%);
   }
 }
 
