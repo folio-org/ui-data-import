@@ -164,15 +164,17 @@ export const MatchProfilesFormComponent = memo(({
 
   const [incomingRecord, setIncomingRecord] = useState({});
   const [existingRecord, setExistingRecord] = useState({});
+  const [existingRecordType, setExistingRecordType] = useState(initialExistingRecordType);
+  const [incomingRecordType, setIncomingRecordType] = useState(initialIncomingRecordType);
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   useEffect(() => {
-    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecordType]);
-    setExistingRecord(FOLIO_RECORD_TYPES[initialExistingRecordType]);
+    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[incomingRecordType]);
+    setExistingRecord(FOLIO_RECORD_TYPES[existingRecordType]);
     setStaticValueType(currentStaticValueType);
-  }, [initialIncomingRecordType, initialExistingRecordType, currentStaticValueType]);
+  }, [currentStaticValueType, existingRecord, existingRecordType, incomingRecordType]);
 
   const isSubmitDisabled = pristine || submitting;
   const newLabel = <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
@@ -237,6 +239,7 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleIncomingRecordChange = record => {
     setIncomingRecord(record);
+    setIncomingRecordType(record.type);
     changeFormState('profile.incomingRecordType', record.type);
     matchDetails.forEach((item, i) => {
       changeFormState(`profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type));
@@ -257,6 +260,7 @@ export const MatchProfilesFormComponent = memo(({
 
     setExistingRecord(record);
     setExistingRecordFields(options);
+    setExistingRecordType(type);
     changeFormState('profile.existingRecordType', type);
     matchDetails.forEach((item, i) => {
       changeFormState(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));
