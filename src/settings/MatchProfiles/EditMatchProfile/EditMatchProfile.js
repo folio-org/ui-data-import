@@ -20,8 +20,6 @@ const EditMatchProfileComponent = ({
   layerType,
   ...routeProps
 }) => {
-  // correct match profile -> go next
-  // console.log(matchProfile);
   const { formatMessage } = useIntl();
 
   const matchProfileRecord = get(matchProfile, 'records.0');
@@ -38,14 +36,8 @@ const EditMatchProfileComponent = ({
     );
   }
 
-  // correct match profile -> go next
-  // console.log({ matchProfileRecord });
-
   const isDuplicateMode = layerType === LAYER_TYPES.DUPLICATE;
   const initialValues = !isDuplicateMode ? matchProfileRecord : omit(matchProfileRecord, ['id', 'parentProfiles', 'childProfiles']);
-
-  // correct match profile -> go next
-  // console.log({ initialValues });
 
   return (
     <Layer

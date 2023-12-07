@@ -46,6 +46,12 @@ export const RecordTypesSelect = memo(({
   useUpdateOnResize();
   const [existingRecord, setExistingRecord] = useState(FOLIO_RECORD_TYPES[initialExistingRecord]);
   const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecord]);
+
+  useEffect(() => {
+    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecord]);
+    setExistingRecord(FOLIO_RECORD_TYPES[initialExistingRecord]);
+  }, [initialExistingRecord, initialIncomingRecord]);
+
   const existingRecordType = existingRecord?.type;
 
   const getIncomingRecordOptions = (recordType) => {

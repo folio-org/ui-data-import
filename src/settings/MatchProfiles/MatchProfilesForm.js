@@ -147,16 +147,12 @@ export const MatchProfilesFormComponent = memo(({
   const { formatMessage } = useIntl();
 
   const { profile } = initialValues;
-  // correct match profile -> go next
-  // console.log({ initialValues });
-  // console.log({ profile });
   const {
     existingRecordType: initialExistingRecordType,
     incomingRecordType: initialIncomingRecordType,
     name,
     matchDetails,
   } = profile;
-  console.log({ matchDetails });
   const associatedJobProfiles = profile.parentProfiles || [];
   const associatedJobProfilesAmount = associatedJobProfiles.length;
 
@@ -166,15 +162,17 @@ export const MatchProfilesFormComponent = memo(({
 
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
-  const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecordType]);
+  const [incomingRecord, setIncomingRecord] = useState({});
   const [existingRecord, setExistingRecord] = useState({});
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   useEffect(() => {
+    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecordType]);
     setExistingRecord(FOLIO_RECORD_TYPES[initialExistingRecordType]);
-  }, [initialExistingRecordType]);
+    setStaticValueType(currentStaticValueType);
+  }, [initialIncomingRecordType, initialExistingRecordType, currentStaticValueType]);
 
   const isSubmitDisabled = pristine || submitting;
   const newLabel = <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
@@ -281,10 +279,6 @@ export const MatchProfilesFormComponent = memo(({
     ? formatMessage({ id: existingRecord.captionId })
     : '';
 
-  // console.log({ existingRecordFields });
-
-  // console.log(getInitialFields());
-
   return (
     <EditKeyShortcutsWrapper onSubmit={onSubmit}>
       <FullScreenForm
@@ -351,8 +345,8 @@ export const MatchProfilesFormComponent = memo(({
                   <>
                     <RecordTypesSelect
                       id="panel-existing-edit"
-                      existingRecordType={initialExistingRecordType}
-                      incomingRecordType={initialIncomingRecordType}
+                      existingRecordType={existingRecord?.type}
+                      incomingRecordType={incomingRecord?.type}
                       onExistingSelect={(record) => handleExistingRecordChange(record, matchFields, getDropdownOptions)}
                       onIncomingSelect={handleIncomingRecordChange}
                     />
@@ -379,7 +373,7 @@ export const MatchProfilesFormComponent = memo(({
                             onStaticValueTypeChange={handleStaticValueTypeChange}
                             onQualifierSectionChange={handleQualifierSectionChange}
                             changeFormState={changeFormState}
-                            formValues={form.getState().values}
+                            formValues={matchDetails}
                           />
                         )}
                       />
