@@ -6,6 +6,7 @@
 * Action profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1497)
 * Field mapping profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1498)
 * Job profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1495)
+* Change path for holdingsRecord.json. (UIDATIMP-1576)
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
