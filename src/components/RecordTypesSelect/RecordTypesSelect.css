@@ -51,7 +51,7 @@
 }
 
 .clickableItem:hover {
-  background-color: color(var(--primary) whiteness(30%))
+  background-color: hwb(from var(--primary) h 30% b);
 }
 
 .disabledItem {
