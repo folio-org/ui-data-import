@@ -6,6 +6,8 @@
 * Action profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1497)
 * Field mapping profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1498)
 * Job profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1495)
+* Change path for holdingsRecord.json. (UIDATIMP-1576)
+* Refactor CSS away from `color()` function. (UIDATIMP-1577)
 * Match profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1496)
 
 ### Bugs fixed:
@@ -13,6 +15,7 @@
 * Fix inconsistent behavior during editing job profiles (UIDATIMP-1530)
 * Order field is nor populated during linking/unlinking profiles to job profile (UIDATIMP-1571)
 * When error occurs during saving edited job profile page crashes (UIDATIMP-1572)
+* Log summary table display errors when Items and Holdings are discarded (UIDATIMP-1573)
 
 ## [7.0.4](https://github.com/folio-org/ui-data-import/tree/v7.0.4) (2023-11-24)
 
