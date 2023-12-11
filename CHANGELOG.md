@@ -8,6 +8,7 @@
 * Job profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1495)
 * Change path for holdingsRecord.json. (UIDATIMP-1576)
 * Refactor CSS away from `color()` function. (UIDATIMP-1577)
+* Match profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1496)
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
