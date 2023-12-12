@@ -20,6 +20,7 @@
 
 ### Bugs fixed:
 * Log summary table display errors when Items and Holdings are discarded (UIDATIMP-1573)
+* Display correct match profile when switch between them (UIDATIMP-1569)
 
 ## [7.0.4](https://github.com/folio-org/ui-data-import/tree/v7.0.4) (2023-11-24)
 
