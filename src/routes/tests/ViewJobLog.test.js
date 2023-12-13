@@ -59,6 +59,7 @@ const mockJobLogData = {
   sourceRecordOrder: 0,
   sourceRecordTitle: 'Test record title',
 };
+const mockIncomingRecordJSONData = JSON.stringify({ test: 'test' });
 const mockSRSMARCBibMARCJSONData = {
   id: faker.random.uuid(),
   recordType: 'MARC',
@@ -124,7 +125,7 @@ jest.mock('../../hooks', () => ({
   useInvoiceLineByIdQuery: jest.fn(() => ({ isLoading: false, data: mockInvoiceLineJSONData })),
   useAuthoritiesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockAuthorityJSONData] })),
   useLocationsQuery: jest.fn(() => ({ isLoading: false, data: mockLocationsData })),
-  useIncomingRecordByIdQuery: jest.fn(() => ({ isLoading: false, data: '{ test: "test" }' })),
+  useIncomingRecordByIdQuery: jest.fn(() => ({ isLoading: false, data: mockIncomingRecordJSONData })),
 }));
 
 const renderViewJobLog = () => {
@@ -160,12 +161,12 @@ describe('View job log page', () => {
 
       it('"Incoming Record" tab should be active by default', () => {
         const { getByRole } = renderViewJobLog();
-        const IncomingRecordTabElement = getByRole('tab', {
+        const incomingRecordTabElement = getByRole('tab', {
           name: 'Incoming record',
           selected: true,
         });
 
-        expect(IncomingRecordTabElement).toBeDefined();
+        expect(incomingRecordTabElement).toBeDefined();
       });
     });
 
@@ -202,7 +203,7 @@ describe('View job log page', () => {
       expect(getByText('Show:')).toBeDefined();
     });
 
-    it('should have 7 tabs', () => {
+    it('should have 8 tabs', () => {
       const { getAllByRole } = renderViewJobLog();
 
       expect(getAllByRole('tab').length).toEqual(8);
@@ -236,10 +237,10 @@ describe('View job log page', () => {
           getByText,
         } = renderViewJobLog();
 
-        fireEvent.click(getByText('Instance'));
+        fireEvent.click(getByText('SRS MARC'));
         const codeElement = container.querySelector('code.info');
 
-        expect(JSON.parse(codeElement.textContent)).toEqual({ test: 'test' });
+        expect(JSON.parse(codeElement.textContent)).toEqual(mockSRSMARCBibMARCJSONData);
       });
 
       describe('and Instance tag is active', () => {
