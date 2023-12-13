@@ -102,7 +102,7 @@ export const ViewJobLog = () => {
         label: '',
         logs: parsedRecordContent ? JSON.parse(parsedRecordContent) : '',
         error: error || '',
-        errorBlockId: 'srs-marc-bib-error',
+        errorBlockId: 'incoming-record-error',
       },
     ];
   }, [jobLogData, parsedRecordContent]);
