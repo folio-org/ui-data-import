@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
 import {
-  get,
   isEqual,
   isEmpty,
-  omit,
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { CheckboxHeader } from '@folio/stripes-data-transfer-components';
 
 import {
-  withCheckboxList,
-  checkboxListShape,
   fetchJsonSchema,
   getModuleVersion,
   handleAllRequests,
@@ -195,7 +189,6 @@ export const matchProfilesShape = {
     'updatedBy',
   ],
   columnWidths: {
-    isChecked: '35px',
     name: '300px',
     tags: '150px',
     updated: '100px',
@@ -217,45 +210,11 @@ export const matchProfilesShape = {
       };
     }
 
-    if (props && props.checkboxList) {
-      const {
-        checkboxList: {
-          isAllSelected,
-          handleSelectAllCheckbox,
-        },
-      } = props;
-
-      headers = {
-        ...headers,
-        selected: (
-          <CheckboxHeader
-            checked={isAllSelected}
-            onChange={handleSelectAllCheckbox}
-          />
-        ),
-      };
-    }
-
     return headers;
   },
 };
 
-const mapStateToProps = state => {
-  const {
-    hasLoaded = false,
-    records: [record = {}] = [],
-  } = get(state, 'folio_data_import_match_profile', {});
-  const selectedRecord = {
-    hasLoaded,
-    record: omit(record, 'metadata', 'userInfo'),
-  };
-
-  return { selectedRecord };
-};
-
-@withCheckboxList()
 @stripesConnect
-@connect(mapStateToProps)
 export class MatchProfiles extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -312,9 +271,6 @@ export class MatchProfiles extends Component {
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
     label: PropTypes.node.isRequired,
-    selectedRecord: PropTypes.object.isRequired,
-    checkboxList: checkboxListShape.isRequired,
-    setList: PropTypes.func.isRequired,
     showSingleResult: PropTypes.bool,
     objectName: PropTypes.string,
     ENTITY_KEY: PropTypes.string,
@@ -336,15 +292,9 @@ export class MatchProfiles extends Component {
     ENTITY_KEY: ENTITY_KEYS.MATCH_PROFILES,
     INITIAL_RESULT_COUNT,
     RESULT_COUNT_INCREMENT,
-    actionMenuItems: [
-      'addNew',
-      'exportSelected',
-      'selectAll',
-      'deselectAll',
-    ],
-    visibleColumns: ['selected', ...matchProfilesShape.visibleColumns],
-    nonInteractiveHeaders: ['selected'],
-    columnWidths: { selected: '40px', name: '430px' },
+    actionMenuItems: ['addNew'],
+    visibleColumns: matchProfilesShape.visibleColumns,
+    columnWidths: { name: '430px' },
     ViewRecordComponent: ViewMatchProfile,
     CreateRecordComponent: CreateMatchProfile,
     EditRecordComponent: EditMatchProfile,

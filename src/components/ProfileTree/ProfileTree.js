@@ -99,7 +99,7 @@ export const ProfileTree = memo(({
   const findRelIndex = (relations, masterId, line, reactTo) => {
     return relations.findIndex(rel => rel.masterProfileId === masterId
       && rel.detailProfileId === line.content.id
-      && line.reactTo === reactTo);
+      && rel.reactTo === reactTo);
   };
 
   const composeRelations = ({
