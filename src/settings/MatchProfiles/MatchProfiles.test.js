@@ -56,26 +56,12 @@ const matchProfilesProps = {
     pathname: 'data-import-profiles/matchProfiles',
   },
   label: <span>Match Profiles</span>,
-  selectedRecord: {
-    record: null,
-    hasLoaded: false,
-  },
-  checkboxList: {
-    selectedRecords: new Set(['testId1']),
-    isAllSelected: false,
-    selectRecord: noop,
-    selectAll: noop,
-    deselectAll: noop,
-    handleSelectAllCheckbox: noop,
-  },
 };
 
 const getMatchProfileComponent = ({
   resources,
   location,
   label,
-  selectedRecord,
-  checkboxList,
 }) => {
   return (
     <Harness translations={translationsProperties}>
@@ -90,9 +76,6 @@ const getMatchProfileComponent = ({
             unlink
             history={history}
             label={label}
-            selectedRecord={selectedRecord}
-            checkboxList={checkboxList}
-            setList={noop}
             initialValues={{}}
           />
         </Paneset>

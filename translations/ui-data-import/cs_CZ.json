@@ -923,7 +923,7 @@
     "settings.mappingProfiles.map.order.orderInformation.field.manual": "Manuální",
     "settings.mappingProfiles.map.order.orderInformation.field.reEncumber": "Opětovné zatížení",
     "settings.mappingProfiles.map.order.orderInformation.field.true": "pravdivé",
-    "settings.mappingProfiles.map.order.orderInformation.field.false": "Nepravdivé",
+    "settings.mappingProfiles.map.order.orderInformation.field.false": "deaktivováno",
     "settings.mappingProfiles.map.order.orderInformation.field.note.addLabel": "Přidat poznámku",
     "settings.mappingProfiles.map.order.orderInformation.field.note": "Poznámka",
     "settings.mappingProfiles.map.order.orderLineInformation.section": "Informace o řádku objednávky",
