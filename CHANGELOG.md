@@ -9,6 +9,7 @@
 * Change path for holdingsRecord.json. (UIDATIMP-1576)
 * Refactor CSS away from `color()` function. (UIDATIMP-1577)
 * Match profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1496)
+* Display missed options in the 'Existing holdings record field' section after creating match profile. (UIDATIMP-1579)
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
