@@ -1,16 +1,17 @@
 import { useQuery } from 'react-query';
 
-import { useNamespace } from '@folio/stripes/core';
+import {
+  useNamespace,
+  useOkapiKy,
+} from '@folio/stripes/core';
 
-import { useTenantKy } from './useTenantKy';
-
-export const useIncomingRecordByIdQuery = (incomingRecordId, { tenant } = {}) => {
-  const ky = useTenantKy({ tenant });
+export const useIncomingRecordByIdQuery = incomingRecordId => {
+  const ky = useOkapiKy();
   const [namespace] = useNamespace({ key: 'incomingRecordById' });
 
   const query = useQuery(
     {
-      queryKey: [namespace, incomingRecordId, tenant],
+      queryKey: [namespace, incomingRecordId],
       queryFn: () => ky.get(`metadata-provider/incomingRecords/${incomingRecordId}`).json(),
       enabled: !!incomingRecordId,
     }
