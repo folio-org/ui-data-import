@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useEffect,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -161,11 +162,19 @@ export const MatchProfilesFormComponent = memo(({
 
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
 
-  const [incomingRecord, setIncomingRecord] = useState(MATCH_INCOMING_RECORD_TYPES[initialIncomingRecordType]);
-  const [existingRecord, setExistingRecord] = useState(FOLIO_RECORD_TYPES[initialExistingRecordType]);
+  const [incomingRecord, setIncomingRecord] = useState({});
+  const [existingRecord, setExistingRecord] = useState({});
+  const [existingRecordType, setExistingRecordType] = useState(initialExistingRecordType);
+  const [incomingRecordType, setIncomingRecordType] = useState(initialIncomingRecordType);
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
+
+  useEffect(() => {
+    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[incomingRecordType]);
+    setExistingRecord(FOLIO_RECORD_TYPES[existingRecordType]);
+    setStaticValueType(currentStaticValueType);
+  }, [currentStaticValueType, existingRecord, existingRecordType, incomingRecordType]);
 
   const isSubmitDisabled = pristine || submitting;
   const newLabel = <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
@@ -230,6 +239,7 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleIncomingRecordChange = record => {
     setIncomingRecord(record);
+    setIncomingRecordType(record.type);
     changeFormState('profile.incomingRecordType', record.type);
     matchDetails.forEach((item, i) => {
       changeFormState(`profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type));
@@ -250,6 +260,7 @@ export const MatchProfilesFormComponent = memo(({
 
     setExistingRecord(record);
     setExistingRecordFields(options);
+    setExistingRecordType(type);
     changeFormState('profile.existingRecordType', type);
     matchDetails.forEach((item, i) => {
       changeFormState(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));
@@ -338,8 +349,8 @@ export const MatchProfilesFormComponent = memo(({
                   <>
                     <RecordTypesSelect
                       id="panel-existing-edit"
-                      existingRecordType={initialExistingRecordType}
-                      incomingRecordType={initialIncomingRecordType}
+                      existingRecordType={existingRecord?.type}
+                      incomingRecordType={incomingRecord?.type}
                       onExistingSelect={(record) => handleExistingRecordChange(record, matchFields, getDropdownOptions)}
                       onIncomingSelect={handleIncomingRecordChange}
                     />
@@ -366,7 +377,7 @@ export const MatchProfilesFormComponent = memo(({
                             onStaticValueTypeChange={handleStaticValueTypeChange}
                             onQualifierSectionChange={handleQualifierSectionChange}
                             changeFormState={changeFormState}
-                            formValues={form.getState().values}
+                            formValues={matchDetails}
                           />
                         )}
                       />

@@ -26,7 +26,7 @@ const existingSectionFolioWithCorrectData = {
   }],
   existingRecordType: 'INSTANCE',
   changeFormState: onChangeFormStateMock,
-  formValues: { profile: { matchDetails: [{ existingMatchExpression: { fields: [{ value: 'instance.identifiers[].value' }] } }] } },
+  formValues: [{ existingMatchExpression: { fields: [{ value: 'instance.identifiers[].value' }] } }],
 };
 
 const existingSectionFolioWithWrongData = {
@@ -43,7 +43,7 @@ const existingSectionFolioWithWrongData = {
   }],
   existingRecordType: 'HOLDINGS',
   changeFormState: onChangeFormStateMock,
-  formValues: { profile: { matchDetails: [{ existingMatchExpression: { fields: [{ value: 'test value' }] } }] } },
+  formValues: [{ existingMatchExpression: { fields: [{ value: 'test value' }] } }],
 };
 
 const renderExistingSectionFolio = ({

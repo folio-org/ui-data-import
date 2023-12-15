@@ -58,7 +58,7 @@ export const ExistingSectionFolio = ({
     value => {
       if (!value) return '';
 
-      const valueFromState = formValues.profile.matchDetails[repeatableIndex].existingMatchExpression.fields;
+      const valueFromState = formValues[repeatableIndex].existingMatchExpression.fields;
 
       const fieldValue = valueFromState[0].value;
       const fieldFromConfig = fieldsConfig.find(item => item.value === fieldValue && item.recordType === existingRecordType);
@@ -71,7 +71,7 @@ export const ExistingSectionFolio = ({
 
       return existingRecordField || '';
     },
-    [existingRecordFields, existingRecordType, formValues.profile.matchDetails, repeatableIndex],
+    [existingRecordFields, existingRecordType, formValues, repeatableIndex],
   );
 
   return (
