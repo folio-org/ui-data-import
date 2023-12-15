@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   waitFor,
   renderHook,
@@ -19,7 +17,7 @@ describe('useIncomingRecordByIdQuery', () => {
     useOkapiKy.mockClear().mockReturnValue({
       get: () => {
         return ({
-          json: () => Promise.resolve({ data: mockIncomingRecord }),
+          json: () => Promise.resolve({ parsedRecordContent: mockIncomingRecord }),
         });
       },
     });
