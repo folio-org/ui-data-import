@@ -1,18 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import {
-  fireEvent,
-  render,
-} from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   buildStripes,
   renderWithIntl,
-  translationsProperties
+  translationsProperties,
 } from '../../../test/jest/helpers';
-import { Harness } from '../../../test/helpers';
 import '../../../test/jest/__mock__';
 
 import { JobSummary } from './JobSummary';
@@ -66,19 +62,15 @@ const jobLogEntriesResources = {
     other: { totalRecords: 1 },
   },
 };
-const jobLogResources = {
-  jobLog: { records: [{}] },
-};
 const getResources = ({ dataType, jobExecutionsId, isErrorsOnly = false }) => ({
   ...getJobExecutionsResources(dataType, jobExecutionsId),
   ...jobLogEntriesResources,
-  ...jobLogResources,
   query: { errorsOnly: isErrorsOnly },
   resultCount: 1,
 });
 
 const mutator = {
-  jobLog: { GET: jest.fn() },
+  jobLogEntries: { GET: () => {} },
 };
 const stripesMock = buildStripes();
 
@@ -187,34 +179,6 @@ describe('Job summary page', () => {
     const { getByText } = renderJobSummary({});
 
     expect(getByText('RecordsTable')).toBeDefined();
-  });
-
-  it('should fetch job logs once jobExecutionsId is known', () => {
-    const component = (jobExecutionsId) => (
-      <Harness
-        translations={translationsProperties}
-        stripes={{}}
-      >
-        <Router>
-          <JobSummary
-            resources={getResources({ dataType: 'MARC', jobExecutionsId })}
-            mutator={mutator}
-            location={{
-              search: '',
-              pathname: '',
-              state: { from: 'test' }
-            }}
-            history={{ push: () => {} }}
-          />
-        </Router>
-      </Harness>
-    );
-
-    const { rerender } = render(component('testId'));
-
-    rerender(component('testJobExecutionsId'));
-
-    expect(mutator.jobLog.GET).toHaveBeenCalled();
   });
 
   it('should render a download link if multipart capability is present', () => {
