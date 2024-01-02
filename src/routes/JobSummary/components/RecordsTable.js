@@ -48,7 +48,7 @@ export const RecordsTable = ({
   history,
   resources,
   resources: {
-    jobLog: { records: jobLogRecords },
+    jobLogEntries: { records: jobLogEntriesRecords },
     locations,
   },
   source,
@@ -147,7 +147,7 @@ export const RecordsTable = ({
       <InstanceCell
         instanceActionStatus={instanceActionStatus}
         sourceRecordId={sourceRecordId}
-        jobLogRecords={jobLogRecords}
+        jobLogRecords={jobLogEntriesRecords}
       />
     ),
     holdingsStatus: ({ sourceRecordId }) => {
@@ -155,7 +155,7 @@ export const RecordsTable = ({
         instanceData,
         holdingsData,
         itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
+      } = getRelatedInfo(jobLogEntriesRecords, sourceRecordId);
 
       if (isEmpty(holdingsData)) {
         return (
@@ -194,7 +194,7 @@ export const RecordsTable = ({
         instanceData,
         holdingsData,
         itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
+      } = getRelatedInfo(jobLogEntriesRecords, sourceRecordId);
       const instanceId = instanceData?.idList[0];
 
       const isGeneralItemError = isGeneralItemsError(itemActionStatus, itemData);
@@ -265,7 +265,7 @@ export const RecordsTable = ({
       const {
         holdingsData,
         itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
+      } = getRelatedInfo(jobLogEntriesRecords, sourceRecordId);
 
       const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
@@ -273,7 +273,7 @@ export const RecordsTable = ({
         <AuthorityCell
           authorityActionStatus={authorityActionStatus}
           sourceRecordId={sourceRecordId}
-          jobLogRecords={jobLogRecords}
+          jobLogRecords={jobLogEntriesRecords}
           sortedItemData={sortedItemData}
         />
       );
@@ -285,7 +285,7 @@ export const RecordsTable = ({
       const {
         holdingsData,
         itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
+      } = getRelatedInfo(jobLogEntriesRecords, sourceRecordId);
 
       const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
@@ -293,7 +293,7 @@ export const RecordsTable = ({
         <OrderCell
           poLineActionStatus={poLineActionStatus}
           sourceRecordId={sourceRecordId}
-          jobLogRecords={jobLogRecords}
+          jobLogRecords={jobLogEntriesRecords}
           sortedItemData={sortedItemData}
         />
       );
@@ -306,7 +306,7 @@ export const RecordsTable = ({
       const {
         holdingsData,
         itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
+      } = getRelatedInfo(jobLogEntriesRecords, sourceRecordId);
 
       const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
 
@@ -314,7 +314,7 @@ export const RecordsTable = ({
         <InvoiceCell
           invoiceActionStatus={invoiceActionStatus}
           sourceRecordId={sourceRecordId}
-          jobLogRecords={jobLogRecords}
+          jobLogRecords={jobLogEntriesRecords}
           sortedItemData={sortedItemData}
           sourceRecordOrder={sourceRecordOrder}
         />
@@ -328,7 +328,7 @@ export const RecordsTable = ({
       const {
         holdingsData,
         itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
+      } = getRelatedInfo(jobLogEntriesRecords, sourceRecordId);
 
       const isGeneralItemError = isGeneralItemsError(itemActionStatus, itemData);
 
@@ -387,7 +387,6 @@ export const RecordsTable = ({
 RecordsTable.propTypes = {
   resources: PropTypes.shape({
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
-    jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     locations: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     query: PropTypes.object,
   }).isRequired,
