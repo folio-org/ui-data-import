@@ -34,7 +34,7 @@ const renderInvoiceLineInformation = () => {
       setReferenceTables={setReferenceTablesMock}
       initialFields={{}}
       mappingFields={INVOICE.mappingFields}
-      invoiceLinesFieldIndex={26}
+      invoiceLinesFieldIndex={27}
       accountingNumberOptions={[]}
       okapi={okapi}
     />

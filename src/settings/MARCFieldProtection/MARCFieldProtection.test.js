@@ -82,7 +82,10 @@ const stripesCustomProps = {
   connect: Component => props => (
     <Component
       {...props}
-      mutator={{}}
+      mutator={{
+        values: { GET: () => {} },
+        tenant: { replace: () => {} },
+      }}
       resources={resources}
     />
   ),
