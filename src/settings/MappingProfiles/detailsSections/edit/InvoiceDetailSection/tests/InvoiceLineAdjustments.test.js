@@ -30,7 +30,7 @@ const okapi = buildOkapi();
 const renderInvoiceLineAdjustments = () => {
   const component = () => (
     <InvoiceLineAdjustments
-      invoiceLinesFieldIndex={26}
+      invoiceLinesFieldIndex={27}
       setReferenceTables={noop}
       mappingFields={INVOICE.mappingFields}
       initialFields={{}}
