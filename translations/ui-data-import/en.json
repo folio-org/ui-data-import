@@ -1146,6 +1146,7 @@
   "logViewer.order": "Order",
   "logViewer.orderLine": "Order line",
   "logViewer.filter.label": "Show",
+  "logViewer.filter.incomingRecord": "Incoming record",
   "logViewer.filter.srsMARC": "SRS MARC",
   "logViewer.filter.instance": "Instance",
   "logViewer.filter.holdings": "Holdings",
