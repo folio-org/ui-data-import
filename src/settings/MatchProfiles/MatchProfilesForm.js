@@ -149,7 +149,6 @@ export const MatchProfilesFormComponent = memo(({
   const { profile } = initialValues;
   const {
     existingRecordType: initialExistingRecordType,
-    incomingRecordType: initialIncomingRecordType,
     name,
     matchDetails,
   } = profile;
@@ -161,20 +160,20 @@ export const MatchProfilesFormComponent = memo(({
   const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
 
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
+  const currectIncomingRecordType = get(form.getState(), ['values', 'profile', 'incomingRecordType'], null);
+  const currectExistingRecordType = get(form.getState(), ['values', 'profile', 'existingRecordType'], null);
 
   const [incomingRecord, setIncomingRecord] = useState({});
   const [existingRecord, setExistingRecord] = useState({});
-  const [existingRecordType, setExistingRecordType] = useState(initialExistingRecordType);
-  const [incomingRecordType, setIncomingRecordType] = useState(initialIncomingRecordType);
   const [existingRecordFields, setExistingRecordFields] = useState([]);
   const [staticValueType, setStaticValueType] = useState(currentStaticValueType);
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   useEffect(() => {
-    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[incomingRecordType]);
-    setExistingRecord(FOLIO_RECORD_TYPES[existingRecordType]);
+    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[currectIncomingRecordType]);
+    setExistingRecord(FOLIO_RECORD_TYPES[currectExistingRecordType]);
     setStaticValueType(currentStaticValueType);
-  }, [currentStaticValueType, existingRecord, existingRecordType, incomingRecordType]);
+  }, [currectExistingRecordType, currectIncomingRecordType, currentStaticValueType]);
 
   const isSubmitDisabled = pristine || submitting;
   const newLabel = <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
@@ -239,7 +238,6 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleIncomingRecordChange = record => {
     setIncomingRecord(record);
-    setIncomingRecordType(record.type);
     changeFormState('profile.incomingRecordType', record.type);
     matchDetails.forEach((item, i) => {
       changeFormState(`profile.matchDetails[${i}].incomingMatchExpression`, getSectionInitialValues(record.type));
@@ -260,7 +258,6 @@ export const MatchProfilesFormComponent = memo(({
 
     setExistingRecord(record);
     setExistingRecordFields(options);
-    setExistingRecordType(type);
     changeFormState('profile.existingRecordType', type);
     matchDetails.forEach((item, i) => {
       changeFormState(`profile.matchDetails[${i}].existingMatchExpression`, getSectionInitialValues(type));

@@ -40,13 +40,13 @@ export const ExtendedInformation = ({
   setReferenceTables,
 }) => {
   const EXTENDED_INFO_FIELDS_MAP = {
-    FOLIO_INVOICE_NUMBER: getFieldName(19),
-    PAYMENT_METHOD: getFieldName(20),
-    CHECK_SUBSCRIPTION_OVERLAP: getBoolFieldName(21),
-    EXPORT_TO_ACCOUNTING: getBoolFieldName(22),
-    CURRENCY: getFieldName(23),
-    CURRENT_EXCHANGE_RATE: getFieldName(24),
-    SET_EXCHANGE_RATE: getFieldName(25),
+    FOLIO_INVOICE_NUMBER: getFieldName(20),
+    PAYMENT_METHOD: getFieldName(21),
+    CHECK_SUBSCRIPTION_OVERLAP: getBoolFieldName(22),
+    EXPORT_TO_ACCOUNTING: getBoolFieldName(23),
+    CURRENCY: getFieldName(24),
+    CURRENT_EXCHANGE_RATE: getFieldName(25),
+    SET_EXCHANGE_RATE: getFieldName(26),
   };
 
   const [exchangeRate] = useFieldMappingFieldValue([EXCHANGE_RATE_FIELD]);

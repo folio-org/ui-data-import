@@ -186,6 +186,11 @@ const INVOICE = {
     path: 'invoice.accountingCode',
     value: '',
   }, {
+    name: 'accountNo',
+    enabled: false,
+    path: 'invoice.accountNo',
+    value: '',
+  }, {
     name: 'folioInvoiceNo',
     enabled: false,
     path: 'invoice.folioInvoiceNo',
