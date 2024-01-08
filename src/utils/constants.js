@@ -143,13 +143,14 @@ export const PROFILE_LABEL_IDS = {
 export const LOG_VIEWER = {
   FILTER: {
     OPTIONS: {
-      SRS_MARC_BIB: 0,
-      INSTANCE: 1,
-      HOLDINGS: 2,
-      ITEM: 3,
-      AUTHORITY: 4,
-      ORDER: 5,
-      INVOICE: 6,
+      INCOMING_RECORD: 0,
+      SRS_MARC_BIB: 1,
+      INSTANCE: 2,
+      HOLDINGS: 3,
+      ITEM: 4,
+      AUTHORITY: 5,
+      ORDER: 6,
+      INVOICE: 7,
     },
   },
 };
