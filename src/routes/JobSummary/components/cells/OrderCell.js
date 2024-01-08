@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import {
   getRecordActionStatusLabel,
   getHotlinkCellFormatter,
@@ -7,18 +9,17 @@ import {
 import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const OrderCell = ({
-  poLineActionStatus,
-  sourceRecordId,
-  jobLogRecords,
+  relatedPoLineInfo,
   sortedItemData,
 }) => {
+  const poLineActionStatus = relatedPoLineInfo.actionStatus;
+
   if (!poLineActionStatus) {
     return fillCellWithNoValues(sortedItemData);
   }
 
   const entityLabel = getRecordActionStatusLabel(poLineActionStatus);
-  const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-  const orderLineId = sourceRecord?.relatedPoLineInfo.idList[0];
+  const orderLineId = relatedPoLineInfo.idList[0];
   const path = `/orders/lines/view/${orderLineId}`;
 
   const isPathCorrect = !!orderLineId;
@@ -26,3 +27,10 @@ export const OrderCell = ({
 
   return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'order');
 };
+
+OrderCell.propTypes = {
+  relatedPoLineInfo: PropTypes.object.isRequired,
+  sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
+};
+
+OrderCell.defaultProps = { sortedItemData: [] };

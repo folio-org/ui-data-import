@@ -9,18 +9,17 @@ import {
 import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const AuthorityCell = ({
-  authorityActionStatus,
-  sourceRecordId,
-  jobLogRecords,
+  relatedAuthorityInfo,
   sortedItemData,
 }) => {
+  const authorityActionStatus = relatedAuthorityInfo.actionStatus;
+
   if (!authorityActionStatus) {
     return fillCellWithNoValues(sortedItemData);
   }
 
   const entityLabel = getRecordActionStatusLabel(authorityActionStatus);
-  const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-  const authorityId = sourceRecord?.relatedAuthorityInfo.idList[0];
+  const authorityId = relatedAuthorityInfo.idList[0];
   const path = `/marc-authorities/authorities/${authorityId}`;
 
   const isPathCorrect = !!authorityId;
@@ -31,14 +30,8 @@ export const AuthorityCell = ({
 };
 
 AuthorityCell.propTypes = {
-  sourceRecordId: PropTypes.string.isRequired,
-  jobLogRecords: PropTypes.arrayOf(PropTypes.object),
+  relatedAuthorityInfo: PropTypes.object.isRequired,
   sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
-  authorityActionStatus: PropTypes.string,
 };
 
-AuthorityCell.defaultProps = {
-  jobLogRecords: [],
-  sortedItemData: [],
-  authorityActionStatus: '',
-};
+AuthorityCell.defaultProps = { sortedItemData: [] };

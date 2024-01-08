@@ -9,26 +9,20 @@ import {
 import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const InvoiceCell = ({
-  invoiceActionStatus,
-  sourceRecordId,
-  jobLogRecords,
+  relatedInvoiceInfo,
+  relatedInvoiceLineInfo,
   sortedItemData,
-  sourceRecordOrder,
 }) => {
+  const invoiceActionStatus = relatedInvoiceInfo.actionStatus;
+
   if (!invoiceActionStatus && !isEmpty(sortedItemData)) {
     return fillCellWithNoValues(sortedItemData);
   }
 
   const entityLabel = getRecordActionStatusLabel(invoiceActionStatus);
-  const sourceRecord = jobLogRecords.find(item => {
-    const isIdEqual = item.sourceRecordId === sourceRecordId;
-    const isOrderEqual = item.relatedInvoiceLineInfo?.fullInvoiceLineNumber === sourceRecordOrder;
 
-    return isIdEqual && isOrderEqual;
-  });
-
-  const invoiceId = sourceRecord?.relatedInvoiceInfo.idList[0];
-  const invoiceLineId = sourceRecord?.relatedInvoiceLineInfo.id;
+  const invoiceId = relatedInvoiceInfo.idList[0];
+  const invoiceLineId = relatedInvoiceLineInfo.id;
   const path = `/invoice/view/${invoiceId}/line/${invoiceLineId}/view`;
 
   const isPathCorrect = !!(invoiceId && invoiceLineId);
@@ -38,15 +32,9 @@ export const InvoiceCell = ({
 };
 
 InvoiceCell.propTypes = {
-  sourceRecordId: PropTypes.string.isRequired,
-  sourceRecordOrder: PropTypes.number.isRequired,
-  jobLogRecords: PropTypes.arrayOf(PropTypes.object),
+  relatedInvoiceInfo: PropTypes.object.isRequired,
+  relatedInvoiceLineInfo: PropTypes.object.isRequired,
   sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
-  invoiceActionStatus: PropTypes.string,
 };
 
-InvoiceCell.defaultProps = {
-  jobLogRecords: [],
-  sortedItemData: [],
-  invoiceActionStatus: '',
-};
+InvoiceCell.defaultProps = { sortedItemData: [] };
