@@ -37,9 +37,9 @@ const renderHoldingsCell = (holdingsInfo) => {
   const component = (
     <Router>
       <HoldingsCell
-        holdingsInfo={holdingsInfo}
         instanceId="testInstanceId"
-        itemInfo={itemInfo}
+        relatedHoldingsInfo={holdingsInfo}
+        relatedItemInfo={itemInfo}
         locations={locationsProp}
       />
     </Router>
