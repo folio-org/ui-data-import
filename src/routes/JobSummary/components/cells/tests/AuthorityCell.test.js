@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { runAxeTest } from '@folio/stripes-testing';
-import faker from 'faker';
 
 import '../../../../../../test/jest/__mock__';
 
@@ -11,38 +10,6 @@ import {
 } from '../../../../../../test/jest/helpers';
 
 import { AuthorityCell } from '../AuthorityCell';
-
-const jobLogRecords = [{
-  sourceRecordId: 'testId',
-  sourceRecordOrder: 0,
-  sourceRecordTitle: 'Test item 1',
-  relatedInstanceInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
-  },
-  relatedHoldingsInfo: [{
-    actionStatus: 'CREATED',
-    id: 'testHoldingsId',
-    permanentLocationId: faker.random.uuid(),
-    hrid: 'ho00000000017',
-    error: '',
-  }],
-  relatedItemInfo: [{
-    actionStatus: 'CREATED',
-    id: '37f20cb1-f60c-4195-80a1-00a16c4af5cb',
-    hrid: 'it00000000015',
-    holdingsId: 'testHoldingsId',
-    error: '',
-  }],
-  relatedAuthorityInfo: {
-    actionStatus: 'CREATED',
-    idList: ['testAuthorityId'],
-  },
-  relatedPoLineInfo: {
-    actionStatus: 'CREATED',
-    idList: [faker.random.uuid()],
-  },
-}];
 
 const sortedItemData = [
   [{
@@ -58,9 +25,10 @@ const renderAuthorityCell = (authorityActionStatus) => {
   const component = (
     <Router>
       <AuthorityCell
-        authorityActionStatus={authorityActionStatus}
-        sourceRecordId="testId"
-        jobLogRecords={jobLogRecords}
+        relatedAuthorityInfo={{
+          actionStatus: authorityActionStatus,
+          idList: ['testAuthorityId'],
+        }}
         sortedItemData={sortedItemData}
       />
     </Router>

@@ -11,23 +11,14 @@ import {
 
 import { InstanceCell } from '../InstanceCell';
 
-const jobLogRecords = [{
-  sourceRecordId: 'testId',
-  sourceRecordOrder: 0,
-  sourceRecordTitle: 'Test item 1',
-  relatedInstanceInfo: {
-    actionStatus: 'CREATED',
-    idList: ['testInstanceId'],
-  },
-}];
-
 const renderInstanceCell = (instanceActionStatus) => {
   const component = (
     <Router>
       <InstanceCell
-        instanceActionStatus={instanceActionStatus}
-        sourceRecordId="testId"
-        jobLogRecords={jobLogRecords}
+        relatedInstanceInfo={{
+          actionStatus: instanceActionStatus,
+          idList: ['testInstanceId'],
+        }}
       />
     </Router>
   );
