@@ -46,6 +46,7 @@ export const MappingInvoiceDetails = ({
   const [selectedVendor, setSelectedVendor] = useState({});
   const [accountingCodeOptions, setAccountingCodeOptions] = useState([]);
   const [accountingNumberOptions, setAccountingNumberOptions] = useState([]);
+  const [accountNumbersByCode, setAccountNumbersByCode] = useState({});
 
   const [filledVendorId] = useFieldMappingValueFromLookup(VENDOR_ID_FIELD);
   const { organization } = useOrganizationValue(filledVendorId ? `"${filledVendorId}"` : '');
@@ -58,7 +59,7 @@ export const MappingInvoiceDetails = ({
   }, [organization]);
 
   const ACCOUNTING_CODE_FIELD_INDEX = 18;
-  const INVOICE_LINES_FIELD_INDEX = 26;
+  const INVOICE_LINES_FIELD_INDEX = 27;
   const ACCOUNT_NUMBER_FIELD_INDEX = 10;
 
   const selectVendor = useCallback(vendor => {
@@ -70,6 +71,12 @@ export const MappingInvoiceDetails = ({
       const erpCode = vendor.erpCode || '';
       const hasAnyAccountingCode = vendor.accounts?.some(({ appSystemNo }) => Boolean(appSystemNo));
       const defaultVendorAccountingCode = !hasAnyAccountingCode ? erpCode : '';
+
+      const accNumbersByAccCode = vendor.accounts.reduce((obj, account) => (!account.appSystemNo ? obj : {
+        ...obj,
+        [account.appSystemNo]: account.accountNo,
+      }), {});
+      setAccountNumbersByCode(accNumbersByAccCode);
 
       setReferenceTables(getFieldName(ACCOUNTING_CODE_FIELD_INDEX), defaultVendorAccountingCode ? `"${defaultVendorAccountingCode}"` : '');
       setReferenceTables(getSubfieldName(INVOICE_LINES_FIELD_INDEX, ACCOUNT_NUMBER_FIELD_INDEX, 0), '');
@@ -108,6 +115,7 @@ export const MappingInvoiceDetails = ({
         filledVendorId={filledVendorId}
         setReferenceTables={setReferenceTables}
         accountingCodeOptions={accountingCodeOptions}
+        accountNumbersByCode={accountNumbersByCode}
         onSelectVendor={selectVendor}
         onClearVendor={onClearVendor}
         okapi={okapi}
