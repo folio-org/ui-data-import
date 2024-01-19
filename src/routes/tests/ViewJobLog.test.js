@@ -59,6 +59,7 @@ const mockJobLogData = {
   sourceRecordOrder: 0,
   sourceRecordTitle: 'Test record title',
 };
+const mockIncomingRecordJSONData = JSON.stringify({ test: 'test' });
 const mockSRSMARCBibMARCJSONData = {
   id: faker.random.uuid(),
   recordType: 'MARC',
@@ -124,6 +125,7 @@ jest.mock('../../hooks', () => ({
   useInvoiceLineByIdQuery: jest.fn(() => ({ isLoading: false, data: mockInvoiceLineJSONData })),
   useAuthoritiesByIdQuery: jest.fn(() => ({ isLoading: false, data: [mockAuthorityJSONData] })),
   useLocationsQuery: jest.fn(() => ({ isLoading: false, data: mockLocationsData })),
+  useIncomingRecordByIdQuery: jest.fn(() => ({ isLoading: false, data: mockIncomingRecordJSONData })),
 }));
 
 const renderViewJobLog = () => {
@@ -157,14 +159,14 @@ describe('View job log page', () => {
         expect(queryByText('1 (Test record title)')).toBeDefined();
       });
 
-      it('"SRS MARC" tab should be active by default', () => {
+      it('"Incoming Record" tab should be active by default', () => {
         const { getByRole } = renderViewJobLog();
-        const srsMarcBibTabElement = getByRole('tab', {
-          name: 'SRS MARC',
+        const incomingRecordTabElement = getByRole('tab', {
+          name: 'Incoming record',
           selected: true,
         });
 
-        expect(srsMarcBibTabElement).toBeDefined();
+        expect(incomingRecordTabElement).toBeDefined();
       });
     });
 
@@ -201,10 +203,10 @@ describe('View job log page', () => {
       expect(getByText('Show:')).toBeDefined();
     });
 
-    it('should have 7 tabs', () => {
+    it('should have 8 tabs', () => {
       const { getAllByRole } = renderViewJobLog();
 
-      expect(getAllByRole('tab').length).toEqual(7);
+      expect(getAllByRole('tab').length).toEqual(8);
     });
   });
 
@@ -230,7 +232,12 @@ describe('View job log page', () => {
       });
 
       it('should display SRS MARC JSON details on the screen', () => {
-        const { container } = renderViewJobLog();
+        const {
+          container,
+          getByText,
+        } = renderViewJobLog();
+
+        fireEvent.click(getByText('SRS MARC'));
         const codeElement = container.querySelector('code.info');
 
         expect(JSON.parse(codeElement.textContent)).toEqual(mockSRSMARCBibMARCJSONData);

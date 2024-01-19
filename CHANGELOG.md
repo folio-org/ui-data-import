@@ -10,6 +10,8 @@
 * Refactor CSS away from `color()` function. (UIDATIMP-1577)
 * Match profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1496)
 * Display missed options in the 'Existing holdings record field' section after creating match profile. (UIDATIMP-1579)
+* Update unit tests after changes in stripes-smart-components. (UIDATIMP-1585)
+* Provide "accountNo" field mapping when account-level accounting code is specified for invoice mapping. (UIDATIMP-1584)
 * Update unit tests after changes in stripes-smart-components (UIDATIMP-1585)
 * Mock ResizeObserver to fix failed tests (UIDATIMP-1586)
 

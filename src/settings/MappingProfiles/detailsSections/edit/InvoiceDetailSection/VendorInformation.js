@@ -30,6 +30,7 @@ export const VendorInformation = ({
   setReferenceTables,
   filledVendorId,
   accountingCodeOptions,
+  accountNumbersByCode,
   onSelectVendor,
   onClearVendor,
   okapi,
@@ -38,10 +39,16 @@ export const VendorInformation = ({
     VENDOR_INVOICE_NUMBER: getFieldName(16),
     VENDOR_NAME: getFieldName(17),
     ACCOUNTING_CODE: 18,
+    ACCOUNT_NUMBER: 19,
   };
 
   const onAccountingCodeChange = value => {
     setReferenceTables(getFieldEnabled(VENDOR_INFO_FIELDS_MAP.ACCOUNTING_CODE), !isEmpty(value));
+
+    const accountNo = accountNumbersByCode[value?.slice(1, -1)];
+
+    setReferenceTables(getFieldEnabled(VENDOR_INFO_FIELDS_MAP.ACCOUNT_NUMBER), !isEmpty(accountNo));
+    setReferenceTables(getFieldName(VENDOR_INFO_FIELDS_MAP.ACCOUNT_NUMBER), accountNo ? `"${accountNo}"` : '');
   };
 
   return (
@@ -98,9 +105,11 @@ VendorInformation.propTypes = {
   onClearVendor: PropTypes.func,
   filledVendorId: PropTypes.string,
   accountingCodeOptions: PropTypes.arrayOf(PropTypes.object),
+  accountNumbersByCode: PropTypes.object,
 };
 
 VendorInformation.defaultProps = {
   filledVendorId: '',
   accountingCodeOptions: [],
+  accountNumbersByCode: {},
 };
