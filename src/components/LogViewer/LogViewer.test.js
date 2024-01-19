@@ -13,6 +13,14 @@ import { LogViewer } from './LogViewer';
 const logViewerLogsProps = {
   logs: {
     0: [{
+      label: 'incoming record label',
+      logs: [{
+        id: '0',
+        name: 'test',
+      }],
+      errorBlockId: 'incoming-record-error',
+    }],
+    1: [{
       label: 'srs-marc-bib label',
       logs: [{
         id: '0',
@@ -20,12 +28,12 @@ const logViewerLogsProps = {
       }],
       errorBlockId: 'srs-marc-bib-error',
     }],
-    1: [{
+    2: [{
       label: 'instance label',
       error: 'test error',
       errorBlockId: 'instance-error',
     }],
-    2: [{
+    3: [{
       label: 'holdings label',
       logs: [{
         id: '2',
@@ -33,7 +41,7 @@ const logViewerLogsProps = {
       }],
       errorBlockId: 'holdings-error',
     }],
-    3: [{
+    4: [{
       label: 'item label',
       logs: [{
         id: '3',
@@ -41,7 +49,7 @@ const logViewerLogsProps = {
       }],
       errorBlockId: 'item-error',
     }],
-    4: [{
+    5: [{
       label: 'authority label',
       logs: [{
         id: '4',
@@ -49,7 +57,7 @@ const logViewerLogsProps = {
       }],
       errorBlockId: 'authority-error',
     }],
-    5: [{
+    6: [{
       label: 'po-line label',
       logs: [{
         id: '5',
@@ -57,7 +65,7 @@ const logViewerLogsProps = {
       }],
       errorBlockId: 'po-line-error',
     }],
-    6: [{
+    7: [{
       label: 'invoice label',
       logs: [{
         id: '6',
@@ -117,13 +125,13 @@ describe('LogViewer component', () => {
     expect(preElement).toHaveClass('coy');
   });
 
-  it('should be rendered', () => {
+  it('should be rendered Incoming record data by default', () => {
     const { getByText } = renderLogViewer({
       ...logViewerLogsProps,
       ...logViewerOtherProps,
     });
 
-    expect(getByText('srs-marc-bib label')).toBeDefined();
+    expect(getByText('incoming record label')).toBeDefined();
   });
 
   describe('when there is no data', () => {

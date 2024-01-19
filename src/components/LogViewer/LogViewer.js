@@ -31,6 +31,9 @@ const { FILTER: { OPTIONS } } = LOG_VIEWER;
 
 const filterOptions = [
   {
+    id: OPTIONS.INCOMING_RECORD,
+    caption: 'ui-data-import.logViewer.filter.incomingRecord',
+  }, {
     id: OPTIONS.SRS_MARC_BIB,
     caption: 'ui-data-import.logViewer.filter.srsMARC',
   }, {
@@ -71,7 +74,7 @@ export const LogViewer = memo(({
     visible = true,
     message = '',
     showThemes = true,
-    activeFilter = OPTIONS.SRS_MARC_BIB,
+    activeFilter = OPTIONS.INCOMING_RECORD,
   } = {},
 }) => {
   const { formatMessage } = useIntl();
