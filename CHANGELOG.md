@@ -11,6 +11,7 @@
 * Match profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1496)
 * Display missed options in the 'Existing holdings record field' section after creating match profile. (UIDATIMP-1579)
 * Update unit tests after changes in stripes-smart-components (UIDATIMP-1585)
+* Mock ResizeObserver to fix failed tests (UIDATIMP-1586)
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)

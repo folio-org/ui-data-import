@@ -10,11 +10,6 @@ import '../../../test/jest/__mock__';
 
 import { RecordTypesSelect } from './RecordTypesSelect';
 
-window.ResizeObserver = jest.fn(() => ({
-  observe() {},
-  unobserve() {},
-}));
-
 const renderRecordTypesSelect = ({
   incomingRecordType,
   existingRecordType,
@@ -30,10 +25,6 @@ const renderRecordTypesSelect = ({
 };
 
 describe('RecordTypesSelect component', () => {
-  afterAll(() => {
-    delete window.ResizeObserver;
-  });
-
   it('should be rendered with no axe errors', async () => {
     const { container } = renderRecordTypesSelect({
       incomingRecordType: 'MARC_AUTHORITY',

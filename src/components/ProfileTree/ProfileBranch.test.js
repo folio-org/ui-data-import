@@ -11,10 +11,6 @@ import '../../../test/jest/__mock__';
 
 import { ProfileBranch } from './ProfileBranch';
 
-window.ResizeObserver = jest.fn(() => ({
-  observe() {},
-  unobserve() {},
-}));
 const profileBranchProps = {
   linkingRules: {
     profilesAllowed: ['matchProfiles', 'actionProfiles'],
@@ -117,10 +113,6 @@ const renderProfileBranch = ({
 };
 
 describe('ProfileBranch component', () => {
-  afterAll(() => {
-    delete window.ResizeObserver;
-  });
-
   it('should be rendered with no axe errors', async () => {
     const { container } = renderProfileBranch(profileBranchProps);
 

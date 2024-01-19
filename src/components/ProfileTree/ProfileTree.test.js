@@ -44,11 +44,6 @@ jest.mock('@folio/stripes/components', () => ({
   ) : null)),
 }));
 
-window.ResizeObserver = jest.fn(() => ({
-  observe() {},
-  unobserve() {},
-}));
-
 global.fetch = jest.fn();
 
 const profileTreeProps = ({
@@ -163,7 +158,6 @@ describe('ProfileTree component', () => {
   });
 
   afterAll(() => {
-    delete window.ResizeObserver;
     delete global.fetch;
   });
 
