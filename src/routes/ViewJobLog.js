@@ -27,6 +27,7 @@ import {
   useInvoiceLineByIdQuery,
   useAuthoritiesByIdQuery,
   useLocationsQuery,
+  useIncomingRecordByIdQuery,
 } from '../hooks';
 
 import {
@@ -68,6 +69,7 @@ export const ViewJobLog = () => {
   const { data: invoiceLineData } = useInvoiceLineByIdQuery(invoiceLineId, { tenant: jobLogData?.relatedInvoiceInfo?.tenantId });
   const { data: authoritiesData } = useAuthoritiesByIdQuery(authoritiesIds, { tenant: jobLogData?.relatedAuthorityInfo?.tenantId });
   const { data: locationsData = [] } = useLocationsQuery({ tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
+  const { data: parsedRecordContent } = useIncomingRecordByIdQuery(recordId);
 
   useEffect(() => {
     if (!isJobLogLoading && !isJobLogError) {
@@ -91,6 +93,19 @@ export const ViewJobLog = () => {
       setAuthoritiesIds(relatedAuthorityInfo?.idList);
     }
   }, [isJobLogLoading, isJobLogError, jobLogData]);
+
+  const incomingRecordLogs = useMemo(() => {
+    const { error } = jobLogData;
+
+    return [
+      {
+        label: '',
+        logs: parsedRecordContent ? JSON.parse(parsedRecordContent) : '',
+        error: error || '',
+        errorBlockId: 'incoming-record-error',
+      },
+    ];
+  }, [jobLogData, parsedRecordContent]);
 
   const srsMarcBibLogs = useMemo(() => {
     const { error } = jobLogData;
@@ -264,10 +279,11 @@ export const ViewJobLog = () => {
       />
     ),
     showThemes: false,
-    activeFilter: isEdifactType ? OPTIONS.INVOICE : OPTIONS.SRS_MARC_BIB,
+    activeFilter: isEdifactType ? OPTIONS.INVOICE : OPTIONS.INCOMING_RECORD,
   };
 
   const logs = {
+    [OPTIONS.INCOMING_RECORD]: incomingRecordLogs,
     [OPTIONS.SRS_MARC_BIB]: srsMarcBibLogs,
     [OPTIONS.INSTANCE]: instanceLogs,
     [OPTIONS.HOLDINGS]: holdingsLogs,

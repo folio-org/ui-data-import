@@ -76,7 +76,6 @@ const JobSummaryComponent = props => {
     resources,
     resources: {
       jobExecutions: { records: jobExecutionsRecords },
-      jobLogEntries: { records: jobLogEntriesRecords },
       query,
     },
     location,
@@ -111,16 +110,6 @@ const JobSummaryComponent = props => {
       mutator?.resultOffset?.replace(0);
     }
   }, [id, mutator]);
-
-  useEffect(() => {
-    if (jobExecutionsId && previousJobExecutionsIdRef.current !== jobExecutionsId) {
-      jobLogEntriesRecords.forEach(entry => {
-        const recordId = isEdifactType ? entry.invoiceLineJournalRecordId : entry.sourceRecordId;
-
-        mutator.jobLog.GET({ path: `metadata-provider/jobLogEntries/${jobExecutionsId}/records/${recordId}` });
-      });
-    }
-  }, [jobExecutionsId, jobLogEntriesRecords]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getSource = () => {
     const resourceName = 'jobLogEntries';
@@ -293,12 +282,6 @@ JobSummaryComponent.manifest = Object.freeze({
       staticFallback: { params: {} },
     },
   },
-  jobLog: {
-    type: 'okapi',
-    path: 'metadata-provider/jobLogEntries/:{id}/records/:{recordId}',
-    throwErrors: false,
-    accumulate: true,
-  },
   jobExecutions: {
     type: 'okapi',
     path: 'change-manager/jobExecutions/:{id}',
@@ -333,7 +316,6 @@ JobSummaryComponent.propTypes = {
       ).isRequired,
     }),
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
-    jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     locations: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
   }).isRequired,
   location: PropTypes.oneOfType([

@@ -11,21 +11,6 @@ import {
 
 import { InvoiceCell } from '../InvoiceCell';
 
-const jobLogRecords = [{
-  sourceRecordId: 'testId',
-  sourceRecordOrder: 0,
-  invoiceActionStatus: 'CREATED',
-  relatedInvoiceInfo: {
-    idList: ['testInvoiceId'],
-    hridList: [],
-  },
-  relatedInvoiceLineInfo: {
-    fullInvoiceLineNumber: 0,
-    id: 'testInvoiceLineId',
-    hridList: [],
-  },
-}];
-
 const sortedItemData = [
   [{
     actionStatu: 'CREATED',
@@ -40,11 +25,12 @@ const renderInvoiceCell = (invoiceActionStatus) => {
   const component = (
     <Router>
       <InvoiceCell
-        invoiceActionStatus={invoiceActionStatus}
-        sourceRecordId="testId"
-        jobLogRecords={jobLogRecords}
+        relatedInvoiceInfo={{
+          actionStatus: invoiceActionStatus,
+          idList: ['testInvoiceId'],
+        }}
+        relatedInvoiceLineInfo={{ id: 'testInvoiceLineId' }}
         sortedItemData={sortedItemData}
-        sourceRecordOrder={0}
       />
     </Router>
   );

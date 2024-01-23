@@ -100,16 +100,7 @@ const renderTreeLine = ({
   return render(component);
 };
 
-window.ResizeObserver = jest.fn(() => ({
-  observe() {},
-  unobserve() {},
-}));
-
 describe('TreeLine component', () => {
-  afterAll(() => {
-    delete window.ResizeObserver;
-  });
-
   it('should be rendered with no axe errors', async () => {
     const { container } = render(parentContainer);
 
