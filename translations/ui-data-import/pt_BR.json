@@ -214,7 +214,7 @@
     "editJobProfile": "Editar perfil do trabalho",
     "run": "Executar",
     "modal.jobProfile.run.header": "Tem certeza de que deseja executar este trabalho?",
-    "modal.jobProfile.run.message": "Você selecionou o perfil de trabalho \"<b>{nome}\"</b> para <b>Executar</b> os arquivos carregados.",
+    "modal.jobProfile.run.message": "Você selecionou o perfil de trabalho \"<b>{name}\"</b> para <b>Executar</b> os arquivos carregados.",
     "save": "Salvar",
     "match.metadata": "Metadados de correspondência",
     "match.criteria": "Critérios de correspondência",
@@ -1166,5 +1166,6 @@
     "jobParts": "Partes do trabalho",
     "jobSummarySourceFileLabel": "Arquivo de origem: ",
     "jobSummarySourceFileUnavailable": "Indisponível",
-    "errorsCountHeader": "{count, plural, one {# erro encontrado} other {# erros encontrados}}"
+    "errorsCountHeader": "{count, plural, one {# erro encontrado} other {# erros encontrados}}",
+    "logViewer.filter.incomingRecord": "Registro de entrada"
 }

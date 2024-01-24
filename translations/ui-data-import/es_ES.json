@@ -1149,7 +1149,7 @@
     "jobProgress.partsProcessed": "Job parts processed: {current} of {total}",
     "jobProgress.partsCompleted": "Completado",
     "jobProgress.partsCompletedWithErrors": "Completed with errors: {amount}",
-    "jobProgress.partsFailed": "Fallado",
+    "jobProgress.partsFailed": "Fallado: {amount}",
     "uploadError": "There was a problem uploading the file. Please try again",
     "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
     "logViewer.partOfTotal": "{number} of {total}",
@@ -1166,5 +1166,6 @@
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
     "jobSummarySourceFileUnavailable": "Indisponible",
-    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}",
+    "logViewer.filter.incomingRecord": "Incoming record"
 }
