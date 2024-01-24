@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 import { useStripes } from '@folio/stripes/core';
 
@@ -7,7 +7,6 @@ import {
   getHotlinkCellFormatter,
   BaseLineCell,
 } from '../utils';
-
 import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const ItemCell = ({
@@ -52,3 +51,10 @@ export const ItemCell = ({
     </BaseLineCell>
   );
 };
+
+ItemCell.propTypes = {
+  instanceId: PropTypes.string.isRequired,
+  sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
+};
+
+ItemCell.defaultProps = { sortedItemData: [] };

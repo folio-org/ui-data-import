@@ -35,7 +35,6 @@ import {
 } from '.';
 import {
   BaseLineCell,
-  getRelatedInfo,
   groupAndSortDataForRender,
   isGeneralItemsError,
 } from './utils';
@@ -47,10 +46,7 @@ export const RecordsTable = ({
   location,
   history,
   resources,
-  resources: {
-    jobLog: { records: jobLogRecords },
-    locations,
-  },
+  resources: { locations },
   source,
   maxSortKeys,
   defaultSort,
@@ -125,7 +121,7 @@ export const RecordsTable = ({
       sourceRecordId,
       sourceRecordType,
       sourceRecordActionStatus,
-      holdingsActionStatus,
+      relatedHoldingsInfo,
       invoiceLineJournalRecordId,
     }) => (
       <TitleCell
@@ -133,31 +129,22 @@ export const RecordsTable = ({
         sourceRecordId={sourceRecordId}
         sourceRecordType={sourceRecordType}
         sourceRecordTitle={sourceRecordTitle}
-        holdingsActionStatus={holdingsActionStatus}
+        holdingsActionStatus={relatedHoldingsInfo?.actionStatus}
         sourceRecordActionStatus={sourceRecordActionStatus}
         invoiceLineJournalRecordId={invoiceLineJournalRecordId}
         jobLogEntriesRecords={filteredJobLogEntriesRecords}
       />
     ),
     srsMarcStatus: ({ sourceRecordActionStatus }) => <SRSMarcCell sourceRecordActionStatus={sourceRecordActionStatus} />,
-    instanceStatus: ({
-      instanceActionStatus,
-      sourceRecordId,
-    }) => (
-      <InstanceCell
-        instanceActionStatus={instanceActionStatus}
-        sourceRecordId={sourceRecordId}
-        jobLogRecords={jobLogRecords}
-      />
+    instanceStatus: ({ relatedInstanceInfo = {} }) => (
+      <InstanceCell relatedInstanceInfo={relatedInstanceInfo} />
     ),
-    holdingsStatus: ({ sourceRecordId }) => {
-      const {
-        instanceData,
-        holdingsData,
-        itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
-
-      if (isEmpty(holdingsData)) {
+    holdingsStatus: ({
+      relatedInstanceInfo = {},
+      relatedHoldingsInfo = [],
+      relatedItemInfo = [],
+    }) => {
+      if (isEmpty(relatedHoldingsInfo)) {
         return (
           <BaseLineCell>
             <NoValue />
@@ -165,10 +152,10 @@ export const RecordsTable = ({
         );
       }
 
-      const itemInfo = itemData ? [...itemData] : [{}];
-      const instanceId = instanceData?.idList[0];
+      const itemInfo = !isEmpty(relatedItemInfo) ? [...relatedItemInfo] : [{}];
+      const instanceId = relatedInstanceInfo.idList[0];
 
-      holdingsData?.forEach(holdings => {
+      relatedHoldingsInfo.forEach(holdings => {
         const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
         const holdingsId = holdings.id;
 
@@ -180,24 +167,19 @@ export const RecordsTable = ({
       return (
         <HoldingsCell
           instanceId={instanceId}
-          holdingsInfo={holdingsData}
-          itemInfo={itemInfo}
+          relatedHoldingsInfo={relatedHoldingsInfo}
+          relatedItemInfo={itemInfo}
           locations={locations.records}
         />
       );
     },
     itemStatus: ({
-      sourceRecordId,
-      itemActionStatus,
+      relatedInstanceInfo = {},
+      relatedHoldingsInfo = [],
+      relatedItemInfo = [],
     }) => {
-      const {
-        instanceData,
-        holdingsData,
-        itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
-      const instanceId = instanceData?.idList[0];
-
-      const isGeneralItemError = isGeneralItemsError(itemActionStatus, itemData);
+      const instanceId = relatedInstanceInfo.idList[0];
+      const isGeneralItemError = isGeneralItemsError(relatedItemInfo);
 
       if (isGeneralItemError) {
         return (
@@ -207,7 +189,7 @@ export const RecordsTable = ({
         );
       }
 
-      if (isEmpty(itemData) && isEmpty(holdingsData)) {
+      if (isEmpty(relatedItemInfo) && isEmpty(relatedHoldingsInfo)) {
         return (
           <BaseLineCell>
             <NoValue />
@@ -215,8 +197,8 @@ export const RecordsTable = ({
         );
       }
 
-      if (isEmpty(itemData)) {
-        const emptyValues = holdingsData?.map((_, index) => (
+      if (isEmpty(relatedItemInfo)) {
+        const emptyValues = relatedHoldingsInfo?.map((_, index) => (
           <div key={index} style={{ paddingBottom: '7px' }}>
             <NoValue />
           </div>
@@ -229,18 +211,18 @@ export const RecordsTable = ({
         );
       }
 
-      if (isEmpty(holdingsData)) {
+      if (isEmpty(relatedHoldingsInfo)) {
         return (
           <ItemCell
-            sortedItemData={[itemData]}
+            sortedItemData={[relatedItemInfo]}
             instanceId={instanceId}
           />
         );
       }
 
-      const itemInfo = itemData ? [...itemData] : [{}];
+      const itemInfo = relatedItemInfo ? [...relatedItemInfo] : [{}];
 
-      holdingsData?.forEach(holdings => {
+      relatedHoldingsInfo?.forEach(holdings => {
         const isDiscarded = holdings.actionStatus === RECORD_ACTION_STATUS.DISCARDED;
         const holdingsId = holdings.id;
 
@@ -249,7 +231,7 @@ export const RecordsTable = ({
         }
       });
 
-      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
+      const sortedItemData = groupAndSortDataForRender(relatedItemInfo, relatedHoldingsInfo);
 
       return (
         <ItemCell
@@ -259,78 +241,55 @@ export const RecordsTable = ({
       );
     },
     authorityStatus: ({
-      authorityActionStatus,
-      sourceRecordId,
+      relatedHoldingsInfo = [],
+      relatedItemInfo = [],
+      relatedAuthorityInfo = {},
     }) => {
-      const {
-        holdingsData,
-        itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
-
-      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
+      const sortedItemData = groupAndSortDataForRender(relatedItemInfo, relatedHoldingsInfo);
 
       return (
         <AuthorityCell
-          authorityActionStatus={authorityActionStatus}
-          sourceRecordId={sourceRecordId}
-          jobLogRecords={jobLogRecords}
+          relatedAuthorityInfo={relatedAuthorityInfo}
           sortedItemData={sortedItemData}
         />
       );
     },
     orderStatus: ({
-      poLineActionStatus,
-      sourceRecordId,
+      relatedHoldingsInfo = [],
+      relatedItemInfo = [],
+      relatedPoLineInfo = {},
     }) => {
-      const {
-        holdingsData,
-        itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
-
-      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
+      const sortedItemData = groupAndSortDataForRender(relatedItemInfo, relatedHoldingsInfo);
 
       return (
         <OrderCell
-          poLineActionStatus={poLineActionStatus}
-          sourceRecordId={sourceRecordId}
-          jobLogRecords={jobLogRecords}
+          relatedPoLineInfo={relatedPoLineInfo}
           sortedItemData={sortedItemData}
         />
       );
     },
     invoiceStatus: ({
-      invoiceActionStatus,
-      sourceRecordId,
-      sourceRecordOrder,
+      relatedHoldingsInfo = [],
+      relatedItemInfo = [],
+      relatedInvoiceInfo = {},
+      relatedInvoiceLineInfo = {},
     }) => {
-      const {
-        holdingsData,
-        itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
-
-      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData);
+      const sortedItemData = groupAndSortDataForRender(relatedItemInfo, relatedHoldingsInfo);
 
       return (
         <InvoiceCell
-          invoiceActionStatus={invoiceActionStatus}
-          sourceRecordId={sourceRecordId}
-          jobLogRecords={jobLogRecords}
+          relatedInvoiceInfo={relatedInvoiceInfo}
+          relatedInvoiceLineInfo={relatedInvoiceLineInfo}
           sortedItemData={sortedItemData}
-          sourceRecordOrder={sourceRecordOrder}
         />
       );
     },
     error: ({
       error,
-      sourceRecordId,
-      itemActionStatus,
+      relatedHoldingsInfo = [],
+      relatedItemInfo = [],
     }) => {
-      const {
-        holdingsData,
-        itemData,
-      } = getRelatedInfo(jobLogRecords, sourceRecordId);
-
-      const isGeneralItemError = isGeneralItemsError(itemActionStatus, itemData);
+      const isGeneralItemError = isGeneralItemsError(relatedItemInfo);
 
       if (isGeneralItemError) {
         return (
@@ -340,16 +299,16 @@ export const RecordsTable = ({
         );
       }
 
-      if (isEmpty(itemData) && holdingsData?.some(item => item.error)) {
+      if (isEmpty(relatedItemInfo) && relatedHoldingsInfo?.some(item => item.error)) {
         return (
           <ErrorCell
             error={error}
-            sortedItemData={holdingsData?.map(item => [item])}
+            sortedItemData={relatedHoldingsInfo?.map(item => [item])}
           />
         );
       }
 
-      const sortedItemData = groupAndSortDataForRender(itemData, holdingsData, true);
+      const sortedItemData = groupAndSortDataForRender(relatedItemInfo, relatedHoldingsInfo, true);
 
       return (
         <ErrorCell
@@ -387,7 +346,6 @@ export const RecordsTable = ({
 RecordsTable.propTypes = {
   resources: PropTypes.shape({
     jobLogEntries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
-    jobLog: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     locations: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object).isRequired }),
     query: PropTypes.object,
   }).isRequired,

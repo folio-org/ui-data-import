@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -8,14 +7,10 @@ import {
 
 import { RECORD_ACTION_STATUS } from '../../../../utils';
 
-export const InstanceCell = ({
-  instanceActionStatus,
-  sourceRecordId,
-  jobLogRecords,
-}) => {
+export const InstanceCell = ({ relatedInstanceInfo }) => {
+  const instanceActionStatus = relatedInstanceInfo.actionStatus;
   const entityLabel = getRecordActionStatusLabel(instanceActionStatus);
-  const sourceRecord = jobLogRecords.find(item => item.sourceRecordId === sourceRecordId);
-  const entityId = sourceRecord?.relatedInstanceInfo.idList[0];
+  const entityId = relatedInstanceInfo.idList[0];
   const path = `/inventory/view/${entityId}`;
 
   const isPathCorrect = !!entityId;
@@ -25,13 +20,4 @@ export const InstanceCell = ({
   return getHotlinkCellFormatter(isHotlink, entityLabel, path, 'instance');
 };
 
-InstanceCell.propTypes = {
-  sourceRecordId: PropTypes.string.isRequired,
-  jobLogRecords: PropTypes.arrayOf(PropTypes.object),
-  instanceActionStatus: PropTypes.string,
-};
-
-InstanceCell.defaultProps = {
-  jobLogRecords: [],
-  instanceActionStatus: '',
-};
+InstanceCell.propTypes = { relatedInstanceInfo: PropTypes.object.isRequired };

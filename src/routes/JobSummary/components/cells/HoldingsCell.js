@@ -13,13 +13,13 @@ import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const HoldingsCell = ({
   instanceId,
-  holdingsInfo,
-  itemInfo,
+  relatedHoldingsInfo,
+  relatedItemInfo,
   locations,
 }) => {
   const { okapi: { tenant } } = useStripes();
 
-  const holdingsInfoCell = holdingsInfo?.map((holdings, index) => {
+  const holdingsInfoCell = relatedHoldingsInfo.map((holdings, index) => {
     const entityLabel = getRecordActionStatusLabel(holdings.actionStatus);
     const holdingsId = holdings.id;
     const path = `/inventory/view/${instanceId}/${holdingsId}`;
@@ -28,7 +28,7 @@ export const HoldingsCell = ({
 
     const locationCode = locations.find(locationItem => locationId === locationItem.id)?.code;
 
-    const itemForHoldingsCount = itemInfo.filter(item => item.holdingsId === holdings.id).length;
+    const itemForHoldingsCount = relatedItemInfo.filter(item => item.holdingsId === holdings.id).length;
 
     const isPathCorrect = !!(instanceId && holdingsId);
     const isHotlink = isPathCorrect && (holdings.actionStatus === RECORD_ACTION_STATUS.CREATED
@@ -53,14 +53,8 @@ export const HoldingsCell = ({
 };
 
 HoldingsCell.propTypes = {
+  relatedHoldingsInfo: PropTypes.arrayOf(PropTypes.object).isRequired,
+  relatedItemInfo: PropTypes.arrayOf(PropTypes.object).isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  instanceId: PropTypes.string,
-  holdingsInfo: PropTypes.arrayOf(PropTypes.object),
-  itemInfo: PropTypes.arrayOf(PropTypes.object),
-};
-
-HoldingsCell.defaultProps = {
-  instanceId: '',
-  holdingsInfo: [],
-  itemInfo: [],
+  instanceId: PropTypes.string.isRequired,
 };
