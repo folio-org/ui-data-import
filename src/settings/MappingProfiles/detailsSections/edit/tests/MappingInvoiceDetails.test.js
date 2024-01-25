@@ -21,7 +21,7 @@ import {
   getInitialDetails,
 } from '../../../initialDetails';
 
-const organizationMock = [{
+const organizationMock = {
   id: 'orgId',
   name: 'org name',
   erpCode: 'erpCode',
@@ -29,7 +29,7 @@ const organizationMock = [{
     appSystemNo: 'appSystemNo1',
     accountNo: 'accountNo1',
   }],
-}];
+};
 
 const mockVendorUUID = faker.random.uuid();
 
