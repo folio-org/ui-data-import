@@ -286,12 +286,18 @@ export const RecordsTable = ({
     },
     error: ({
       error,
+      relatedInstanceInfo = {},
       relatedHoldingsInfo = [],
       relatedItemInfo = [],
+      relatedAuthorityInfo = {},
+      relatedPoLineInfo = {},
+      relatedInvoiceLineInfo = {},
     }) => {
       const isGeneralItemError = isGeneralItemsError(relatedItemInfo);
+      const isGeneralError = relatedInstanceInfo.error || relatedAuthorityInfo.error
+        || relatedPoLineInfo.error || relatedInvoiceLineInfo.error;
 
-      if (isGeneralItemError) {
+      if (isGeneralItemError || isGeneralError) {
         return (
           <BaseLineCell>
             <FormattedMessage id="ui-data-import.error" />
