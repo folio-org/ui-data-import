@@ -234,6 +234,13 @@ export const getAccountingNumberOptions = vendor => {
   }));
 };
 
+export const getAccountNumbersByCode = organization => {
+  return organization.accounts.reduce((obj, account) => (!account.appSystemNo ? obj : {
+    ...obj,
+    [account.appSystemNo]: account.accountNo,
+  }), {});
+};
+
 export const renderAmountValue = (amountValue, amountType, currency) => {
   const amountSymbol = amountType === 'percentage' ?
     <FormattedMessage id="stripes-acq-components.fundDistribution.type.sign.percent" /> :

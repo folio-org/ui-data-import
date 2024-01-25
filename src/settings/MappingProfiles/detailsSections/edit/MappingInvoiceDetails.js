@@ -29,6 +29,7 @@ import {
   getAccountingNumberOptions,
   getFieldEnabled,
   getSubfieldName,
+  getAccountNumbersByCode,
 } from '../utils';
 import {
   useFieldMappingValueFromLookup,
@@ -55,6 +56,7 @@ export const MappingInvoiceDetails = ({
     if (!isEmpty(organization)) {
       setAccountingCodeOptions(getAccountingCodeOptions(organization));
       setAccountingNumberOptions(getAccountingNumberOptions(organization));
+      setAccountNumbersByCode(getAccountNumbersByCode(organization));
     }
   }, [organization]);
 
@@ -71,11 +73,8 @@ export const MappingInvoiceDetails = ({
       const erpCode = vendor.erpCode || '';
       const hasAnyAccountingCode = vendor.accounts?.some(({ appSystemNo }) => Boolean(appSystemNo));
       const defaultVendorAccountingCode = !hasAnyAccountingCode ? erpCode : '';
+      const accNumbersByAccCode = getAccountNumbersByCode(vendor);
 
-      const accNumbersByAccCode = vendor.accounts.reduce((obj, account) => (!account.appSystemNo ? obj : {
-        ...obj,
-        [account.appSystemNo]: account.accountNo,
-      }), {});
       setAccountNumbersByCode(accNumbersByAccCode);
 
       setReferenceTables(getFieldName(ACCOUNTING_CODE_FIELD_INDEX), defaultVendorAccountingCode ? `"${defaultVendorAccountingCode}"` : '');
