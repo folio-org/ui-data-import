@@ -14,7 +14,10 @@ import {
   injectIntl,
 } from 'react-intl';
 
-import { withStripes } from '@folio/stripes/core';
+import {
+  TitleManager,
+  withStripes,
+} from '@folio/stripes/core';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { TextField } from '@folio/stripes/components';
 
@@ -246,27 +249,32 @@ export class MARCFieldProtection extends Component {
     };
 
     return (
-      <this.connectedControlledVocab
-        id="marc-field-protection"
-        baseUrl="field-protection-settings/marc"
-        records="marcFieldProtectionSettings"
-        label={intl.formatMessage({ id: 'ui-data-import.settings.marcFieldProtection.title' })}
-        labelSingular={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
-        objectLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
-        listFormLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.listFormHeader" />}
-        columnMapping={columnMapping}
-        formatter={formatter}
-        readOnlyFields={readOnlyFields}
-        visibleFields={visibleFields}
-        hiddenFields={hiddenFields}
-        actionSuppressor={actionSuppressor}
-        itemTemplate={itemTemplate}
-        sortby="field"
-        validate={this.validateFields}
-        stripes={stripes}
-        fieldComponents={this.getFieldComponents()}
-        editable={hasPerm}
-      />
+      <TitleManager
+        page={intl.formatMessage({ id: 'ui-data-import.settings.dataImport.title' })}
+        record={intl.formatMessage({ id: 'ui-data-import.settings.marcFieldProtection.title' })}
+      >
+        <this.connectedControlledVocab
+          id="marc-field-protection"
+          baseUrl="field-protection-settings/marc"
+          records="marcFieldProtectionSettings"
+          label={intl.formatMessage({ id: 'ui-data-import.settings.marcFieldProtection.title' })}
+          labelSingular={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
+          objectLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
+          listFormLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.listFormHeader" />}
+          columnMapping={columnMapping}
+          formatter={formatter}
+          readOnlyFields={readOnlyFields}
+          visibleFields={visibleFields}
+          hiddenFields={hiddenFields}
+          actionSuppressor={actionSuppressor}
+          itemTemplate={itemTemplate}
+          sortby="field"
+          validate={this.validateFields}
+          stripes={stripes}
+          fieldComponents={this.getFieldComponents()}
+          editable={hasPerm}
+        />
+      </TitleManager>
     );
   }
 }

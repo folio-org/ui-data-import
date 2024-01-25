@@ -3,12 +3,16 @@ import React, {
   createRef,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
 import { InfoPopover } from '@folio/stripes/components';
 import {
   stripesShape,
+  TitleManager,
   withRoot,
 } from '@folio/stripes/core';
 
@@ -26,11 +30,13 @@ import {
 
 import css from './DataImportSettings.css';
 
+@injectIntl
 @withRoot
 export class DataImportSettings extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     root: PropTypes.shape({ addReducer: PropTypes.func.isRequired }).isRequired,
+    intl: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -111,13 +117,15 @@ export class DataImportSettings extends Component {
 
   render() {
     return (
-      <Settings
-        {...this.props}
-        paneTitleRef={this.paneTitleRef}
-        navPaneWidth="15%"
-        sections={this.sections}
-        paneTitle={generateSettingsLabel('index.paneTitle')}
-      />
+      <TitleManager page={this.props.intl.formatMessage({ id: 'ui-data-import.settings.dataImport.title' })}>
+        <Settings
+          {...this.props}
+          paneTitleRef={this.paneTitleRef}
+          navPaneWidth="15%"
+          sections={this.sections}
+          paneTitle={generateSettingsLabel('index.paneTitle')}
+        />
+      </TitleManager>
     );
   }
 }

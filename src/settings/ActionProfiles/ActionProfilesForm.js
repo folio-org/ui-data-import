@@ -18,6 +18,7 @@ import {
 import {
   useStripes,
   checkIfUserInCentralTenant,
+  TitleManager,
 } from '@folio/stripes/core';
 import {
   Headline,
@@ -214,6 +215,11 @@ export const ActionProfilesFormComponent = ({
         onSubmit={onSubmit}
         onCancel={onCancel}
       >
+        <TitleManager
+          prefix={`${formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+          page={formatMessage({ id: 'ui-data-import.settings.actionProfiles.title' })}
+          record={`${formatMessage({ id: `ui-data-import.${layerType}` })} ${profile.name}`}
+        />
         <Headline
           size="xx-large"
           tag="h2"

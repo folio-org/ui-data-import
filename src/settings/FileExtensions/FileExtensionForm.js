@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { Field } from 'react-final-form';
 import { identity } from 'lodash';
 
+import { TitleManager } from '@folio/stripes/core';
 import {
   Headline,
   TextArea,
@@ -48,6 +52,7 @@ export const FileExtensionFormComponent = ({
   transitionToParams,
   baseUrl,
 }) => {
+  const { formatMessage } = useIntl();
   const isEditMode = Boolean(initialValues.id);
 
   const [dataTypesRequired, setDataTypesRequired] = useState(isEditMode ? !initialValues.importBlocked : true);
@@ -85,6 +90,10 @@ export const FileExtensionFormComponent = ({
     ? initialValues.extension
     : <FormattedMessage id="ui-data-import.settings.fileExtension.newMapping" />;
 
+  const pageTitle = isEditMode
+    ? `${formatMessage({ id: 'ui-data-import.edit' })} ${initialValues.extension}`
+    : formatMessage({ id: 'ui-data-import.create' });
+
   const onSubmit = async event => {
     await handleProfileSave(handleSubmit, form.reset, transitionToParams, baseUrl)(event);
   };
@@ -100,6 +109,11 @@ export const FileExtensionFormComponent = ({
         onSubmit={onSubmit}
         onCancel={onCancel}
       >
+        <TitleManager
+          prefix={`${formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+          page={formatMessage({ id: 'ui-data-import.settings.fileExtensions.title' })}
+          record={pageTitle}
+        />
         <Headline
           size="xx-large"
           tag="h2"

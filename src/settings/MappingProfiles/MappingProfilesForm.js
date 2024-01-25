@@ -22,6 +22,7 @@ import stripesForm from '@folio/stripes/form';
 import {
   useStripes,
   checkIfUserInCentralTenant,
+  TitleManager,
 } from '@folio/stripes/core';
 import {
   Headline,
@@ -348,6 +349,11 @@ export const MappingProfilesFormComponent = ({
           onCancel={onCancel}
           contentClassName={styles.mappingForm}
         >
+          <TitleManager
+            prefix={`${formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+            page={formatMessage({ id: 'ui-data-import.settings.mappingProfiles.title' })}
+            record={`${formatMessage({ id: `ui-data-import.${layerType}` })} ${profile.name}`}
+          />
           <Headline
             data-test-header-title
             id="profile-headline"

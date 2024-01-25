@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -55,6 +58,7 @@ import {
 import sharedCss from '../../../shared.css';
 import styles from '../MatchProfiles.css';
 
+@injectIntl
 @stripesConnect
 @withTags
 export class ViewMatchProfile extends Component {
@@ -97,6 +101,7 @@ export class ViewMatchProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
     parentResources: PropTypes.object,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
@@ -207,6 +212,7 @@ export class ViewMatchProfile extends Component {
       history,
       location,
       accordionStatusRef,
+      intl,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
 
@@ -247,7 +253,11 @@ export class ViewMatchProfile extends Component {
           fluidContentWidth
           id="view-match-profile-pane"
         >
-          <TitleManager record={matchProfile.name} />
+          <TitleManager
+            prefix={`${intl.formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+            page={intl.formatMessage({ id: 'ui-data-import.settings.matchProfiles.title' })}
+            record={matchProfile.name}
+          />
           <Headline
             className={sharedCss.headline}
             data-test-headline
