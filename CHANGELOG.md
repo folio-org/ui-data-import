@@ -22,6 +22,7 @@
 * Fix inconsistent behavior during editing job profiles (UIDATIMP-1530)
 * Order field is nor populated during linking/unlinking profiles to job profile (UIDATIMP-1571)
 * When error occurs during saving edited job profile page crashes (UIDATIMP-1572)
+* Job summary: error column does not display errors (UIDATIMP-1590)
 
 ## [7.0.5](https://github.com/folio-org/ui-data-import/tree/v7.0.5) (2023-12-06)
 

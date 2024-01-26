@@ -4,6 +4,7 @@ import { noop } from 'lodash';
 import { BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { runAxeTest } from '@folio/stripes-testing';
+import { within } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -25,7 +26,6 @@ const jobLogEntriesRecords = [
     sourceRecordOrder : 0,
     sourceRecordTitle: 'Test record 1',
     sourceRecordActionStatus: 'CREATED',
-    instanceActionStatus: 'CREATED',
     error: '',
     relatedInstanceInfo: {
       actionStatus: 'CREATED',
@@ -52,10 +52,9 @@ const jobLogEntriesRecords = [
   {
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: '59138d56-bc81-4f66-9f72-f57f53629646',
-    sourceRecordOrder : 4,
+    sourceRecordOrder : 1,
     sourceRecordTitle: 'Test record 2',
     sourceRecordActionStatus: 'CREATED',
-    instanceActionStatus: 'CREATED',
     error: '',
     relatedInstanceInfo: {
       actionStatus: 'CREATED',
@@ -127,6 +126,46 @@ const jobLogEntriesRecords = [
     },
     relatedInvoiceLineInfo: { },
   },
+  {
+    jobExecutionId: faker.random.uuid(),
+    sourceRecordId: '59138d56-bc81-4f66-9f72-f57f536211567',
+    sourceRecordOrder : 2,
+    sourceRecordTitle: 'Test record 3',
+    sourceRecordActionStatus: 'CREATED',
+    error: '',
+    relatedInstanceInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [],
+      hridList: [],
+      error: 'some error',
+    },
+    relatedHoldingsInfo: [],
+    relatedItemInfo: [],
+    relatedAuthorityInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [],
+      hridList: [],
+      error: 'some error',
+    },
+    relatedPoLineInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [],
+      hridList: [],
+      error: 'some error',
+    },
+    relatedInvoiceInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [],
+      hridList: [],
+      error: 'some error',
+    },
+    relatedInvoiceLineInfo: {
+      actionStatus: 'DISCARDED',
+      idList: [],
+      hridList: [],
+      error: 'some error',
+    },
+  },
 ];
 
 const jobLogEntriesResources = {
@@ -194,24 +233,17 @@ describe('RecordsTable component', () => {
   });
 
   it('should have proper columns', () => {
-    const { getByText } = renderRecordsTable();
-    /*
-     * Get "Holdings" and "Error" labels by query selector instead of by "getByText" because there are
-     * "Holdings" / "Error" column labels and "Holdings" / "Error" messages in cells on the page
-     */
-    const holdingsColumn = document.querySelector('#list-column-holdingsstatus div[class^="mclHeaderInner"] > div');
-    const errorColumn = document.querySelector('#list-column-error div[class^="mclHeaderInner"] > div');
+    const { getByRole } = renderRecordsTable();
 
-    expect(getByText('Record')).toBeDefined();
-    expect(getByText('Title')).toBeDefined();
-    expect(getByText('SRS MARC')).toBeDefined();
-    expect(getByText('Instance')).toBeDefined();
-    expect(holdingsColumn.innerHTML).toEqual('Holdings');
-    expect(getByText('Item')).toBeDefined();
-    expect(getByText('Authority')).toBeDefined();
-    expect(getByText('Order')).toBeDefined();
-    expect(getByText('Invoice')).toBeDefined();
-    expect(errorColumn.innerHTML).toEqual('Error');
+    expect(getByRole('button', { name: /record/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /title/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /srs marc/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /holdings/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /item/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /authority/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /order/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /invoice/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /error/i })).toBeInTheDocument();
   });
 
   it('should render records', () => {
@@ -219,5 +251,13 @@ describe('RecordsTable component', () => {
 
     expect(getByText('Test record 1')).toBeInTheDocument();
     expect(getByText('Test record 2')).toBeInTheDocument();
+    expect(getByText('Test record 3')).toBeInTheDocument();
+  });
+
+  it('should render error if any entity has it', () => {
+    const { getByRole } = renderRecordsTable();
+    const row = getByRole('row', { name: /test record 3/i });
+
+    expect(within(row).getByText(/error/i)).toBeInTheDocument();
   });
 });
