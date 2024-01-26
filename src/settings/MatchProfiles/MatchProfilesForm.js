@@ -19,6 +19,7 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
+import { TitleManager } from '@folio/stripes/core';
 import {
   Headline,
   AccordionSet,
@@ -291,6 +292,11 @@ export const MatchProfilesFormComponent = memo(({
         onSubmit={onSubmit}
         onCancel={onCancel}
       >
+        <TitleManager
+          prefix={`${formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+          page={formatMessage({ id: 'ui-data-import.settings.matchProfiles.title' })}
+          record={`${formatMessage({ id: `ui-data-import.${layerType}` })} ${profile.name}`}
+        />
         <Headline
           size="xx-large"
           tag="h2"

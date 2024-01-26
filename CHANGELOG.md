@@ -15,6 +15,7 @@
 * Update unit tests after changes in stripes-smart-components. (UIDATIMP-1585)
 * Mock ResizeObserver to fix failed tests. (UIDATIMP-1586)
 * Make changes in requests for Log Details. (UIDATIMP-1558)
+* Set Data Import settings HTML page title this format - `<<App name>> settings - <<selected page name>> - FOLIO` (UIDATIMP-1578)
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 
 import {
   TitleManager,
@@ -36,6 +39,7 @@ import {
 
 import sharedCss from '../../../shared.css';
 
+@injectIntl
 @stripesConnect
 export class ViewFileExtension extends Component {
   static manifest = Object.freeze({
@@ -80,6 +84,7 @@ export class ViewFileExtension extends Component {
     ]).isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   };
@@ -168,6 +173,7 @@ export class ViewFileExtension extends Component {
     const {
       history,
       location,
+      intl,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
 
@@ -185,7 +191,11 @@ export class ViewFileExtension extends Component {
           renderHeader={this.renderPaneHeader}
           id="view-file-extension-pane"
         >
-          <TitleManager record={record.extension} />
+          <TitleManager
+            prefix={`${intl.formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+            page={intl.formatMessage({ id: 'ui-data-import.settings.fileExtensions.title' })}
+            record={record.extension}
+          />
           <Headline
             data-test-headline
             size="xx-large"

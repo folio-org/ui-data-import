@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -53,6 +56,7 @@ import {
 
 import sharedCss from '../../../shared.css';
 
+@injectIntl
 @stripesConnect
 @withTags
 @withRouter
@@ -95,6 +99,7 @@ export class ViewActionProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
     accordionStatusRef: PropTypes.object,
@@ -202,6 +207,7 @@ export class ViewActionProfile extends Component {
       history,
       location,
       accordionStatusRef,
+      intl,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
     const {
@@ -248,7 +254,11 @@ export class ViewActionProfile extends Component {
           renderHeader={this.renderPaneHeader}
           id="view-action-profile-pane"
         >
-          <TitleManager record={actionProfile.name} />
+          <TitleManager
+            prefix={`${intl.formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+            page={intl.formatMessage({ id: 'ui-data-import.settings.actionProfiles.title' })}
+            record={actionProfile.name}
+          />
           <Headline
             className={sharedCss.headline}
             data-test-headline

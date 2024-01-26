@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 
 import {
   AppIcon,
@@ -67,6 +70,7 @@ import {
 
 import sharedCss from '../../../shared.css';
 
+@injectIntl
 @stripesConnect
 @withTags
 export class ViewMappingProfile extends Component {
@@ -109,6 +113,7 @@ export class ViewMappingProfile extends Component {
     tagsEnabled: PropTypes.bool,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
     ENTITY_KEY: PropTypes.string, // eslint-disable-line
     actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
     accordionStatusRef: PropTypes.object,
@@ -222,6 +227,7 @@ export class ViewMappingProfile extends Component {
       history,
       location,
       accordionStatusRef,
+      intl,
     } = this.props;
     const { showDeleteConfirmation } = this.state;
 
@@ -293,7 +299,11 @@ export class ViewMappingProfile extends Component {
           renderHeader={this.renderPaneHeader}
           centerContent={false}
         >
-          <TitleManager record={name} />
+          <TitleManager
+            prefix={`${intl.formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+            page={intl.formatMessage({ id: 'ui-data-import.settings.mappingProfiles.title' })}
+            record={name}
+          />
           <Headline
             className={sharedCss.headline}
             data-test-headline

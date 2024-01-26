@@ -2,7 +2,10 @@ import React, {
   Component,
   createRef,
 } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import {
@@ -15,7 +18,10 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 import { buildUrl } from '@folio/stripes/smart-components';
-import { stripesShape } from '@folio/stripes/core';
+import {
+  TitleManager,
+  stripesShape,
+} from '@folio/stripes/core';
 import { listTemplate } from '@folio/stripes-data-transfer-components';
 
 import {
@@ -32,6 +38,7 @@ import { SearchAndSort } from '../SearchAndSort';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
 
+@injectIntl
 export class ListView extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
@@ -66,6 +73,7 @@ export class ListView extends Component {
     columnWidths: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     renderHeaders: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
     isFullScreen: PropTypes.bool,
     defaultSort: PropTypes.string,
   };
@@ -224,6 +232,7 @@ export class ListView extends Component {
       isFullScreen,
       defaultSort,
       nonInteractiveHeaders,
+      intl,
     } = this.props;
     const { showRestoreModal } = this.state;
 
@@ -245,6 +254,10 @@ export class ListView extends Component {
       >
         {props => (
           <>
+            <TitleManager
+              page={intl.formatMessage({ id: 'ui-data-import.settings.dataImport.title' })}
+              record={intl.formatMessage({ id: `ui-data-import.settings.${ENTITY_KEY}.title` })}
+            />
             <SearchAndSort
               objectName={objectName}
               finishedResourceName={ENTITY_KEY}

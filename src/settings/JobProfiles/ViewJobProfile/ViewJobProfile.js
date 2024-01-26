@@ -5,7 +5,10 @@ import React, {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -352,7 +355,11 @@ const ViewJobProfileComponent = props => {
         renderHeader={renderPaneHeader}
         id="view-job-profile-pane"
       >
-        <TitleManager record={jobProfileRecord.name} />
+        <TitleManager
+          prefix={`${formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+          page={formatMessage({ id: 'ui-data-import.settings.jobProfiles.title' })}
+          record={jobProfileRecord?.name}
+        />
         <Headline
           className={sharedCss.headline}
           data-test-headline

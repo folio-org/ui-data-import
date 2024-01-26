@@ -9,7 +9,10 @@ import {
   useDispatch,
 } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { Field } from 'react-final-form';
 import {
   get,
@@ -33,7 +36,10 @@ import {
   FullScreenForm,
 } from '@folio/stripes-data-transfer-components';
 import stripesFinalForm from '@folio/stripes/final-form';
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  TitleManager,
+  stripesConnect,
+} from '@folio/stripes/core';
 
 import {
   EditKeyShortcutsWrapper,
@@ -128,6 +134,8 @@ export const JobProfilesFormComponent = memo(({
     },
     [isLayerCreate, resources.profileSnapshots.records],
   );
+
+  const { formatMessage } = useIntl();
 
   const dispatch = useDispatch();
   const currentJobProfileTreeContent = useSelector(state => {
@@ -276,6 +284,11 @@ export const JobProfilesFormComponent = memo(({
           onCancel();
         }}
       >
+        <TitleManager
+          prefix={`${formatMessage({ id: 'ui-data-import.settings.dataImport.title' })} - `}
+          page={formatMessage({ id: 'ui-data-import.settings.jobProfiles.title' })}
+          record={`${formatMessage({ id: `ui-data-import.${layerType}` })} ${profile.name}`}
+        />
         <Headline
           size="xx-large"
           tag="h2"
