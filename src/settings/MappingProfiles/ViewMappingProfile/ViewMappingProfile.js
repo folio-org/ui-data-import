@@ -342,7 +342,9 @@ export class ViewMappingProfile extends Component {
                 {isMARCRecord && (
                   <KeyValue label={<FormattedMessage id="ui-data-import.fieldMappingsForMarc" />}>
                     <div data-test-field-mapping-for-marc-field>
-                      <FormattedMessage id={marcMappingOptionLabel} />
+                      {marcMappingOptionLabel
+                        ? <FormattedMessage id={marcMappingOptionLabel} />
+                        : <NoValue />}
                     </div>
                   </KeyValue>
                 )}
