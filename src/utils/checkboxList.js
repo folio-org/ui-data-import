@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
@@ -76,6 +79,9 @@ export const withCheckboxList = config => WrappedComponent => props => {
   // get initial value for selected records from sessionStorage
   const pageKey = get(config, 'pageKey', '');
   const selectedRecords = new Set(storage.getItem(pageKey) || []);
+
+  // reset checkboxes state when component is unmounted
+  useEffect(() => () => storage.setItem(pageKey, []), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [list, setList] = useState([]);
   const checkboxList = useCheckboxList(list, selectedRecords);
