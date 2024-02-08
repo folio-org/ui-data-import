@@ -1166,5 +1166,7 @@
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Source file: ",
     "jobSummarySourceFileUnavailable": "Unavailable",
-    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}",
+    "logViewer.filter.incomingRecord": "Incoming record",
+    "settings.dataImport.title": "Data import settings"
 }

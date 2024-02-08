@@ -1166,5 +1166,7 @@
     "jobParts": "任务部分",
     "jobSummarySourceFileLabel": "源文件：",
     "jobSummarySourceFileUnavailable": "不可用",
-    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}",
+    "logViewer.filter.incomingRecord": "传入记录",
+    "settings.dataImport.title": "数据导入设置"
 }

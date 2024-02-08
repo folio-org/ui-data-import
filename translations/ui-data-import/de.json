@@ -429,7 +429,7 @@
     "settings.mappingProfiles.map.holdings": "Bestände",
     "settings.mappingProfiles.map.holdings.administrativeData.field.hrid": "Bestands-HRID",
     "settings.mappingProfiles.map.holdings.administrativeData.field.formerId.legend": "Vorheriger Bestand",
-    "settings.mappingProfiles.map.holdings.administrativeData.field.formerId": "Vorherige Bestands-ID",
+    "settings.mappingProfiles.map.holdings.administrativeData.field.formerId": "Ehemalige Bestands-ID",
     "settings.mappingProfiles.map.holdings.administrativeData.field.formerId.addLabel": "Vorherige Bestandskennung hinzufügen",
     "settings.mappingProfiles.map.holdings.administrativeData.field.holdingsTypeId": "Bestandstyp",
     "settings.mappingProfiles.map.holdings.location.field.shelvingOrder": "Regalordnung",
@@ -1166,5 +1166,7 @@
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Quelldatei:",
     "jobSummarySourceFileUnavailable": "Nicht verfügbar",
-    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}",
+    "logViewer.filter.incomingRecord": "Incoming record",
+    "settings.dataImport.title": "Data import settings"
 }
