@@ -146,6 +146,7 @@ export class MARCFieldProtection extends Component {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
     this.getFieldComponents = this.getFieldComponents.bind(this);
+    this.validateFields = this.validateFields.bind(this);
   }
 
   suppressEdit = ({ source }) => source === MARC_FIELD_PROTECTION_SOURCE.SYSTEM.value;
@@ -258,7 +259,15 @@ export class MARCFieldProtection extends Component {
           baseUrl="field-protection-settings/marc"
           records="marcFieldProtectionSettings"
           label={intl.formatMessage({ id: 'ui-data-import.settings.marcFieldProtection.title' })}
-          labelSingular={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
+          translations={{
+            cannotDeleteTermHeader: 'ui-data-import.settings.marcFieldProtection.cannotDeleteTermHeader',
+            cannotDeleteTermMessage: 'ui-data-import.settings.marcFieldProtection.cannotDeleteTermMessage',
+            deleteEntry: 'ui-data-import.settings.marcFieldProtection.deleteEntry',
+            termDeleted: 'ui-data-import.settings.marcFieldProtection.termDeleted',
+            termCreated: 'ui-data-import.settings.marcFieldProtection.termCreated',
+            termUpdated: 'ui-data-import.settings.marcFieldProtection.termUpdated',
+            termWillBeDeleted: 'ui-data-import.settings.marcFieldProtection.termWillBeDeleted',
+          }}
           objectLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.title" />}
           listFormLabel={<FormattedMessage id="ui-data-import.settings.marcFieldProtection.listFormHeader" />}
           columnMapping={columnMapping}

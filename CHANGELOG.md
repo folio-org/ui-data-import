@@ -17,6 +17,7 @@
 * Make changes in requests for Log Details. (UIDATIMP-1558)
 * Set Data Import settings HTML page title this format - `<<App name>> settings - <<selected page name>> - FOLIO` (UIDATIMP-1578)
 * Reset checkboxes state after navigating away from the Home/View all logs page. (UIDATIMP-1593)
+* Replace deprecated labelSingular prop with translations prop in MARCFieldProtection ControlledVocab. (UIDATIMP-1596)
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
