@@ -4,6 +4,7 @@
   top: 5px;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   width: auto;
   height: auto;
   margin: 5px;
@@ -16,7 +17,6 @@
     align-items: center;
   }
   & .header {
-    min-width: 250px;
     & .recordId {
       color: #145A32
     }
@@ -30,14 +30,13 @@
     }
   }
   & .filter {
-    min-width: 950px;
     & .filter__label {
       margin-right: 5px;
       font-weight: bold;
     }
     & [class*=buttonGroup---] {
       & button {
-        min-width: 100px;
+        min-width: 130px;
       }
     }
   }
@@ -64,11 +63,5 @@ pre {
     padding: 5px;
     outline: 1px solid #cccccc;
     font-size: 12px;
-  }
-}
-
-@media (max-width: 1280px) {
-  .toolbar {
-    flex-direction: column-reverse;
   }
 }
