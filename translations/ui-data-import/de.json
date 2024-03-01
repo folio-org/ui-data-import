@@ -429,7 +429,7 @@
     "settings.mappingProfiles.map.holdings": "Bestände",
     "settings.mappingProfiles.map.holdings.administrativeData.field.hrid": "Bestands-HRID",
     "settings.mappingProfiles.map.holdings.administrativeData.field.formerId.legend": "Vorheriger Bestand",
-    "settings.mappingProfiles.map.holdings.administrativeData.field.formerId": "Vorherige Bestands-ID",
+    "settings.mappingProfiles.map.holdings.administrativeData.field.formerId": "Ehemalige Bestands-ID",
     "settings.mappingProfiles.map.holdings.administrativeData.field.formerId.addLabel": "Vorherige Bestandskennung hinzufügen",
     "settings.mappingProfiles.map.holdings.administrativeData.field.holdingsTypeId": "Bestandstyp",
     "settings.mappingProfiles.map.holdings.location.field.shelvingOrder": "Regalordnung",
@@ -1166,5 +1166,14 @@
     "jobParts": "Job parts",
     "jobSummarySourceFileLabel": "Quelldatei:",
     "jobSummarySourceFileUnavailable": "Nicht verfügbar",
-    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}",
+    "logViewer.filter.incomingRecord": "Incoming record",
+    "settings.dataImport.title": "Data import settings",
+    "settings.marcFieldProtection.cannotDeleteTermHeader": "Cannot delete MARC field protection",
+    "settings.marcFieldProtection.cannotDeleteTermMessage": "This MARC field protection cannot be deleted, as it is in use by one or more records.",
+    "settings.marcFieldProtection.deleteEntry": "Delete MARC field protection",
+    "settings.marcFieldProtection.termDeleted": "The MARC field protection <b>{term}</b> was successfully <b>deleted</b>",
+    "settings.marcFieldProtection.termCreated": "The MARC field protection <b>{term}</b> was successfully <b>created</b>",
+    "settings.marcFieldProtection.termUpdated": "The MARC field protection <b>{term}</b> was successfully <b>updated</b>",
+    "settings.marcFieldProtection.termWillBeDeleted": "The MARC field protection <b>{term}</b> will be <b>deleted.</b>"
 }

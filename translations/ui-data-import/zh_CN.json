@@ -1166,5 +1166,14 @@
     "jobParts": "任务部分",
     "jobSummarySourceFileLabel": "源文件：",
     "jobSummarySourceFileUnavailable": "不可用",
-    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}"
+    "errorsCountHeader": "{count, plural, one {# error found} other {# errors found}}",
+    "logViewer.filter.incomingRecord": "传入记录",
+    "settings.dataImport.title": "数据导入设置",
+    "settings.marcFieldProtection.cannotDeleteTermHeader": "Cannot delete MARC field protection",
+    "settings.marcFieldProtection.cannotDeleteTermMessage": "This MARC field protection cannot be deleted, as it is in use by one or more records.",
+    "settings.marcFieldProtection.deleteEntry": "Delete MARC field protection",
+    "settings.marcFieldProtection.termDeleted": "The MARC field protection <b>{term}</b> was successfully <b>deleted</b>",
+    "settings.marcFieldProtection.termCreated": "The MARC field protection <b>{term}</b> was successfully <b>created</b>",
+    "settings.marcFieldProtection.termUpdated": "The MARC field protection <b>{term}</b> was successfully <b>updated</b>",
+    "settings.marcFieldProtection.termWillBeDeleted": "The MARC field protection <b>{term}</b> will be <b>deleted.</b>"
 }
