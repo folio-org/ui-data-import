@@ -22,8 +22,6 @@ import {
   INVOICE_RESOURCE_PATHS,
   ACQ_DATA_RESOURCE_PATHS,
   FIND_ALL_CQL,
-  OCLC_MATCH_EXISTING_SRS_RECORD_ID,
-  OCLC_MATCH_NO_SRS_RECORD_ID,
   getIdentifierTypes,
 } from '../../utils';
 import { ListView } from '../../components';
@@ -174,8 +172,7 @@ export const matchProfilesShape = {
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
-        const withoutDefaultProfiles = `AND (id<>(${OCLC_MATCH_EXISTING_SRS_RECORD_ID} AND ${OCLC_MATCH_NO_SRS_RECORD_ID}))`;
-        const query = `${props.filterParams?.manifest?.query || FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
+        const query = `${props.filterParams?.manifest?.query || FIND_ALL_CQL} ${searchQuery} ${sortQuery}`;
 
         return { query };
       },
