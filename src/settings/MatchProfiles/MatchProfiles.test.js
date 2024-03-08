@@ -17,11 +17,7 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import {
-  FIND_ALL_CQL,
-  OCLC_MATCH_EXISTING_SRS_RECORD_ID,
-  OCLC_MATCH_NO_SRS_RECORD_ID,
-} from '../../utils';
+import { FIND_ALL_CQL } from '../../utils';
 import { matchProfilesShape } from '.';
 import { MatchProfiles } from './MatchProfiles';
 
@@ -105,7 +101,7 @@ describe('MatchProfiles component', () => {
   describe('query string', () => {
     describe('when sort and query params are set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = `propsQuery AND (id<>(${OCLC_MATCH_EXISTING_SRS_RECORD_ID} AND ${OCLC_MATCH_NO_SRS_RECORD_ID})) AND (
+        const expectedQuery = `propsQuery AND (
   name="testQuery*" OR
   existingRecordType="testQuery*" OR
   field="testQuery*" OR
@@ -130,11 +126,10 @@ describe('MatchProfiles component', () => {
 
     describe('when sort and query params are not set', () => {
       it('should return correct query string', () => {
-        const expectedQuery = `${FIND_ALL_CQL} AND (id<>(${OCLC_MATCH_EXISTING_SRS_RECORD_ID} AND ${OCLC_MATCH_NO_SRS_RECORD_ID}))`;
         const props = { filterParams: { manifest: { query: null } } };
         const { query } = matchProfilesShape.manifest.records.params(null, null, null, null, props);
 
-        expect(query.trim()).toEqual(expectedQuery);
+        expect(query.trim()).toEqual(FIND_ALL_CQL);
       });
     });
   });
