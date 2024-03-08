@@ -891,7 +891,7 @@
     "selectAction.modify": "Modificar (sólo tipo de registro bibliográfico MARC)",
     "selectAction.update": "Actualizar (todos los tipos de registros excepto Pedidos, Facturas o MARC Holdings)",
     "modal.cancelRunningJob.header": "¿Cancelar el trabajo de importación?",
-    "modal.cancelRunningJob.message": "¿Está seguro de que desea <b>cancelar este trabajo de importación?</b><p><b>Nota:</b> Los trabajos cancelados no se pueden reiniciar. Los registros creados o actualizados antes de que se cancele el trabajo aún no se pueden revertir.</p>",
+    "modal.cancelRunningJob.message": "¿Está seguro de que desea <b>cancelar este trabajo de importación?</b><p><b>Nota:</b> Los trabajos cancelados no se pueden reiniciar. Los registros creados o actualizados antes de que{break}se cancele el trabajo aún no se pueden revertir.</p>",
     "modal.cancelRunningJob.cancel": "No, no cancelar la importación",
     "modal.cancelRunningJob.confirm": "Sí, cancelar el trabajo de importación",
     "jobStartedDate": "Empezó a correr",
