@@ -204,7 +204,7 @@ describe('ActionProfilesForm component', () => {
           expect(actionInput.value).toBe('CREATE');
         });
 
-        it('all record types except MARC Holdings should be available', () => {
+        it('all record types except MARC Bibliographic, MARC Holdings and MARC Authority should be available', () => {
           const { container } = renderActionProfilesForm(actionProfilesFormProps());
           const actionInput = container.querySelector('[name="profile.action"]');
 
@@ -215,8 +215,10 @@ describe('ActionProfilesForm component', () => {
           expect(container.querySelector('[value="ITEM"]')).not.toBeDisabled();
           expect(container.querySelector('[value="ORDER"]')).not.toBeDisabled();
           expect(container.querySelector('[value="INVOICE"]')).not.toBeDisabled();
-          expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeDisabled();
+
+          expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).not.toBeInTheDocument();
           expect(container.querySelector('[value="MARC_HOLDINGS"]')).not.toBeInTheDocument();
+          expect(container.querySelector('[value="MARC_AUTHORITY"]')).not.toBeInTheDocument();
         });
       });
 
