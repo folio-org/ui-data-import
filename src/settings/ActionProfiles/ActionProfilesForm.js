@@ -149,6 +149,7 @@ export const ActionProfilesFormComponent = ({
       }
       case ACTION_TYPES_SELECT.CREATE.type:
         return omit(RECORD_TYPES, [
+          ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_HOLDINGS.type,
           ACTION_PROFILES_FORM_FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
         ]);
