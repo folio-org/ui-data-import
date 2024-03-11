@@ -211,11 +211,15 @@ const ViewJobProfileComponent = props => {
 
       history.push('/data-import');
     } catch (error) {
+      setProcessingRequest(false);
       setIsConfirmButtonDisabled(false);
       hideRunConfirmation();
+
+      const isUploadDefinitionError = error.status === STATUS_CODES.NOT_FOUND || error.status === STATUS_CODES.UNPROCESSABLE_ENTITY;
+
       calloutRef.current.sendCallout({
         type: 'error',
-        message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+        message: <FormattedMessage id={`ui-data-import.${isUploadDefinitionError ? 'uploadDefinitionError' : 'communicationProblem'}`} />,
       });
 
       console.error(error); // eslint-disable-line no-console

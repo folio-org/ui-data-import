@@ -195,6 +195,7 @@
   "placeholder.fileName": "Search for File name",
   "uploadError": "There was a problem uploading the file. Please try again",
   "communicationProblem": "Server communication problem. Please try again",
+  "uploadDefinitionError": "Upload definition was deleted by another user. Please try again.",
   "exportSelected": "Export selected",
   "itemsCount": "({count, number} {count, plural, one {item} other {items}})",
   "selectAll": "Select all",
