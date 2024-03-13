@@ -123,18 +123,22 @@ export const RecordsTable = ({
       sourceRecordActionStatus,
       relatedHoldingsInfo,
       invoiceLineJournalRecordId,
-    }) => (
-      <TitleCell
-        isEdifactType={isEdifactType}
-        sourceRecordId={sourceRecordId}
-        sourceRecordType={sourceRecordType}
-        sourceRecordTitle={sourceRecordTitle}
-        holdingsActionStatus={relatedHoldingsInfo?.actionStatus}
-        sourceRecordActionStatus={sourceRecordActionStatus}
-        invoiceLineJournalRecordId={invoiceLineJournalRecordId}
-        jobLogEntriesRecords={filteredJobLogEntriesRecords}
-      />
-    ),
+      incomingRecordId,
+    }) => {
+      return (
+        <TitleCell
+          isEdifactType={isEdifactType}
+          sourceRecordId={sourceRecordId}
+          sourceRecordType={sourceRecordType}
+          sourceRecordTitle={sourceRecordTitle}
+          holdingsActionStatus={relatedHoldingsInfo?.actionStatus}
+          sourceRecordActionStatus={sourceRecordActionStatus}
+          invoiceLineJournalRecordId={invoiceLineJournalRecordId}
+          jobLogEntriesRecords={filteredJobLogEntriesRecords}
+          incomingRecordId={incomingRecordId}
+        />
+      );
+    },
     srsMarcStatus: ({ sourceRecordActionStatus }) => <SRSMarcCell sourceRecordActionStatus={sourceRecordActionStatus} />,
     instanceStatus: ({ relatedInstanceInfo = {} }) => (
       <InstanceCell relatedInstanceInfo={relatedInstanceInfo} />

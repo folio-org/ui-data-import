@@ -40,7 +40,11 @@ import sharedCss from '../shared.css';
 const { FILTER: { OPTIONS } } = LOG_VIEWER;
 
 export const ViewJobLog = () => {
-  const { id: logId, recordId } = useParams();
+  const {
+    id: logId,
+    recordId,
+    incomingRecordId,
+  } = useParams();
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const instanceLineIdParam = searchParams.get('instanceLineId');
@@ -69,7 +73,7 @@ export const ViewJobLog = () => {
   const { data: invoiceLineData } = useInvoiceLineByIdQuery(invoiceLineId, { tenant: jobLogData?.relatedInvoiceInfo?.tenantId });
   const { data: authoritiesData } = useAuthoritiesByIdQuery(authoritiesIds, { tenant: jobLogData?.relatedAuthorityInfo?.tenantId });
   const { data: locationsData = [] } = useLocationsQuery({ tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
-  const { data: parsedRecordContent } = useIncomingRecordByIdQuery(recordId);
+  const { data: parsedRecordContent } = useIncomingRecordByIdQuery(incomingRecordId);
 
   useEffect(() => {
     if (!isJobLogLoading && !isJobLogError) {

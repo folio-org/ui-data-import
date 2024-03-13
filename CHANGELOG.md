@@ -19,6 +19,7 @@
 * Reset checkboxes state after navigating away from the Home/View all logs page. (UIDATIMP-1593)
 * Replace deprecated labelSingular prop with translations prop in MARCFieldProtection ControlledVocab. (UIDATIMP-1596)
 * Remove MARC Bib option when Action = Create and update translation for "Create" option. (UIDATIMP-1598)
+* View job logs: Use incomingRecordId to retrieve Incoming record logs. (UIDATIMP-1600)
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
