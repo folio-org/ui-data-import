@@ -887,7 +887,7 @@
     "modal.cancelUpload.message": "Are you sure that you want <b>to delete this uploaded file?</b> Deleted files will be permanently removed and cannot be retrieved",
     "modal.cancelUpload.cancel": "No, no borrar",
     "modal.cancelUpload.confirm": "Sí, borrar",
-    "selectAction.create": "Create (all record types except MARC Authority or MARC Holdings)",
+    "selectAction.create": "Create (all record types except MARC Bibliographic, MARC Authority, or MARC Holdings)",
     "selectAction.modify": "Modify (MARC Bibliographic record type only)",
     "selectAction.update": "Update (all record types except Orders, Invoices, or MARC Holdings)",
     "modal.cancelRunningJob.header": "Cancel import job?",
@@ -1175,5 +1175,6 @@
     "settings.marcFieldProtection.termDeleted": "The MARC field protection <b>{term}</b> was successfully <b>deleted</b>",
     "settings.marcFieldProtection.termCreated": "The MARC field protection <b>{term}</b> was successfully <b>created</b>",
     "settings.marcFieldProtection.termUpdated": "The MARC field protection <b>{term}</b> was successfully <b>updated</b>",
-    "settings.marcFieldProtection.termWillBeDeleted": "The MARC field protection <b>{term}</b> will be <b>deleted.</b>"
+    "settings.marcFieldProtection.termWillBeDeleted": "The MARC field protection <b>{term}</b> will be <b>deleted.</b>",
+    "uploadDefinitionError": "Upload definition was deleted by another user. Please try again."
 }

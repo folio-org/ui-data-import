@@ -30,6 +30,7 @@
 * Handle empty marc mapping label (UIDATIMP-1592)
 * Update style of Incoming Record button to match other buttons (UIDATIMP-1594)
 * Not able to use system generated Match profiles (UIDATIMP-1521)
+* Change error message when upload definition has been deleted by another user. (UIDATIMP-1599)
 
 ## [7.0.5](https://github.com/folio-org/ui-data-import/tree/v7.0.5) (2023-12-06)
 
