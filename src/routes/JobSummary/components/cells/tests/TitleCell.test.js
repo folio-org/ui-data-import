@@ -28,6 +28,7 @@ const renderTitleCell = ({
         sourceRecordId="sourceRecordId"
         jobLogEntriesRecords={jobLogEntriesRecordsProp}
         invoiceLineJournalRecordId="journalRecordId"
+        incomingRecordId="incomingRecordId"
         isEdifactType
       />
     </Router>
@@ -56,7 +57,7 @@ describe('TitleCell component', () => {
       const titleHotlink = container.querySelector('[data-test-text-link="true"]');
 
       expect(titleHotlink.innerHTML).toContain('Holdings');
-      expect(titleHotlink.href).toContain('/data-import/log/jobExecutionId/sourceRecordId?instanceLineId=journalRecordId');
+      expect(titleHotlink.href).toContain('/data-import/log/jobExecutionId/sourceRecordId/incomingRecordId?instanceLineId=journalRecordId');
     });
   });
 
@@ -79,7 +80,7 @@ describe('TitleCell component', () => {
       const titleHotlink = container.querySelector('[data-test-text-link="true"]');
 
       expect(titleHotlink.innerHTML).toContain('Test title');
-      expect(titleHotlink.href).toContain('/data-import/log/jobExecutionId/sourceRecordId?instanceLineId=journalRecordId');
+      expect(titleHotlink.href).toContain('/data-import/log/jobExecutionId/sourceRecordId/incomingRecordId?instanceLineId=journalRecordId');
     });
   });
 });

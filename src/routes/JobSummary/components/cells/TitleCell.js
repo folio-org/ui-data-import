@@ -36,7 +36,6 @@ export const TitleCell = ({
         target="_blank"
         rel="noopener noreferrer"
         to={path}
-
       >
         {title}
       </TextLink>
