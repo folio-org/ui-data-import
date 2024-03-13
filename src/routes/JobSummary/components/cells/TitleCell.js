@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { TextLink } from '@folio/stripes/components';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
@@ -41,4 +42,16 @@ export const TitleCell = ({
       </TextLink>
     </BaseLineCell>
   );
+};
+
+TitleCell.propTypes = {
+  isEdifactType: PropTypes.bool,
+  sourceRecordId: PropTypes.string.isRequired,
+  sourceRecordType: PropTypes.string.isRequired,
+  sourceRecordTitle: PropTypes.string.isRequired,
+  holdingsActionStatus: PropTypes.string,
+  sourceRecordActionStatus: PropTypes.string.isRequired,
+  invoiceLineJournalRecordId: PropTypes.string,
+  jobLogEntriesRecords: PropTypes.arrayOf(PropTypes.object).isRequired,
+  incomingRecordId: PropTypes.string.isRequired,
 };
