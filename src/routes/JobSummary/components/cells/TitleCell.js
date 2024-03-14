@@ -17,10 +17,9 @@ export const TitleCell = ({
   sourceRecordActionStatus,
   invoiceLineJournalRecordId,
   jobLogEntriesRecords,
-  incomingRecordId,
 }) => {
   const jobExecutionId = jobLogEntriesRecords[0]?.jobExecutionId;
-  const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}/${incomingRecordId}`,
+  const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
     isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
   const isHoldingsRecordImportFailed = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type
@@ -53,5 +52,4 @@ TitleCell.propTypes = {
   sourceRecordActionStatus: PropTypes.string.isRequired,
   invoiceLineJournalRecordId: PropTypes.string,
   jobLogEntriesRecords: PropTypes.arrayOf(PropTypes.object).isRequired,
-  incomingRecordId: PropTypes.string.isRequired,
 };

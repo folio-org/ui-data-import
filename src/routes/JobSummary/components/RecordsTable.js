@@ -123,7 +123,6 @@ export const RecordsTable = ({
       sourceRecordActionStatus,
       relatedHoldingsInfo,
       invoiceLineJournalRecordId,
-      incomingRecordId,
     }) => (
       <TitleCell
         isEdifactType={isEdifactType}
@@ -134,7 +133,6 @@ export const RecordsTable = ({
         sourceRecordActionStatus={sourceRecordActionStatus}
         invoiceLineJournalRecordId={invoiceLineJournalRecordId}
         jobLogEntriesRecords={filteredJobLogEntriesRecords}
-        incomingRecordId={incomingRecordId}
       />
     ),
     srsMarcStatus: ({ sourceRecordActionStatus }) => <SRSMarcCell sourceRecordActionStatus={sourceRecordActionStatus} />,
