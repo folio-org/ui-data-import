@@ -69,7 +69,7 @@ export const ViewJobLog = () => {
   const { data: invoiceLineData } = useInvoiceLineByIdQuery(invoiceLineId, { tenant: jobLogData?.relatedInvoiceInfo?.tenantId });
   const { data: authoritiesData } = useAuthoritiesByIdQuery(authoritiesIds, { tenant: jobLogData?.relatedAuthorityInfo?.tenantId });
   const { data: locationsData = [] } = useLocationsQuery({ tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
-  const { data: parsedRecordContent } = useIncomingRecordByIdQuery(jobLogData?.incomingRecordId);
+  const { data: parsedRecordContent } = useIncomingRecordByIdQuery(logId);
 
   useEffect(() => {
     if (!isJobLogLoading && !isJobLogError) {
