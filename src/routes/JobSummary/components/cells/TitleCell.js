@@ -10,7 +10,7 @@ import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const TitleCell = ({
   isEdifactType,
-  sourceRecordId,
+  incomingRecordId,
   sourceRecordType,
   sourceRecordTitle,
   holdingsActionStatus,
@@ -19,7 +19,7 @@ export const TitleCell = ({
   jobLogEntriesRecords,
 }) => {
   const jobExecutionId = jobLogEntriesRecords[0]?.jobExecutionId;
-  const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
+  const path = createUrl(`/data-import/log/${jobExecutionId}/${incomingRecordId}`,
     isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
   const isHoldingsRecordImportFailed = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type
