@@ -118,7 +118,7 @@ export const RecordsTable = ({
     ),
     title: ({
       sourceRecordTitle,
-      sourceRecordId,
+      incomingRecordId,
       sourceRecordType,
       sourceRecordActionStatus,
       relatedHoldingsInfo,
@@ -126,7 +126,7 @@ export const RecordsTable = ({
     }) => (
       <TitleCell
         isEdifactType={isEdifactType}
-        sourceRecordId={sourceRecordId}
+        incomingRecordId={incomingRecordId}
         sourceRecordType={sourceRecordType}
         sourceRecordTitle={sourceRecordTitle}
         holdingsActionStatus={relatedHoldingsInfo?.actionStatus}

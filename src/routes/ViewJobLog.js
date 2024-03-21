@@ -40,11 +40,12 @@ import sharedCss from '../shared.css';
 const { FILTER: { OPTIONS } } = LOG_VIEWER;
 
 export const ViewJobLog = () => {
-  const { id: logId, recordId } = useParams();
+  const { id: logId, incomingRecordId } = useParams();
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const instanceLineIdParam = searchParams.get('instanceLineId');
 
+  const [srsId, setSRSId] = useState(null);
   const [instancesIds, setInstancesIds] = useState([]);
   const [holdingsIds, setHoldingsIds] = useState([]);
   const [itemsIds, setItemsIds] = useState([]);
@@ -58,8 +59,8 @@ export const ViewJobLog = () => {
     isError: isJobLogError,
     isLoading: isJobLogLoading,
     data: jobLogData = {},
-  } = useJobLogRecordsQuery(logId, instanceLineIdParam || recordId);
-  const { data: srsRecordData } = useSRSRecordQuery(recordId, { tenant: jobLogData?.sourceRecordTenantId });
+  } = useJobLogRecordsQuery(logId, instanceLineIdParam || incomingRecordId);
+  const { data: srsRecordData } = useSRSRecordQuery(srsId, { tenant: jobLogData?.sourceRecordTenantId });
   const { data: instancesData } = useInventoryInstancesByIdQuery(instancesIds, { tenant: jobLogData?.relatedInstanceInfo?.tenantId });
   const { data: holdingsData } = useInventoryHoldingsByIdQuery(holdingsIds, { tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
   const { data: itemsData } = useInventoryItemsByIdQuery(itemsIds, { tenant: jobLogData?.relatedItemInfo?.tenantId });
@@ -69,11 +70,12 @@ export const ViewJobLog = () => {
   const { data: invoiceLineData } = useInvoiceLineByIdQuery(invoiceLineId, { tenant: jobLogData?.relatedInvoiceInfo?.tenantId });
   const { data: authoritiesData } = useAuthoritiesByIdQuery(authoritiesIds, { tenant: jobLogData?.relatedAuthorityInfo?.tenantId });
   const { data: locationsData = [] } = useLocationsQuery({ tenant: jobLogData?.relatedHoldingsInfo?.tenantId });
-  const { data: parsedRecordContent } = useIncomingRecordByIdQuery(jobLogData?.incomingRecordId);
+  const { data: parsedRecordContent } = useIncomingRecordByIdQuery(incomingRecordId);
 
   useEffect(() => {
     if (!isJobLogLoading && !isJobLogError) {
       const {
+        sourceRecordId,
         relatedInstanceInfo,
         relatedHoldingsInfo,
         relatedItemInfo,
@@ -83,6 +85,7 @@ export const ViewJobLog = () => {
         relatedAuthorityInfo,
       } = jobLogData;
 
+      setSRSId(sourceRecordId);
       setInstancesIds(relatedInstanceInfo.idList);
       setHoldingsIds(relatedHoldingsInfo.map((item) => item.id).filter((id) => !!id));
       setItemsIds(relatedItemInfo.map((item) => item.id).filter((id) => !!id));
