@@ -45,7 +45,7 @@ export const TitleCell = ({
 
 TitleCell.propTypes = {
   isEdifactType: PropTypes.bool,
-  sourceRecordId: PropTypes.string.isRequired,
+  incomingRecordId: PropTypes.string.isRequired,
   sourceRecordType: PropTypes.string.isRequired,
   sourceRecordTitle: PropTypes.string.isRequired,
   holdingsActionStatus: PropTypes.string,
