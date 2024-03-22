@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **7.1.0** (in progress)
+## [7.1.0](https://github.com/folio-org/ui-data-import/tree/v7.1.0) (2024-03-22)
 
 ### Features added:
 * Action profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1497)
