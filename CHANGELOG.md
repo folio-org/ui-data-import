@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **7.1.0** (in progress)
+## [7.1.0](https://github.com/folio-org/ui-data-import/tree/v7.1.0) (2024-03-22)
 
 ### Features added:
 * Action profile Settings: suppress checkboxes and checkbox actions. (UIDATIMP-1497)
@@ -20,6 +20,7 @@
 * Replace deprecated labelSingular prop with translations prop in MARCFieldProtection ControlledVocab. (UIDATIMP-1596)
 * Remove MARC Bib option when Action = Create and update translation for "Create" option. (UIDATIMP-1598)
 * View job logs: Use incomingRecordId to retrieve Incoming record logs. (UIDATIMP-1600)
+* Bumped folio dependencies and interfaces dependency
 
 ### Bugs fixed:
 * Set per-tenant limit to retrieve the data. (UIDATIMP-1566)
