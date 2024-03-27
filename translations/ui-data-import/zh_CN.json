@@ -350,7 +350,7 @@
     "settings.mappingProfiles.map.item.itemCondition.field.itemDamagedStatusDate": "日期",
     "settings.mappingProfiles.map.item.itemNotes.section": "单件附注",
     "settings.mappingProfiles.map.item.itemLoans.section": "借阅和可用性",
-    "settings.mappingProfiles.map.item.itemLoans.field.loanTypePermanentRequired": "永久借阅类型",
+    "settings.mappingProfiles.map.item.itemLoans.field.loanTypePermanentRequired": "永久借閱類型",
     "settings.mappingProfiles.map.item.itemLoans.field.loanTypeTemporary": "临时借阅类型",
     "settings.mappingProfiles.map.item.itemLoans.field.loanStatus": "状态",
     "settings.mappingProfiles.map.instance": "实例",

@@ -17,7 +17,7 @@
     "jobProfileName": "Perfil de proceso",
     "jobExecutionHrId": "ID",
     "jobCompletedDate": "Ejecución finalizada",
-    "noPreviewsJobsMessage": "No hay artículos que mostrar",
+    "noPreviewsJobsMessage": "No hay ítems que mostrar",
     "noRunningJobsMessage": "No hay trabajos en ejecución para mostrar",
     "loading": "Cargando...",
     "meta.title": "Importar datos",
