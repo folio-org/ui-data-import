@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { TextLink } from '@folio/stripes/components';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
@@ -9,7 +10,7 @@ import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const TitleCell = ({
   isEdifactType,
-  sourceRecordId,
+  incomingRecordId,
   sourceRecordType,
   sourceRecordTitle,
   holdingsActionStatus,
@@ -18,7 +19,7 @@ export const TitleCell = ({
   jobLogEntriesRecords,
 }) => {
   const jobExecutionId = jobLogEntriesRecords[0]?.jobExecutionId;
-  const path = createUrl(`/data-import/log/${jobExecutionId}/${sourceRecordId}`,
+  const path = createUrl(`/data-import/log/${jobExecutionId}/${incomingRecordId}`,
     isEdifactType ? { instanceLineId: invoiceLineJournalRecordId } : {});
 
   const isHoldingsRecordImportFailed = sourceRecordType === FOLIO_RECORD_TYPES.MARC_HOLDINGS.type
@@ -40,4 +41,15 @@ export const TitleCell = ({
       </TextLink>
     </BaseLineCell>
   );
+};
+
+TitleCell.propTypes = {
+  isEdifactType: PropTypes.bool,
+  incomingRecordId: PropTypes.string.isRequired,
+  sourceRecordType: PropTypes.string.isRequired,
+  sourceRecordTitle: PropTypes.string.isRequired,
+  holdingsActionStatus: PropTypes.string,
+  sourceRecordActionStatus: PropTypes.string.isRequired,
+  invoiceLineJournalRecordId: PropTypes.string,
+  jobLogEntriesRecords: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

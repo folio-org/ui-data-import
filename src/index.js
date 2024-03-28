@@ -59,7 +59,7 @@ class DataImport extends Component {
                 component={JobProfile}
               />
               <Route
-                path={`${path}/log/:id/:recordId`}
+                path={`${path}/log/:id/:incomingRecordId`}
                 exact
                 component={ViewJobLog}
               />
