@@ -39,6 +39,7 @@ import {
   PAGE_KEYS,
   storage,
   STATE_MANAGEMENT_LANDING,
+  trimLeadNumbers,
 } from '../utils';
 import { jobExecutionsReducer } from '../redux/reducers/jobExecutionsReducer';
 import {
@@ -261,6 +262,11 @@ export class Home extends Component {
       isShowFinishedJobModalOpen,
     } = this.state;
 
+    const trimmedLogs = logs?.map((log) => ({
+      ...log,
+      fileName: trimLeadNumbers(log.fileName),
+    }));
+
     return (
       <PersistedPaneset
         appId="@folio/data-import"
@@ -291,7 +297,7 @@ export class Home extends Component {
           padContent={false}
         >
           <RecentJobLogs
-            logs={logs}
+            logs={trimmedLogs}
             haveLogsLoaded={hasLoaded}
             checkboxList={checkboxList}
             checkboxesDisabled={isLogsDeletionInProgress}
