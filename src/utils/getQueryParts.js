@@ -1,6 +1,12 @@
 import { startsWith } from 'lodash';
 
-export const getSearchQuery = (queryTemplate, searchString) => queryTemplate.replace(/%{query\.query}/g, searchString);
+export const getSearchQuery = (queryTemplate, searchString) => {
+  const containsAsterisks = /\*+$/g;
+  const isValidSearchString = !containsAsterisks.test(searchString);
+  const validSearchString = isValidSearchString ? searchString : searchString.replace(containsAsterisks, '');
+
+  return queryTemplate.replace(/%{query\.query}/g, validSearchString);
+};
 
 export const getSortQuery = (sortMap, sortValues) => {
   const isSortDescending = sortValue => startsWith(sortValue, '-');

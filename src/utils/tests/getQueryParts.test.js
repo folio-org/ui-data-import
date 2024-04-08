@@ -1,4 +1,7 @@
-import { getSortQuery } from '../getQueryParts';
+import {
+  getSortQuery,
+  getSearchQuery,
+} from '../getQueryParts';
 
 describe('getSortQuery function', () => {
   it('returns sort query string', () => {
@@ -16,5 +19,21 @@ describe('getSortQuery function', () => {
 
     expect(getSortQuery(sortMap, sortValues1)).toBe(expected1);
     expect(getSortQuery(sortMap, sortValues2)).toBe(expected2);
+  });
+});
+
+describe('getSearchQuery function', () => {
+  it('should return search query string', () => {
+    const queryTemplate = 'name="%{query.query}*"';
+
+    const searchString1 = 'test';
+    const searchString2 = 'test*';
+    const searchString3 = 'test**';
+
+    const expectedSearchString = 'name="test*"';
+
+    expect(getSearchQuery(queryTemplate, searchString1)).toBe(expectedSearchString);
+    expect(getSearchQuery(queryTemplate, searchString2)).toBe(expectedSearchString);
+    expect(getSearchQuery(queryTemplate, searchString3)).toBe(expectedSearchString);
   });
 });
