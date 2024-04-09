@@ -220,9 +220,18 @@ export class DataFetcher extends Component {
 
   /** @param  {boolean} [isEmpty] flag to fill contextData with empty data */
   mapResourcesToState(isEmpty) {
-    const { resources: { jobs, logs } } = this.props;
+    const {
+      resources: {
+        jobs,
+        logs,
+        splitStatus,
+      },
+    } = this.props;
 
-    const contextData = { hasLoaded: (jobs.hasLoaded && logs.hasLoaded) };
+    const contextData = {
+      hasLoaded: (jobs.hasLoaded && logs.hasLoaded),
+      isSplitStatusEnabled: splitStatus.records[0].splitStatus,
+    };
 
     forEach({ jobs, logs }, (resourceValue, resourceName) => {
       contextData[resourceName] = isEmpty ? [] : get(resourceValue, ['records', 0, 'jobExecutions'], []);
