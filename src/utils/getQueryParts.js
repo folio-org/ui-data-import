@@ -1,9 +1,9 @@
 import { startsWith } from 'lodash';
 
+import { validateSearchString } from './validateSearchString';
+
 export const getSearchQuery = (queryTemplate, searchString) => {
-  const containsAsterisks = /\*+$/g;
-  const isValidSearchString = !containsAsterisks.test(searchString);
-  const validSearchString = isValidSearchString ? searchString : searchString.replace(containsAsterisks, '');
+  const validSearchString = validateSearchString(searchString);
 
   return queryTemplate.replace(/%{query\.query}/g, validSearchString);
 };

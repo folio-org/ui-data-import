@@ -43,6 +43,7 @@ import {
 import {
   createLayerURL,
   LAYER_TYPES,
+  validateSearchString,
 } from '../../utils';
 
 import css from './SearchAndSort.css';
@@ -286,11 +287,12 @@ export class SearchAndSort extends Component {
   onSubmitSearch = e => {
     const { onSubmitSearch } = this.props;
     const { locallyChangedSearchTerm } = this.state;
+    const validSearchTerm = validateSearchString(locallyChangedSearchTerm);
 
     e.preventDefault();
     e.stopPropagation();
-    this.performSearch(locallyChangedSearchTerm);
-    onSubmitSearch(e, locallyChangedSearchTerm);
+    this.performSearch(validSearchTerm);
+    onSubmitSearch(e, validSearchTerm);
   };
 
   performSearch = debounce(query => {
