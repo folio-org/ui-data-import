@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **7.1.1** (in progress)
+## [7.1.1](https://github.com/folio-org/ui-data-import/tree/v7.1.1) (2024-04-11)
 
 ### Bugs fixed:
 * Add permissions to data-import set to get incoming records. (UIDATIMP-1609)
