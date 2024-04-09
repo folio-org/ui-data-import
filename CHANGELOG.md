@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Add permissions to data-import set to get incoming records. (UIDATIMP-1609)
+* Trim lead numbers in `fileName` field for sorting when split files is enabled. (UIDATIMP-1604)
 
 ## [7.1.0](https://github.com/folio-org/ui-data-import/tree/v7.1.0) (2024-03-22)
 
