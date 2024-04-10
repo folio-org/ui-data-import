@@ -17,7 +17,7 @@ import {
 
 import { DataFetcherContext } from '../../components';
 import { Home } from '../Home';
-import * as utils from '../../utils/deleteJobExecutions';
+import * as utils from '../../utils';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -59,7 +59,12 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   ) : null)),
 }));
-const deleteJobExecutionsSpy = jest.spyOn(utils, 'deleteJobExecutions');
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  trimLeadNumbers: jest.fn(fileName => fileName),
+  deleteJobExecutions: jest.fn(),
+}));
+
 const initialStore = {
   'folio-data-import_landing': {
     hrIds: [],
@@ -103,10 +108,11 @@ describe('Home component', () => {
 
   beforeEach(() => {
     mockStorage = {};
+    utils.trimLeadNumbers.mockClear();
   });
 
   afterAll(() => {
-    deleteJobExecutionsSpy.mockClear();
+    utils.deleteJobExecutions.mockClear();
     global.Storage.prototype.setItem.mockReset();
   });
 
@@ -157,7 +163,7 @@ describe('Home component', () => {
 
     describe('when confirm deleting logs', () => {
       it('confirmation modal should disappear', async () => {
-        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+        utils.deleteJobExecutions.mockResolvedValue({ jobExecutionDetails: [{}] });
 
         const {
           getAllByLabelText,
@@ -174,7 +180,7 @@ describe('Home component', () => {
       });
 
       it('all checkboxes should be disabled', async () => {
-        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+        utils.deleteJobExecutions.mockResolvedValue({ jobExecutionDetails: [{}] });
 
         const {
           getAllByLabelText,
@@ -195,7 +201,7 @@ describe('Home component', () => {
       });
 
       it('and successful callout should be displayed', async () => {
-        deleteJobExecutionsSpy.mockResolvedValue({ jobExecutionDetails: [{}] });
+        utils.deleteJobExecutions.mockResolvedValue({ jobExecutionDetails: [{}] });
 
         const {
           getAllByLabelText,
@@ -213,7 +219,7 @@ describe('Home component', () => {
 
       describe('when deleting logs failed', () => {
         it('should show callout with error message', async () => {
-          deleteJobExecutionsSpy.mockRejectedValueOnce('Cannot delete jobExecutions');
+          utils.deleteJobExecutions.mockRejectedValueOnce('Cannot delete jobExecutions');
 
           const {
             getAllByLabelText,
@@ -276,6 +282,14 @@ describe('Home component', () => {
           await waitFor(() => expect(queryByText('Information modal')).toBeNull());
         });
       });
+    });
+  });
+
+  describe('when split status is enabled', () => {
+    it('should call the function to trim lead numbers in file names', () => {
+      renderHome(storeWithData, { ...defaultContext, isSplitStatusEnabled: true });
+
+      expect(utils.trimLeadNumbers).toHaveBeenCalledTimes(defaultContext.logs.length);
     });
   });
 });
