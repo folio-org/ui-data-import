@@ -287,12 +287,13 @@ export class SearchAndSort extends Component {
   onSubmitSearch = e => {
     const { onSubmitSearch } = this.props;
     const { locallyChangedSearchTerm } = this.state;
-    const validSearchTerm = validateSearchString(locallyChangedSearchTerm);
 
     e.preventDefault();
     e.stopPropagation();
-    this.performSearch(validSearchTerm);
-    onSubmitSearch(e, validSearchTerm);
+    const validSearchString = validateSearchString(locallyChangedSearchTerm);
+
+    this.performSearch(validSearchString);
+    onSubmitSearch(e, validSearchString);
   };
 
   performSearch = debounce(query => {
