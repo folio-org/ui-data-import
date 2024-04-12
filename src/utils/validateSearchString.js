@@ -16,7 +16,7 @@
  * // => test
  */
 export const validateSearchString = searchString => {
-  const containsAsterisks = /\*+$/g;
+  const containsAsterisks = /\**$/g;
   const isValidSearchString = !containsAsterisks.test(searchString);
 
   return isValidSearchString ? searchString : searchString.replace(containsAsterisks, '');
