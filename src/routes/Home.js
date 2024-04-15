@@ -39,6 +39,7 @@ import {
   PAGE_KEYS,
   storage,
   STATE_MANAGEMENT_LANDING,
+  trimLeadNumbers,
 } from '../utils';
 import { jobExecutionsReducer } from '../redux/reducers/jobExecutionsReducer';
 import {
@@ -250,10 +251,20 @@ export class Home extends Component {
     this.setState({ isShowFinishedJobModalOpen: false });
   };
 
+  getTrimmedLogs = () => {
+    const { logs } = this.context;
+
+    return logs?.map(log => ({
+      ...log,
+      fileName: trimLeadNumbers(log.fileName),
+    }));
+  }
+
   render() {
     const {
       logs,
       hasLoaded,
+      isSplitStatusEnabled,
     } = this.context;
     const { checkboxList } = this.props;
     const {
@@ -291,7 +302,7 @@ export class Home extends Component {
           padContent={false}
         >
           <RecentJobLogs
-            logs={logs}
+            logs={isSplitStatusEnabled ? this.getTrimmedLogs() : logs}
             haveLogsLoaded={hasLoaded}
             checkboxList={checkboxList}
             checkboxesDisabled={isLogsDeletionInProgress}

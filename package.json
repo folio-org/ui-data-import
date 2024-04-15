@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -208,7 +208,8 @@
           "metadata-provider.logs.get",
           "source-storage.records.get",
           "ui-data-import.view",
-          "ui-orders.orders.view"
+          "ui-orders.orders.view",
+          "metadata-provider.incomingrecords.get"
         ],
         "visible": true
       },
@@ -223,7 +224,8 @@
           "data-import.uploaddefinitions.get",
           "metadata-provider.jobexecutions.get",
           "metadata-provider.logs.get",
-          "source-storage.records.get"
+          "source-storage.records.get",
+          "metadata-provider.incomingrecords.get"
         ],
         "visible": true
       },
