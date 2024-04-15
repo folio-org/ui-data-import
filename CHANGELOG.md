@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **7.1.2** (in progress)
+
+### Bugs fixed:
+* JSON log not displaying the location of created multiple holdings. (UIDATIMP-1608)
+
 ## [7.1.1](https://github.com/folio-org/ui-data-import/tree/v7.1.1) (2024-04-11)
 
 ### Bugs fixed:
