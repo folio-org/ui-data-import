@@ -36,7 +36,7 @@ const sortMap = {
   action: 'action folioRecord',
   tags: 'tags.tagList',
   updated: 'metadata.updatedDate',
-  updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+  updatedBy: 'userInfo.lastName userInfo.firstName userInfo.userName',
 };
 const defaultSort = 'name';
 
