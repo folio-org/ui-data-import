@@ -63,7 +63,7 @@ export class FileExtensions extends Component {
               importBlocked: 'importBlocked',
               updated: 'metadata.updatedDate',
               dataTypes: 'dataTypes',
-              updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+              updatedBy: 'userInfo.lastName userInfo.firstName userInfo.userName',
             },
             [],
           ),
