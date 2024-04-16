@@ -6,6 +6,7 @@
 * "addedRelations" is not clearing after unlinking the update profile. (UIDATIMP-1603)
 * JSON log not displaying the location of created multiple holdings. (UIDATIMP-1608)
 * Perform sorting by last name first, instead of first name in 'Updated by' column. (UIDATIMP-1613)
+* Allow to search profiles using `*`. (UIDATIMP-1605)
 
 ## [7.1.1](https://github.com/folio-org/ui-data-import/tree/v7.1.1) (2024-04-11)
 
