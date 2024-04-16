@@ -60,9 +60,7 @@ export const AssociatedList = memo(({
   const sortDirection = sortOrderQuery.startsWith('-') ? SORT_TYPES.DESCENDING : SORT_TYPES.ASCENDING;
   const sortOrder = sortOrderQuery.replace(/^-/, '').replace(/,.*/, '');
   const sortTemplate = searchAndSortTemplate(intl);
-  let columns = isStatic && isMultiSelect ? ['selected', ...visibleColumns] : visibleColumns;
-
-  columns = !isStatic ? [...columns, 'unlink'] : columns;
+  const columns = !isStatic ? [...visibleColumns, 'unlink'] : visibleColumns;
 
   const descI = columns.findIndex(col => col === 'description');
 
