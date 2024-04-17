@@ -179,9 +179,9 @@ export const RecordsTable = ({
       relatedItemInfo = [],
     }) => {
       const instanceId = relatedInstanceInfo.idList[0];
-      const isGeneralItemError = isGeneralItemsError(relatedItemInfo);
+      const isSingleItemError = isGeneralItemsError(relatedItemInfo);
 
-      if (isGeneralItemError) {
+      if (isSingleItemError) {
         return (
           <BaseLineCell>
             <FormattedMessage id="ui-data-import.logLight.actionStatus.noAction" />
@@ -293,11 +293,11 @@ export const RecordsTable = ({
       relatedPoLineInfo = {},
       relatedInvoiceLineInfo = {},
     }) => {
-      const isGeneralItemError = isGeneralItemsError(relatedItemInfo);
-      const isGeneralError = relatedInstanceInfo.error || relatedAuthorityInfo.error
+      const isSingleItemError = isGeneralItemsError(relatedItemInfo);
+      const isGeneralError = error || relatedInstanceInfo.error || relatedAuthorityInfo.error
         || relatedPoLineInfo.error || relatedInvoiceLineInfo.error;
 
-      if (isGeneralItemError || isGeneralError) {
+      if (isSingleItemError || isGeneralError) {
         return (
           <BaseLineCell>
             <FormattedMessage id="ui-data-import.error" />
@@ -305,11 +305,10 @@ export const RecordsTable = ({
         );
       }
 
-      if (isEmpty(relatedItemInfo) && relatedHoldingsInfo?.some(item => item.error)) {
+      if (isEmpty(relatedItemInfo) && relatedHoldingsInfo?.some(holding => holding.error)) {
         return (
           <ErrorCell
-            error={error}
-            sortedItemData={relatedHoldingsInfo?.map(item => [item])}
+            sortedItemData={relatedHoldingsInfo?.map(holding => [holding])}
           />
         );
       }
@@ -318,7 +317,6 @@ export const RecordsTable = ({
 
       return (
         <ErrorCell
-          error={error}
           sortedItemData={sortedItemData}
         />
       );

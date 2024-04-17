@@ -8,22 +8,19 @@ import {
 } from '../utils';
 
 export const ErrorCell = ({
-  error,
   sortedItemData,
 }) => {
-  if (error && !isEmpty(sortedItemData)) {
+  if (!isEmpty(sortedItemData)) {
     return fillCellWithNoValues(sortedItemData, true);
   }
 
-  return error ? <BaseLineCell><FormattedMessage id="ui-data-import.error" /></BaseLineCell> : '';
+  return <BaseLineCell><FormattedMessage id="ui-data-import.error" /></BaseLineCell>;
 };
 
 ErrorCell.propTypes = {
-  error: PropTypes.string,
   sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
 };
 
 ErrorCell.defaultProps = {
-  error: '',
   sortedItemData: [],
 };
