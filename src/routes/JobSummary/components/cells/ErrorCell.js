@@ -11,7 +11,7 @@ export const ErrorCell = ({
   error,
   sortedItemData,
 }) => {
-  if (error && !isEmpty(sortedItemData)) {
+  if (!isEmpty(sortedItemData)) {
     return fillCellWithNoValues(sortedItemData, true);
   }
 
