@@ -8,6 +8,7 @@
 * Perform sorting by last name first, instead of first name in 'Updated by' column. (UIDATIMP-1613)
 * Allow to search profiles using `*`. (UIDATIMP-1605)
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
+* The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
 
 ## [7.1.1](https://github.com/folio-org/ui-data-import/tree/v7.1.1) (2024-04-11)
 

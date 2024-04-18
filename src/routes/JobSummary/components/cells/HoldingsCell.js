@@ -34,7 +34,9 @@ export const HoldingsCell = ({
     const isHotlink = isPathCorrect && (holdings.actionStatus === RECORD_ACTION_STATUS.CREATED
         || holdings.actionStatus === RECORD_ACTION_STATUS.UPDATED);
 
-    const spacing = !isDiscarded ? Array.from({ length: itemForHoldingsCount }, (_, i) => <br key={i} />) : <br />;
+    const spacing = !isDiscarded
+      ? Array.from({ length: itemForHoldingsCount }, (_, i) => <br key={i} />)
+      : <br />;
 
     return (
       <div key={index} style={{ paddingBottom: '7px' }}>
