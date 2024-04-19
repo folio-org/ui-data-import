@@ -58,10 +58,12 @@ export const ProfileLabel = memo(({
     profileWrapperId: detailWrapperId = null,
   } = recordData;
   const {
+    id,
     contentType: parentType,
-    profileId: parentId,
+    profileId,
     profileWrapperId: masterWrapperId = null,
   } = parentRecordData;
+  const parentId = profileId || id;
 
   const labelMode = record ? 'static' : 'editable';
   const entityKey = `${camelCase(recordType)}s`;
