@@ -48,7 +48,7 @@ export const jobProfilesShape = {
           name: 'name',
           tags: 'tags.tagList',
           updated: 'metadata.updatedDate',
-          updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+          updatedBy: 'userInfo.lastName userInfo.firstName userInfo.userName',
           description: 'description',
         };
         const queryTemplate = '(name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")';
@@ -136,7 +136,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
             name: 'name',
             tags: 'tags.tagList',
             updated: 'metadata.updatedDate',
-            updatedBy: 'userInfo.firstName userInfo.lastName userInfo.userName',
+            updatedBy: 'userInfo.lastName userInfo.firstName userInfo.userName',
           };
 
           if (chooseJobProfile) {
