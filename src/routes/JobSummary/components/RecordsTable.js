@@ -305,9 +305,10 @@ export const RecordsTable = ({
         );
       }
 
-      if (isEmpty(relatedItemInfo) && relatedHoldingsInfo?.some(holding => holding.error)) {
+      if (isEmpty(relatedItemInfo) && !relatedHoldingsInfo?.some(holding => holding.error)) {
         return (
           <ErrorCell
+            error={error}
             sortedItemData={relatedHoldingsInfo?.map(holding => [holding])}
           />
         );
@@ -317,6 +318,7 @@ export const RecordsTable = ({
 
       return (
         <ErrorCell
+          error={error}
           sortedItemData={sortedItemData}
         />
       );
