@@ -1,14 +1,18 @@
 # Change history for ui-data-import
 
-## **7.1.2** (in progress)
+## **7.2.0** (in progress)
 
 ### Bugs fixed:
 * "addedRelations" is not clearing after unlinking the update profile. (UIDATIMP-1603)
+* Remove `selected` column from associated profiles list. (UIDATIMP-1607)
+* The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
+
+## [7.1.2](https://github.com/folio-org/ui-data-import/tree/v7.1.2) (2024-04-19)
+
+### Bugs fixed:
 * JSON log not displaying the location of created multiple holdings. (UIDATIMP-1608)
 * Perform sorting by last name first, instead of first name in 'Updated by' column. (UIDATIMP-1613)
 * Allow to search profiles using `*`. (UIDATIMP-1605)
-* Remove `selected` column from associated profiles list. (UIDATIMP-1607)
-* The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
 
 ## [7.1.1](https://github.com/folio-org/ui-data-import/tree/v7.1.1) (2024-04-11)
 
