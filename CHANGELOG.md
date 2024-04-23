@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.1.3](https://github.com/folio-org/ui-data-import/tree/v7.1.3) (2024-04-22)
+
+### Bugs fixed:
+* "addedRelations" is not clearing after unlinking the update profile. (UIDATIMP-1603)
+
 ## [7.1.2](https://github.com/folio-org/ui-data-import/tree/v7.1.2) (2024-04-19)
 
 ### Bugs fixed:
