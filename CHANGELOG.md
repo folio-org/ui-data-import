@@ -3,9 +3,13 @@
 ## **7.2.0** (in progress)
 
 ### Bugs fixed:
-* "addedRelations" is not clearing after unlinking the update profile. (UIDATIMP-1603)
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
+
+## [7.1.3](https://github.com/folio-org/ui-data-import/tree/v7.1.3) (2024-04-22)
+
+### Bugs fixed:
+* "addedRelations" is not clearing after unlinking the update profile. (UIDATIMP-1603)
 
 ## [7.1.2](https://github.com/folio-org/ui-data-import/tree/v7.1.2) (2024-04-19)
 
