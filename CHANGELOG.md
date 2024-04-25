@@ -6,6 +6,7 @@
 * "addedRelations" is not clearing after unlinking the update profile. (UIDATIMP-1603)
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
+* Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
 
 ## [7.1.2](https://github.com/folio-org/ui-data-import/tree/v7.1.2) (2024-04-19)
 
