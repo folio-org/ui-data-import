@@ -121,6 +121,7 @@ export const JobProfilesFormComponent = memo(({
   const { profile } = initialValues;
   const isEditMode = Boolean(profile.id);
   const isLayerCreate = layerType === LAYER_TYPES.CREATE;
+  const isLayerDuplicate = layerType === LAYER_TYPES.DUPLICATE;
   const isSubmitDisabled = pristine || submitting;
 
   const childWrappers = useMemo(
@@ -130,9 +131,9 @@ export const JobProfilesFormComponent = memo(({
   const profileWrapperId = useMemo(
     () => {
       const lastRecord = resources.profileSnapshots?.records.at(-1);
-      return (!isLayerCreate && lastRecord) ? lastRecord?.profileWrapperId : null;
+      return (!isLayerCreate && !isLayerDuplicate && lastRecord) ? lastRecord?.profileWrapperId : null;
     },
-    [isLayerCreate, resources.profileSnapshots.records],
+    [isLayerCreate, isLayerDuplicate, resources.profileSnapshots.records],
   );
 
   const { formatMessage } = useIntl();

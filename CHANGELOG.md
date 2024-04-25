@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.1.5] (IN PROGRESS)
+
+### Bugs fixed:
+* Changes made during duplication of "Default - Create SRS MARC Authority" job profile are not saved and affect original job profile. (UIDATIMP-1622)
+
 ## [7.1.4](https://github.com/folio-org/ui-data-import/tree/v7.1.4) (2024-04-26)
 
 ### Bugs fixed:
