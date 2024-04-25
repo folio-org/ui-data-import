@@ -5,6 +5,7 @@
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
+* Changes made during duplication of "Default - Create SRS MARC Authority" job profile are not saved and affect original job profile. (UIDATIMP-1622)
 
 ## [7.1.3](https://github.com/folio-org/ui-data-import/tree/v7.1.3) (2024-04-22)
 
