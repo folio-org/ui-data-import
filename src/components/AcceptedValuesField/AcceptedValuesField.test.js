@@ -221,7 +221,7 @@ describe('Accepted values field component', () => {
         });
 
         await waitFor(() => expect(findByText('withReferenceValues')).toBeDefined());
-        await waitFor(() => expect(mockConsoleError).toHaveBeenCalledTimes(2));
+        await waitFor(() => expect(mockConsoleError).toHaveBeenCalledTimes(4));
       });
     });
   });
