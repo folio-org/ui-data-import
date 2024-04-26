@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **7.1.4** (in progress)
+## [7.1.4](https://github.com/folio-org/ui-data-import/tree/v7.1.4) (2024-04-26)
 
 ### Bugs fixed:
 * The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
