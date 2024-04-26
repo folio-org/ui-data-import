@@ -38,7 +38,7 @@ describe('ErrorCell component', () => {
     await runAxeTest({ rootNode: container });
   });
 
-  describe('when error was occured', () => {
+  describe('when error was occurred', () => {
     it('should render error message', () => {
       const { getByText } = renderErrorCell({ error: 'test error' });
 
@@ -48,7 +48,6 @@ describe('ErrorCell component', () => {
     describe('when item has an error', () => {
       it('should render error message', () => {
         const { getByText } = renderErrorCell({
-          error: 'test error',
           sortedItemData: sortedItemDataProp,
         });
 
