@@ -85,7 +85,7 @@ export const PhysicalResourceDetails = ({
   useEffect(() => {
     if (dismissCreateInventory) {
       clearFieldValue({
-        paths: [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY, PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.MATERIAL_TYPE],
+        paths: [PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.CREATE_INVENTORY],
         setReferenceTables,
       });
     }
@@ -218,7 +218,7 @@ export const PhysicalResourceDetails = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(MATERIAL_TYPE_INDEX)}
             okapi={okapi}
-            disabled={dismissPhysicalDetails || dismissCreateInventory}
+            disabled={dismissPhysicalDetails}
           />
         </Col>
       </Row>
