@@ -1,14 +1,33 @@
 # Change history for ui-data-import
 
-## **7.1.2** (in progress)
+## **7.2.0** (in progress)
+
+### Bugs fixed:
+* Remove `selected` column from associated profiles list. (UIDATIMP-1607)
+* Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
+
+## **7.1.5** (in progress)
+
+### Bugs fixed:
+* Changes made during duplication of "Default - Create SRS MARC Authority" job profile are not saved and affect original job profile. (UIDATIMP-1622)
+* Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
+
+## [7.1.4](https://github.com/folio-org/ui-data-import/tree/v7.1.4) (2024-04-26)
+
+### Bugs fixed:
+* The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
+
+## [7.1.3](https://github.com/folio-org/ui-data-import/tree/v7.1.3) (2024-04-22)
 
 ### Bugs fixed:
 * "addedRelations" is not clearing after unlinking the update profile. (UIDATIMP-1603)
+
+## [7.1.2](https://github.com/folio-org/ui-data-import/tree/v7.1.2) (2024-04-19)
+
+### Bugs fixed:
 * JSON log not displaying the location of created multiple holdings. (UIDATIMP-1608)
 * Perform sorting by last name first, instead of first name in 'Updated by' column. (UIDATIMP-1613)
 * Allow to search profiles using `*`. (UIDATIMP-1605)
-* Remove `selected` column from associated profiles list. (UIDATIMP-1607)
-* The 'Error' status is not displayed in "Error" column for the same row as Items with status "No action". (UIDATIMP-1619)
 
 ## [7.1.1](https://github.com/folio-org/ui-data-import/tree/v7.1.1) (2024-04-11)
 

@@ -176,7 +176,10 @@ export class UploadingJobsDisplay extends Component {
   handleNavigation = nextLocation => {
     const { location } = this.props;
 
-    const locationHasChanged = location.pathname !== nextLocation.pathname;
+    const jobProfilePathRegExp = /job-profile(?:\/view)?/g;
+    const isJobProfilePath = jobProfilePathRegExp.test(nextLocation.pathname);
+
+    const locationHasChanged = location.pathname !== nextLocation.pathname && !isJobProfilePath;
     const shouldPrompt = this.filesUploading && locationHasChanged;
 
     if (shouldPrompt) {
