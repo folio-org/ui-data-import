@@ -82,7 +82,7 @@ export const EResourcesDetails = ({
   useEffect(() => {
     if (dismissCreateInventory) {
       clearFieldValue({
-        paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY, E_RESOURCES_DETAILS_FIELDS_MAP.MATERIAL_TYPE],
+        paths: [E_RESOURCES_DETAILS_FIELDS_MAP.CREATE_INVENTORY],
         setReferenceTables,
       });
     }
@@ -206,7 +206,7 @@ export const EResourcesDetails = ({
             setAcceptedValues={setReferenceTables}
             acceptedValuesPath={getAcceptedValuesPath(MATERIAL_TYPE_INDEX)}
             okapi={okapi}
-            disabled={dismissElectronicDetails || dismissCreateInventory}
+            disabled={dismissElectronicDetails}
           />
         </Col>
         <Col xs={3}>
