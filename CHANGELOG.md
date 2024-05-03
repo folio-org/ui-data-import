@@ -6,7 +6,7 @@
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
 
-## **7.1.6** (in progress)
+## [7.1.6](https://github.com/folio-org/ui-data-import/tree/v7.1.6) (2024-05-02)
 
 ### Bugs fixed:
 * Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
