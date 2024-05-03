@@ -2,6 +2,7 @@ import './currencyData.mock';
 import './documentCreateRange.mock';
 import './matchMedia.mock';
 import './reactVirtializedAutoSizer.mock';
+import './resizeObserver.mock';
 import './stripesConfig.mock';
 import './stripesIcon.mock';
 import './stripesCore.mock';

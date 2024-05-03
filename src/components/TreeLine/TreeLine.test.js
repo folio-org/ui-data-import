@@ -100,11 +100,6 @@ const renderTreeLine = ({
   return render(component);
 };
 
-window.ResizeObserver = jest.fn(() => ({
-  observe() {},
-  unobserve() {},
-}));
-
 describe('TreeLine component', () => {
   afterAll(() => {
     delete window.ResizeObserver;

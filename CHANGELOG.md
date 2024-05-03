@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.0.6](https://github.com/folio-org/ui-data-import/tree/v7.0.6) (2024-05-03)
+
+### Bugs fixed:
+* Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
+
 ## [7.0.5](https://github.com/folio-org/ui-data-import/tree/v7.0.5) (2023-12-06)
 
 ### Bugs fixed:

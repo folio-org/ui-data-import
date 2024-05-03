@@ -11,10 +11,6 @@ import '../../../test/jest/__mock__';
 
 import { ProfileBranch } from './ProfileBranch';
 
-window.ResizeObserver = jest.fn(() => ({
-  observe() {},
-  unobserve() {},
-}));
 const profileBranchProps = {
   linkingRules: {
     profilesAllowed: ['matchProfiles', 'actionProfiles'],

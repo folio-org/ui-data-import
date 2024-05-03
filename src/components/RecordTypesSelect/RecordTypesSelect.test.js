@@ -10,11 +10,6 @@ import '../../../test/jest/__mock__';
 
 import { RecordTypesSelect } from './RecordTypesSelect';
 
-window.ResizeObserver = jest.fn(() => ({
-  observe() {},
-  unobserve() {},
-}));
-
 const renderRecordTypesSelect = ({
   incomingRecordType,
   existingRecordType,
