@@ -6,11 +6,15 @@
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
 
-## **7.1.5** (in progress)
+## **7.1.6** (in progress)
+
+### Bugs fixed:
+* Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
+
+## [7.1.5](https://github.com/folio-org/ui-data-import/tree/v7.1.5) (2024-04-30)
 
 ### Bugs fixed:
 * Changes made during duplication of "Default - Create SRS MARC Authority" job profile are not saved and affect original job profile. (UIDATIMP-1622)
-* Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
 
 ## [7.1.4](https://github.com/folio-org/ui-data-import/tree/v7.1.4) (2024-04-26)
 
