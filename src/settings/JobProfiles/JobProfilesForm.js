@@ -175,10 +175,43 @@ export const JobProfilesFormComponent = memo(({
   }, [childWrappers]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const contentData = !isLayerCreate ? childWrappers : [];
-    const getData = !isEmpty(currentJobProfileTreeContent) ? currentJobProfileTreeContent : contentData;
+    const removeKeys = (obj, keys) => {
+      let index;
+      for (const prop in obj) {
+        if (Object.hasOwn(obj, prop)) {
+          switch (typeof (obj[prop])) {
+            case 'object':
+              index = keys.indexOf(prop);
+              if (index > -1) {
+                delete obj[prop];
+              } else {
+                removeKeys(obj[prop], keys);
+              }
+              break;
+            default:
+              index = keys.indexOf(prop);
+              if (index > -1) {
+                delete obj[prop];
+              }
+              break;
+          }
+        }
+      }
+    };
 
-    setProfileTreeData(getData);
+    const contentData = !isLayerCreate ? childWrappers : [];
+    const treeData = !isEmpty(currentJobProfileTreeContent) ? currentJobProfileTreeContent : contentData;
+
+    // af far as new profileWrapperId should be created for new profiles
+    // it is needed to omit these fields during duplication because it copies
+    // data from the original job profile
+    const massageTreeData = () => (isLayerDuplicate
+      ? treeData.forEach(obj => removeKeys(obj, ['profileWrapperId']))
+      : treeData);
+
+    massageTreeData();
+
+    setProfileTreeData(treeData);
   }, [isLayerCreate, childWrappers]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
