@@ -5,12 +5,17 @@
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
+* Changes made during duplication of a job with a match profile are not saved. (UIDATIMP-1633)
 
-## **7.1.5** (in progress)
+## [7.1.6](https://github.com/folio-org/ui-data-import/tree/v7.1.6) (2024-05-02)
+
+### Bugs fixed:
+* Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1627)
+
+## [7.1.5](https://github.com/folio-org/ui-data-import/tree/v7.1.5) (2024-04-30)
 
 ### Bugs fixed:
 * Changes made during duplication of "Default - Create SRS MARC Authority" job profile are not saved and affect original job profile. (UIDATIMP-1622)
-* Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
 
 ## [7.1.4](https://github.com/folio-org/ui-data-import/tree/v7.1.4) (2024-04-26)
 
@@ -67,6 +72,11 @@
 * Update style of Incoming Record button to match other buttons (UIDATIMP-1594)
 * Not able to use system generated Match profiles (UIDATIMP-1521)
 * Change error message when upload definition has been deleted by another user. (UIDATIMP-1599)
+
+## [7.0.6](https://github.com/folio-org/ui-data-import/tree/v7.0.6) (2024-05-03)
+
+### Bugs fixed:
+* Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
 
 ## [7.0.5](https://github.com/folio-org/ui-data-import/tree/v7.0.5) (2023-12-06)
 
