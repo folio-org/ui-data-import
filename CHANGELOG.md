@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Changes made during duplication of a job with a match profile are not saved. (UIDATIMP-1633)
+* Display an empty value when `jobProfileInfo` is empty. (UIDATIMP-1640)
 
 ## [7.1.6](https://github.com/folio-org/ui-data-import/tree/v7.1.6) (2024-05-02)
 
