@@ -6,6 +6,7 @@
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
 * Changes made during duplication of a job with a match profile are not saved. (UIDATIMP-1633)
+* Display an empty value when `jobProfileInfo` is empty. (UIDATIMP-1640)
 
 ## [7.1.6](https://github.com/folio-org/ui-data-import/tree/v7.1.6) (2024-05-02)
 
