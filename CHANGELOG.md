@@ -12,7 +12,6 @@
 * Update Order mapping rules to allow Material Type mapping when Purchase Order Status set to 'Open'. (UIDATIMP-1626)
 
 ## [7.0.5](https://github.com/folio-org/ui-data-import/tree/v7.0.5) (2023-12-06)
-
 ### Bugs fixed:
 * Log summary table display errors when Items and Holdings are discarded (UIDATIMP-1573)
 
