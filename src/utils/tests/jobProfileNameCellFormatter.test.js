@@ -1,8 +1,11 @@
 import { Router } from 'react-router-dom';
-import { render } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 
 import '../../../test/jest/__mock__';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 
 import { jobProfileNameCellFormatter } from '../jobProfileNameCellFormatter';
 
@@ -19,7 +22,7 @@ const renderJobProfileName = record => {
   const textLink = jobProfileNameCellFormatter(record);
   const component = <Router history={history}>{textLink}</Router>;
 
-  return render(component);
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('jobProfileNameCellFormatter function', () => {
@@ -34,5 +37,13 @@ describe('jobProfileNameCellFormatter function', () => {
 
     expect(getByText(jobProfileRecord.jobProfileInfo.name).href)
       .toContain(`/settings/data-import/job-profiles/view/${jobProfileRecord.jobProfileInfo.id}`);
+  });
+
+  describe('when jobProfileInfo is empty', () => {
+    it('should render an empty value', () => {
+      const { getByText } = renderJobProfileName({});
+
+      expect(getByText('-')).toBeInTheDocument();
+    });
   });
 });

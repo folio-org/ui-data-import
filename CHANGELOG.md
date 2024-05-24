@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.1.8](https://github.com/folio-org/ui-data-import/tree/v7.1.8) (2024-05-09)
+
+### Bugs fixed:
+* Display an empty value when `jobProfileInfo` is empty. (UIDATIMP-1640)
+
 ## [7.1.7](https://github.com/folio-org/ui-data-import/tree/v7.1.7) (2024-05-09)
 
 ### Bugs fixed:
