@@ -7,7 +7,7 @@ import {
   FormattedDate,
 } from '@folio/stripes/components';
 
-export const StaticValueDate = ({ value }) => {
+export const StaticValueDate = ({ value = '' }) => {
   return (
     <Layout
       data-test-static-exact-date-wrapper
@@ -19,5 +19,3 @@ export const StaticValueDate = ({ value }) => {
 };
 
 StaticValueDate.propTypes = { value: PropTypes.string };
-
-StaticValueDate.defaultProps = { value: '' };

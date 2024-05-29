@@ -38,7 +38,7 @@ import {
 import { VENDOR_DETAILS_FIELD } from '../../../../../utils';
 
 export const Vendor = ({
-  accountNumbers,
+  accountNumbers = [],
   setReferenceTables,
   initialFields,
   okapi,
@@ -182,5 +182,3 @@ Vendor.propTypes = {
   okapi: PropTypes.object.isRequired,
   accountNumbers: PropTypes.arrayOf(PropTypes.object),
 };
-
-Vendor.defaultProps = { accountNumbers: [] };

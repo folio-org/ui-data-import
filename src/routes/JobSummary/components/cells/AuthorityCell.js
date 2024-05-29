@@ -10,7 +10,7 @@ import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const AuthorityCell = ({
   relatedAuthorityInfo,
-  sortedItemData,
+  sortedItemData = [],
 }) => {
   const authorityActionStatus = relatedAuthorityInfo.actionStatus;
 
@@ -33,5 +33,3 @@ AuthorityCell.propTypes = {
   relatedAuthorityInfo: PropTypes.object.isRequired,
   sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
 };
-
-AuthorityCell.defaultProps = { sortedItemData: [] };

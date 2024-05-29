@@ -48,8 +48,8 @@ export const RecordsTable = ({
   resources,
   resources: { locations },
   source,
-  maxSortKeys,
-  defaultSort,
+  maxSortKeys = 2,
+  defaultSort = '',
   resultCountIncrement,
   pageAmount,
   isEdifactType,
@@ -380,8 +380,4 @@ RecordsTable.propTypes = {
   isEdifactType: PropTypes.bool,
   defaultSort: PropTypes.string,
   maxSortKeys: PropTypes.number,
-};
-RecordsTable.defaultProps = {
-  defaultSort: '',
-  maxSortKeys: 2,
 };

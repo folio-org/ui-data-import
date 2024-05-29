@@ -27,9 +27,9 @@ import {
 import css from '../ViewMatchCriterion.css';
 
 const ExistingSectionFolio = memo(({
-  existingRecordFields,
-  existingRecordType,
-  existingRecordFieldLabel,
+  existingRecordFields = [],
+  existingRecordType = null,
+  existingRecordFieldLabel = null,
   stripes,
 }) => {
   const { formatMessage } = useIntl();
@@ -70,12 +70,6 @@ ExistingSectionFolio.propTypes = {
   existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
   existingRecordFieldLabel: PropTypes.node,
   stripes: PropTypes.object.isRequired,
-};
-
-ExistingSectionFolio.defaultProps = {
-  existingRecordFields: [],
-  existingRecordType: null,
-  existingRecordFieldLabel: null,
 };
 
 export default stripesConnect(ExistingSectionFolio);

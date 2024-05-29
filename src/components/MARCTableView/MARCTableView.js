@@ -8,10 +8,21 @@ import css from '../MARCTable/MARCTable.css';
 
 import { mappingMARCFieldShape } from '../../utils';
 
+const defaultColumnWidths = {
+  action: '90px',
+  field: '90px',
+  indicator1: '63px',
+  indicator2: '63px',
+  subfield: '93px',
+  subaction: '140px',
+  data: '340px',
+  position: '140px',
+};
+
 export const MARCTableView = ({
   columns,
   fields,
-  columnWidths,
+  columnWidths = defaultColumnWidths,
 }) => {
   return (
     <div
@@ -35,17 +46,4 @@ MARCTableView.propTypes = {
   fields: PropTypes.arrayOf(mappingMARCFieldShape.isRequired).isRequired,
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   columnWidths: PropTypes.object,
-};
-
-MARCTableView.defaultProps = {
-  columnWidths: {
-    action: '90px',
-    field: '90px',
-    indicator1: '63px',
-    indicator2: '63px',
-    subfield: '93px',
-    subaction: '140px',
-    data: '340px',
-    position: '140px',
-  },
 };

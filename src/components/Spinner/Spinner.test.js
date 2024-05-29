@@ -1,5 +1,8 @@
 import React from 'react';
-import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  act,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -34,7 +37,9 @@ describe('Spinner component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderSpinner(spinnerProps);
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render preloader', () => {

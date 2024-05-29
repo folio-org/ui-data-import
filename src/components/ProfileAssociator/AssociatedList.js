@@ -29,17 +29,17 @@ export const AssociatedList = memo(({
   intl,
   entityKey,
   namespaceKey,
-  isMultiSelect,
-  isStatic,
+  isMultiSelect = false,
+  isStatic = true,
   checkboxList,
   profileShape,
   columnWidths,
-  contentData,
+  contentData = null,
   className,
-  onRemove,
-  dataAttributes,
-  searchTerm,
-  isEditMode,
+  onRemove = noop,
+  dataAttributes = null,
+  searchTerm = '',
+  isEditMode = false,
 }) => {
   const nsSort = getNsKey('sort', namespaceKey);
   const nsQuery = getNsKey('query', namespaceKey);
@@ -162,14 +162,4 @@ AssociatedList.propTypes = {
   className: PropTypes.string || PropTypes.object,
   searchTerm: PropTypes.string,
   isEditMode: PropTypes.bool,
-};
-
-AssociatedList.defaultProps = {
-  isMultiSelect: false,
-  isEditMode: false,
-  isStatic: true,
-  dataAttributes: null,
-  contentData: null,
-  onRemove: noop,
-  searchTerm: '',
 };

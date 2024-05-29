@@ -18,7 +18,7 @@ import css from '../ViewMatchCriterion.css';
 
 export const MARCFieldSection = ({
   expressionDetails,
-  recordFieldSectionLabel,
+  recordFieldSectionLabel = null,
   recordFieldType,
 }) => {
   const getValue = fieldName => {
@@ -80,5 +80,3 @@ MARCFieldSection.propTypes = {
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   recordFieldSectionLabel: PropTypes.node,
 };
-
-MARCFieldSection.defaultProps = { recordFieldSectionLabel: null };

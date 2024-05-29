@@ -17,9 +17,10 @@ import { formatDecoratorValue } from '../../utils';
 import styles from './withReferenceValues.css';
 
 const decoratorValueRegExp = /"[^"]+"/g;
+const defaultWrapperLabel = 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues';
 
 export const withReferenceValues = memo(({
-  id,
+  id = null,
   input,
   value,
   label,
@@ -28,12 +29,12 @@ export const withReferenceValues = memo(({
   optionValue,
   optionLabel,
   wrappedComponent,
-  wrapperLabel,
-  disabled,
-  required,
-  readOnly,
-  isMultiSelection,
-  hasLoaded,
+  wrapperLabel = defaultWrapperLabel,
+  disabled = false,
+  required = false,
+  readOnly = false,
+  isMultiSelection = false,
+  hasLoaded = false,
   ...rest
 }) => {
   const currentValue = input?.value || value;
@@ -133,14 +134,4 @@ withReferenceValues.propTypes = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
-};
-
-withReferenceValues.defaultProps = {
-  id: null,
-  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-  disabled: false,
-  isMultiSelection: false,
-  hasLoaded: false,
-  required: false,
-  readOnly: false,
 };

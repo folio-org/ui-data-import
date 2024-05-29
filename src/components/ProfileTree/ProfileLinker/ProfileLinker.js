@@ -28,8 +28,8 @@ import css from '../ProfileTree.css';
 
 export const ProfileLinker = ({
   id,
-  parentId,
-  masterWrapperId,
+  parentId = null,
+  masterWrapperId = null,
   parentType,
   profileType,
   onLink,
@@ -37,9 +37,9 @@ export const ProfileLinker = ({
   dataKey,
   initialData,
   setInitialData,
-  reactTo,
-  title,
-  className,
+  reactTo = PROFILE_RELATION_TYPES.NONE,
+  title = '',
+  className = '',
 }) => {
   const [typeSelectorOpen, setTypeSelectorOpen] = useState(false);
   const buttonRefs = {
@@ -155,12 +155,4 @@ ProfileLinker.propTypes = {
   reactTo: PropTypes.oneOf(Object.values(PROFILE_RELATION_TYPES)),
   title: PropTypes.node || PropTypes.string,
   className: PropTypes.string,
-};
-
-ProfileLinker.defaultProps = {
-  parentId: null,
-  masterWrapperId: null,
-  title: '',
-  className: '',
-  reactTo: PROFILE_RELATION_TYPES.NONE,
 };

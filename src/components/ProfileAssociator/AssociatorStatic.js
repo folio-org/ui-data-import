@@ -23,13 +23,13 @@ export const AssociatorStatic = memo(({
   intl,
   entityKey,
   namespaceKey,
-  isMultiSelect,
+  isMultiSelect = true,
   profileShape,
-  dataAttributes,
-  contentData,
-  hasLoaded,
-  useSearch,
-  isEditMode,
+  dataAttributes = null,
+  contentData = null,
+  hasLoaded = false,
+  useSearch = true,
+  isEditMode = false,
 }) => {
   const [currentData, setCurrentData] = useState([]);
   const [currentQuery, setCurrentQuery] = useState('');
@@ -187,13 +187,4 @@ AssociatorStatic.propTypes = {
   useSearch: PropTypes.bool,
   isEditMode: PropTypes.bool,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }),
-};
-
-AssociatorStatic.defaultProps = {
-  isMultiSelect: true,
-  isEditMode: false,
-  dataAttributes: null,
-  contentData: null,
-  hasLoaded: false,
-  useSearch: true,
 };

@@ -25,8 +25,8 @@ import css from '../MatchCriterions.css';
 export const QualifierPartSection = ({
   repeatableIndex,
   recordFieldType,
-  isOpen,
-  onChange,
+  isOpen = false,
+  onChange = noop,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -74,9 +74,4 @@ QualifierPartSection.propTypes = {
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   isOpen: PropTypes.bool,
   onChange: PropTypes.func,
-};
-
-QualifierPartSection.defaultProps = {
-  isOpen: false,
-  onChange: noop,
 };

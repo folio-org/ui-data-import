@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import {
+  act,
   render,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
@@ -61,6 +62,7 @@ const resources = buildResources({
     },
     jobs: {
       hasLoaded: true,
+      records: [],
     }
   }
 });
@@ -85,7 +87,8 @@ const renderDataFetcher = mutator => render(
 describe('DataFetcher component', () => {
   it('should be rendered with no axe errors', async () => {
     const mutator = buildMutator(reset, successGET);
-    const { container } = await renderDataFetcher(mutator);
+
+    const { container } = await act(async () => renderDataFetcher(mutator));
 
     await runAxeTest({ rootNode: container });
   });

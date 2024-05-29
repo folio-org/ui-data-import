@@ -55,13 +55,6 @@ const propTypes = {
   value: PropTypes.string,
 };
 
-const defaultProps = {
-  autoFocus: false,
-  hideOnChoose: true,
-  modifiers: {},
-  placement: 'bottom',
-};
-
 /**
  * This component is similar to the stripes <Datepicker> except that it allows to enter any text
  * to the input field.
@@ -70,21 +63,22 @@ const TextDateField = ({
   disabled,
   dateFormat,
   exclude,
-  hideOnChoose,
   id,
   intl,
   inputRef,
   locale,
-  modifiers,
   onBlur,
   onFocus,
   onChange,
-  placement,
   readOnly,
   showCalendar: showCalendarProp,
   usePortal,
   onSetDate,
   value: valueProp,
+  autoFocus = false,
+  hideOnChoose = true,
+  modifiers = {},
+  placement = 'bottom',
   ...props
 }) => {
   const format = useRef(dateFormat).current;
@@ -221,6 +215,7 @@ const TextDateField = ({
       <TextField
         {...props}
         id={testId}
+        autoFocus={autoFocus}
         readOnly={readOnly}
         disabled={disabled}
         value={valueProp}
@@ -262,6 +257,5 @@ const TextDateField = ({
 };
 
 TextDateField.propTypes = propTypes;
-TextDateField.defaultProps = defaultProps;
 
 export const TextDate = injectIntl(TextDateField);

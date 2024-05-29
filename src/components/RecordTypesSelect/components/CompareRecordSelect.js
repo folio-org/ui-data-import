@@ -34,13 +34,13 @@ const compareElemMargin = 4;
 
 export const CompareRecordSelect = memo(({
   id,
-  incomingRecord,
-  existingRecord,
-  setExistingRecord,
-  setIncomingRecord,
   incomingRecordOptions,
-  isEditable,
-  isLocalLTR,
+  incomingRecord = null,
+  existingRecord = null,
+  setExistingRecord = noop,
+  setIncomingRecord = noop,
+  isEditable = true,
+  isLocalLTR = true,
 }) => {
   const [top, setTop] = useState();
   const [height, setHeight] = useState();
@@ -198,13 +198,4 @@ CompareRecordSelect.propTypes = {
   incomingRecordOptions: PropTypes.object,
   isEditable: PropTypes.bool,
   isLocalLTR: PropTypes.bool,
-};
-
-CompareRecordSelect.defaultProps = {
-  setExistingRecord: noop,
-  setIncomingRecord: noop,
-  incomingRecord: null,
-  existingRecord: null,
-  isEditable: true,
-  isLocalLTR: true,
 };

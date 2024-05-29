@@ -39,8 +39,8 @@ export const RecordSelect = ({
   id,
   onSelect,
   container = `#${id} .${treeViewStyles.rootListContainer}`,
-  isEditable,
-  isLocalLTR,
+  isEditable = true,
+  isLocalLTR = true,
 }) => {
   const stripes = useStripes();
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
@@ -98,9 +98,4 @@ RecordSelect.propTypes = {
   container: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Element)]),
   isEditable: PropTypes.bool,
   isLocalLTR: PropTypes.bool,
-};
-
-RecordSelect.defaultProps = {
-  isEditable: true,
-  isLocalLTR: true,
 };

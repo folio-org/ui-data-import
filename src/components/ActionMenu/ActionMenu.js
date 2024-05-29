@@ -13,7 +13,7 @@ export const ActionMenu = memo(({
   entity: { props: { actionMenuItems: items } },
   menu,
   baseUrl,
-  recordId,
+  recordId = '',
 }) => {
   const isDefaultProfile = DEFAULT_PROFILE_IDS.includes(recordId);
   const isDuplicateButtonDisabled = PROFILE_IDS_WITH_DISABLED_DUPLICATE_BUTTON.includes(recordId);
@@ -41,5 +41,3 @@ ActionMenu.propTypes = {
   recordId: PropTypes.string,
   baseUrl: PropTypes.string,
 };
-
-ActionMenu.defaultProps = { recordId: '' };

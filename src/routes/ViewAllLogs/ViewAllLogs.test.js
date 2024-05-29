@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  act,
   fireEvent,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
@@ -216,7 +217,9 @@ describe('ViewAllLogs component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderViewAllLogs(defaultQuery);
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render correct number of records', async () => {

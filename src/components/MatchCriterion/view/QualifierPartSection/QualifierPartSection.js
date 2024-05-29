@@ -23,7 +23,7 @@ import {
 import css from '../ViewMatchCriterion.css';
 
 export const QualifierPartSection = ({
-  qualifierData,
+  qualifierData = null,
   recordFieldType,
 }) => {
   const { formatMessage } = useIntl();
@@ -55,5 +55,3 @@ QualifierPartSection.propTypes = {
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   qualifierData: qualifierShape,
 };
-
-QualifierPartSection.defaultProps = { qualifierData: null };

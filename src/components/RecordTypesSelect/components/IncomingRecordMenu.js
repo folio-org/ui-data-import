@@ -14,8 +14,8 @@ export const IncomingRecordMenu = ({
   onClick,
   onToggle,
   keyHandler,
-  dataAttributes,
   incomingRecordOptions,
+  dataAttributes = null,
 }) => {
   return (
     <DropdownMenu
@@ -53,5 +53,3 @@ IncomingRecordMenu.propTypes = {
   dataAttributes: PropTypes.object,
   existingRecordType: PropTypes.string,
 };
-
-IncomingRecordMenu.defaultProps = { dataAttributes: null };

@@ -21,13 +21,26 @@ import {
   mappingMARCFieldShape,
 } from '../../utils';
 
+const defaultColumnWidths = {
+  arrows: '70px',
+  action: '100px',
+  field: '120px',
+  indicator1: '93px',
+  indicator2: '93px',
+  subfield: '93px',
+  subaction: '140px',
+  data: '340px',
+  position: '140px',
+  addRemove: '70px',
+};
+
 export const MARCTable = ({
   columns,
   fields,
   onChange,
-  columnWidths,
-  isFirstRowRemovable,
-  fillNewRowFieldsWithDefaultValue,
+  columnWidths = defaultColumnWidths,
+  isFirstRowRemovable = false,
+  fillNewRowFieldsWithDefaultValue = false,
 }) => {
   const [rows, setRows] = useState([]);
 
@@ -224,21 +237,4 @@ MARCTable.propTypes = {
   onChange: PropTypes.func,
   isFirstRowRemovable: PropTypes.bool,
   fillNewRowFieldsWithDefaultValue: PropTypes.bool,
-};
-
-MARCTable.defaultProps = {
-  columnWidths: {
-    arrows: '70px',
-    action: '100px',
-    field: '120px',
-    indicator1: '93px',
-    indicator2: '93px',
-    subfield: '93px',
-    subaction: '140px',
-    data: '340px',
-    position: '140px',
-    addRemove: '70px',
-  },
-  isFirstRowRemovable: false,
-  fillNewRowFieldsWithDefaultValue: false,
 };

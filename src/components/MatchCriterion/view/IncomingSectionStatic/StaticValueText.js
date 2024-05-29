@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { NoValue } from '@folio/stripes/components';
 
-export const StaticValueText = ({ value }) => {
+export const StaticValueText = ({ value = '' }) => {
   return (
     <div data-test-static-text-field>
       {value || <NoValue />}
@@ -12,5 +12,3 @@ export const StaticValueText = ({ value }) => {
 };
 
 StaticValueText.propTypes = { value: PropTypes.string };
-
-StaticValueText.defaultProps = { value: '' };

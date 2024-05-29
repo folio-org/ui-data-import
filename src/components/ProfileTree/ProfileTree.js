@@ -16,6 +16,7 @@ import {
   snakeCase,
   get,
   set,
+  isEqual,
 } from 'lodash';
 import classNames from 'classnames';
 
@@ -39,20 +40,20 @@ import {
 import css from './ProfileTree.css';
 
 export const ProfileTree = memo(({
-  parentId,
-  profileWrapperId,
+  parentId = null,
+  profileWrapperId = null,
   linkingRules,
   contentData,
   relationsToAdd,
   relationsToDelete,
   okapi,
-  onLink,
-  onUnlink,
-  setData,
-  record,
-  className,
-  dataAttributes,
-  showLabelsAsHotLink,
+  onLink = noop,
+  onUnlink = noop,
+  setData = noop,
+  record = null,
+  className = null,
+  dataAttributes = null,
+  showLabelsAsHotLink = false,
   resources,
 }) => {
   const dataKey = 'currentData';
@@ -66,23 +67,24 @@ export const ProfileTree = memo(({
   };
 
   const dispatch = useDispatch();
+  const isEqualValues = (oldValue, newValue) => isEqual(newValue, oldValue);
   const profileTreeContent = useSelector(state => {
     return get(
       state,
       [STATE_MANAGEMENT.REDUCER, profileTreeKey],
       [],
     );
-  });
+  }, isEqualValues);
 
-  const [addedRelations, setAddedRelations] = useState(relationsToAdd);
-  const [deletedRelations, setDeletedRelations] = useState(relationsToDelete);
+  const [addedRelations, setAddedRelations] = useState([]);
+  const [deletedRelations, setDeletedRelations] = useState([]);
 
   useEffect(() => {
-    setAddedRelations(relationsToAdd);
+    setAddedRelations(relationsToAdd || []);
   }, [relationsToAdd]);
 
   useEffect(() => {
-    setDeletedRelations(relationsToDelete);
+    setDeletedRelations(relationsToDelete || []);
   }, [relationsToDelete]);
 
   const isSnakeCase = str => str && str.includes('_');
@@ -325,18 +327,4 @@ ProfileTree.propTypes = {
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
   showLabelsAsHotLink: PropTypes.bool,
-};
-
-ProfileTree.defaultProps = {
-  parentId: null,
-  profileWrapperId: null,
-  relationsToAdd: [],
-  relationsToDelete: [],
-  onLink: noop,
-  onUnlink: noop,
-  setData: noop,
-  record: null,
-  className: null,
-  dataAttributes: null,
-  showLabelsAsHotLink: false,
 };

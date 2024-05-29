@@ -46,7 +46,7 @@ import {
 
 export const InvoiceLineInformation = ({
   invoiceLinesFieldIndex,
-  accountingNumberOptions,
+  accountingNumberOptions = [],
   initialFields,
   mappingFields,
   setReferenceTables,
@@ -271,5 +271,3 @@ InvoiceLineInformation.propTypes = {
   okapi: okapiShape.isRequired,
   mappingFields: PropTypes.arrayOf(PropTypes.object),
 };
-
-InvoiceLineInformation.defaultProps = { accountingNumberOptions: [] };

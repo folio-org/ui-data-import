@@ -7,7 +7,7 @@ import { WithTranslation } from '..';
 
 export const MappedHeader = ({
   headersToSeparate,
-  headlineProps,
+  headlineProps = {},
 }) => {
   const headers = headersToSeparate.filter(header => !!header);
 
@@ -42,5 +42,3 @@ MappedHeader.propTypes = {
   headersToSeparate: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node])).isRequired,
   headlineProps: PropTypes.object,
 };
-
-MappedHeader.defaultProps = { headlineProps: {} };

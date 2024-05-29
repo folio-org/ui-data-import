@@ -23,7 +23,7 @@ import {
 
 import css from '../ViewMatchCriterion.css';
 
-export const IncomingSectionStatic = ({ staticValueDetails }) => {
+export const IncomingSectionStatic = ({ staticValueDetails = null }) => {
   const { formatMessage } = useIntl();
 
   const dataOptions = [
@@ -78,5 +78,3 @@ export const IncomingSectionStatic = ({ staticValueDetails }) => {
 };
 
 IncomingSectionStatic.propTypes = { staticValueDetails: staticValueDetailsShape };
-
-IncomingSectionStatic.defaultProps = { staticValueDetails: null };

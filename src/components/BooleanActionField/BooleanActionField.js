@@ -11,13 +11,13 @@ import {
 } from '../../utils';
 
 export const BooleanActionField = ({
-  id,
   name,
-  label,
-  placeholder,
   onBooleanFieldChange,
-  required,
-  disabled,
+  id = '',
+  label = '',
+  placeholder = '',
+  required = false,
+  disabled = false,
 }) => {
   const intl = useIntl();
 
@@ -62,12 +62,4 @@ BooleanActionField.propTypes = {
   placeholder: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   required: PropTypes.bool,
   disabled: PropTypes.bool,
-};
-
-BooleanActionField.defaultProps = {
-  id: '',
-  label: '',
-  placeholder: '',
-  required: false,
-  disabled: false,
 };

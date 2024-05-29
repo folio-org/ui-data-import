@@ -12,8 +12,8 @@ import {
 import css from '../ViewMatchCriterion.css';
 
 export const StaticValueDateRange = ({
-  fromDate,
-  toDate,
+  fromDate = '',
+  toDate = '',
 }) => {
   return (
     <Layout
@@ -43,9 +43,4 @@ export const StaticValueDateRange = ({
 StaticValueDateRange.propTypes = {
   fromDate: PropTypes.string,
   toDate: PropTypes.string,
-};
-
-StaticValueDateRange.defaultProps = {
-  fromDate: '',
-  toDate: '',
 };

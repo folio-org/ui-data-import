@@ -31,11 +31,11 @@ import {
 export const OverrideProtectedFieldsTable = ({
   marcFieldProtectionFields,
   mappingMarcFieldProtectionFields,
-  setReferenceTables,
+  setReferenceTables = noop,
   folioRecordType,
-  isEditable,
-  isAccordionOpen,
-  isViewMode,
+  isEditable = false,
+  isAccordionOpen = true,
+  isViewMode = true,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
     .sort((a, b) => a.field.localeCompare(b.field));
@@ -164,11 +164,4 @@ OverrideProtectedFieldsTable.propTypes = {
   isEditable: PropTypes.bool,
   isAccordionOpen: PropTypes.bool,
   isViewMode: PropTypes.bool,
-};
-
-OverrideProtectedFieldsTable.defaultProps = {
-  isViewMode: true,
-  isEditable: false,
-  isAccordionOpen: true,
-  setReferenceTables: noop,
 };

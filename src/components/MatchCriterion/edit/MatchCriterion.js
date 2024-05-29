@@ -38,14 +38,14 @@ import css from './MatchCriterions.css';
 export const MatchCriterion = ({
   repeatableIndex,
   matchDetails,
-  incomingRecordType,
-  existingRecordType,
-  staticValueType,
-  incomingRecordLabel,
-  existingRecordLabel,
+  incomingRecordType = null,
+  existingRecordType = null,
+  staticValueType = null,
+  incomingRecordLabel = null,
+  existingRecordLabel = '',
   existingRecordFields,
-  onStaticValueTypeChange,
-  onQualifierSectionChange,
+  onStaticValueTypeChange = noop,
+  onQualifierSectionChange = noop,
   changeFormState,
   formValues,
 }) => {
@@ -242,14 +242,4 @@ MatchCriterion.propTypes = {
   onStaticValueTypeChange: PropTypes.func,
   onQualifierSectionChange: PropTypes.func,
   formValues: PropTypes.object,
-};
-
-MatchCriterion.defaultProps = {
-  incomingRecordType: null,
-  existingRecordType: null,
-  staticValueType: null,
-  incomingRecordLabel: null,
-  existingRecordLabel: '',
-  onStaticValueTypeChange: noop,
-  onQualifierSectionChange: noop,
 };

@@ -20,15 +20,15 @@ const FieldOrganization = ({
   onSelect,
   onClear,
   setReferenceTables,
-  disabled,
-  isPluginDisabled,
   label,
   name,
-  required,
   id,
   mutator,
   validate,
   mappingValue,
+  disabled = false,
+  isPluginDisabled = false,
+  required = false,
 }) => {
   const [selectedOrganization, setSelectedOrganization] = useState(null);
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(!!id);
@@ -149,12 +149,6 @@ FieldOrganization.propTypes = {
     PropTypes.arrayOf(PropTypes.func),
   ]),
   mappingValue: PropTypes.string,
-};
-
-FieldOrganization.defaultProps = {
-  disabled: false,
-  isPluginDisabled: false,
-  required: false,
 };
 
 FieldOrganization.manifest = {

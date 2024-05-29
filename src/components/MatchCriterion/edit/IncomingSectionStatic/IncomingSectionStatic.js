@@ -28,8 +28,8 @@ import css from '../MatchCriterions.css';
 
 export const IncomingSectionStatic = ({
   repeatableIndex,
-  staticValueType,
-  onTypeChange,
+  staticValueType = null,
+  onTypeChange = noop,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -96,9 +96,4 @@ IncomingSectionStatic.propTypes = {
   repeatableIndex: PropTypes.number.isRequired,
   staticValueType: PropTypes.oneOf(Object.keys(STATIC_VALUE_TYPES)),
   onTypeChange: PropTypes.func,
-};
-
-IncomingSectionStatic.defaultProps = {
-  staticValueType: null,
-  onTypeChange: noop,
 };
