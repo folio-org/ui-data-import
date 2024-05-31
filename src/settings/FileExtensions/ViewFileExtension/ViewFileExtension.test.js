@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
 import {
@@ -91,7 +91,9 @@ describe('ViewFileExtension component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderViewFileExtension(viewFileExtensionProps);
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render extension name', () => {

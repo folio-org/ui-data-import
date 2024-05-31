@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import {
@@ -105,7 +105,9 @@ describe('MARCFieldProtection component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMarcFieldProtection();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should be rendered', () => {
