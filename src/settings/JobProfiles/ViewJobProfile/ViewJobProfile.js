@@ -105,12 +105,6 @@ const jobPartsCellFormatter = record => (
   />
 );
 
-const defaultActionMenuItems = [
-  'edit',
-  'duplicate',
-  'delete',
-];
-
 const ViewJobProfileComponent = props => {
   const {
     resources,
@@ -122,7 +116,7 @@ const ViewJobProfileComponent = props => {
     location,
     onDelete,
     onClose,
-    actionMenuItems = defaultActionMenuItems,
+    actionMenuItems,
     accordionStatusRef,
   } = props;
 
@@ -245,11 +239,7 @@ const ViewJobProfileComponent = props => {
     return (
       <ActionMenu
         entity={{
-          props: {
-            actionMenuItems: defaultActionMenuItems,
-            ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,
-            ...props,
-          },
+          props,
           showRunConfirmation: () => setShowRunConfirmation(true),
           showDeleteConfirmation: () => setShowDeleteConfirmation(true),
         }}
@@ -449,7 +439,6 @@ const ViewJobProfileComponent = props => {
                   visibleColumns={visibleColumns}
                   formatter={jobsUsingThisProfileFormatter}
                   nonInteractiveHeaders={['jobParts']}
-                  width="100%"
                 />
               ) : (
                 <Preloader
@@ -644,6 +633,15 @@ ViewJobProfileComponent.propTypes = {
   ENTITY_KEY: PropTypes.string, // eslint-disable-line
   actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   accordionStatusRef: PropTypes.object,
+};
+
+ViewJobProfileComponent.defaultProps = {
+  ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,
+  actionMenuItems: [
+    'edit',
+    'duplicate',
+    'delete',
+  ],
 };
 
 export const ViewJobProfile = compose(

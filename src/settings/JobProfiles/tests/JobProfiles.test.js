@@ -115,6 +115,7 @@ const renderJobProfiles = ({
           refreshRemote={refreshRemote}
           detailProps={detailProps}
           initialValues={{}}
+          setList={noop}
         />
       </Paneset>
     </Router>

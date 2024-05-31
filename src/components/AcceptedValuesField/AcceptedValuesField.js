@@ -57,7 +57,7 @@ export const AcceptedValuesField = ({
   wrapperSources = null,
   wrapperSourcesFn = null,
 }) => {
-  const [listOptions, setListOptions] = useState(acceptedValuesList || []);
+  const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(hasLoaded || !isEmpty(listOptions));
 
   const getAcceptedValuesObj = data => {
@@ -159,7 +159,7 @@ export const AcceptedValuesField = ({
       component={withReferenceValues}
       name={name}
       label={label}
-      dataOptions={listOptions}
+      dataOptions={listOptions || []}
       optionValue={optionValue}
       optionLabel={optionLabel}
       wrappedComponent={component}
@@ -182,7 +182,7 @@ export const AcceptedValuesField = ({
     return (
       <WithReferenceValuesElement
         wrappedComponent={component}
-        dataOptions={listOptions}
+        dataOptions={listOptions || []}
         value={componentValue}
         onFieldChange={onChange}
         label={label}

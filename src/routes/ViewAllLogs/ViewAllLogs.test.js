@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
-  act,
   fireEvent,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';

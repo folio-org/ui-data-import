@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import { runAxeTest } from '@folio/stripes-testing';
@@ -71,7 +71,9 @@ describe('InvoiceAdjustments edit component', () => {
 
     expect(invoiceAdjustmentsTitle).toBeInTheDocument();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render correct fields', async () => {

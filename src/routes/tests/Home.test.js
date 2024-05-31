@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   fireEvent,
   waitFor,
@@ -119,7 +119,9 @@ describe('Home component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderHome(storeWithData);
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should be rendered', async () => {

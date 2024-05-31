@@ -73,6 +73,7 @@ const getMatchProfileComponent = ({
             history={history}
             label={label}
             initialValues={{}}
+            setList={noop}
           />
         </Paneset>
       </Router>

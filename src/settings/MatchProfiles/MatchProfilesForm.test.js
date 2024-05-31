@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   screen,
@@ -210,6 +210,7 @@ const renderMatchProfilesForm = ({
         onCancel={noop}
         transitionToParams={noop}
         onSubmit={jest.fn()}
+        layerType={layerType}
         baseUrl="testBaseUrl"
       />
     </Router>
@@ -336,7 +337,9 @@ describe('MatchProfilesForm component', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.EDIT));
 
-      await runAxeTest({ rootNode: container });
+      await act(async () => {
+        await runAxeTest({ rootNode: container });
+      });
     });
 
     it('should be rendered', () => {

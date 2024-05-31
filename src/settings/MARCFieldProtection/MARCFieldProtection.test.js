@@ -76,7 +76,10 @@ const resources = {
   ] },
 };
 const stripesCustomProps = {
-  okapi: { url: 'https://folio-testing-okapi.dev.folio.org' },
+  okapi: {
+    tenant: 'diku',
+    url: 'https://folio-testing-okapi.dev.folio.org',
+  },
   logger: { log: noop },
   hasPerm: noop,
   connect: Component => props => (
@@ -84,6 +87,7 @@ const stripesCustomProps = {
       {...props}
       mutator={{ tenant: { replace: () => {} } }}
       resources={resources}
+      confirmationHeading="test"
     />
   ),
 };

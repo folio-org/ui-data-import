@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { act } from 'react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import {
   renderWithIntl,
 } from '../../../../test/jest/helpers';
@@ -53,16 +54,19 @@ describe('SourceDownloadLinkComponent', () => {
     mockResponse.mockClear();
   });
 
-  it('renders a loading spinner..', async () => {
-    mockResponse.mockResolvedValue({ url: 'testUrl' });
-    const { getByText } = await renderSourceDownloadLink({ id:'testId1' });
+  it('renders a loading spinner', async () => {
+    mockResponse.mockImplementation(() => new Promise(resolve => setTimeout(() => resolve({ url: 'testUrl' }), 0)));
 
-    expect(getByText('Loading')).toBeInTheDocument();
+    await act(async () => {
+      renderSourceDownloadLink({ id: 'testId1' });
+    });
+
+    expect(screen.getByText('Loading')).toBeInTheDocument();
   });
 
   it('renders the filename in the link', async () => {
     mockResponse.mockResolvedValue({ url: 'testUrl' });
-    const { findByText } = await renderSourceDownloadLink({ id:'testId2' });
+    const { findByText } = await act(async () => renderSourceDownloadLink({ id:'testId2' }));
 
     const text = await findByText('testFilename');
     expect(text).toBeDefined();
@@ -70,7 +74,7 @@ describe('SourceDownloadLinkComponent', () => {
 
   it('renders the provided url to the link href', async () => {
     mockResponse.mockResolvedValue({ url: 'http://www.testUrl' });
-    const { findByRole } = await renderSourceDownloadLink({ id:'testId3' });
+    const { findByRole } = await act(async () => renderSourceDownloadLink({ id:'testId3' }));
 
     const link = await findByRole('link');
     expect(link.href).toBe('http://www.testurl/');
@@ -78,7 +82,7 @@ describe('SourceDownloadLinkComponent', () => {
 
   it('renders unavailable message if the url is unavailable', async () => {
     mockResponse.mockResolvedValue('Not found');
-    const { findByText } = await renderSourceDownloadLink({ id:'file-removed' });
+    const { findByText } = await act(async () => renderSourceDownloadLink({ id:'file-removed' }));
     const message = await findByText('Unavailable');
     expect(message).toBeInTheDocument();
   });

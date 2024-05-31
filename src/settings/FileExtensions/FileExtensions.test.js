@@ -11,6 +11,7 @@ import { buildResources } from '@folio/stripes-data-transfer-components/test/hel
 import { Paneset } from '@folio/stripes/components';
 import {
   buildMutator,
+  buildStripes,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -22,6 +23,7 @@ const history = createMemoryHistory();
 
 history.push = jest.fn();
 
+const stripes = buildStripes();
 const resources = buildResources({
   resourceName: 'fileExtensions',
   records: [
@@ -98,6 +100,7 @@ const renderFileExtensions = ({
           mutator={mutator}
           detailProps={detailProps}
           initialValues={{}}
+          stripes={stripes}
         />
       </Paneset>
     </Router>

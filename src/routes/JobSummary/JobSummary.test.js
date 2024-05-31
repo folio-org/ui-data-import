@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
@@ -108,7 +108,9 @@ describe('Job summary page', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderJobSummary({});
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should have a file name in the header', () => {

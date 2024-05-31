@@ -241,5 +241,5 @@ MatchCriterion.propTypes = {
   existingRecordLabel: PropTypes.string,
   onStaticValueTypeChange: PropTypes.func,
   onQualifierSectionChange: PropTypes.func,
-  formValues: PropTypes.object,
+  formValues: PropTypes.arrayOf(PropTypes.object),
 };

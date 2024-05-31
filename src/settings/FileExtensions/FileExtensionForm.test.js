@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import faker from 'faker';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
@@ -85,7 +85,9 @@ describe('FileExtensionForm component', () => {
       initialValues: initialValuesNewForm,
     });
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   describe('when form is in creating new record mode', () => {
