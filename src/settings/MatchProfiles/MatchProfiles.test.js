@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { render } from '@folio/jest-config-stripes/testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
@@ -90,7 +90,9 @@ describe('MatchProfiles component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderMatchProfiles(matchProfilesProps);
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should be rendered', () => {

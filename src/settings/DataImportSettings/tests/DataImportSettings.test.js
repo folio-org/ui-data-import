@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
@@ -56,7 +56,9 @@ describe('DataImportSettings component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderDataImportSettings();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('renders correct heading', () => {

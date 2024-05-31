@@ -212,7 +212,7 @@ describe('SearchAndSort component', () => {
     expect(getByText('1 job profile')).toBeInTheDocument();
   });
 
-  describe.skip('after rerender', () => {
+  describe('after rerender', () => {
     it('single record should be rendered', () => {
       const {
         getByText,
