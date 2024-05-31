@@ -229,7 +229,9 @@ describe('MatchProfilesForm component', () => {
     it('should be rendered with no axe errors', async () => {
       const { container } = renderMatchProfilesForm(matchProfilesFormProps(LAYER_TYPES.CREATE));
 
-      await runAxeTest({ rootNode: container });
+      await act(async () => {
+        await runAxeTest({ rootNode: container });
+      });
     });
 
     describe('when select static value incoming record', () => {
