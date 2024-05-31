@@ -2,6 +2,9 @@
 
 ## **7.2.0** (in progress)
 
+### Features added:
+* Fix unit tests warnings in console. (UIDATIMP-1606)
+
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
