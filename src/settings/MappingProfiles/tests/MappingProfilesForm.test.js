@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { act } from 'react';
 import faker from 'faker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
-  act,
   fireEvent,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';

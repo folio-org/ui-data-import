@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React, {
+  act,
+  useContext,
+} from 'react';
 import {
   waitFor,
   fireEvent,
-  act,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 

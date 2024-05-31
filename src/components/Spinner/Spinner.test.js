@@ -1,8 +1,5 @@
-import React from 'react';
-import {
-  act,
-  fireEvent,
-} from '@folio/jest-config-stripes/testing-library/react';
+import React, { act } from 'react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {

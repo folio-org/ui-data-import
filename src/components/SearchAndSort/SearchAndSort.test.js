@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   Route,
   Router,
@@ -7,7 +7,6 @@ import {
   fireEvent,
   waitFor,
   render,
-  act,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';

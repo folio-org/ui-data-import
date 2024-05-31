@@ -1,9 +1,8 @@
 import React, { act } from 'react';
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import {
-  renderWithIntl,
-} from '../../../../test/jest/helpers';
+
 import '../../../../test/jest/__mock__';
+import { renderWithIntl } from '../../../../test/jest/helpers';
 
 import { SourceDownloadLink } from './SourceDownloadLink';
 import '../../../utils/multipartUpload';

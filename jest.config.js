@@ -6,8 +6,8 @@ module.exports = {
   transform: {
     ...acqConfigs.transform,
   },
-  setupFilesAfterEnv: [
+  /* setupFilesAfterEnv: [
     ...config.setupFilesAfterEnv,
     './setupTests.js',
-  ],
+  ], */
 };

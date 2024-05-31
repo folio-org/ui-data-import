@@ -87,7 +87,6 @@ const stripesCustomProps = {
       {...props}
       mutator={{ tenant: { replace: () => {} } }}
       resources={resources}
-      confirmationHeading="test"
     />
   ),
 };

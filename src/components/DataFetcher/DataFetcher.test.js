@@ -1,6 +1,8 @@
-import React, { useContext } from 'react';
-import {
+import React, {
   act,
+  useContext,
+} from 'react';
+import {
   render,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
