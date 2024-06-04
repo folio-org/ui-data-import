@@ -29,6 +29,8 @@ import {
   trimSearchTerm,
   showActionMenu,
   fieldsConfig,
+  DEFAULT_RESULT_COUNT,
+  DEFAULT_COUNT_INCREMENT,
 } from '../../utils';
 import {
   ViewContainer,
@@ -38,8 +40,6 @@ import { SearchAndSort } from '../SearchAndSort';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
 
-const DEFAULT_RESULT_COUNT = 5000;
-const DEFAULT_COUNT_INCREMENT = 5000;
 const defaultDetailProps = { jsonSchemas: { identifierTypes: [] } };
 const defaultSelectedRecord = {
   record: null,

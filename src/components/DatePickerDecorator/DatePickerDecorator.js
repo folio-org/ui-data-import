@@ -29,14 +29,14 @@ import {
 
 import styles from './DatePickerDecorator.css';
 
-const defaultWrapperValue = 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues';
+const defaultWrapperLabel = 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues';
 
 export const DatePickerDecorator = memo(({
   input,
   wrappedComponent,
   label,
   id = '',
-  wrapperLabel = defaultWrapperValue,
+  wrapperLabel = defaultWrapperLabel,
   disabled = false,
   required = false,
   readOnly = false,
