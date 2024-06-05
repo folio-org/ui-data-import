@@ -12,7 +12,7 @@ export const Default = memo(({
   icon,
   onClick,
   dataAttributes,
-  isDisabled,
+  isDisabled = false,
 }) => (
   <Button
     buttonStyle="dropdownItem"
@@ -33,5 +33,3 @@ Default.propTypes = {
   dataAttributes: PropTypes.object,
   isDisabled: PropTypes.bool,
 };
-
-Default.defaultProps = { isDisabled: false };

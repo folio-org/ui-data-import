@@ -62,11 +62,11 @@ export const onChangeSelectionFilter = (onChange, filterName) => {
 };
 
 const ViewAllLogsFilters = ({
-  activeFilters,
-  closedByDefault,
+  activeFilters = [],
+  closedByDefault = true,
   onChange,
-  jobProfiles,
-  users,
+  jobProfiles = [],
+  users = [],
 }) => {
   const getJobProfileOptions = uniqBy(jobProfiles.filter(jobProfile => jobProfile).map(jobProfile => ({
     value: jobProfile?.id,
@@ -186,13 +186,6 @@ ViewAllLogsFilters.propTypes = {
   onChange: PropTypes.func.isRequired,
   jobProfiles: PropTypes.arrayOf(PropTypes.object),
   users: PropTypes.arrayOf(PropTypes.object),
-};
-
-ViewAllLogsFilters.defaultProps = {
-  activeFilters: [],
-  closedByDefault: true,
-  jobProfiles: [],
-  users: [],
 };
 
 export default ViewAllLogsFilters;

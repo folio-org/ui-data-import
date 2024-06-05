@@ -18,12 +18,12 @@ import {
 import css from './Section.css';
 
 export const Section = memo(({
-  label,
-  optional,
-  isOpen,
-  onChange,
   className,
-  children,
+  label = null,
+  optional = false,
+  isOpen = true,
+  onChange = noop,
+  children = [],
   ...rest
 }) => {
   const [isChecked, setChecked] = useState(isOpen);
@@ -94,12 +94,4 @@ Section.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.arrayOf(PropTypes.func),
   ]),
-};
-
-Section.defaultProps = {
-  label: null,
-  optional: false,
-  isOpen: true,
-  onChange: noop,
-  children: [],
 };

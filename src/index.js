@@ -31,11 +31,9 @@ class DataImport extends Component {
     showSettings: PropTypes.bool,
   };
 
-  static defaultProps = { showSettings: false };
-
   render() {
     const {
-      showSettings,
+      showSettings = false,
       match: { path },
     } = this.props;
 

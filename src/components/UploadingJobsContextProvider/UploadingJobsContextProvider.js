@@ -28,11 +28,11 @@ import { UploadingJobsContext } from '.';
 export class UploadingJobsContextProvider extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
-    okapiKy: PropTypes.func.isRequired,
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
       PropTypes.node,
     ]).isRequired,
+    okapiKy: PropTypes.object,
   };
 
   static contextType = CalloutContext;

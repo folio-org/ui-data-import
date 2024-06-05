@@ -1,4 +1,7 @@
-import React, { useContext } from 'react';
+import React, {
+  act,
+  useContext,
+} from 'react';
 import {
   waitFor,
   fireEvent,
@@ -8,6 +11,7 @@ import { runAxeTest } from '@folio/stripes-testing';
 import { renderWithContext } from '@folio/stripes-data-transfer-components/test/jest/helpers';
 
 import '../../../test/jest/__mock__';
+import { buildStripes } from '../../../test/jest/helpers';
 
 import { UploadingJobsContextProvider } from './UploadingJobsContextProvider';
 import { UploadingJobsContext } from './UploadingJobsContext';
@@ -56,9 +60,11 @@ const TestComponent = () => {
   );
 };
 
+const stripes = buildStripes();
+
 const renderUploadingJobsContextProvider = () => {
   const component = (
-    <UploadingJobsContextProvider>
+    <UploadingJobsContextProvider stripes={stripes}>
       <TestComponent />
     </UploadingJobsContextProvider>
   );
@@ -81,12 +87,14 @@ describe('UploadingJobsContextProvider component', () => {
     mockResponse.mockResolvedValueOnce({ splitStatus: true });
     const { container } = renderUploadingJobsContextProvider();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
-  it('should render children', () => {
+  it('should render children', async () => {
     mockResponse.mockResolvedValueOnce({ splitStatus: true });
-    const { getByText } = renderUploadingJobsContextProvider();
+    const { getByText } = await act(async () => renderUploadingJobsContextProvider());
 
     expect(getByText('Children')).toBeDefined();
   });

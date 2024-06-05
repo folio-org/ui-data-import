@@ -21,7 +21,7 @@ import css from '../MARCTable/MARCTable.css';
 export const MARCTableViewRow = ({
   rowData,
   columnWidths,
-  isSubline,
+  isSubline = false,
 }) => {
   const {
     REPLACE,
@@ -187,5 +187,3 @@ MARCTableViewRow.propTypes = {
   columnWidths: PropTypes.object.isRequired,
   isSubline: PropTypes.bool,
 };
-
-MARCTableViewRow.defaultProps = { isSubline: false };

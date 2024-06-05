@@ -29,15 +29,17 @@ import {
 
 import styles from './DatePickerDecorator.css';
 
+const defaultWrapperLabel = 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues';
+
 export const DatePickerDecorator = memo(({
-  disabled,
-  id,
   input,
-  label,
-  required,
-  readOnly,
-  wrapperLabel,
   wrappedComponent,
+  label,
+  id = '',
+  wrapperLabel = defaultWrapperLabel,
+  disabled = false,
+  required = false,
+  readOnly = false,
   ...rest
 }) => {
   const {
@@ -187,12 +189,4 @@ DatePickerDecorator.propTypes = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
-};
-
-DatePickerDecorator.defaultProps = {
-  id: '',
-  wrapperLabel: 'ui-data-import.settings.mappingProfiles.map.wrapper.acceptedValues',
-  disabled: false,
-  required: false,
-  readOnly: false,
 };

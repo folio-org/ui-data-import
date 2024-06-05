@@ -69,7 +69,7 @@ import {
 const OrderInformationComponent = ({
   initialFields,
   setReferenceTables,
-  onOrganizationSelect,
+  onOrganizationSelect = null,
   resources: {
     isApprovalRequired,
     userCanEditPONumber,
@@ -519,7 +519,5 @@ OrderInformationComponent.propTypes = {
   onOrganizationSelect: PropTypes.func,
   requestLimit: PropTypes.number,
 };
-
-OrderInformationComponent.defaultProps = { onOrganizationSelect: null };
 
 export const OrderInformation = stripesConnect(OrderInformationComponent);

@@ -10,7 +10,7 @@ import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const OrderCell = ({
   relatedPoLineInfo,
-  sortedItemData,
+  sortedItemData = [],
 }) => {
   const poLineActionStatus = relatedPoLineInfo.actionStatus;
 
@@ -32,5 +32,3 @@ OrderCell.propTypes = {
   relatedPoLineInfo: PropTypes.object.isRequired,
   sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
 };
-
-OrderCell.defaultProps = { sortedItemData: [] };

@@ -29,12 +29,12 @@ const columnMapping = {
 const visibleColumns = ['name', 'patronGroup', 'username', 'barcode'];
 
 function FieldAssignedTo({
-  id,
+  id = '',
   name,
-  label,
+  label = null,
   setReferenceTables,
   stripes,
-  disabled,
+  disabled = false,
   mutator,
 }) {
   const [user, setUser] = useState({});
@@ -114,12 +114,6 @@ FieldAssignedTo.propTypes = {
   id: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   disabled: PropTypes.bool,
-};
-
-FieldAssignedTo.defaultProps = {
-  id: '',
-  label: null,
-  disabled: false,
 };
 
 FieldAssignedTo.manifest = Object.freeze({

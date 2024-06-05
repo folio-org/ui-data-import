@@ -16,8 +16,6 @@ export class ReturnToAssignJobs extends Component {
     prohibitFilesUploading: PropTypes.bool,
   };
 
-  static defaultProps = { prohibitFilesUploading: false };
-
   static contextType = UploadingJobsContext;
 
   state = { deletingInProgress: false };
@@ -63,7 +61,7 @@ export class ReturnToAssignJobs extends Component {
   };
 
   render() {
-    const { prohibitFilesUploading } = this.props;
+    const { prohibitFilesUploading = false } = this.props;
     const { deletingInProgress } = this.state;
 
     const messageId = prohibitFilesUploading ? 'messageWhenProhibited' : 'message';

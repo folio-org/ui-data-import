@@ -14,8 +14,8 @@ import {
 export const FolioRecordTypeSelect = ({
   fieldName,
   dataOptions,
-  onRecordSelect,
-  formType,
+  onRecordSelect = noop,
+  formType = 'final-form',
 }) => {
   // TODO: Remove this after UIDATIMP-826 is done
   const FolioRecordTypeSelectReduxForm = (
@@ -74,9 +74,4 @@ FolioRecordTypeSelect.propTypes = {
   dataOptions: PropTypes.arrayOf(PropTypes.object),
   onRecordSelect: PropTypes.func,
   formType: PropTypes.oneOf(['redux-form', 'final-form']), // TODO: Remove this prop after UIDATIMP-826 is done
-};
-
-FolioRecordTypeSelect.defaultProps = {
-  onRecordSelect: noop,
-  formType: 'final-form',
 };

@@ -27,7 +27,7 @@ import css from '../../MappingProfiles.css';
 export const MappingMARCBibDetails = ({
   marcMappingDetails,
   fieldMappingsForMARCField,
-  marcFieldProtectionFields,
+  marcFieldProtectionFields = [{}],
   mappingMarcFieldProtectionFields,
   onUpdateFieldAdd,
   setReferenceTables,
@@ -128,5 +128,3 @@ MappingMARCBibDetails.propTypes = {
   onUpdateFieldAdd: PropTypes.func,
   folioRecordType: PropTypes.string,
 };
-
-MappingMARCBibDetails.defaultProps = { marcFieldProtectionFields: [{}] };

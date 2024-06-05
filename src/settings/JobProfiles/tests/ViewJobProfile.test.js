@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import faker from 'faker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
@@ -150,7 +150,9 @@ describe('ViewJobProfile component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderViewJobProfile(viewJobProfileProps(jobProfile));
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render profile name correctly', async () => {

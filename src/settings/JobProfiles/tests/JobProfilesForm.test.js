@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
@@ -105,7 +105,7 @@ const renderJobProfilesForm = ({
   initialValues,
   stripes,
   match,
-  layerType,
+  layerType = LAYER_TYPES.CREATE,
 }) => {
   const component = () => (
     <Router>
@@ -143,7 +143,9 @@ describe('JobProfilesForm component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderJobProfilesForm(jobProfilesFormProps({}));
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   describe('when profile is duplicated', () => {

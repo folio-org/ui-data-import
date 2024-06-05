@@ -29,6 +29,8 @@ import {
   trimSearchTerm,
   showActionMenu,
   fieldsConfig,
+  DEFAULT_RESULT_COUNT,
+  DEFAULT_COUNT_INCREMENT,
 } from '../../utils';
 import {
   ViewContainer,
@@ -37,6 +39,12 @@ import {
 import { SearchAndSort } from '../SearchAndSort';
 import { ActionMenu } from '../ActionMenu';
 import { createNetworkMessage } from '../Callout';
+
+const defaultDetailProps = { jsonSchemas: { identifierTypes: [] } };
+const defaultSelectedRecord = {
+  record: null,
+  hasLoaded: false,
+};
 
 @injectIntl
 export class ListView extends Component {
@@ -78,22 +86,6 @@ export class ListView extends Component {
     defaultSort: PropTypes.string,
   };
 
-  static defaultProps = {
-    showSingleResult: true,
-    INITIAL_RESULT_COUNT: 5000,
-    RESULT_COUNT_INCREMENT: 5000,
-    ENTITY_KEY: '',
-    withNewRecordButton: true,
-    selectedRecord: {
-      record: null,
-      hasLoaded: false,
-    },
-    checkboxList: {},
-    defaultSort: 'name',
-    nonInteractiveHeaders: [],
-    detailProps: { jsonSchemas: { identifierTypes: [] } },
-  };
-
   state = {
     showRestoreModal: false,
     restoreInProgress: false,
@@ -101,7 +93,7 @@ export class ListView extends Component {
 
   componentDidMount() {
     const {
-      ENTITY_KEY,
+      ENTITY_KEY = '',
       mutator,
     } = this.props;
 
@@ -125,7 +117,7 @@ export class ListView extends Component {
   calloutRef = createRef();
 
   get entityList() {
-    const { ENTITY_KEY } = this.props;
+    const { ENTITY_KEY = '' } = this.props;
 
     return get(this.props.resources, [ENTITY_KEY, 'records'], []);
   }
@@ -193,7 +185,7 @@ export class ListView extends Component {
   );
 
   rowUpdater = ({ id }) => {
-    const { checkboxList: { selectedRecords } } = this.props;
+    const { checkboxList: { selectedRecords } = {} } = this.props;
 
     return selectedRecords.has(id);
   };
@@ -208,20 +200,20 @@ export class ListView extends Component {
       location,
       history,
       match,
-      showSingleResult,
-      selectedRecord,
+      showSingleResult = true,
+      selectedRecord = defaultSelectedRecord,
       checkboxList: {
         selectedRecords,
         selectRecord,
         deselectAll,
-      },
+      } = {},
       objectName,
-      INITIAL_RESULT_COUNT,
-      RESULT_COUNT_INCREMENT,
+      INITIAL_RESULT_COUNT = DEFAULT_RESULT_COUNT,
+      RESULT_COUNT_INCREMENT = DEFAULT_COUNT_INCREMENT,
       initialValues,
-      ENTITY_KEY,
-      withNewRecordButton,
-      detailProps,
+      ENTITY_KEY = '',
+      withNewRecordButton = true,
+      detailProps = defaultDetailProps,
       visibleColumns,
       columnWidths,
       ViewRecordComponent,
@@ -230,8 +222,8 @@ export class ListView extends Component {
       renderHeaders,
       actionMenuItems,
       isFullScreen,
-      defaultSort,
-      nonInteractiveHeaders,
+      defaultSort = 'name',
+      nonInteractiveHeaders = [],
       intl,
     } = this.props;
     const { showRestoreModal } = this.state;

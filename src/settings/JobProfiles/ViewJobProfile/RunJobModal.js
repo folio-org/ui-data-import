@@ -32,14 +32,6 @@ const propTypes = {
   open: PropTypes.bool.isRequired,
 };
 
-const defaultProps = {
-  bodyTag: 'p',
-  buttonStyle: 'primary',
-  cancelButtonStyle: 'default',
-  isConfirmButtonDisabled: false,
-  isCancelButtonDisabled: false,
-};
-
 const RunJobModal = (props) => {
   const footerPrimary = useRef(null);
   const contentId = useRef(uniqueId('modal-content')).current;
@@ -47,17 +39,19 @@ const RunJobModal = (props) => {
   const cancelLabel = props.cancelLabel || <FormattedMessage id="stripes-components.cancel" />;
   const confirmLabel = props.confirmLabel || <FormattedMessage id="stripes-components.submit" />;
   const {
-    bodyTag: Element,
+    bodyTag: Element = 'p',
     onCancel,
-    isConfirmButtonDisabled,
-    isCancelButtonDisabled
+    isConfirmButtonDisabled = false,
+    isCancelButtonDisabled = false,
+    buttonStyle = 'primary',
+    cancelButtonStyle = 'default',
   } = props;
 
   const footer = (
     <ModalFooter>
       <Button
         data-test-confirmation-modal-confirm-button
-        buttonStyle={props.buttonStyle}
+        buttonStyle={buttonStyle}
         id={`clickable-${testId}-confirm`}
         onClick={props.onConfirm}
         ref={footerPrimary}
@@ -67,7 +61,7 @@ const RunJobModal = (props) => {
       </Button>
       <Button
         data-test-confirmation-modal-cancel-button
-        buttonStyle={props.cancelButtonStyle}
+        buttonStyle={cancelButtonStyle}
         id={`clickable-${testId}-cancel`}
         onClick={props.onCancel}
         disabled={isCancelButtonDisabled}
@@ -101,6 +95,5 @@ const RunJobModal = (props) => {
 };
 
 RunJobModal.propTypes = propTypes;
-RunJobModal.defaultProps = defaultProps;
 
 export default RunJobModal;

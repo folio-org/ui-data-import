@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -52,7 +52,9 @@ describe('Item "Condition" edit component', () => {
 
     expect(conditionTitle).toBeInTheDocument();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render correct section', async () => {

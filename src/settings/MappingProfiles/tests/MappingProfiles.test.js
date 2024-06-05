@@ -118,6 +118,7 @@ const renderMappingProfiles = ({
           label={label}
           detailProps={detailProps}
           initialValues={{}}
+          setList={noop}
         />
       </Paneset>
     </Router>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   Route,
   Router,
@@ -258,7 +258,7 @@ describe('SearchAndSort component', () => {
       }));
       const searchInput = getByLabelText('Search Job profiles');
 
-      searchInput.focus();
+      act(() => searchInput.focus());
 
       fireEvent.change(searchInput, { target: { value: 'test value' } });
 
@@ -274,7 +274,7 @@ describe('SearchAndSort component', () => {
         }));
         const searchInput = getByLabelText('Search Job profiles');
 
-        searchInput.focus();
+        act(() => searchInput.focus());
 
         fireEvent.change(searchInput, { target: { value: 'test value' } });
 
@@ -299,11 +299,11 @@ describe('SearchAndSort component', () => {
         }));
         const searchInput = getByLabelText('Search Job profiles');
 
-        searchInput.focus();
+        act(() => searchInput.focus());
 
         fireEvent.change(searchInput, { target: { value: 'test value' } });
         fireEvent.click(getByText('Search'));
-        jest.runOnlyPendingTimers();
+        act(() => jest.runOnlyPendingTimers());
 
         expect(onSubmitSearchMock).toHaveBeenCalled();
       });

@@ -20,8 +20,8 @@ import css from '../MatchCriterions.css';
 
 export const ExistingSectionFolio = ({
   repeatableIndex,
-  existingRecordFieldLabel,
-  existingRecordFields,
+  existingRecordFieldLabel = '',
+  existingRecordFields = null,
   existingRecordType,
   changeFormState,
   formValues,
@@ -110,10 +110,5 @@ ExistingSectionFolio.propTypes = {
     label: PropTypes.string.isRequired,
   })),
   existingRecordFieldLabel: PropTypes.string,
-  formValues: PropTypes.object,
-};
-
-ExistingSectionFolio.defaultProps = {
-  existingRecordFields: null,
-  existingRecordFieldLabel: '',
+  formValues: PropTypes.arrayOf(PropTypes.object),
 };

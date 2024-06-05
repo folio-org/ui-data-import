@@ -16,7 +16,7 @@ import css from '../MatchCriterions.css';
 
 export const MARCFieldSection = ({
   repeatableIndex,
-  recordFieldSectionLabel,
+  recordFieldSectionLabel = '',
   recordFieldType,
 }) => {
   return (
@@ -111,5 +111,3 @@ MARCFieldSection.propTypes = {
   recordFieldType: PropTypes.oneOf(['incoming', 'existing']).isRequired,
   recordFieldSectionLabel: PropTypes.string,
 };
-
-MARCFieldSection.defaultProps = { recordFieldSectionLabel: '' };

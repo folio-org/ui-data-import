@@ -17,7 +17,7 @@ export const LinkerMenu = ({
   entityKeys: [matchProfiles, actionProfiles],
   onToggle,
   onClick,
-  keyHandler,
+  keyHandler = noop,
 }) => {
   return (
     <DropdownMenu
@@ -57,5 +57,3 @@ LinkerMenu.propTypes = {
   onClick: PropTypes.func.isRequired,
   keyHandler: PropTypes.func,
 };
-
-LinkerMenu.defaultProps = { keyHandler: noop };

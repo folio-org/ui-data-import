@@ -9,7 +9,6 @@ import {
   Col,
   NoValue,
 } from '@folio/stripes/components';
-import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
 import { Section } from '../..';
 import {
@@ -23,15 +22,14 @@ import {
 import {
   CRITERION_TYPES_OPTIONS,
   matchDetailsShape,
-  MATCH_INCOMING_RECORD_TYPES,
 } from '../../../utils';
 
 import css from './ViewMatchCriterion.css';
 
 export const ViewMatchCriterion = ({
   matchDetails,
-  incomingRecordLabel,
-  existingRecordLabel,
+  incomingRecordLabel = null,
+  existingRecordLabel = null,
   resources,
 }) => {
   const {
@@ -211,16 +209,7 @@ export const ViewMatchCriterion = ({
 
 ViewMatchCriterion.propTypes = {
   matchDetails: matchDetailsShape.isRequired,
-  incomingRecordType: PropTypes.oneOf(Object.keys(MATCH_INCOMING_RECORD_TYPES)),
-  existingRecordType: PropTypes.oneOf(Object.keys(FOLIO_RECORD_TYPES)),
   incomingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   existingRecordLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   resources: PropTypes.object,
-};
-
-ViewMatchCriterion.defaultProps = {
-  incomingRecordType: null,
-  existingRecordType: null,
-  incomingRecordLabel: null,
-  existingRecordLabel: null,
 };

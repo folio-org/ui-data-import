@@ -127,13 +127,11 @@ const propTypes = {
   handlePreview: PropTypes.func,
 };
 
-const defaultProps = { handlePreview: noop };
-
 const JobComponent = ({
   stripes,
   job,
   intl,
-  handlePreview,
+  handlePreview = noop,
 }) => {
   const [deletionInProgress, setDeletionInProgress] = useState(false);
   const [showCancelJobModal, setShowCancelJobModal] = useState(false);
@@ -392,6 +390,5 @@ const JobComponent = ({
 };
 
 JobComponent.propTypes = propTypes;
-JobComponent.defaultProps = defaultProps;
 
 export const Job = withStripes(injectIntl(JobComponent));

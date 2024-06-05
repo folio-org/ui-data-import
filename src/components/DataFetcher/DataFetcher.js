@@ -127,8 +127,6 @@ export class DataFetcher extends Component {
     updateInterval: PropTypes.number, // milliseconds
   };
 
-  static defaultProps = { updateInterval: DEFAULT_FETCHER_UPDATE_INTERVAL };
-
   state = {
     statusLoaded: false,
     contextData: { // eslint-disable-line object-curly-newline
@@ -173,7 +171,7 @@ export class DataFetcher extends Component {
   }
 
   updateResourcesData() {
-    const { updateInterval } = this.props;
+    const { updateInterval = DEFAULT_FETCHER_UPDATE_INTERVAL } = this.props;
 
     this.timeoutId = setTimeout(async () => {
       await this.fetchResourcesData();

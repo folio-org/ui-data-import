@@ -28,21 +28,21 @@ import css from './ProfileTree.css';
 
 export const ProfileLabel = memo(({
   label,
-  reactTo,
+  reactTo = PROFILE_RELATION_TYPES.NONE,
   linkingRules,
-  className,
+  className = null,
   recordData,
-  record,
+  record = null,
   parentRecordData,
   parentSectionKey,
   parentSectionData,
   setParentSectionData,
-  onUnlink,
-  onDelete,
-  dataAttributes,
-  showLabelsAsHotLink,
-  currentProfilesRelationTypes,
-  currentIndex,
+  onUnlink = noop,
+  onDelete = noop,
+  dataAttributes = null,
+  showLabelsAsHotLink = false,
+  currentProfilesRelationTypes = '',
+  currentIndex = '',
 }) => {
   const {
     columnsAllowed,
@@ -213,16 +213,4 @@ ProfileLabel.propTypes = {
   showLabelsAsHotLink: PropTypes.bool,
   currentProfilesRelationTypes: PropTypes.string,
   currentIndex: PropTypes.string,
-};
-
-ProfileLabel.defaultProps = {
-  reactTo: PROFILE_RELATION_TYPES.NONE,
-  record: null,
-  className: null,
-  dataAttributes: null,
-  onUnlink: noop,
-  onDelete: noop,
-  showLabelsAsHotLink: false,
-  currentIndex: '',
-  currentProfilesRelationTypes: '',
 };
