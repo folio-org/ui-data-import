@@ -44,7 +44,7 @@ jest.mock('../../../hooks', () => ({
       name: 'distributionType',
       enabled: true,
       path: 'order.poLine.fundDistribution[].distributionType',
-      value: 'percentage',
+      value: '"percentage"',
     }],
   }]],
 }));
