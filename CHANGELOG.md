@@ -4,6 +4,7 @@
 
 ### Features added:
 * Fix unit tests warnings in console. (UIDATIMP-1606)
+* Wrap value for "distributionType" field mapping with quotation marks (UIDATIMP-1644)
 
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
