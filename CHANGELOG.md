@@ -9,6 +9,7 @@
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
+* When navigating to the Invoice field mapping profile edit form the page crashes (UIDATIMP-1646)
 
 ## [7.1.8](https://github.com/folio-org/ui-data-import/tree/v7.1.8) (2024-05-09)
 

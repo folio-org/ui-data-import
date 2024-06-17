@@ -325,7 +325,7 @@ export const validateRepeatableActionsField = (value, hasFields) => {
  * validateAcceptedValues([{ key: 'value' }], 'key')('"test"')
  * // => Translated string (en = 'Please correct the syntax to continue')
  */
-export const validateAcceptedValues = (acceptedValues, valueKey) => value => {
+export const validateAcceptedValues = (acceptedValues = [], valueKey) => value => {
   const pattern = /"[^"]+"/g;
 
   if (!value || !value.length || !acceptedValues.length) {
