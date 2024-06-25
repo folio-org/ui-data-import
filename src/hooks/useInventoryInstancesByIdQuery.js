@@ -1,11 +1,12 @@
 import { useQuery } from 'react-query';
 
-import { useNamespace } from '@folio/stripes/core';
-
-import { useTenantKy } from './useTenantKy';
+import {
+  useNamespace,
+  useOkapiKy,
+} from '@folio/stripes/core';
 
 export const useInventoryInstancesByIdQuery = (instancesIds = [], { tenant } = {}) => {
-  const ky = useTenantKy({ tenant });
+  const ky = useOkapiKy({ tenant });
   const [namespace] = useNamespace({ key: 'instancesById' });
 
   const queryIds = instancesIds.join(' or ');
