@@ -1,10 +1,12 @@
 import { useQuery } from 'react-query';
 
-import { useNamespace } from '@folio/stripes/core';
-import { useTenantKy } from './useTenantKy';
+import {
+  useNamespace,
+  useOkapiKy,
+} from '@folio/stripes/core';
 
 export const useOrderByIdQuery = (orderId = null, { tenant } = {}) => {
-  const ky = useTenantKy({ tenant });
+  const ky = useOkapiKy({ tenant });
   const [namespace] = useNamespace({ key: 'orderById' });
 
   return useQuery(

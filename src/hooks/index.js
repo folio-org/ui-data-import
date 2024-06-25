@@ -9,5 +9,4 @@ export * from './useLocationsQuery';
 export * from './useOrderByIdQuery';
 export * from './usePOLinesByIdQuery';
 export * from './useSRSRecordQuery';
-export * from './useTenantKy';
 export * from './useIncomingRecordByIdQuery';
