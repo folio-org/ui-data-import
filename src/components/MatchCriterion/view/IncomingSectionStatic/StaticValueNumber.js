@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { NoValue } from '@folio/stripes/components';
 
-export const StaticValueNumber = ({ value }) => {
+export const StaticValueNumber = ({ value = '' }) => {
   return (
     <div data-test-static-number-field>
       {value || <NoValue />}
@@ -12,5 +12,3 @@ export const StaticValueNumber = ({ value }) => {
 };
 
 StaticValueNumber.propTypes = { value: PropTypes.string };
-
-StaticValueNumber.defaultProps = { value: '' };

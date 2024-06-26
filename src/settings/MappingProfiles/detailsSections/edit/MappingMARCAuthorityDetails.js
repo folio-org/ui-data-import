@@ -8,7 +8,7 @@ import { OverrideProtectedFieldsTable } from '../../../../components';
 import { marcFieldProtectionSettingsShape } from '../../../../utils';
 
 export const MappingMARCAuthorityDetails = ({
-  marcFieldProtectionFields,
+  marcFieldProtectionFields = [{}],
   mappingMarcFieldProtectionFields,
   setReferenceTables,
   folioRecordType,
@@ -33,5 +33,3 @@ MappingMARCAuthorityDetails.propTypes = {
   marcFieldProtectionFields: PropTypes.arrayOf(marcFieldProtectionSettingsShape),
   folioRecordType: PropTypes.string,
 };
-
-MappingMARCAuthorityDetails.defaultProps = { marcFieldProtectionFields: [{}] };

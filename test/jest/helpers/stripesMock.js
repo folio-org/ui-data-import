@@ -21,6 +21,7 @@ export const buildStripes = (otherProperties = {}) => ({
   setSinglePlugin: noop,
   setTimezone: noop,
   setToken: noop,
+  setIsAuthenticated: noop,
   store: {
     getState: noop,
     dispatch: noop,

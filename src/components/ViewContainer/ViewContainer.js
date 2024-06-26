@@ -53,7 +53,7 @@ export const ViewContainer = memo(({
   };
 
   const deselectOnDelete = recordId => {
-    const isRecordSelected = selectedRecords.has(recordId);
+    const isRecordSelected = selectedRecords?.has(recordId);
 
     if (isRecordSelected) {
       selectRecord(recordId);

@@ -27,35 +27,35 @@ import {
 
 export const AcceptedValuesField = ({
   acceptedValuesList,
-  acceptedValuesPath,
+  acceptedValuesPath = null,
   component,
-  componentValue,
-  dataAttributes,
-  disabled,
-  format,
-  formatListOptions,
+  componentValue = null,
+  dataAttributes = null,
+  disabled = false,
+  format = null,
+  formatListOptions = null,
   hasLoaded,
-  id,
-  isDirty,
-  isFormField,
-  isMultiSelection,
-  isRemoveValueAllowed,
-  label,
-  name,
-  okapi,
-  onChange,
+  id = null,
+  isDirty = false,
+  isFormField = true,
+  isMultiSelection = false,
+  isRemoveValueAllowed = false,
+  label = null,
+  name = null,
+  okapi = {},
+  onChange = null,
   optionLabel,
-  optionTemplate,
+  optionTemplate = null,
   optionValue,
-  parse,
-  parsedOptionLabel,
-  parsedOptionValue,
-  required,
-  setAcceptedValues,
-  validation,
-  wrapperLabel,
-  wrapperSources,
-  wrapperSourcesFn,
+  parse = null,
+  parsedOptionLabel = '',
+  parsedOptionValue = '',
+  required = false,
+  setAcceptedValues = noop,
+  validation = null,
+  wrapperLabel = null,
+  wrapperSources = null,
+  wrapperSourcesFn = null,
 }) => {
   const [listOptions, setListOptions] = useState(acceptedValuesList);
   const [hasOptions, setHasOptions] = useState(hasLoaded || !isEmpty(listOptions));
@@ -159,7 +159,7 @@ export const AcceptedValuesField = ({
       component={withReferenceValues}
       name={name}
       label={label}
-      dataOptions={listOptions}
+      dataOptions={listOptions || []}
       optionValue={optionValue}
       optionLabel={optionLabel}
       wrappedComponent={component}
@@ -182,7 +182,7 @@ export const AcceptedValuesField = ({
     return (
       <WithReferenceValuesElement
         wrappedComponent={component}
-        dataOptions={listOptions}
+        dataOptions={listOptions || []}
         value={componentValue}
         onFieldChange={onChange}
         label={label}
@@ -234,34 +234,4 @@ AcceptedValuesField.propTypes = {
   wrapperSources: PropTypes.arrayOf(PropTypes.object),
   wrapperSourcesFn: PropTypes.string,
   wrapperLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-};
-
-AcceptedValuesField.defaultProps = {
-  acceptedValuesList: [],
-  acceptedValuesPath: null,
-  componentValue: null,
-  dataAttributes: null,
-  disabled: false,
-  format: null,
-  formatListOptions: null,
-  hasLoaded: false,
-  id: null,
-  isDirty: false,
-  isFormField: true,
-  isMultiSelection: false,
-  isRemoveValueAllowed: false,
-  label: null,
-  name: null,
-  okapi: {},
-  onChange: null,
-  optionTemplate: null,
-  parse: null,
-  parsedOptionLabel: '',
-  parsedOptionValue: '',
-  required: false,
-  setAcceptedValues: noop,
-  validation: null,
-  wrapperSources: null,
-  wrapperSourcesFn: null,
-  wrapperLabel: null,
 };

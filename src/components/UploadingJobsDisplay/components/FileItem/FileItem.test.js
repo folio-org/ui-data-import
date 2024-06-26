@@ -14,6 +14,7 @@ import { FILE_STATUSES } from '../../../../utils';
 
 const fileName = 'test_file';
 const fileSize = 1000;
+const defaultUploadedDate = '2024-01-01T13:36:06.537+00:00';
 
 const renderFileItem = ({
   uiKey = fileName,
@@ -22,7 +23,7 @@ const renderFileItem = ({
   onDelete,
   onCancelImport,
   status,
-  uploadedDate,
+  uploadedDate = defaultUploadedDate,
   loading,
   isSnapshotMode,
 }) => {

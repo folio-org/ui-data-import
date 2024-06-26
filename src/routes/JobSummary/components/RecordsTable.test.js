@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import faker from 'faker';
 import { noop } from 'lodash';
 import { BrowserRouter } from 'react-router-dom';
@@ -23,8 +23,10 @@ const jobLogEntriesRecords = [
   {
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: '59138d56-bc81-4f66-9f72-f57f53621111',
+    incomingRecordId: '59138d56-bc81-4f66-9f72-f57f53621111',
     sourceRecordOrder : 0,
     sourceRecordTitle: 'Test record 1',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     sourceRecordActionStatus: 'CREATED',
     error: '',
     relatedInstanceInfo: {
@@ -52,8 +54,10 @@ const jobLogEntriesRecords = [
   {
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: '59138d56-bc81-4f66-9f72-f57f53629646',
+    incomingRecordId: '59138d56-bc81-4f66-9f72-f57f53629646',
     sourceRecordOrder : 1,
     sourceRecordTitle: 'Test record 2',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     sourceRecordActionStatus: 'CREATED',
     error: '',
     relatedInstanceInfo: {
@@ -129,8 +133,10 @@ const jobLogEntriesRecords = [
   {
     jobExecutionId: faker.random.uuid(),
     sourceRecordId: '59138d56-bc81-4f66-9f72-f57f536211567',
+    incomingRecordId: '59138d56-bc81-4f66-9f72-f57f536211567',
     sourceRecordOrder : 2,
     sourceRecordTitle: 'Test record 3',
+    sourceRecordType: 'MARC_BIBLIOGRAPHIC',
     sourceRecordActionStatus: 'CREATED',
     error: '',
     relatedInstanceInfo: {
@@ -229,7 +235,9 @@ describe('RecordsTable component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderRecordsTable({});
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should have proper columns', () => {

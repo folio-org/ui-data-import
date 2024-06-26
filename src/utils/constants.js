@@ -789,6 +789,9 @@ export const PAGE_KEYS = {
 export const PER_REQUEST_LIMIT = 3000;
 export const LIMIT_5000 = 5000;
 
+export const DEFAULT_RESULT_COUNT = 5000;
+export const DEFAULT_COUNT_INCREMENT = 5000;
+
 export const TWO_DIGIT = '2-digit';
 export const NUMERIC = 'numeric';
 

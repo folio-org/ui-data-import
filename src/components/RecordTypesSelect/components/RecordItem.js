@@ -24,8 +24,8 @@ export const RecordItem = memo(({
   className,
   style,
   onClick,
-  isEditable,
-  onToggle,
+  isEditable = true,
+  onToggle = noop,
   incomingRecordOptions,
 }) => {
   const ref = useRef();
@@ -120,9 +120,4 @@ RecordItem.propTypes = {
   isEditable: PropTypes.bool,
   onToggle: PropTypes.func,
   incomingRecordOptions: PropTypes.object,
-};
-
-RecordItem.defaultProps = {
-  isEditable: true,
-  onToggle: noop,
 };

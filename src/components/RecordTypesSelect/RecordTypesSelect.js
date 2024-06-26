@@ -34,12 +34,12 @@ const useUpdateOnResize = () => {
 };
 
 export const RecordTypesSelect = memo(({
-  id,
+  id = 'compare-record-types',
   existingRecordType: initialExistingRecord,
-  incomingRecordType: initialIncomingRecord,
-  onExistingSelect,
-  onIncomingSelect,
-  isEditable,
+  incomingRecordType: initialIncomingRecord = MATCH_INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
+  onExistingSelect = noop,
+  onIncomingSelect = noop,
+  isEditable = true,
 }) => {
   const IS_LOCALE_LTR = document.dir === HTML_LANG_DIRECTIONS.LEFT_TO_RIGHT;
 
@@ -149,13 +149,4 @@ RecordTypesSelect.propTypes = {
   onExistingSelect: PropTypes.func,
   onIncomingSelect: PropTypes.func,
   isEditable: PropTypes.bool,
-};
-
-RecordTypesSelect.defaultProps = {
-  id: 'compare-record-types',
-  existingRecordType: '',
-  incomingRecordType: MATCH_INCOMING_RECORD_TYPES.MARC_BIBLIOGRAPHIC,
-  onExistingSelect: noop,
-  onIncomingSelect: noop,
-  isEditable: true,
 };

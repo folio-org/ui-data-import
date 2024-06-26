@@ -16,8 +16,8 @@ import { getContentData } from '../utils';
 
 export const ViewRepeatableField = ({
   repeatableAction,
-  repeatableFieldActions,
-  repeatableActionToDelete,
+  repeatableFieldActions = MAPPING_REPEATABLE_FIELD_ACTIONS,
+  repeatableActionToDelete = REPEATABLE_ACTIONS.DELETE_EXISTING,
   fieldData,
   visibleColumns,
   columnMapping,
@@ -56,9 +56,4 @@ ViewRepeatableField.propTypes = {
   fieldData: PropTypes.arrayOf(PropTypes.object),
   formatter: PropTypes.object,
   columnIdPrefix: PropTypes.string,
-};
-
-ViewRepeatableField.defaultProps = {
-  repeatableFieldActions: MAPPING_REPEATABLE_FIELD_ACTIONS,
-  repeatableActionToDelete: REPEATABLE_ACTIONS.DELETE_EXISTING,
 };

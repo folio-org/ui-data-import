@@ -161,6 +161,8 @@ export const FundDistribution = ({
                   label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.fundDistribution.field.type`} />}
                   name={FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                   currency={currency}
+                  format={value => value?.replace(/"+/g, '')}
+                  parse={value => `"${value}"`}
                 />
               </Col>
             </Row>

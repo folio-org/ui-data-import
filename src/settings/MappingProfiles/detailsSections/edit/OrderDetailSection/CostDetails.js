@@ -247,6 +247,8 @@ export const CostDetails = ({
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.costDetails.field.type`} />}
             name={COST_DETAILS_FIELDS_MAP.TYPE}
             currency={currency}
+            format={value => value?.replace(/"+/g, '')}
+            parse={value => `"${value}"`}
           />
         </Col>
       </Row>

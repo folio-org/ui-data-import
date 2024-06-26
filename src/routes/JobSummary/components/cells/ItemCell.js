@@ -10,7 +10,7 @@ import {
 import { RECORD_ACTION_STATUS } from '../../../../utils';
 
 export const ItemCell = ({
-  sortedItemData,
+  sortedItemData = [],
   instanceId,
 }) => {
   const { okapi: { tenant } } = useStripes();
@@ -56,5 +56,3 @@ ItemCell.propTypes = {
   instanceId: PropTypes.string.isRequired,
   sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
 };
-
-ItemCell.defaultProps = { sortedItemData: [] };

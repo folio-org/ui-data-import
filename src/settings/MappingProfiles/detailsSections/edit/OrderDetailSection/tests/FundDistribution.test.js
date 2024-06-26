@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -44,7 +44,7 @@ jest.mock('../../../hooks', () => ({
       name: 'distributionType',
       enabled: true,
       path: 'order.poLine.fundDistribution[].distributionType',
-      value: 'percentage',
+      value: '"percentage"',
     }],
   }]],
 }));
@@ -95,7 +95,9 @@ describe('FundDistribution edit component', () => {
 
     expect(fundDistributionTitle).toBeInTheDocument();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render correct fields', async () => {

@@ -139,20 +139,21 @@ export const JobProfilesFormComponent = memo(({
   const { formatMessage } = useIntl();
 
   const dispatch = useDispatch();
+  const isEqualValues = (oldValue, newValue) => isEqual(newValue, oldValue);
   const currentJobProfileTreeContent = useSelector(state => {
     return get(
       state,
       [STATE_MANAGEMENT.REDUCER, dataKey],
       [],
     );
-  });
+  }, isEqualValues);
   const profileTreeContent = useSelector(state => {
     return get(
       state,
       [STATE_MANAGEMENT.REDUCER, profileTreeKey],
       [],
     );
-  });
+  }, isEqualValues);
 
   const [isModalOpen, showModal] = useState(false);
   const [profileTreeData, setProfileTreeData] = useState([]);

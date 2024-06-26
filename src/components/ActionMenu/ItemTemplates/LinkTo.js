@@ -15,7 +15,7 @@ export const LinkTo = memo(({
   menu,
   location,
   dataAttributes = {},
-  isDisabled,
+  isDisabled = false,
 }) => (
   <Button
     to={isDisabled ? null : location}
@@ -45,5 +45,3 @@ LinkTo.propTypes = {
   dataAttributes: PropTypes.object,
   isDisabled: PropTypes.bool,
 };
-
-LinkTo.defaultProps = { isDisabled: false };

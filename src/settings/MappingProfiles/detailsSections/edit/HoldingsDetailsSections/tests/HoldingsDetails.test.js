@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -100,7 +100,9 @@ describe('Holdings "Holdings details" edit component', () => {
 
     expect(holdingsDetailsTitle).toBeInTheDocument();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render correct section', async () => {

@@ -162,6 +162,8 @@ export const InvoiceLineFundDistribution = ({
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
                         name={INVOICE_LINE_FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                         currency={currency}
+                        format={value => value?.replace(/"+/g, '')}
+                        parse={value => `"${value}"`}
                       />
                     </Col>
                     <Col xs={2}>

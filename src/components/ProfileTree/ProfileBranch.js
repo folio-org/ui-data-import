@@ -16,6 +16,7 @@ import {
   snakeCase,
   get,
   set,
+  isEqual,
 } from 'lodash';
 import classNames from 'classnames';
 
@@ -38,28 +39,28 @@ import {
 } from '../../utils';
 
 export const ProfileBranch = memo(({
-  reactTo,
+  reactTo = null,
   linkingRules,
   recordData,
-  record,
+  record = null,
   profileType,
   okapi,
   parentRecordData,
   parentSectionKey,
   parentSectionData,
   setParentSectionData,
-  rootId,
-  className,
-  onChange,
-  onLink,
-  onUnlink,
-  onDelete,
-  dataAttributes,
-  showLabelsAsHotLink,
+  rootId = null,
+  className = null,
+  onChange = noop,
+  onLink = noop,
+  onUnlink = noop,
+  onDelete = noop,
+  dataAttributes = null,
+  showLabelsAsHotLink = false,
   resources,
-  index,
-  parentIndex,
-  parentProfilesRelationTypes,
+  index = 0,
+  parentIndex = '',
+  parentProfilesRelationTypes = '',
 }) => {
   const { childrenAllowed } = linkingRules;
   const {
@@ -73,13 +74,14 @@ export const ProfileBranch = memo(({
   const sectionKey = `${record ? record.id : 'current'}Branch.${currentRecord ? currentRecord.id : 'root'}`;
 
   const dispatch = useDispatch();
+  const isEqualValues = (oldValue, newValue) => isEqual(newValue, oldValue);
   const jobProfilesState = useSelector(state => {
     return get(
       state,
       [STATE_MANAGEMENT.REDUCER, 'jobProfiles', sectionKey],
       [],
     );
-  });
+  }, isEqualValues);
 
   const getSectionStatus = section => {
     const res = get(jobProfilesState, ['sectionStatus', section]);
@@ -321,20 +323,4 @@ ProfileBranch.propTypes = {
   index: PropTypes.number,
   parentIndex: PropTypes.string,
   parentProfilesRelationTypes: PropTypes.string,
-};
-
-ProfileBranch.defaultProps = {
-  reactTo: null,
-  rootId: null,
-  record: null,
-  className: null,
-  onChange: noop,
-  onLink: noop,
-  onUnlink: noop,
-  onDelete: noop,
-  dataAttributes: null,
-  showLabelsAsHotLink: false,
-  index: 0,
-  parentIndex: '',
-  parentProfilesRelationTypes: '',
 };

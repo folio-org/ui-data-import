@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   fireEvent,
   waitFor,
@@ -216,7 +216,9 @@ describe('ViewAllLogs component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderViewAllLogs(defaultQuery);
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should render correct number of records', async () => {

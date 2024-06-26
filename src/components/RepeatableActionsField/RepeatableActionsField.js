@@ -26,18 +26,20 @@ import { getInitialDetails } from '../../settings/MappingProfiles';
 
 import styles from './RepeatableActionsField.css';
 
+const defaultWrapperPlaceholder = 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions';
+
 export const RepeatableActionsField = memo(({
   wrapperFieldName,
   legend,
-  wrapperPlaceholder,
+  wrapperPlaceholder = defaultWrapperPlaceholder,
   repeatableFieldAction,
   repeatableFieldIndex,
   hasRepeatableFields,
   onRepeatableActionChange,
-  actions,
-  actionToClearFields,
-  subfieldsToClearPath,
-  disabled,
+  actions = MAPPING_REPEATABLE_FIELD_ACTIONS,
+  actionToClearFields = REPEATABLE_ACTIONS.DELETE_EXISTING,
+  subfieldsToClearPath = '',
+  disabled = false,
   recordType,
   children,
 }) => {
@@ -125,12 +127,4 @@ RepeatableActionsField.propTypes = {
   actions: PropTypes.arrayOf(repeatableFieldActionShape),
   actionToClearFields: PropTypes.string,
   subfieldsToClearPath: PropTypes.string,
-};
-
-RepeatableActionsField.defaultProps = {
-  disabled: false,
-  wrapperPlaceholder: 'ui-data-import.settings.mappingProfiles.map.wrapper.repeatableActions',
-  actions: MAPPING_REPEATABLE_FIELD_ACTIONS,
-  actionToClearFields: REPEATABLE_ACTIONS.DELETE_EXISTING,
-  subfieldsToClearPath: '',
 };

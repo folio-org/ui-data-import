@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
@@ -146,7 +146,9 @@ describe('ViewMatchProfile component', () => {
 
     expect(matchProfileTitle).toBeInTheDocument();
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('match profile name should be rendered correctly', async () => {

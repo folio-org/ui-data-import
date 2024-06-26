@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
@@ -11,6 +11,7 @@ import { buildResources } from '@folio/stripes-data-transfer-components/test/hel
 import { Paneset } from '@folio/stripes/components';
 import {
   buildMutator,
+  buildStripes,
   renderWithIntl,
   renderWithReduxForm,
   translationsProperties,
@@ -22,6 +23,7 @@ const history = createMemoryHistory();
 
 history.push = jest.fn();
 
+const stripes = buildStripes();
 const resources = buildResources({
   resourceName: 'fileExtensions',
   records: [
@@ -98,6 +100,7 @@ const renderFileExtensions = ({
           mutator={mutator}
           detailProps={detailProps}
           initialValues={{}}
+          stripes={stripes}
         />
       </Paneset>
     </Router>
@@ -114,7 +117,9 @@ describe('FileExtensions component', () => {
   it('should be rendered with no axe errors', async () => {
     const { container } = renderFileExtensions(fileExtensionsProps);
 
-    await runAxeTest({ rootNode: container });
+    await act(async () => {
+      await runAxeTest({ rootNode: container });
+    });
   });
 
   it('should be rendered', () => {

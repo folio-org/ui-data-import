@@ -13,16 +13,23 @@ import {
 
 import styles from './partials.css';
 
+const defaultEmptyMessage = (
+  <FormattedMessage
+    id="ui-data-import.emptyMessage"
+    values={{ type: <FormattedMessage id="ui-data-import.list" /> }}
+  />
+);
+
 export const OptionsList = ({
-  id,
   label,
   dataOptions,
-  optionValue,
-  optionLabel,
-  className,
-  disabled,
   onSelect,
-  emptyMessage,
+  id = '',
+  optionValue = 'value',
+  optionLabel = 'label',
+  className = null,
+  disabled = false,
+  emptyMessage = defaultEmptyMessage,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -91,16 +98,4 @@ OptionsList.propTypes = {
   optionValue: PropTypes.string,
   optionLabel: PropTypes.string,
   disabled: PropTypes.bool,
-};
-
-OptionsList.defaultProps = {
-  id: '',
-  optionValue: 'value',
-  optionLabel: 'label',
-  className: null,
-  disabled: false,
-  emptyMessage: <FormattedMessage
-    id="ui-data-import.emptyMessage"
-    values={{ type: <FormattedMessage id="ui-data-import.list" /> }}
-  />,
 };

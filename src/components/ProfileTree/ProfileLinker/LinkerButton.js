@@ -13,9 +13,9 @@ export const LinkerButton = memo(({
   id,
   entityKey,
   onClick,
-  searchLabel,
-  className,
-  dataAttributes,
+  searchLabel = '',
+  className = '',
+  dataAttributes = null,
 }) => (
   <Button
     data-test-plugin-find-record-button
@@ -45,10 +45,4 @@ LinkerButton.propTypes = {
   searchLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   className: PropTypes.string,
   dataAttributes: PropTypes.object,
-};
-
-LinkerButton.defaultProps = {
-  className: '',
-  searchLabel: '',
-  dataAttributes: null,
 };

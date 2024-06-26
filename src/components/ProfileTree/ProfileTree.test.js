@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   fireEvent,
   waitFor,
@@ -171,7 +171,7 @@ describe('ProfileTree component', () => {
   });
 
   describe('when clicking on delete button', () => {
-    it('modal window shod be closed', async () => {
+    it('modal window should be closed', async () => {
       const {
         container,
         findByText,
@@ -215,13 +215,13 @@ describe('ProfileTree component', () => {
       allowDelete: false,
     }));
 
-    Pluggable.mock.calls[0][0].onLink([{
+    await act(() => Pluggable.mock.calls[0][0].onLink([{
       content: {
         id: 'testId',
         metadata: {},
         userInfo: {},
       },
-    }]);
+    }]));
 
     await waitFor(() => expect(findAllByText('Match profile: "testName"')).toBeDefined());
   });

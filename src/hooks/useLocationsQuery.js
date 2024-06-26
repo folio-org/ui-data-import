@@ -1,13 +1,14 @@
 import { useQuery } from 'react-query';
 
-import { useNamespace } from '@folio/stripes/core';
-
-import { useTenantKy } from './useTenantKy';
+import {
+  useNamespace,
+  useOkapiKy,
+} from '@folio/stripes/core';
 
 import { LIMIT_5000 } from '../utils';
 
 export const useLocationsQuery = ({ tenant } = {}) => {
-  const ky = useTenantKy({ tenant });
+  const ky = useOkapiKy({ tenant });
   const [namespace] = useNamespace({ key: 'locations' });
 
   const query = useQuery({

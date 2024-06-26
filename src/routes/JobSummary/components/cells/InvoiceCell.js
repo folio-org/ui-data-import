@@ -11,7 +11,7 @@ import { RECORD_ACTION_STATUS } from '../../../../utils';
 export const InvoiceCell = ({
   relatedInvoiceInfo,
   relatedInvoiceLineInfo,
-  sortedItemData,
+  sortedItemData = [],
 }) => {
   const invoiceActionStatus = relatedInvoiceInfo.actionStatus;
 
@@ -36,5 +36,3 @@ InvoiceCell.propTypes = {
   relatedInvoiceLineInfo: PropTypes.object.isRequired,
   sortedItemData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
 };
-
-InvoiceCell.defaultProps = { sortedItemData: [] };

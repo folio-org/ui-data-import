@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   fireEvent,
@@ -243,7 +243,9 @@ describe('ListView component', () => {
         ...listViewPropsActionProfiles,
       });
 
-      await runAxeTest({ rootNode: container });
+      await act(async () => {
+        await runAxeTest({ rootNode: container });
+      });
     });
 
     it('should render correct label', () => {
@@ -263,7 +265,9 @@ describe('ListView component', () => {
         ...listViewPropsFileExtensions,
       });
 
-      await runAxeTest({ rootNode: container });
+      await act(async () => {
+        await runAxeTest({ rootNode: container });
+      });
     });
 
     it('should render correct label', () => {

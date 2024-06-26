@@ -28,9 +28,9 @@ import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const VendorInformation = ({
   setReferenceTables,
-  filledVendorId,
-  accountingCodeOptions,
-  accountNumbersByCode,
+  filledVendorId = '',
+  accountingCodeOptions = [],
+  accountNumbersByCode = {},
   onSelectVendor,
   onClearVendor,
   okapi,
@@ -106,10 +106,4 @@ VendorInformation.propTypes = {
   filledVendorId: PropTypes.string,
   accountingCodeOptions: PropTypes.arrayOf(PropTypes.object),
   accountNumbersByCode: PropTypes.object,
-};
-
-VendorInformation.defaultProps = {
-  filledVendorId: '',
-  accountingCodeOptions: [],
-  accountNumbersByCode: {},
 };

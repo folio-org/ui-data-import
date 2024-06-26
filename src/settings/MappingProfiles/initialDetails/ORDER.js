@@ -362,7 +362,7 @@ const ORDER = {
     name: 'discountType',
     enabled: true,
     path: 'order.poLine.cost.discountType',
-    value: 'percentage',
+    value: '"percentage"',
   }, {
     name: 'fundDistribution',
     enabled: true,
@@ -393,7 +393,7 @@ const ORDER = {
         name: 'distributionType',
         enabled: true,
         path: 'order.poLine.fundDistribution[].distributionType',
-        value: 'percentage',
+        value: '"percentage"',
       }],
     }],
   }, {
