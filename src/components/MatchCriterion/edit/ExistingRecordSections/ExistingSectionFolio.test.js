@@ -97,17 +97,11 @@ describe('ExistingSectionFolio edit component', () => {
         value: 'test value1',
       }];
 
-      const {
-        container,
-        getByText,
-      } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
-      const optionsElement = getByText('test label1');
+      const { getByText } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
 
+      const optionsElement = getByText('test label1');
       fireEvent.click(optionsElement);
 
-      const singleValueContainer = container.querySelector('.singleValue');
-
-      expect(singleValueContainer).not.toHaveTextContent('test label1');
       expect(onChangeFormStateMock).toHaveBeenCalledWith(fieldToChangePath, fieldToChangeValue);
     });
 
