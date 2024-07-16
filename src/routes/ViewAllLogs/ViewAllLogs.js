@@ -410,7 +410,7 @@ const ViewAllLogs = props => {
   const itemToView = JSON.parse(sessionStorage.getItem(DATA_IMPORT_POSITION));
 
   return (
-    <div data-test-logs-list>
+    <div>
       <SearchAndSort
         packageInfo={packageInfoFormProps || packageInfo}
         objectName="job-logs"
