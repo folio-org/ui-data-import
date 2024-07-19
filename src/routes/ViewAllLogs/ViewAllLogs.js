@@ -166,6 +166,7 @@ const ViewAllLogs = props => {
   useEffect(() => () => storage.setItem(PAGE_KEYS.VIEW_ALL, []), []);
 
   useEffect(() => {
+    mutator.resultOffset.replace(0);
     mutator.usersList?.GET();
     mutator.jobProfilesList?.GET();
     setLogsList();
