@@ -41,11 +41,13 @@ const mutator = buildMutator({
     PUT: noop,
     cancel: noop,
   },
-  users: {
+  usersList: {
     GET: noop,
+    reset: noop,
   },
-  jobProfiles: {
+  jobProfilesList: {
     GET: noop,
+    reset: noop,
   },
   splitStatus: {
     GET: noop,
@@ -122,7 +124,7 @@ const getResources = query => ({
         status: 'ERROR',
       },
     ],
-    jobProfiles: {
+    jobProfilesList: {
       records: [
         { name: 'test1' },
         { name: 'test2' },
