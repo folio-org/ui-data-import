@@ -8,6 +8,7 @@
 * Remove steps with BigTest check from pipelines on Jenkins (UIDATIMP-1648)
 * Replace `useTenantKy` with `useOkapiKy` (UIDATIMP-1649)
 * Transform `ViewAllLogs` component into the functional one (UIDATIMP-1630)
+* Change endpoint to get actual SRS MARC data (UIDATIMP-1597)
 
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
