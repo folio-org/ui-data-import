@@ -11,7 +11,7 @@ export const useSRSRecordQuery = (recordId, { tenant } = {}) => {
   return useQuery(
     {
       queryKey: [namespace, recordId, tenant],
-      queryFn: () => ky.get(`source-storage/records/${recordId}`).json(),
+      queryFn: () => ky.get(`source-storage/source-records/${recordId}`).json(),
       enabled: !!recordId,
     }
   );

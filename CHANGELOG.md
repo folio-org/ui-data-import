@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## **7.1.10** (in progress)
+
+### Bugs fixed:
+* Change endpoint to get actual SRS MARC data (UIDATIMP-1597)
+
 ## [7.1.9](https://github.com/folio-org/ui-data-import/tree/v7.1.9) (2024-09-16)
 
 ### Bugs fixed:
