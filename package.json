@@ -209,7 +209,8 @@
           "source-storage.records.get",
           "ui-data-import.view",
           "ui-orders.orders.view",
-          "metadata-provider.incomingrecords.get"
+          "metadata-provider.incomingrecords.get",
+          "source-storage.sourceRecords.get"
         ],
         "visible": true
       },
@@ -225,7 +226,8 @@
           "metadata-provider.jobexecutions.get",
           "metadata-provider.logs.get",
           "source-storage.records.get",
-          "metadata-provider.incomingrecords.get"
+          "metadata-provider.incomingrecords.get",
+          "source-storage.sourceRecords.get"
         ],
         "visible": true
       },

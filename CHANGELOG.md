@@ -8,12 +8,14 @@
 * Remove steps with BigTest check from pipelines on Jenkins (UIDATIMP-1648)
 * Replace `useTenantKy` with `useOkapiKy` (UIDATIMP-1649)
 * Transform `ViewAllLogs` component into the functional one (UIDATIMP-1630)
+* Change endpoint to get actual SRS MARC data (UIDATIMP-1597)
 
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
 * Do not show "Leave the page" modal when view job profile from the list. (UIDATIMP-1615)
 * When navigating to the Invoice field mapping profile edit form the page crashes (UIDATIMP-1646)
 * Reset offset when open VievAllLogs page. (UIDATIMP-1645)
+* Add missing `source-storage.sourceRecords.get` permission. (UIDATIMP-1652)
 
 ## [7.1.8](https://github.com/folio-org/ui-data-import/tree/v7.1.8) (2024-05-09)
 
