@@ -67,6 +67,8 @@ export const NOTES_VISIBLE_COLUMNS = { NOTE: 'note' };
 
 export const PHYSICAL_RESOURCE_VISIBLE_COLUMNS = { VOLUMES: 'volumes' };
 
+export const DONOR_INFORMATION_VISIBLE_COLUMNS = { DONOR: 'donor' };
+
 export const VENDOR_VISIBLE_COLUMNS = {
   REF_NUMBER: 'refNumber',
   REF_NUMBER_TYPE: 'refNumberType',

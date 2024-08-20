@@ -286,6 +286,22 @@ const ORDER = {
     path: 'order.poLine.poLineDescription',
     value: '',
   }, {
+    name: 'donorOrganizationIds',
+    enabled: true,
+    path: 'order.poLine.donorOrganizationIds[]',
+    repeatableFieldAction: null,
+    value: '',
+    subfields: [{
+      order: 0,
+      path: 'order.poLine.donorOrganizationIds[]',
+      fields: [{
+        name: 'donorOrganizationIds',
+        enabled: true,
+        path: 'order.poLine.donorOrganizationIds[]',
+        value: '',
+      }],
+    }],
+  }, {
     name: 'vendorDetail',
     enabled: true,
     path: 'order.poLine.vendorDetail.referenceNumbers[]',

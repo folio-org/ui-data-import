@@ -20,6 +20,7 @@ jest.mock('../OrderDetailSection', () => ({
   OrderInformation: () => <span>OrderInformation</span>,
   ItemDetails: () => <span>ItemDetails</span>,
   POLineDetails: () => <span>POLineDetails</span>,
+  DonorInformation: () => <span>DonorInformation</span>,
   Vendor: () => <span>Vendor</span>,
   CostDetails: () => <span>CostDetails</span>,
   FundDistribution: () => <span>FundDistribution</span>,
@@ -74,6 +75,7 @@ describe('MappingOrderDetails edit component', () => {
     expect(getByText('OrderInformation')).toBeInTheDocument();
     expect(getByText('ItemDetails')).toBeInTheDocument();
     expect(getByText('POLineDetails')).toBeInTheDocument();
+    expect(getByText('DonorInformation')).toBeInTheDocument();
     expect(getByText('Vendor')).toBeInTheDocument();
     expect(getByText('CostDetails')).toBeInTheDocument();
     expect(getByText('FundDistribution')).toBeInTheDocument();

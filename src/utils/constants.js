@@ -74,6 +74,7 @@ export const NOTES_FIELD = 'notes';
 export const FUND_DISTRIBUTION_FIELD = 'fundDistribution';
 export const CONTRIBUTORS_FIELD = 'contributors';
 export const PRODUCT_IDS_FIELD = 'productIds';
+export const DONORS_FIELD = 'donorOrganizationIds';
 export const LOCATIONS_FIELD = 'locations';
 export const VOLUMES_FIELD = 'volumes';
 export const VENDOR_DETAILS_FIELD = 'vendorDetail';

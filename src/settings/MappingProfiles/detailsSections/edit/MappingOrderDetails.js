@@ -17,6 +17,7 @@ import {
   Location,
   PhysicalResourceDetails,
   EResourcesDetails,
+  DonorInformation,
 } from './OrderDetailSection';
 
 import { TRANSLATION_ID_PREFIX } from '../constants';
@@ -60,6 +61,10 @@ export const MappingOrderDetails = ({
           setReferenceTables={setReferenceTables}
           okapi={okapi}
           requestLimit={requestLimit}
+        />
+        <DonorInformation
+          initialFields={initialFields}
+          setReferenceTables={setReferenceTables}
         />
         <Vendor
           accountNumbers={vendorAccountNumbers}
