@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.1.9](https://github.com/folio-org/ui-data-import/tree/v7.1.9) (2024-09-16)
+
+### Bugs fixed:
+* Implement new Donor information section for Order field mapping profiles (UIDATIMP-1656)
+
 ## [7.1.8](https://github.com/folio-org/ui-data-import/tree/v7.1.8) (2024-05-09)
 
 ### Bugs fixed:
@@ -75,6 +80,12 @@
 * Update style of Incoming Record button to match other buttons (UIDATIMP-1594)
 * Not able to use system generated Match profiles (UIDATIMP-1521)
 * Change error message when upload definition has been deleted by another user. (UIDATIMP-1599)
+
+## [7.0.7](https://github.com/folio-org/ui-data-import/tree/v7.0.7) (2024-05-09)
+
+### Bugs fixed:
+* Changes made during duplication of "Default - Create SRS MARC Authority" job profile are not saved and affect original job profile. (UIDATIMP-1622)
+* Changes made during duplication of a job with a match profile are not saved. (UIDATIMP-1637)
 
 ## [7.0.6](https://github.com/folio-org/ui-data-import/tree/v7.0.6) (2024-05-03)
 

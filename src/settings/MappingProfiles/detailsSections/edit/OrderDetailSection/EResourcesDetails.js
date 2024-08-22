@@ -55,17 +55,17 @@ export const EResourcesDetails = ({
   okapi,
   requestLimit,
 }) => {
-  const MATERIAL_TYPE_INDEX = 68;
+  const MATERIAL_TYPE_INDEX = 69;
   const E_RESOURCES_DETAILS_FIELDS_MAP = {
-    ACCESS_PROVIDER: getFieldName(64),
-    ACTIVATION_STATUS: getBoolFieldName(65),
-    ACTIVATION_DUE: getFieldName(66),
-    CREATE_INVENTORY: getFieldName(67),
+    ACCESS_PROVIDER: getFieldName(65),
+    ACTIVATION_STATUS: getBoolFieldName(66),
+    ACTIVATION_DUE: getFieldName(67),
+    CREATE_INVENTORY: getFieldName(68),
     MATERIAL_TYPE: getFieldName(MATERIAL_TYPE_INDEX),
-    TRIAL: getBoolFieldName(69),
-    EXPECTED_ACTIVATION: getFieldName(70),
-    USER_LIMIT: getFieldName(71),
-    URL: getFieldName(72),
+    TRIAL: getBoolFieldName(70),
+    EXPECTED_ACTIVATION: getFieldName(71),
+    USER_LIMIT: getFieldName(72),
+    URL: getFieldName(73),
   };
 
   const { formatMessage } = useIntl();

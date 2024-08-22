@@ -49,7 +49,7 @@ export const Location = ({
   okapi,
   requestLimit,
 }) => {
-  const LOCATIONS_INDEX = 57;
+  const LOCATIONS_INDEX = 58;
   const LOCATION_FIELDS_MAP = {
     NAME: index => getSubfieldName(LOCATIONS_INDEX, 0, index),
     QUANTITY_PHYSICAL: index => getSubfieldName(LOCATIONS_INDEX, 1, index),

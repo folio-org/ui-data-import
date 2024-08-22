@@ -1,4 +1,5 @@
 export * from './CostDetails';
+export * from './DonorInformation';
 export * from './EResourcesDetails';
 export * from './FundDistribution';
 export * from './ItemDetails';
