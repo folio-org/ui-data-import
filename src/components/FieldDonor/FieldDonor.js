@@ -33,12 +33,10 @@ export const FieldDonor = ({
   useEffect(() => {
     const uuid = getMatchByUuidInQuotes(inputValue);
 
-    if (uuid && allDonors?.length) {
-      if (selectedDonor?.id !== uuid) {
-        const donorFromResources = allDonors.find(donor => donor.id === uuid);
+    if (uuid && allDonors?.length && selectedDonor?.id !== uuid) {
+      const donorFromResources = allDonors.find(donor => donor.id === uuid);
 
-        setSelectedDonor(donorFromResources);
-      }
+      setSelectedDonor(donorFromResources);
     }
   }, [inputValue, allDonors, selectedDonor]);
 
@@ -61,9 +59,7 @@ export const FieldDonor = ({
     setMappingQuery('');
     setReferenceTables(name, '');
 
-    if (onClear) {
-      onClear();
-    }
+    onClear?.();
   }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleFieldFormat = useCallback(value => {
