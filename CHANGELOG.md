@@ -9,6 +9,7 @@
 * Replace `useTenantKy` with `useOkapiKy` (UIDATIMP-1649)
 * Transform `ViewAllLogs` component into the functional one (UIDATIMP-1630)
 * Change endpoint to get actual SRS MARC data (UIDATIMP-1597)
+* Implement new Donor information section for Order field mapping profiles (UIDATIMP-1656)
 
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)

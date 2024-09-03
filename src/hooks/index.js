@@ -1,4 +1,5 @@
 export * from './useAuthoritiesByIdQuery';
+export * from './useDonorsQuery';
 export * from './useInventoryHoldingsByIdQuery';
 export * from './useInventoryInstancesByIdQuery';
 export * from './useInventoryItemsByIdQuery';

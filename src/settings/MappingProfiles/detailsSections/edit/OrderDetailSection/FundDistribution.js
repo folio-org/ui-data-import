@@ -45,7 +45,7 @@ export const FundDistribution = ({
   requestLimit,
 }) => {
   const FUND_DISTRIBUTION_FIELDS_MAP = {
-    FUND_DISTRIBUTION: 56,
+    FUND_DISTRIBUTION: 57,
     FUND_ID: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 0, index),
     EXPENSE_CLASS: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 1, index),
     VALUE: index => getSubfieldName(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 2, index),
