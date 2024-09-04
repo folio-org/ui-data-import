@@ -20,7 +20,10 @@ import { useDonorsQuery } from '../../../../../hooks';
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
+  getRepeatableFieldName,
   getSubfieldName,
+  handleRepeatableFieldAndActionAdd,
+  handleRepeatableFieldAndActionClean,
   onAdd,
   onRemove,
 } from '../../utils';
@@ -40,12 +43,28 @@ export const DonorInformation = ({
 
 
   const handleDonorsAdd = useCallback(
-    () => onAdd(donors, 'donorOrganizationIds', DONORS_INDEX, initialFields, setReferenceTables, 'order'),
+    () => {
+      const onDonorAdd = (fieldsPath, refTable, fieldIndex, isFirstSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionAdd(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isFirstSubfield);
+      };
+
+      return onAdd(donors, 'donorOrganizationIds', DONORS_INDEX, initialFields, onDonorAdd, 'order');
+    },
     [DONORS_INDEX, initialFields, setReferenceTables, donors],
   );
 
   const handleDonorsClean = useCallback(
-    index => onRemove(index, donors, DONORS_INDEX, setReferenceTables, 'order'),
+    index => {
+      const onDonorsClean = (fieldsPath, refTable, fieldIndex, isLastSubfield) => {
+        const repeatableFieldActionPath = getRepeatableFieldName(fieldIndex);
+
+        handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
+      };
+
+      return onRemove(index, donors, DONORS_INDEX, onDonorsClean, 'order');
+    },
     [DONORS_INDEX, setReferenceTables, donors],
   );
 
