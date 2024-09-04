@@ -289,7 +289,7 @@ const ORDER = {
     name: 'donorOrganizationIds',
     enabled: true,
     path: 'order.poLine.donorOrganizationIds[]',
-    repeatableFieldAction: 'EXTEND_EXISTING',
+    repeatableFieldAction: null,
     value: '',
     subfields: [{
       order: 0,
