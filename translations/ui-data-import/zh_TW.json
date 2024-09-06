@@ -1176,5 +1176,8 @@
     "settings.marcFieldProtection.termCreated": "MARC欄位保護<b> {term} </b>已成功<b>建立</b>",
     "settings.marcFieldProtection.termUpdated": "MARC欄位保護<b> {term} </b>已成功<b>更新</b>",
     "settings.marcFieldProtection.termWillBeDeleted": "MARC欄位保護<b> {term} </b>將被<b>刪除。 </b>",
-    "uploadDefinitionError": "上傳定義已被其他使用者刪除。請再試一次。"
+    "uploadDefinitionError": "上傳定義已被其他使用者刪除。請再試一次。",
+    "settings.mappingProfiles.map.order.donorInformation.section": "Donor information",
+    "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Add donor",
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Donor"
 }
