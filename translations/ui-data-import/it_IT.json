@@ -1176,5 +1176,8 @@
     "settings.marcFieldProtection.termCreated": "The MARC field protection <b>{term}</b> was successfully <b>created</b>",
     "settings.marcFieldProtection.termUpdated": "The MARC field protection <b>{term}</b> was successfully <b>updated</b>",
     "settings.marcFieldProtection.termWillBeDeleted": "The MARC field protection <b>{term}</b> will be <b>deleted.</b>",
-    "uploadDefinitionError": "Upload definition was deleted by another user. Please try again."
+    "uploadDefinitionError": "Upload definition was deleted by another user. Please try again.",
+    "settings.mappingProfiles.map.order.donorInformation.section": "Donor information",
+    "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Add donor",
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Donor"
 }
