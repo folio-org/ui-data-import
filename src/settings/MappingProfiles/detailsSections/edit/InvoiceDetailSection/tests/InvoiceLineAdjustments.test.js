@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
 import {
   noop,
   get,
@@ -70,6 +70,7 @@ describe('InvoiceLineAdjustments edit component', () => {
     it('with correct fields', () => {
       const { getByText } = renderInvoiceLineAdjustments();
 
+      screen.debug();
       expect(getByText('Description')).toBeInTheDocument();
       expect(getByText('Amount')).toBeInTheDocument();
       expect(getByText('Type')).toBeInTheDocument();

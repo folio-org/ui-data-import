@@ -6,6 +6,7 @@ import {
 } from 'react-intl';
 import { Field } from 'redux-form';
 import {
+  capitalize,
   isEmpty,
   noop,
 } from 'lodash';
@@ -20,7 +21,7 @@ import {
   TextField,
   Checkbox,
 } from '@folio/stripes/components';
-import { TypeToggle } from '@folio/stripes-acq-components';
+import { TypeToggle, FUND_DISTR_TYPE } from '@folio/stripes-acq-components';
 
 import { AcceptedValuesField } from '../../../../../components';
 import {
@@ -56,6 +57,7 @@ import {
   ADJUSTMENTS_FIELD,
   CURRENCY_FIELD,
 } from '../../../../../utils';
+
 
 export const InvoiceAdjustments = ({
   initialFields,
@@ -226,6 +228,14 @@ export const InvoiceAdjustments = ({
       }
     };
 
+    const onChangeToPercent = path => {
+      setReferenceTables(path, `"${capitalize(FUND_DISTR_TYPE.percent)}"`);
+    };
+
+    const onChangeToAmount = path => {
+      setReferenceTables(path, `"${capitalize(FUND_DISTR_TYPE.amount)}"`);
+    };
+
     const trashButton = (
       <IconButton
         data-test-repeatable-field-remove-item-button
@@ -272,6 +282,8 @@ export const InvoiceAdjustments = ({
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
               name={INVOICE_ADJUSTMENTS_FIELDS_MAP.TYPE(index)}
               currency={currency}
+              onChangeToPercent={onChangeToPercent}
+              onChangeToAmount={onChangeToAmount}
             />
           </Col>
           <Col xs={2}>
