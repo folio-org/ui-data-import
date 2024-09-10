@@ -1,9 +1,6 @@
 import React from 'react';
-import { fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
-import {
-  noop,
-  get,
-} from 'lodash';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { get } from 'lodash';
 
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -25,13 +22,17 @@ jest.mock('../../../hooks', () => ({
   useFieldMappingRefValues: () => [[mockLineAdjustmentsFields]],
 }));
 
+const setReferenceTablesMock = jest.fn();
 const okapi = buildOkapi();
+
+const invoiceLineAdjustmentsPath = 'profile.mappingDetails.mappingFields[27].subfields.0.fields.15.value';
+const invoiceLineAdjustmentsTypePath = 'profile.mappingDetails.mappingFields[27].subfields.0.fields.15.subfields.0.fields.2.value';
 
 const renderInvoiceLineAdjustments = () => {
   const component = () => (
     <InvoiceLineAdjustments
       invoiceLinesFieldIndex={27}
-      setReferenceTables={noop}
+      setReferenceTables={setReferenceTablesMock}
       mappingFields={INVOICE.mappingFields}
       initialFields={{}}
       okapi={okapi}
@@ -42,6 +43,10 @@ const renderInvoiceLineAdjustments = () => {
 };
 
 describe('InvoiceLineAdjustments edit component', () => {
+  beforeEach(() => {
+    setReferenceTablesMock.mockClear();
+  });
+
   it('should be rendered with no axe errors', async () => {
     const { container } = renderInvoiceLineAdjustments();
 
@@ -67,15 +72,47 @@ describe('InvoiceLineAdjustments edit component', () => {
       expect(getByText('Adjustment 1')).toBeInTheDocument();
     });
 
-    it('with correct fields', () => {
+    it('should be rendered with correct fields', () => {
       const { getByText } = renderInvoiceLineAdjustments();
 
-      screen.debug();
       expect(getByText('Description')).toBeInTheDocument();
       expect(getByText('Amount')).toBeInTheDocument();
       expect(getByText('Type')).toBeInTheDocument();
       expect(getByText('Relation to total')).toBeInTheDocument();
       expect(getByText('Export to accounting')).toBeInTheDocument();
+    });
+
+    describe('when click on trash icon', () => {
+      it('shold call the function to clean fields', () => {
+        const { container } = renderInvoiceLineAdjustments();
+
+        const deleteButton = container.querySelector('[data-test-repeatable-field-remove-item-button="true"]');
+        fireEvent.click(deleteButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceLineAdjustmentsPath, null);
+      });
+    });
+
+    describe('when choose percentage invoice adjustment type', () => {
+      it('shold call the function to set the value', () => {
+        const { getByText } = renderInvoiceLineAdjustments();
+
+        const percentButton = getByText('%');
+        fireEvent.click(percentButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceLineAdjustmentsTypePath, '"Percentage"');
+      });
+    });
+
+    describe('when choose currency invoice adjustment type', () => {
+      it('shold call the function to set the value', () => {
+        const { getByText } = renderInvoiceLineAdjustments();
+
+        const currencyButton = getByText('$');
+        fireEvent.click(currencyButton);
+
+        expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceLineAdjustmentsTypePath, '"Amount"');
+      });
     });
   });
 });
