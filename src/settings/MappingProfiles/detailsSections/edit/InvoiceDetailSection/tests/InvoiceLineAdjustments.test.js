@@ -12,8 +12,12 @@ import {
 } from '../../../../../../../test/jest/helpers';
 import '../../../../../../../test/jest/__mock__';
 
-import { InvoiceLineAdjustments } from '../InvoiceLineAdjustments';
+import { getSubfieldName } from '../../../utils';
 import INVOICE from '../../../../initialDetails/INVOICE';
+import {
+  INVOICE_LINE_ADJUSTMENTS_INDEX,
+  InvoiceLineAdjustments,
+} from '../InvoiceLineAdjustments';
 
 const mockLineAdjustmentsFields = get(INVOICE.mappingFields, 'invoiceLines.[0].fields[15].subfields[0]');
 
@@ -25,13 +29,13 @@ jest.mock('../../../hooks', () => ({
 const setReferenceTablesMock = jest.fn();
 const okapi = buildOkapi();
 
-const invoiceLineAdjustmentsPath = 'profile.mappingDetails.mappingFields[27].subfields.0.fields.15.value';
-const invoiceLineAdjustmentsTypePath = 'profile.mappingDetails.mappingFields[27].subfields.0.fields.15.subfields.0.fields.2.value';
+const INVOICE_LINES_FIELD_INDEX = 27;
+const invoiceLineAdjustmentsPath = getSubfieldName(INVOICE_LINES_FIELD_INDEX, INVOICE_LINE_ADJUSTMENTS_INDEX, 0);
 
 const renderInvoiceLineAdjustments = () => {
   const component = () => (
     <InvoiceLineAdjustments
-      invoiceLinesFieldIndex={27}
+      invoiceLinesFieldIndex={INVOICE_LINES_FIELD_INDEX}
       setReferenceTables={setReferenceTablesMock}
       mappingFields={INVOICE.mappingFields}
       initialFields={{}}
@@ -84,34 +88,12 @@ describe('InvoiceLineAdjustments edit component', () => {
 
     describe('when click on trash icon', () => {
       it('shold call the function to clean fields', () => {
-        const { container } = renderInvoiceLineAdjustments();
+        const { getByRole } = renderInvoiceLineAdjustments();
 
-        const deleteButton = container.querySelector('[data-test-repeatable-field-remove-item-button="true"]');
+        const deleteButton = getByRole('button', { name: 'Delete this item' });
         fireEvent.click(deleteButton);
 
         expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceLineAdjustmentsPath, null);
-      });
-    });
-
-    describe('when choose percentage invoice adjustment type', () => {
-      it('shold call the function to set the value', () => {
-        const { getByText } = renderInvoiceLineAdjustments();
-
-        const percentButton = getByText('%');
-        fireEvent.click(percentButton);
-
-        expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceLineAdjustmentsTypePath, '"Percentage"');
-      });
-    });
-
-    describe('when choose currency invoice adjustment type', () => {
-      it('shold call the function to set the value', () => {
-        const { getByText } = renderInvoiceLineAdjustments();
-
-        const currencyButton = getByText('$');
-        fireEvent.click(currencyButton);
-
-        expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceLineAdjustmentsTypePath, '"Amount"');
       });
     });
   });

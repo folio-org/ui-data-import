@@ -46,6 +46,8 @@ import {
   CURRENCY_FIELD,
 } from '../../../../../utils';
 
+export const INVOICE_LINE_ADJUSTMENTS_INDEX = 15;
+
 export const InvoiceLineAdjustments = ({
   invoiceLinesFieldIndex,
   initialFields,
@@ -53,7 +55,6 @@ export const InvoiceLineAdjustments = ({
   setReferenceTables,
   okapi,
 }) => {
-  const INVOICE_LINE_ADJUSTMENTS_INDEX = 15;
   const INVOICE_LINE_ADJUSTMENTS_FIELDS_MAP = {
     SUBFIELDS_PATH: index => getInnerRepeatableFieldPath(index, 0, INVOICE_LINE_ADJUSTMENTS_INDEX),
     DESCRIPTION: index => getInnerSubfieldName(invoiceLinesFieldIndex, 0, INVOICE_LINE_ADJUSTMENTS_INDEX, 0, index),
@@ -135,7 +136,7 @@ export const InvoiceLineAdjustments = ({
               name={INVOICE_LINE_ADJUSTMENTS_FIELDS_MAP.TYPE(index)}
               currency={currency}
               parse={value => `"${capitalize(value)}"`}
-              format={value => value.replace(/"/g, '').toLowerCase()}
+              format={value => value?.replace(/"/g, '')?.toLowerCase()}
             />
           </Col>
           <Col xs={3}>

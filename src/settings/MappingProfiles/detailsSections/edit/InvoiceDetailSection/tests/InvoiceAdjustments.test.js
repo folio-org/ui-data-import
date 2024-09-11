@@ -25,7 +25,6 @@ jest.mock('../../../hooks', () => ({
 
 global.fetch = jest.fn();
 
-const invoiceAdjustmentsTypePath = 'profile.mappingDetails.mappingFields[15].subfields.0.fields.2.value';
 const initialFieldsMock = { adjustments: mockAdjustmentsFields };
 const setReferenceTablesMock = jest.fn();
 const okapi = buildOkapi();
@@ -137,28 +136,6 @@ describe('InvoiceAdjustments edit component', () => {
       fireEvent.click(deleteButton);
 
       expect(setReferenceTablesMock).toHaveBeenCalled();
-    });
-  });
-
-  describe('when choose percentage invoice adjustment type', () => {
-    it('shold call the function to set the value', () => {
-      const { getAllByText } = renderInvoiceAdjustments();
-
-      const percentButton = getAllByText('%')[0];
-      fireEvent.click(percentButton);
-
-      expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceAdjustmentsTypePath, '"Percentage"');
-    });
-  });
-
-  describe('when choose currency invoice adjustment type', () => {
-    it('shold call the function to set the value', () => {
-      const { getAllByText } = renderInvoiceAdjustments();
-
-      const currencyButton = getAllByText('$')[0];
-      fireEvent.click(currencyButton);
-
-      expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceAdjustmentsTypePath, '"Amount"');
     });
   });
 

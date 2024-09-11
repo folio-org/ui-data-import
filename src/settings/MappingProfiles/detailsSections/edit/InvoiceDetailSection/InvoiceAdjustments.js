@@ -184,7 +184,7 @@ export const InvoiceAdjustments = ({
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
                 name={FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                 currency={currency}
-                format={value => value.replace(/"/g, '')}
+                format={value => value?.replace(/"/g, '')}
               />
             </Col>
             <Col xs={2}>
@@ -276,7 +276,7 @@ export const InvoiceAdjustments = ({
               name={INVOICE_ADJUSTMENTS_FIELDS_MAP.TYPE(index)}
               currency={currency}
               parse={value => `"${capitalize(value)}"`}
-              format={value => value.replace(/"/g, '').toLowerCase()}
+              format={value => value?.replace(/"/g, '')?.toLowerCase()}
             />
           </Col>
           <Col xs={2}>
