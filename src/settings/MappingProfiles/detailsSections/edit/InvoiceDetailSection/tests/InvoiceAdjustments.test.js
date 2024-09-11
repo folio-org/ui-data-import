@@ -25,6 +25,7 @@ jest.mock('../../../hooks', () => ({
 
 global.fetch = jest.fn();
 
+const invoiceAdjustmentsTypePath = 'profile.mappingDetails.mappingFields[15].subfields.0.fields.2.value';
 const initialFieldsMock = { adjustments: mockAdjustmentsFields };
 const setReferenceTablesMock = jest.fn();
 const okapi = buildOkapi();
@@ -133,6 +134,60 @@ describe('InvoiceAdjustments edit component', () => {
       fireEvent.click(addButton);
 
       const deleteButton = getAllByRole('button', { name: /delete this item/i })[0];
+      fireEvent.click(deleteButton);
+
+      expect(setReferenceTablesMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('when choose percentage invoice adjustment type', () => {
+    it('shold call the function to set the value', () => {
+      const { getAllByText } = renderInvoiceAdjustments();
+
+      const percentButton = getAllByText('%')[0];
+      fireEvent.click(percentButton);
+
+      expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceAdjustmentsTypePath, '"Percentage"');
+    });
+  });
+
+  describe('when choose currency invoice adjustment type', () => {
+    it('shold call the function to set the value', () => {
+      const { getAllByText } = renderInvoiceAdjustments();
+
+      const currencyButton = getAllByText('$')[0];
+      fireEvent.click(currencyButton);
+
+      expect(setReferenceTablesMock).toHaveBeenCalledWith(invoiceAdjustmentsTypePath, '"Amount"');
+    });
+  });
+
+  describe('when clicking on "Add fund distribution" button', () => {
+    it('should render fund distribution fields', async () => {
+      const {
+        findByRole,
+        getByText,
+      } = renderInvoiceAdjustments();
+
+      const addFundDistributionBtn = await findByRole('button', { name: 'Add fund distribution' });
+      fireEvent.click(addFundDistributionBtn);
+
+      expect(getByText('Fund ID')).toBeInTheDocument();
+      expect(getByText('Expense Class')).toBeInTheDocument();
+    });
+  });
+
+  describe('when clicking on trash icon button for fund distributions', () => {
+    it('should call the function to clean the fields', async () => {
+      const {
+        findByRole,
+        getAllByRole,
+      } = renderInvoiceAdjustments();
+
+      const addFundDistributionBtn = await findByRole('button', { name: 'Add fund distribution' });
+      fireEvent.click(addFundDistributionBtn);
+
+      const deleteButton = getAllByRole('button', { name: /delete this item/i })[1];
       fireEvent.click(deleteButton);
 
       expect(setReferenceTablesMock).toHaveBeenCalled();
