@@ -58,7 +58,6 @@ import {
   CURRENCY_FIELD,
 } from '../../../../../utils';
 
-
 export const InvoiceAdjustments = ({
   initialFields,
   initialFields: { adjustments: { fields: initialFundDistribution } },
