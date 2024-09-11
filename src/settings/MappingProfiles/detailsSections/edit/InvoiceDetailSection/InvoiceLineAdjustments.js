@@ -16,7 +16,7 @@ import {
   TextField,
   Checkbox,
 } from '@folio/stripes/components';
-import { TypeToggle, FUND_DISTR_TYPE } from '@folio/stripes-acq-components';
+import { TypeToggle } from '@folio/stripes-acq-components';
 
 import { capitalize } from 'lodash';
 import { AcceptedValuesField } from '../../../../../components';
@@ -84,14 +84,6 @@ export const InvoiceLineAdjustments = ({
     handleRepeatableFieldAndActionClean(repeatableFieldActionPath, fieldsPath, refTable, setReferenceTables, isLastSubfield);
   };
 
-  const onChangeToPercent = path => {
-    setReferenceTables(path, `"${capitalize(FUND_DISTR_TYPE.percent)}"`);
-  };
-
-  const onChangeToAmount = path => {
-    setReferenceTables(path, `"${capitalize(FUND_DISTR_TYPE.amount)}"`);
-  };
-
   const renderLineAdjustment = (field, index) => {
     const trashButton = (
       <IconButton
@@ -142,8 +134,8 @@ export const InvoiceLineAdjustments = ({
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
               name={INVOICE_LINE_ADJUSTMENTS_FIELDS_MAP.TYPE(index)}
               currency={currency}
-              onChangeToPercent={onChangeToPercent}
-              onChangeToAmount={onChangeToAmount}
+              parse={value => `"${capitalize(value)}"`}
+              format={value => value.replace(/"/g, '').toLowerCase()}
             />
           </Col>
           <Col xs={3}>

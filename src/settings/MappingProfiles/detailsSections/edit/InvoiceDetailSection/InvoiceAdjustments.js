@@ -21,7 +21,7 @@ import {
   TextField,
   Checkbox,
 } from '@folio/stripes/components';
-import { TypeToggle, FUND_DISTR_TYPE } from '@folio/stripes-acq-components';
+import { TypeToggle } from '@folio/stripes-acq-components';
 
 import { AcceptedValuesField } from '../../../../../components';
 import {
@@ -184,6 +184,7 @@ export const InvoiceAdjustments = ({
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
                 name={FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                 currency={currency}
+                format={value => value.replace(/"/g, '')}
               />
             </Col>
             <Col xs={2}>
@@ -226,14 +227,6 @@ export const InvoiceAdjustments = ({
 
         setReferenceTables(fundDistributionFieldPath, []);
       }
-    };
-
-    const onChangeToPercent = path => {
-      setReferenceTables(path, `"${capitalize(FUND_DISTR_TYPE.percent)}"`);
-    };
-
-    const onChangeToAmount = path => {
-      setReferenceTables(path, `"${capitalize(FUND_DISTR_TYPE.amount)}"`);
     };
 
     const trashButton = (
@@ -282,8 +275,8 @@ export const InvoiceAdjustments = ({
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
               name={INVOICE_ADJUSTMENTS_FIELDS_MAP.TYPE(index)}
               currency={currency}
-              onChangeToPercent={onChangeToPercent}
-              onChangeToAmount={onChangeToAmount}
+              parse={value => `"${capitalize(value)}"`}
+              format={value => value.replace(/"/g, '').toLowerCase()}
             />
           </Col>
           <Col xs={2}>
