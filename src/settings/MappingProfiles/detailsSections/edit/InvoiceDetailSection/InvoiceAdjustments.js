@@ -185,6 +185,7 @@ export const InvoiceAdjustments = ({
                 name={FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                 currency={currency}
                 format={value => value?.replace(/"/g, '')}
+                parse={value => `"${(value)}"`}
               />
             </Col>
             <Col xs={2}>
