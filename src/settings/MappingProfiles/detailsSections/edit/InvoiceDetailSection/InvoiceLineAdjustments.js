@@ -5,6 +5,7 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { Field } from 'redux-form';
+import { capitalize } from 'lodash';
 
 import {
   Accordion,
@@ -18,7 +19,6 @@ import {
 } from '@folio/stripes/components';
 import { TypeToggle } from '@folio/stripes-acq-components';
 
-import { capitalize } from 'lodash';
 import { AcceptedValuesField } from '../../../../../components';
 import {
   useFieldMappingFieldValue,
