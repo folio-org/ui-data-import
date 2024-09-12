@@ -113,7 +113,7 @@ const INVOICE = {
         name: 'type',
         enabled: true,
         path: 'invoice.adjustments[].type',
-        value: 'amount',
+        value: '"Amount"',
       }, {
         name: 'prorate',
         enabled: true,
@@ -384,7 +384,7 @@ const INVOICE = {
             name: 'type',
             enabled: true,
             path: 'invoice.invoiceLines[].adjustments[].type',
-            value: 'amount',
+            value: '"Amount"',
           }, {
             name: 'relationToTotal',
             enabled: true,
