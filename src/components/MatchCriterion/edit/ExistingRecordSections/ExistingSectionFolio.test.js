@@ -39,11 +39,11 @@ const existingSectionFolioWithWrongData = {
   }, {
     value: 'test value2',
     label: 'test label2',
-    id: 'test id2',
+    id: 'contributors.items.properties.name',
   }],
-  existingRecordType: 'HOLDINGS',
+  existingRecordType: 'INSTANCE',
   changeFormState: onChangeFormStateMock,
-  formValues: [{ existingMatchExpression: { fields: [{ value: 'test value' }] } }],
+  formValues: [{ existingMatchExpression: { fields: [{ value: 'instance.contributors[].name' }] } }],
 };
 
 const renderExistingSectionFolio = ({
@@ -87,41 +87,43 @@ describe('ExistingSectionFolio edit component', () => {
   });
 
   describe('when clicking on options element', () => {
-    it('with correct data, single value shouldn`t be added', () => {
-      const {
-        container,
-        getByText,
-      } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
-      const optionsElement = getByText('test label1');
+    it('with correct data, single value shouldn\'t be added', () => {
+      const fieldToChangePath = 'profile.matchDetails[0].existingMatchExpression.fields';
+      const fieldToChangeValue = [{
+        label: 'field',
+        value: 'instance.identifiers[].value',
+      }, {
+        label: 'identifierTypeId',
+        value: 'test value1',
+      }];
 
+      const { getByText } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
+
+      const optionsElement = getByText('test label1');
       fireEvent.click(optionsElement);
 
-      const singleValueContainer = container.querySelector('.singleValue');
-
-      expect(singleValueContainer).not.toHaveTextContent('test label1');
-      expect(onChangeFormStateMock).toHaveBeenCalledTimes(1);
+      expect(onChangeFormStateMock).toHaveBeenCalledWith(fieldToChangePath, fieldToChangeValue);
     });
 
     it('with incorrect data, single value should be added', () => {
-      const {
-        container,
-        getByText,
-      } = renderExistingSectionFolio(existingSectionFolioWithWrongData);
-      const optionsElement = getByText('test label2');
+      const fieldToChangePath = 'profile.matchDetails[0].existingMatchExpression.fields';
+      const fieldToChangeValue = [{
+        label: 'field',
+        value: 'instance.contributors[].name',
+      }];
+      const { getByText } = renderExistingSectionFolio(existingSectionFolioWithWrongData);
 
+      const optionsElement = getByText('test label2');
       fireEvent.click(optionsElement);
 
-      const singleValueContainer = container.querySelector('.singleValue');
-
-      expect(singleValueContainer).toHaveTextContent('test label2');
-      expect(onChangeFormStateMock).toHaveBeenCalledTimes(1);
+      expect(onChangeFormStateMock).toHaveBeenCalledWith(fieldToChangePath, fieldToChangeValue);
     });
   });
 
   describe('when searching for an option', () => {
     it('should filter data options', () => {
       const {
-        getByRole,
+        container,
         getByPlaceholderText,
       } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
       const filterElement = getByPlaceholderText('Filter options list');
@@ -130,7 +132,7 @@ describe('ExistingSectionFolio edit component', () => {
 
       fireEvent.change(filterElement, { target: { value: 'test label1' } });
 
-      const dropdownOptionsAmount = getByRole('listbox').children.length;
+      const dropdownOptionsAmount = container.querySelector('.selectionList').children.length;
 
       expect(filterElement).toHaveValue('test label1');
       expect(dropdownOptionsAmount).toEqual(1);
