@@ -1176,5 +1176,8 @@
     "settings.marcFieldProtection.termCreated": "A proteção do campo MARC <b>{term}</b> foi <b>criada</b> com sucesso",
     "settings.marcFieldProtection.termUpdated": "A proteção do campo MARC <b>{term}</b> foi <b>atualizada</b> com sucesso",
     "settings.marcFieldProtection.termWillBeDeleted": "A proteção do campo MARC <b>{term}</b> será <b>excluída.</b>",
-    "uploadDefinitionError": "A definição de carregar foi excluída por outro usuário. Por favor, tente novamente."
+    "uploadDefinitionError": "A definição de carregar foi excluída por outro usuário. Por favor, tente novamente.",
+    "settings.mappingProfiles.map.order.donorInformation.section": "Informações do doador",
+    "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Adicionar doador",
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Doador"
 }
