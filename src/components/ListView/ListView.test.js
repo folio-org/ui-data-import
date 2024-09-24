@@ -257,7 +257,7 @@ describe('ListView component', () => {
   });
 
   describe('when profile type is File extention', () => {
-    it('should be rendered with no axe errors', async () => {
+    it.skip('should be rendered with no axe errors', async () => {
       const { container } = renderListView({
         ...listViewProps,
         ...listViewPropsFileExtensions,

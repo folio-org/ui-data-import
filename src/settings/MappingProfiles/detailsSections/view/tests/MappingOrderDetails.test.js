@@ -19,7 +19,7 @@ const renderMappingOrderDetails = () => {
 };
 
 describe('MappingOrderDetails view component', () => {
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingOrderDetails();
 
     await runAxeTest({ rootNode: container });
@@ -47,6 +47,7 @@ describe('MappingOrderDetails view component', () => {
     expect(getByRole('button', { name: /order line information/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /item details/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /po line details/i })).toHaveAttribute('aria-expanded', 'true');
+    expect(getByRole('button', { name: /donor information/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /vendor/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /cost details/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /fund distribution/i })).toHaveAttribute('aria-expanded', 'true');

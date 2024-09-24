@@ -105,7 +105,7 @@ const renderJobProfilesForm = ({
   initialValues,
   stripes,
   match,
-  layerType,
+  layerType = LAYER_TYPES.CREATE,
 }) => {
   const component = () => (
     <Router>

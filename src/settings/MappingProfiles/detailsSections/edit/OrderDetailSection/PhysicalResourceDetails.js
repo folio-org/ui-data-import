@@ -56,13 +56,13 @@ export const PhysicalResourceDetails = ({
   okapi,
   requestLimit,
 }) => {
-  const MATERIAL_TYPE_INDEX = 62;
-  const VOLUMES_INDEX = 63;
+  const MATERIAL_TYPE_INDEX = 63;
+  const VOLUMES_INDEX = 64;
   const PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP = {
-    MATERIAL_SUPPLIER: getFieldName(58),
-    RECEIPT_DUE: getFieldName(59),
-    EXPECTED_RECEIPT_DATE: getFieldName(60),
-    CREATE_INVENTORY: getFieldName(61),
+    MATERIAL_SUPPLIER: getFieldName(59),
+    RECEIPT_DUE: getFieldName(60),
+    EXPECTED_RECEIPT_DATE: getFieldName(61),
+    CREATE_INVENTORY: getFieldName(62),
     MATERIAL_TYPE: getFieldName(MATERIAL_TYPE_INDEX),
     VOLUME: index => getSubfieldName(VOLUMES_INDEX, 0, index),
   };

@@ -17,6 +17,7 @@ import {
   Location,
   PhysicalResourceDetails,
   EResourcesDetails,
+  DonorInformation,
 } from './OrderDetailsSection';
 
 import { mappingProfileFieldShape } from '../../../../utils';
@@ -42,6 +43,7 @@ export const MappingOrderDetails = ({ mappingDetails }) => {
       >
         <ItemDetails mappingDetails={mappingDetails} />
         <POLineDetails mappingDetails={mappingDetails} />
+        <DonorInformation mappingDetails={mappingDetails} />
         <Vendor mappingDetails={mappingDetails} />
         <CostDetails mappingDetails={mappingDetails} />
         <FundDistribution mappingDetails={mappingDetails} />

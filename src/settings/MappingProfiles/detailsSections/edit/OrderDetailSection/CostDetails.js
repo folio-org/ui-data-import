@@ -43,15 +43,15 @@ export const CostDetails = ({
   okapi,
 }) => {
   const COST_DETAILS_FIELDS_MAP = {
-    PHYSICAL_UNIT_PRICE: getFieldName(47),
-    QUANTITY_PHYSICAL: getFieldName(48),
-    ADDITIONAL_COST: getFieldName(49),
-    CURRENCY: getFieldName(50),
-    SET_EXCHANGE_RATE: getFieldName(51),
-    ELECTRONIC_UNIT_PRICE: getFieldName(52),
-    QUANTITY_ELECTRONIC: getFieldName(53),
-    DISCOUNT: getFieldName(54),
-    TYPE: getFieldName(55),
+    PHYSICAL_UNIT_PRICE: getFieldName(48),
+    QUANTITY_PHYSICAL: getFieldName(49),
+    ADDITIONAL_COST: getFieldName(50),
+    CURRENCY: getFieldName(51),
+    SET_EXCHANGE_RATE: getFieldName(52),
+    ELECTRONIC_UNIT_PRICE: getFieldName(53),
+    QUANTITY_ELECTRONIC: getFieldName(54),
+    DISCOUNT: getFieldName(55),
+    TYPE: getFieldName(56),
   };
 
   const physicalDetailsDisabledPaths = [

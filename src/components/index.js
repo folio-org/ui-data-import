@@ -6,6 +6,7 @@ export * from './DetailsKeyShortcutsWrapper';
 export * from './EditKeyShortcutsWrapper';
 export * from './Callout';
 export * from './FieldAssignedTo';
+export * from './FieldDonor';
 export * from './FieldOrganization';
 export * from './ListView';
 export * from './DataFetcher';
