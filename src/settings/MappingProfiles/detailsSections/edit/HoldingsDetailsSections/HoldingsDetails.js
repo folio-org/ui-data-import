@@ -24,7 +24,6 @@ import {
   getFieldName,
   getSubfieldName,
   getRepeatableFieldName,
-  getAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -283,8 +282,6 @@ export const HoldingsDetails = ({
               wrapperSourcePath: 'illPolicies',
             }]}
             isRemoveValueAllowed
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(19)}
             okapi={okapi}
           />
         </Col>

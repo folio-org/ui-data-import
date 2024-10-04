@@ -26,8 +26,6 @@ import {
   getSubfieldName,
   getBoolFieldName,
   getRepeatableFieldName,
-  getAcceptedValuesPath,
-  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -135,8 +133,6 @@ export const AdministrativeData = ({
               wrapperSourcePath: 'holdingsTypes',
             }]}
             isRemoveValueAllowed
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(3)}
             okapi={okapi}
           />
         </Col>
@@ -184,8 +180,6 @@ export const AdministrativeData = ({
                           wrapperSourcePath: 'statisticalCodeTypes',
                         }]}
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(4, 0, index)}
                         okapi={okapi}
                       />
                     </Col>

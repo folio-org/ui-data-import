@@ -39,7 +39,6 @@ import {
 
 import {
   boolAcceptedValuesOptions,
-  getAcceptedValuesPath,
   getBoolFieldName,
   getFieldName,
   getSubfieldName,
@@ -353,8 +352,6 @@ const OrderInformationComponent = ({
               wrapperSourceLink: getWrapperSourceLink('ACQUISITIONS_UNITS', requestLimit),
               wrapperSourcePath: 'acquisitionsUnits',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.ACQ_UNITS)}
             isMultiSelection
             okapi={okapi}
           />
@@ -384,8 +381,6 @@ const OrderInformationComponent = ({
               wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
               wrapperSourcePath: 'configs',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.BILL_TO_NAME)}
             okapi={okapi}
             onChange={billToNameValue => {
               const address = addressesValue.find(value => {
@@ -416,8 +411,6 @@ const OrderInformationComponent = ({
               wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
               wrapperSourcePath: 'configs',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(ORDER_INFO_FIELDS_MAP.SHIP_TO_NAME)}
             okapi={okapi}
             onChange={shipToNameValue => {
               const address = addressesValue.find(value => {

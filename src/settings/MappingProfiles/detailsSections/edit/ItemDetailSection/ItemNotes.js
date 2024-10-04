@@ -21,7 +21,6 @@ import {
 
 import {
   getBoolSubfieldName,
-  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   onAdd,
@@ -84,8 +83,6 @@ export const ItemNotes = ({
                           wrapperSourceLink: getWrapperSourceLink('ITEM_NOTE_TYPES', requestLimit),
                           wrapperSourcePath: 'itemNoteTypes',
                         }]}
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(25, 0, index)}
                         okapi={okapi}
                       />
                     </Col>

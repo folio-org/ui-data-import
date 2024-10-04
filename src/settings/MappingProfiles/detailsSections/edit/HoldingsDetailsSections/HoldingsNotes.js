@@ -25,7 +25,6 @@ import {
   getSubfieldName,
   getBoolSubfieldName,
   getRepeatableFieldName,
-  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -84,8 +83,6 @@ export const HoldingsNotes = ({
                           wrapperSourceLink: getWrapperSourceLink('HOLDINGS_NOTE_TYPES', requestLimit),
                           wrapperSourcePath: 'holdingsNoteTypes',
                         }]}
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(22, 0, index)}
                         okapi={okapi}
                       />
                     </Col>
