@@ -138,4 +138,36 @@ describe('InvoiceAdjustments edit component', () => {
       expect(setReferenceTablesMock).toHaveBeenCalled();
     });
   });
+
+  describe('when clicking on "Add fund distribution" button', () => {
+    it('should render fund distribution fields', async () => {
+      const {
+        findByRole,
+        getByText,
+      } = renderInvoiceAdjustments();
+
+      const addFundDistributionBtn = await findByRole('button', { name: 'Add fund distribution' });
+      fireEvent.click(addFundDistributionBtn);
+
+      expect(getByText('Fund ID')).toBeInTheDocument();
+      expect(getByText('Expense Class')).toBeInTheDocument();
+    });
+  });
+
+  describe('when clicking on trash icon button for fund distributions', () => {
+    it('should call the function to clean the fields', async () => {
+      const {
+        findByRole,
+        getAllByRole,
+      } = renderInvoiceAdjustments();
+
+      const addFundDistributionBtn = await findByRole('button', { name: 'Add fund distribution' });
+      fireEvent.click(addFundDistributionBtn);
+
+      const deleteButton = getAllByRole('button', { name: /delete this item/i })[1];
+      fireEvent.click(deleteButton);
+
+      expect(setReferenceTablesMock).toHaveBeenCalled();
+    });
+  });
 });

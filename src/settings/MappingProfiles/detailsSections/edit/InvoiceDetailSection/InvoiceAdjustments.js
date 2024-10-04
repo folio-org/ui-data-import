@@ -6,6 +6,7 @@ import {
 } from 'react-intl';
 import { Field } from 'redux-form';
 import {
+  capitalize,
   isEmpty,
   noop,
 } from 'lodash';
@@ -182,6 +183,8 @@ export const InvoiceAdjustments = ({
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.adjustments.fundDistribution.field.type`} />}
                 name={FUND_DISTRIBUTION_FIELDS_MAP.TYPE(index)}
                 currency={currency}
+                format={value => value?.replace(/"/g, '')}
+                parse={value => `"${(value)}"`}
               />
             </Col>
             <Col xs={2}>
@@ -272,6 +275,8 @@ export const InvoiceAdjustments = ({
               label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceAdjustments.field.type`} />}
               name={INVOICE_ADJUSTMENTS_FIELDS_MAP.TYPE(index)}
               currency={currency}
+              parse={value => `"${capitalize(value)}"`}
+              format={value => value?.replace(/"/g, '')?.toLowerCase()}
             />
           </Col>
           <Col xs={2}>
