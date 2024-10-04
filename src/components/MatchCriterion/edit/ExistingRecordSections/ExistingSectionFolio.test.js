@@ -82,6 +82,8 @@ describe('ExistingSectionFolio edit component', () => {
   it('should render data options', () => {
     const { getByText } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
 
+    fireEvent.click(getByText('Select control'));
+
     expect(getByText('test label1')).toBeDefined();
     expect(getByText('test label2')).toBeDefined();
   });
@@ -99,6 +101,7 @@ describe('ExistingSectionFolio edit component', () => {
 
       const { getByText } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
 
+      fireEvent.click(getByText('Select control'));
       const optionsElement = getByText('test label1');
       fireEvent.click(optionsElement);
 
@@ -113,6 +116,7 @@ describe('ExistingSectionFolio edit component', () => {
       }];
       const { getByText } = renderExistingSectionFolio(existingSectionFolioWithWrongData);
 
+      fireEvent.click(getByText('Select control'));
       const optionsElement = getByText('test label2');
       fireEvent.click(optionsElement);
 
@@ -125,12 +129,14 @@ describe('ExistingSectionFolio edit component', () => {
       const {
         container,
         getByPlaceholderText,
+        getByText,
       } = renderExistingSectionFolio(existingSectionFolioWithCorrectData);
       const filterElement = getByPlaceholderText('Filter options list');
 
       expect(filterElement).toHaveValue('');
 
       fireEvent.change(filterElement, { target: { value: 'test label1' } });
+      fireEvent.click(getByText('Select control'));
 
       const dropdownOptionsAmount = container.querySelector('.selectionList').children.length;
 
