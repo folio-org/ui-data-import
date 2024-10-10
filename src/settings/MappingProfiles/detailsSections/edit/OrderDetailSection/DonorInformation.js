@@ -70,7 +70,7 @@ export const DonorInformation = ({
 
   return (
     <Accordion
-      id="location"
+      id="donor-information"
       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.donorInformation.section`} />}
     >
       <RepeatableField
