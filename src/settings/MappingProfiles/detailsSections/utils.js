@@ -244,7 +244,7 @@ export const getAccountNumbersByCode = organization => {
 export const PERCENTAGE_VALUE = 'percentage';
 
 export const renderAmountValue = (amountValue, amountType, currency) => {
-  const amountSymbol = amountType.toLowerCase() === `"${PERCENTAGE_VALUE}"` ?
+  const amountSymbol = amountType?.toLowerCase() === `"${PERCENTAGE_VALUE}"` ?
     <FormattedMessage id="stripes-acq-components.fundDistribution.type.sign.percent" /> :
     <CurrencySymbol currency={currency} />;
 
