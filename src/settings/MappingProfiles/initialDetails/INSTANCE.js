@@ -43,7 +43,6 @@ const INSTANCE = {
     path: 'instance.statusId',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'modeOfIssuanceId',
     enabled: false,
@@ -63,7 +62,6 @@ const INSTANCE = {
         enabled: true,
         path: 'instance.statisticalCodeIds[]',
         value: '',
-        acceptedValues: {},
       }],
     }],
   }, {
@@ -322,7 +320,6 @@ const INSTANCE = {
         enabled: true,
         path: 'instance.natureOfContentTermIds[]',
         value: '',
-        acceptedValues: {},
       }],
     }],
   }, {
@@ -423,7 +420,6 @@ const INSTANCE = {
         enabled: false,
         path: 'instance.electronicAccess[].relationshipId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'uri',
         enabled: false,
@@ -499,7 +495,6 @@ const INSTANCE = {
         enabled: true,
         path: 'instance.parentInstances[].instanceRelationshipTypeId',
         value: '',
-        acceptedValues: {},
       }],
     }],
   }, {
@@ -520,7 +515,6 @@ const INSTANCE = {
         enabled: true,
         path: 'instance.childInstances[].instanceRelationshipTypeId',
         value: '',
-        acceptedValues: {},
       }],
     }],
   }],

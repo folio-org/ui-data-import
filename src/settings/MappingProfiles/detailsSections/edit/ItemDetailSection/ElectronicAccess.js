@@ -19,7 +19,6 @@ import {
 } from '../../../../../components';
 
 import {
-  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   onAdd,
@@ -82,8 +81,6 @@ export const ElectronicAccess = ({
                           wrapperSourceLink: getWrapperSourceLink('ELECTRONIC_ACCESS', requestLimit),
                           wrapperSourcePath: 'electronicAccessRelationships',
                         }]}
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(32, 0, index)}
                         okapi={okapi}
                       />
                     </Col>

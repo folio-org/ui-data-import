@@ -24,7 +24,6 @@ import {
   getSubfieldName,
   getFieldName,
   getRepeatableFieldName,
-  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -210,8 +209,6 @@ export const DescriptiveData = ({
                           wrapperSourceLink: getWrapperSourceLink('NATURE_OF_CONTENT_TERMS', requestLimit),
                           wrapperSourcePath: 'natureOfContentTerms',
                         }]}
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(22, 0, index)}
                       />
                     </Col>
                   </Row>

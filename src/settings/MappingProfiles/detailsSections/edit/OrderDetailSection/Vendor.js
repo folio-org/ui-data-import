@@ -30,7 +30,6 @@ import {
   getFieldName,
   onAdd,
   onRemove,
-  getAcceptedValuesPath,
   getRepeatableFieldName,
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
@@ -152,8 +151,6 @@ export const Vendor = ({
             optionValue="value"
             optionLabel="label"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(VENDOR_FIELDS_MAP.ACCOUNT_NUMBER)}
             acceptedValuesList={accountNumbersOptions}
             okapi={okapi}
             hasLoaded

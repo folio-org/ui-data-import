@@ -26,7 +26,6 @@ import {
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   clearSubfieldValue,
-  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   handleRepeatableFieldAndActionAdd,
@@ -145,8 +144,6 @@ export const Location = ({
                     wrapperSourceLink: getWrapperSourceLink('LOCATIONS', requestLimit),
                     wrapperSourcePath: 'locations'
                   }]}
-                  setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(LOCATIONS_INDEX, 0, index)}
                   optionTemplate="**name** (**code**)"
                   okapi={okapi}
                 />

@@ -16,7 +16,6 @@ import {
 } from '../../../../../components';
 
 import {
-  getAcceptedValuesPath,
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
@@ -27,7 +26,6 @@ import {
 } from '../../../../../utils';
 
 export const ItemData = ({
-  setReferenceTables,
   okapi,
   requestLimit,
 }) => {
@@ -57,8 +55,6 @@ export const ItemData = ({
               wrapperSourceLink: getWrapperSourceLink('MATERIAL_TYPES', requestLimit),
               wrapperSourcePath: 'mtypes',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(8)}
             okapi={okapi}
           />
         </Col>
@@ -97,8 +93,6 @@ export const ItemData = ({
               wrapperSourcePath: 'callNumberTypes',
             }]}
             isRemoveValueAllowed
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(10)}
             okapi={okapi}
           />
         </Col>
@@ -185,7 +179,6 @@ export const ItemData = ({
 };
 
 ItemData.propTypes = {
-  setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   requestLimit: PropTypes.number,
 };

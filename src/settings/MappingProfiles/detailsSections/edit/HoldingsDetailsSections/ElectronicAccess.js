@@ -23,7 +23,6 @@ import {
   onRemove,
   getSubfieldName,
   getRepeatableFieldName,
-  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -82,8 +81,6 @@ export const ElectronicAccess = ({
                           wrapperSourceLink: getWrapperSourceLink('ELECTRONIC_ACCESS', requestLimit),
                           wrapperSourcePath: 'electronicAccessRelationships',
                         }]}
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(23, 0, index)}
                         okapi={okapi}
                       />
                     </Col>

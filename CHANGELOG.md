@@ -11,6 +11,7 @@
 * Change endpoint to get actual SRS MARC data (UIDATIMP-1597)
 * Implement new Donor information section for Order field mapping profiles (UIDATIMP-1656)
 * Adjust value for invoice and invoice lines adjustments "Type" field mapping. (UIDATIMP-1662)
+* Remove accepted values when Mapping profile is created/updated (Instance, Holding, Item and Order). (UIDATIMP-1663)
 
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)

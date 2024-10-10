@@ -20,14 +20,12 @@ import {
 } from '../../../../../components';
 
 import {
-  getAcceptedValuesPath,
   getFieldName,
   renderFieldLabelWithInfo,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 
 export const Location = ({
-  setReferenceTables,
   okapi,
   requestLimit,
 }) => {
@@ -57,8 +55,6 @@ export const Location = ({
               wrapperSourceLink: getWrapperSourceLink('LOCATIONS', requestLimit),
               wrapperSourcePath: 'locations',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(6)}
             optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
@@ -79,8 +75,6 @@ export const Location = ({
               wrapperSourcePath: 'locations',
             }]}
             isRemoveValueAllowed
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(7)}
             optionTemplate="**name** (**code**)"
             okapi={okapi}
           />
@@ -148,8 +142,6 @@ export const Location = ({
               wrapperSourcePath: 'callNumberTypes',
             }]}
             isRemoveValueAllowed
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(11)}
             okapi={okapi}
           />
         </Col>
@@ -205,7 +197,6 @@ export const Location = ({
 };
 
 Location.propTypes = {
-  setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   requestLimit: PropTypes.number,
 };

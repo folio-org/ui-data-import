@@ -59,7 +59,6 @@ const ITEM = {
         enabled: true,
         path: 'item.statisticalCodeIds[]',
         value: '',
-        acceptedValues: {},
       }],
     }],
   }, {
@@ -83,7 +82,6 @@ const ITEM = {
     path: 'item.materialType.id',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'copyNumber',
     enabled: true,
@@ -96,7 +94,6 @@ const ITEM = {
     path: 'item.itemLevelCallNumberTypeId',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'itemLevelCallNumberPrefix',
     enabled: true,
@@ -204,7 +201,6 @@ const ITEM = {
         required: true,
         path: 'item.notes[].itemNoteTypeId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'note',
         enabled: true,
@@ -224,14 +220,12 @@ const ITEM = {
     path: 'item.permanentLoanType.id',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'temporaryLoanType.id',
     enabled: true,
     path: 'item.temporaryLoanType.id',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'status.name',
     enabled: true,
@@ -269,14 +263,12 @@ const ITEM = {
     path: 'item.permanentLocation.id',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'temporaryLocation.id',
     enabled: true,
     path: 'item.temporaryLocation.id',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'electronicAccess',
     enabled: true,
@@ -290,7 +282,6 @@ const ITEM = {
         enabled: true,
         path: 'item.electronicAccess[].relationshipId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'uri',
         enabled: true,

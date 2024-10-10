@@ -23,7 +23,6 @@ import {
   onRemove,
   getSubfieldName,
   getRepeatableFieldName,
-  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -98,8 +97,6 @@ export const InstanceRelationship = ({
                           wrapperSourceLink: getWrapperSourceLink('INSTANCE_RELATIONSHIP_TYPES', requestLimit),
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(31, 1, index)}
                       />
                     </Col>
                   </Row>
@@ -160,8 +157,6 @@ export const InstanceRelationship = ({
                           wrapperSourceLink: getWrapperSourceLink('INSTANCE_RELATIONSHIP_TYPES', requestLimit),
                           wrapperSourcePath: 'instanceRelationshipTypes',
                         }]}
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(32, 1, index)}
                       />
                     </Col>
                   </Row>
