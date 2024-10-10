@@ -36,7 +36,6 @@ import {
 } from '../../constants';
 import {
   clearFieldValue,
-  getAcceptedValuesPath,
   getBoolFieldName,
   getFieldName,
   renderFieldLabelWithInfo,
@@ -203,8 +202,6 @@ export const EResourcesDetails = ({
               wrapperSourceLink: getWrapperSourceLink('MATERIAL_TYPES', requestLimit),
               wrapperSourcePath: 'mtypes',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(MATERIAL_TYPE_INDEX)}
             okapi={okapi}
             disabled={dismissElectronicDetails}
           />

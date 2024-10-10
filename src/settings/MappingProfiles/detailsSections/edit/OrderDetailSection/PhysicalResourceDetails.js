@@ -36,7 +36,6 @@ import {
 } from '../../constants';
 import {
   clearFieldValue,
-  getAcceptedValuesPath,
   getFieldName,
   getSubfieldName,
   onAdd,
@@ -215,8 +214,6 @@ export const PhysicalResourceDetails = ({
               wrapperSourceLink: getWrapperSourceLink('MATERIAL_TYPES', requestLimit),
               wrapperSourcePath: 'mtypes',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(MATERIAL_TYPE_INDEX)}
             okapi={okapi}
             disabled={dismissPhysicalDetails}
           />

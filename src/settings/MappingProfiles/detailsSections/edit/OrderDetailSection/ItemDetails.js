@@ -29,7 +29,6 @@ import {
 import {
   boolAcceptedValuesOptions,
   getFieldName,
-  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   handleRepeatableFieldAndActionAdd,
@@ -291,8 +290,6 @@ export const ItemDetails = ({
                     wrapperSourceLink: getWrapperSourceLink('CONTRIBUTOR_NAME_TYPES', requestLimit),
                     wrapperSourcePath: 'contributorNameTypes'
                   }]}
-                  setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(ITEM_DETAILS_FIELDS_MAP.CONTRIBUTORS, 1, index)}
                   okapi={okapi}
                 />
               </Col>
@@ -344,9 +341,7 @@ export const ItemDetails = ({
                     wrapperSourceLink: getWrapperSourceLink('IDENTIFIER_TYPES', requestLimit),
                     wrapperSourcePath: 'identifierTypes'
                   }]}
-                  setAcceptedValues={setReferenceTables}
                   formatListOptions={filterProductIdTypeOptions}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(ITEM_DETAILS_FIELDS_MAP.PRODUCT_IDS, 2, index)}
                   okapi={okapi}
                 />
               </Col>

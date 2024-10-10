@@ -16,10 +16,7 @@ import {
   WithValidation,
 } from '../../../../../components';
 
-import {
-  getAcceptedValuesPath,
-  getFieldName,
-} from '../../utils';
+import { getFieldName } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
   getWrapperSourceLink,
@@ -28,7 +25,6 @@ import {
 } from '../../../../../utils';
 
 export const Condition = ({
-  setReferenceTables,
   okapi,
   requestLimit,
 }) => {
@@ -99,8 +95,6 @@ export const Condition = ({
               wrapperSourcePath: 'itemDamageStatuses',
             }]}
             isRemoveValueAllowed
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(23)}
             okapi={okapi}
           />
         </Col>
@@ -123,7 +117,6 @@ export const Condition = ({
 };
 
 Condition.propTypes = {
-  setReferenceTables: PropTypes.func.isRequired,
   okapi: okapiShape.isRequired,
   requestLimit: PropTypes.number,
 };

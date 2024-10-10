@@ -50,7 +50,6 @@ export const MappingHoldingsDetails = ({
         requestLimit={requestLimit}
       />
       <Location
-        setReferenceTables={setReferenceTables}
         okapi={okapi}
         requestLimit={requestLimit}
       />

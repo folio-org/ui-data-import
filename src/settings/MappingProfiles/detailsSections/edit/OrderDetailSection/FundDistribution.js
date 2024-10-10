@@ -23,7 +23,6 @@ import {
 
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
-  getRepeatableAcceptedValuesPath,
   getRepeatableFieldName,
   getSubfieldName,
   handleRepeatableFieldAndActionAdd,
@@ -120,8 +119,6 @@ export const FundDistribution = ({
                     wrapperSourcePath: 'funds'
                   }]}
                   optionTemplate="**name** (**code**)"
-                  setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 0, index)}
                   okapi={okapi}
                 />
               </Col>
@@ -138,8 +135,6 @@ export const FundDistribution = ({
                     wrapperSourcePath: 'expenseClasses'
                   }]}
                   optionTemplate="**name** (**code**)"
-                  setAcceptedValues={setReferenceTables}
-                  acceptedValuesPath={getRepeatableAcceptedValuesPath(FUND_DISTRIBUTION_FIELDS_MAP.FUND_DISTRIBUTION, 1, index)}
                   okapi={okapi}
                 />
               </Col>

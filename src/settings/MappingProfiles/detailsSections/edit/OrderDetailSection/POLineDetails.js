@@ -32,7 +32,6 @@ import {
 } from '../../constants';
 import {
   boolAcceptedValuesOptions,
-  getAcceptedValuesPath,
   getFieldName,
   getBoolFieldName,
 } from '../../utils';
@@ -45,7 +44,6 @@ import {
 } from '../../../../../utils';
 
 export const POLineDetails = ({
-  setReferenceTables,
   okapi,
   requestLimit,
 }) => {
@@ -159,8 +157,6 @@ export const POLineDetails = ({
               wrapperSourceLink: getWrapperSourceLink('ACQUISITION_METHODS', requestLimit),
               wrapperSourcePath: 'acquisitionMethods',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(PO_LINE_DETAILS_FIELDS_MAP.ACQ_METHOD)}
             okapi={okapi}
             required
           />
@@ -338,7 +334,6 @@ export const POLineDetails = ({
 };
 
 POLineDetails.propTypes = {
-  setReferenceTables: PropTypes.func.isRequired,
   okapi: PropTypes.object.isRequired,
   requestLimit: PropTypes.number,
 };

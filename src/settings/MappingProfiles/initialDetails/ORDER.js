@@ -52,7 +52,6 @@ const ORDER = {
     enabled: true,
     path: 'order.po.acqUnitIds[]',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'assignedTo',
     enabled: true,
@@ -63,13 +62,11 @@ const ORDER = {
     enabled: true,
     path: 'order.po.billTo',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'shipTo',
     enabled: true,
     path: 'order.po.shipTo',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'manualPo',
     enabled: true,
@@ -81,7 +78,6 @@ const ORDER = {
     enabled: true,
     path: 'order.po.reEncumber',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'notes',
     enabled: true,
@@ -113,7 +109,6 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.details.isAcknowledged',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'subscriptionFrom',
     enabled: true,
@@ -163,7 +158,6 @@ const ORDER = {
         enabled: true,
         path: 'order.poLine.contributors[].contributorNameTypeId',
         value: '',
-        acceptedValues: {},
       }],
     }],
   }, {
@@ -208,7 +202,6 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.acquisitionMethod',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'automaticExport',
     enabled: true,
@@ -220,7 +213,6 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.orderFormat',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'receiptDate',
     enabled: true,
@@ -236,7 +228,6 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.paymentStatus',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'source',
     enabled: false,
@@ -262,19 +253,16 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.cancellationRestriction',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'rush',
     enabled: true,
     path: 'order.poLine.rush',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'checkinItems',
     enabled: true,
     path: 'order.poLine.checkinItems',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'cancellationRestrictionNote',
     enabled: true,
@@ -327,13 +315,11 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.vendorDetail.vendorAccount',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'instructions',
     enabled: true,
     path: 'order.poLine.vendorDetail.instructions',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'listUnitPrice',
     enabled: true,
@@ -393,13 +379,11 @@ const ORDER = {
         enabled: true,
         path: 'order.poLine.fundDistribution[].fundId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'expenseClassId',
         enabled: true,
         path: 'order.poLine.fundDistribution[].expenseClassId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'value',
         enabled: true,
@@ -426,13 +410,11 @@ const ORDER = {
         enabled: true,
         path: 'order.poLine.locations[].locationId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'quantityPhysical',
         enabled: true,
         path: 'order.poLine.locations[].quantityPhysical',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'quantityElectronic',
         enabled: true,
@@ -445,7 +427,6 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.physical.materialSupplier',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'receiptDue',
     enabled: true,
@@ -461,7 +442,6 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.physical.createInventory',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'materialType',
     enabled: true,
@@ -488,7 +468,6 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.eresource.accessProvider',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'activationStatus',
     enabled: true,
@@ -505,13 +484,11 @@ const ORDER = {
     enabled: true,
     path: 'order.poLine.eresource.createInventory',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'materialType',
     enabled: true,
     path: 'order.poLine.eresource.materialType',
     value: '',
-    acceptedValues: {},
   }, {
     name: 'trial',
     enabled: true,

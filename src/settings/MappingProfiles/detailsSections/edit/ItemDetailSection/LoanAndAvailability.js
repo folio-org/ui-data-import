@@ -23,7 +23,6 @@ import {
 } from '../../../../../components';
 
 import {
-  getAcceptedValuesPath,
   getBoolSubfieldName,
   getFieldName,
   getRepeatableFieldName,
@@ -105,8 +104,6 @@ export const LoanAndAvailability = ({
               wrapperSourceLink: getWrapperSourceLink('LOAN_TYPES', requestLimit),
               wrapperSourcePath: 'loantypes',
             }]}
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(26)}
             okapi={okapi}
           />
         </Col>
@@ -128,8 +125,6 @@ export const LoanAndAvailability = ({
               wrapperSourcePath: 'loantypes',
             }]}
             isRemoveValueAllowed
-            setAcceptedValues={setReferenceTables}
-            acceptedValuesPath={getAcceptedValuesPath(27)}
             okapi={okapi}
           />
         </Col>
