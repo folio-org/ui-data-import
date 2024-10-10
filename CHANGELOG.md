@@ -18,6 +18,7 @@
 * When navigating to the Invoice field mapping profile edit form the page crashes (UIDATIMP-1646)
 * Reset offset when open VievAllLogs page. (UIDATIMP-1645)
 * Add missing `source-storage.sourceRecords.get` permission. (UIDATIMP-1652)
+* Display correctly "Percentage" and "Currency" fields for orders and invoices. (UIDATIMP-1666)
 
 ## [7.1.8](https://github.com/folio-org/ui-data-import/tree/v7.1.8) (2024-05-09)
 
