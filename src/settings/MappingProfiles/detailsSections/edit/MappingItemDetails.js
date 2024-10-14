@@ -50,7 +50,6 @@ export const MappingItemDetails = ({
         requestLimit={requestLimit}
       />
       <ItemData
-        setReferenceTables={setReferenceTables}
         okapi={okapi}
         requestLimit={requestLimit}
       />
@@ -61,7 +60,6 @@ export const MappingItemDetails = ({
         setReferenceTables={setReferenceTables}
       />
       <Condition
-        setReferenceTables={setReferenceTables}
         okapi={okapi}
         requestLimit={requestLimit}
       />
@@ -82,7 +80,6 @@ export const MappingItemDetails = ({
         requestLimit={requestLimit}
       />
       <Location
-        setReferenceTables={setReferenceTables}
         okapi={okapi}
         requestLimit={requestLimit}
       />

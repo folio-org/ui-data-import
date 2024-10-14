@@ -34,7 +34,6 @@ const HOLDINGS = {
     path: 'holdings.holdingsTypeId',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'statisticalCodeIds',
     enabled: true,
@@ -48,7 +47,6 @@ const HOLDINGS = {
         enabled: true,
         path: 'holdings.statisticalCodeIds[]',
         value: '',
-        acceptedValues: {},
       }],
     }],
   }, {
@@ -72,14 +70,12 @@ const HOLDINGS = {
     path: 'holdings.permanentLocationId',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'temporaryLocationId',
     enabled: true,
     path: 'holdings.temporaryLocationId',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'shelvingOrder',
     enabled: true,
@@ -104,7 +100,6 @@ const HOLDINGS = {
     path: 'holdings.callNumberTypeId',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'callNumberPrefix',
     enabled: true,
@@ -210,7 +205,6 @@ const HOLDINGS = {
     path: 'holdings.illPolicyId',
     value: '',
     subfields: [],
-    acceptedValues: {},
   }, {
     name: 'digitizationPolicy',
     enabled: true,
@@ -237,7 +231,6 @@ const HOLDINGS = {
         required: true,
         path: 'holdings.notes[].holdingsNoteTypeId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'note',
         enabled: true,
@@ -264,7 +257,6 @@ const HOLDINGS = {
         enabled: true,
         path: 'holdings.electronicAccess[].relationshipId',
         value: '',
-        acceptedValues: {},
       }, {
         name: 'uri',
         enabled: true,

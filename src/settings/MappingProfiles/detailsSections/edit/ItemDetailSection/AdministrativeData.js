@@ -26,7 +26,6 @@ import {
   getSubfieldName,
   getBoolFieldName,
   getRepeatableFieldName,
-  getRepeatableAcceptedValuesPath,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
 import {
@@ -206,8 +205,6 @@ export const AdministrativeData = ({
                           wrapperSourcePath: 'statisticalCodeTypes',
                         }]}
                         optionTemplate="**statisticalCodeTypeName**: **code** - **name**"
-                        setAcceptedValues={setReferenceTables}
-                        acceptedValuesPath={getRepeatableAcceptedValuesPath(6, 0, index)}
                         okapi={okapi}
                       />
                     </Col>

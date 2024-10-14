@@ -11,6 +11,7 @@
 * Change endpoint to get actual SRS MARC data (UIDATIMP-1597)
 * Implement new Donor information section for Order field mapping profiles (UIDATIMP-1656)
 * Adjust value for invoice and invoice lines adjustments "Type" field mapping. (UIDATIMP-1662)
+* Remove accepted values when Mapping profile is created/updated (Instance, Holding, Item and Order). (UIDATIMP-1663)
 
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
@@ -18,6 +19,7 @@
 * When navigating to the Invoice field mapping profile edit form the page crashes (UIDATIMP-1646)
 * Reset offset when open VievAllLogs page. (UIDATIMP-1645)
 * Add missing `source-storage.sourceRecords.get` permission. (UIDATIMP-1652)
+* Display correctly "Percentage" and "Currency" fields for orders and invoices. (UIDATIMP-1666)
 
 ## [7.1.8](https://github.com/folio-org/ui-data-import/tree/v7.1.8) (2024-05-09)
 

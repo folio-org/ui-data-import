@@ -58,7 +58,6 @@ export const MappingOrderDetails = ({
           requestLimit={requestLimit}
         />
         <POLineDetails
-          setReferenceTables={setReferenceTables}
           okapi={okapi}
           requestLimit={requestLimit}
         />
