@@ -255,12 +255,10 @@
           "metadata-provider.jobLogEntries.records.item.get",
           "metadata-provider.journalRecords.collection.get",
           "metadata-provider.jobSummary.item.get",
-          "source-storage.stream.marc-record-identifiers.collection.post",
           "source-storage.records.collection.get",
           "source-storage.records.item.get",
           "source-storage.records.formatted.item.get",
           "source-storage.stream.records.collection.get",
-          "source-storage.records.matching.collection.post",
           "metadata-provider.incomingrecords.get",
           "source-storage.source-records.item.get",
           "source-storage.source-records.collection.get"
