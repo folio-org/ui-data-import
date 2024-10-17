@@ -739,7 +739,7 @@
   "settings.mappingProfiles.map.instance.descriptiveData.field.classifications.addLabel": "Add classification",
   "settings.mappingProfiles.map.instance.descriptiveData.field.classificationTypeId": "Classification identifier type",
   "settings.mappingProfiles.map.instance.descriptiveData.field.classificationNumber": "Classification",
-  "settings.mappingProfiles.map.instance.relationship.section": "Instance relationship (analytics and bound-with)",
+  "settings.mappingProfiles.map.instance.relationship.section": "Instance relationship",
   "settings.mappingProfiles.map.instance.field.parentInstances.legend": "Parent instances",
   "settings.mappingProfiles.map.instance.field.parentInstances.addLabel": "Add parent instance",
   "settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId": "Parent instance",
