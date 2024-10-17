@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **7.2.0** (in progress)
+## **8.0.0** (in progress)
 
 ### Features added:
 * Fix unit tests warnings in console. (UIDATIMP-1606)
