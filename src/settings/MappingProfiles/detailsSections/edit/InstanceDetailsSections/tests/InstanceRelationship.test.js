@@ -92,7 +92,7 @@ describe('Instance "Instance relationship" edit component', () => {
       parentInstancesProp: parentInstances,
       childInstancesProp: childInstances,
     });
-    const instanceRelationshipTitle = await findByText('Instance relationship (analytics and bound-with)');
+    const instanceRelationshipTitle = await findByText('Instance relationship');
 
     expect(instanceRelationshipTitle).toBeInTheDocument();
 
@@ -106,7 +106,7 @@ describe('Instance "Instance relationship" edit component', () => {
       parentInstancesProp: parentInstances,
       childInstancesProp: childInstances,
     });
-    const instanceRelationshipTitle = await findByText('Instance relationship (analytics and bound-with)');
+    const instanceRelationshipTitle = await findByText('Instance relationship');
 
     expect(instanceRelationshipTitle).toBeInTheDocument();
   });
