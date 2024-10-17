@@ -430,7 +430,7 @@ const ViewAllLogs = props => {
         })}
         viewRecordComponent={noop}
         onSelectRow={noop}
-        viewRecordPerms="metadata-provider.jobexecutions.get"
+        viewRecordPerms="ui-data-import.view"
         parentResources={resources}
         parentMutator={mutator}
         stripes={stripes}
