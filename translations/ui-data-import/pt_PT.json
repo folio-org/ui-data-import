@@ -418,7 +418,7 @@
     "settings.mappingProfiles.map.instance.descriptiveData.field.classifications.addLabel": "Add classification",
     "settings.mappingProfiles.map.instance.descriptiveData.field.classificationTypeId": "Classification identifier type",
     "settings.mappingProfiles.map.instance.descriptiveData.field.classificationNumber": "Classification",
-    "settings.mappingProfiles.map.instance.relationship.section": "Instance relationship (analytics and bound-with)",
+    "settings.mappingProfiles.map.instance.relationship.section": "Instance relationship",
     "settings.mappingProfiles.map.instance.field.parentInstances.legend": "Parent instances",
     "settings.mappingProfiles.map.instance.field.parentInstances.addLabel": "Add parent instance",
     "settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId": "Parent instance",
@@ -1176,5 +1176,8 @@
     "settings.marcFieldProtection.termCreated": "The MARC field protection <b>{term}</b> was successfully <b>created</b>",
     "settings.marcFieldProtection.termUpdated": "The MARC field protection <b>{term}</b> was successfully <b>updated</b>",
     "settings.marcFieldProtection.termWillBeDeleted": "The MARC field protection <b>{term}</b> will be <b>deleted.</b>",
-    "uploadDefinitionError": "Upload definition was deleted by another user. Please try again."
+    "uploadDefinitionError": "Upload definition was deleted by another user. Please try again.",
+    "settings.mappingProfiles.map.order.donorInformation.section": "Donor information",
+    "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Add donor",
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Donor"
 }
