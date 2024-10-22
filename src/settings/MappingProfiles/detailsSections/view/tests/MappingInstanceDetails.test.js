@@ -39,7 +39,7 @@ describe('MappingInstanceDetails view component', () => {
     expect(getByRole('button', { name: /electronic access/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /subject/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /classification/i })).toBeInTheDocument();
-    expect(getByRole('button', { name: /instance relationship \(analytics and bound-with\)/i })).toBeInTheDocument();
+    expect(getByRole('button', { name: /instance relationship/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /related instances/i })).toBeInTheDocument();
   });
 
@@ -55,7 +55,7 @@ describe('MappingInstanceDetails view component', () => {
     expect(getByRole('button', { name: /electronic access/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /subject/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /classification/i })).toHaveAttribute('aria-expanded', 'true');
-    expect(getByRole('button', { name: /instance relationship \(analytics and bound-with\)/i })).toHaveAttribute('aria-expanded', 'true');
+    expect(getByRole('button', { name: /instance relationship/i })).toHaveAttribute('aria-expanded', 'true');
     expect(getByRole('button', { name: /related instances/i })).toHaveAttribute('aria-expanded', 'true');
   });
 
@@ -71,7 +71,7 @@ describe('MappingInstanceDetails view component', () => {
     fireEvent.click(getByRole('button', { name: /electronic access/i }));
     fireEvent.click(getByRole('button', { name: /subject/i }));
     fireEvent.click(getByRole('button', { name: /classification/i }));
-    fireEvent.click(getByRole('button', { name: /instance relationship \(analytics and bound-with\)/i }));
+    fireEvent.click(getByRole('button', { name: /instance relationship/i }));
     fireEvent.click(getByRole('button', { name: /related instances/i }));
 
     expect(getByRole('button', { name: /administrative data/i })).toHaveAttribute('aria-expanded', 'false');
@@ -83,7 +83,7 @@ describe('MappingInstanceDetails view component', () => {
     expect(getByRole('button', { name: /electronic access/i })).toHaveAttribute('aria-expanded', 'false');
     expect(getByRole('button', { name: /subject/i })).toHaveAttribute('aria-expanded', 'false');
     expect(getByRole('button', { name: /classification/i })).toHaveAttribute('aria-expanded', 'false');
-    expect(getByRole('button', { name: /instance relationship \(analytics and bound-with\)/i })).toHaveAttribute('aria-expanded', 'false');
+    expect(getByRole('button', { name: /instance relationship/i })).toHaveAttribute('aria-expanded', 'false');
     expect(getByRole('button', { name: /related instances/i })).toHaveAttribute('aria-expanded', 'false');
   });
 });
