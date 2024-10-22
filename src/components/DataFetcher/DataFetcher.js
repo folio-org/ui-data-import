@@ -16,6 +16,7 @@ import {
   OCLC_UPDATE_INSTANCE_JOB_ID,
   createUrlFromArray,
   NO_FILE_NAME,
+  BULK_EDIT_JOB_PROFILE_NAME,
 } from '../../utils';
 
 import { DataFetcherContext } from '.';
@@ -49,6 +50,7 @@ const logsUrlParams = [
   `statusAny=${CANCELLED}`,
   `profileIdNotAny=${OCLC_CREATE_INSTANCE_JOB_ID}`,
   `profileIdNotAny=${OCLC_UPDATE_INSTANCE_JOB_ID}`,
+  `excludeJobProfileName=${BULK_EDIT_JOB_PROFILE_NAME}`,
   `fileNameNotAny=${NO_FILE_NAME}`,
   'limit=25',
   'sortBy=completed_date,desc',

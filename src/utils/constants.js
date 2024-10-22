@@ -9,6 +9,7 @@ export const PREVIOUS_LOCATIONS_KEY = '@folio/data-import/prev-locations';
 export const FIND_ALL_CQL = 'cql.allRecords=1';
 
 export const NO_FILE_NAME = 'No file name';
+export const BULK_EDIT_JOB_PROFILE_NAME = 'Bulk operations data import job profile - *';
 
 export const AVAILABLE_PLACEMENTS = [
   'bottom',
