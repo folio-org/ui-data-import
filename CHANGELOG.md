@@ -16,6 +16,7 @@
 * BE permission refactoring. (UIDATIMP-1667)
 * *BREAKING* Bump `stripes` to `v9.2.0` for Ramsons release. (UIDATIMP-1669)
 * Exclude bulk edit job execution entries from data import log. (UIDATIMP-1665)
+* Add "converter-storage.profileSnapshots.get" to "ui-data-import.manage" subPermissions. (UIDATIMP-1672)
 
 ### Bugs fixed:
 * Remove `selected` column from associated profiles list. (UIDATIMP-1607)
