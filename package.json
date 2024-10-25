@@ -199,6 +199,7 @@
           "converter-storage.profileassociations.collection.get",
           "converter-storage.profileassociations.details.item.get",
           "converter-storage.profileassociations.masters.item.get",
+          "converter-storage.profileSnapshots.get",
           "data-import.assembleStorageFile.post",
           "data-import.fileExtensions.item.get",
           "data-import.fileExtensions.collection.get",
