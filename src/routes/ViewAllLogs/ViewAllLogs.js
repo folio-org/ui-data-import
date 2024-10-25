@@ -49,6 +49,7 @@ import {
   fileNameCellFormatter,
   jobProfileNameCellFormatter,
   useCheckboxList,
+  BULK_EDIT_JOB_PROFILE_NAME,
 } from '../../utils';
 import {
   FILTERS,
@@ -102,6 +103,8 @@ export const getLogsQuery = (_q, _p, resourceData, _l, props) => {
   if (!filtersValues[FILTERS.ERRORS]) {
     filtersValues[FILTERS.ERRORS] = [COMMITTED, ERROR, CANCELLED];
   }
+
+  filtersValues.excludeJobProfileName = BULK_EDIT_JOB_PROFILE_NAME;
 
   let adjustedQueryValue = { ...queryValue };
   if (splitStatus?.hasLoaded) {
