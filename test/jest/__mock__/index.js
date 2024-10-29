@@ -5,5 +5,6 @@ import './reactVirtializedAutoSizer.mock';
 import './stripesConfig.mock';
 import './stripesIcon.mock';
 import './stripesCore.mock';
+import './stripesReactHotkeys.mock';
 import './stripesSmartComponents.mock';
 import './resizeObserver.mock';
