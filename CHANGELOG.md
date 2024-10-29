@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## **8.0.0** (in progress)
+## [8.0.0](https://github.com/folio-org/ui-data-import/tree/v8.0.0) (2024-10-29)
 
 ### Features added:
 * Fix unit tests warnings in console. (UIDATIMP-1606)
