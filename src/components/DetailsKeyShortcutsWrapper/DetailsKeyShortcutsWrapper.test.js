@@ -27,6 +27,7 @@ const history = createMemoryHistory();
 history.push = jest.fn();
 
 jest.mock('@folio/stripes/smart-components', () => ({ ...jest.requireActual('@folio/stripes/smart-components') }), { virtual: true });
+jest.unmock('@folio/stripes-react-hotkeys');
 
 const recordIdProp = faker.random.uuid;
 

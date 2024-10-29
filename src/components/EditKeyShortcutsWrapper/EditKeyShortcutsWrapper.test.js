@@ -20,6 +20,7 @@ const {
 const mockOnSubmitProp = jest.fn(() => Promise.resolve('test value'));
 
 jest.mock('@folio/stripes/smart-components', () => ({ ...jest.requireActual('@folio/stripes/smart-components') }), { virtual: true });
+jest.unmock('@folio/stripes-react-hotkeys');
 
 const renderEditKeyShortcutsWrapper = ({ onSubmit }) => {
   const childElement = <span>Child element</span>;
