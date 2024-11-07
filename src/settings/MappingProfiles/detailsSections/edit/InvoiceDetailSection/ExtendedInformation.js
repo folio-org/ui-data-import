@@ -39,11 +39,14 @@ export const ExtendedInformation = ({
   okapi,
   setReferenceTables,
 }) => {
+  const CHECK_SUBSCRIPTION_OVERLAP_FIELD_INDEX = 22;
+  const EXPORT_TO_ACCOUNTING_FIELD_INDEX = 23;
+
   const EXTENDED_INFO_FIELDS_MAP = {
     FOLIO_INVOICE_NUMBER: getFieldName(20),
     PAYMENT_METHOD: getFieldName(21),
-    CHECK_SUBSCRIPTION_OVERLAP: getBoolFieldName(22),
-    EXPORT_TO_ACCOUNTING: getBoolFieldName(23),
+    CHECK_SUBSCRIPTION_OVERLAP: getBoolFieldName(CHECK_SUBSCRIPTION_OVERLAP_FIELD_INDEX),
+    EXPORT_TO_ACCOUNTING: getBoolFieldName(EXPORT_TO_ACCOUNTING_FIELD_INDEX),
     CURRENCY: getFieldName(24),
     CURRENT_EXCHANGE_RATE: getFieldName(25),
     SET_EXCHANGE_RATE: getFieldName(26),
@@ -57,8 +60,8 @@ export const ExtendedInformation = ({
   const paymentMethodsList = createOptionsList(PAYMENT_METHOD_OPTIONS, formatMessage, 'labelId');
   const currenciesList = useCurrencyOptions();
 
-  const exportToAccountingCheckbox = mappingFields?.[22]?.booleanFieldAction;
-  const checkSubscriptionOverlapCheckbox = mappingFields?.[21]?.booleanFieldAction;
+  const exportToAccountingCheckbox = mappingFields?.[EXPORT_TO_ACCOUNTING_FIELD_INDEX]?.booleanFieldAction;
+  const checkSubscriptionOverlapCheckbox = mappingFields?.[CHECK_SUBSCRIPTION_OVERLAP_FIELD_INDEX]?.booleanFieldAction;
 
   return (
     <Accordion
