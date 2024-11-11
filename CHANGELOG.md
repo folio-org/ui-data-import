@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Invoice field mapping profile: cannot check export to accounting checkbox. (UIDATIMP-1671)
+* Display placeholder in `Job profile` and `User` filters on the `View all` page after clicking on `Reset all` button. (UIDATIMP-1675)
 
 ## [8.0.0](https://github.com/folio-org/ui-data-import/tree/v8.0.0) (2024-10-31)
 
