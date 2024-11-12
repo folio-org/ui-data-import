@@ -110,7 +110,7 @@ ExistingSectionFolio.propTypes = {
     label: PropTypes.string.isRequired,
   })),
   existingRecordFieldLabel: PropTypes.string,
-  formValues: PropTypes.object,
+  formValues: PropTypes.arrayOf(PropTypes.object),
 };
 
 ExistingSectionFolio.defaultProps = {
