@@ -2,13 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { uniqBy } from 'lodash';
+import {
+  isEmpty,
+  uniqBy,
+} from 'lodash';
 
 import {
   AccordionSet,
   Accordion,
   FilterAccordionHeader,
   Selection,
+  OptionSegment,
 } from '@folio/stripes/components';
 import {
   createClearFilterHandler,
@@ -82,6 +86,12 @@ const ViewAllLogsFilters = ({
     return dataOptions.filter(option => new RegExp(value, 'i').test(option.label));
   };
 
+  const formatter = ({ option, searchTerm }) => {
+    return !isEmpty(option?.value)
+      ? <OptionSegment searchTerm={searchTerm}>{option.label}</OptionSegment>
+      : null;
+  };
+
   return (
     <div data-test-filter-logs>
       <AccordionSet>
@@ -133,6 +143,7 @@ const ViewAllLogsFilters = ({
                   onChange={onChangeSelectionFilter(onChange, FILTERS.JOB_PROFILE)}
                   placeholder={placeholder}
                   onFilter={onFilter}
+                  formatter={formatter}
                 />
               )}
             </FormattedMessage>
@@ -155,6 +166,7 @@ const ViewAllLogsFilters = ({
                   onChange={onChangeSelectionFilter(onChange, FILTERS.USER)}
                   placeholder={placeholder}
                   onFilter={onFilter}
+                  formatter={formatter}
                 />
               )}
             </FormattedMessage>
