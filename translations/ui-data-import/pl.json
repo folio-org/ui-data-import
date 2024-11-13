@@ -906,7 +906,7 @@
     "settings.mappingProfiles.map.order.orderInformation.section": "Order information",
     "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderStatus": "Purchase order status",
     "settings.mappingProfiles.map.order.orderInformation.field.pending": "Oczekujące",
-    "settings.mappingProfiles.map.order.orderInformation.field.open": "Open",
+    "settings.mappingProfiles.map.order.orderInformation.field.open": "Otwarte",
     "settings.mappingProfiles.map.order.orderInformation.field.approved": "Zatwierdzony",
     "settings.mappingProfiles.map.order.orderInformation.field.purchaseOrderLinesLimitSetting": "Purchase order lines limit setting",
     "settings.mappingProfiles.map.order.orderInformation.field.overridePurchaseOrderLinesLimitSetting": "Override purchase order lines limit setting",
@@ -961,7 +961,7 @@
     "settings.mappingProfiles.map.order.poLineDetails.field.receiptNotRequired": "Receipt not required",
     "settings.mappingProfiles.map.order.poLineDetails.field.paymentStatus": "Status płatności",
     "settings.mappingProfiles.map.order.poLineDetails.field.source": "Źródło",
-    "settings.mappingProfiles.map.order.poLineDetails.field.donor": "Donor",
+    "settings.mappingProfiles.map.order.poLineDetails.field.donor": "Darczyńca",
     "settings.mappingProfiles.map.order.poLineDetails.field.selector": "Selector",
     "settings.mappingProfiles.map.order.poLineDetails.field.requester": "Rezerwujący",
     "settings.mappingProfiles.map.order.poLineDetails.field.cancellationRestriction": "Ograniczenie anulowania",
@@ -1071,7 +1071,7 @@
     "settings.mappingProfiles.map.order.poLineDetails.receiptStatus": "Status odbioru",
     "settings.mappingProfiles.map.order.poLineDetails.paymentStatus": "Status płatności",
     "settings.mappingProfiles.map.order.poLineDetails.source": "Źródło",
-    "settings.mappingProfiles.map.order.poLineDetails.donor": "Donor",
+    "settings.mappingProfiles.map.order.poLineDetails.donor": "Darczyńca",
     "settings.mappingProfiles.map.order.poLineDetails.selector": "Selektor",
     "settings.mappingProfiles.map.order.poLineDetails.requester": "Rezerwujący",
     "settings.mappingProfiles.map.order.poLineDetails.cancellationRestriction": "Ograniczenie anulowania",
@@ -1179,5 +1179,5 @@
     "uploadDefinitionError": "Upload definition was deleted by another user. Please try again.",
     "settings.mappingProfiles.map.order.donorInformation.section": "Donor information",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Add donor",
-    "settings.mappingProfiles.map.order.donorInformation.donor": "Donor"
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Darczyńca"
 }
