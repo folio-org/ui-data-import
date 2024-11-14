@@ -852,7 +852,7 @@
     "recordTypes.srsMarc": "SRS MARC",
     "settings.mappingProfiles.map.item.status.inProcessNonRequestable": "En traitement (non réservable)",
     "settings.mappingProfiles.map.item.status.intellectualItem": "Intellectual item",
-    "settings.mappingProfiles.map.item.status.longMissing": "Long missing",
+    "settings.mappingProfiles.map.item.status.longMissing": "Manquant depuis longtemps",
     "settings.mappingProfiles.map.item.status.restricted": "Restricted",
     "settings.mappingProfiles.map.item.status.unavailable": "Indisponible",
     "settings.mappingProfiles.map.item.status.unknown": "Inconnu",
