@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [8.0.1] (IN PROGRESS)
+## [8.0.1](https://github.com/folio-org/ui-data-import/tree/v8.0.1) (2024-11-15)
 
 ### Bugs fixed:
 * Invoice field mapping profile: cannot check export to accounting checkbox. (UIDATIMP-1671)
