@@ -105,6 +105,12 @@ const jobPartsCellFormatter = record => (
   />
 );
 
+const DEFAULT_ACTION_ITEMS = [
+  'edit',
+  'duplicate',
+  'delete',
+];
+
 const ViewJobProfileComponent = props => {
   const {
     resources,
@@ -116,7 +122,7 @@ const ViewJobProfileComponent = props => {
     location,
     onDelete,
     onClose,
-    actionMenuItems,
+    actionMenuItems = DEFAULT_ACTION_ITEMS,
     accordionStatusRef,
   } = props;
 
@@ -239,7 +245,11 @@ const ViewJobProfileComponent = props => {
     return (
       <ActionMenu
         entity={{
-          props,
+          props: {
+            ...props,
+            actionMenuItems,
+            ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,
+          },
           showRunConfirmation: () => setShowRunConfirmation(true),
           showDeleteConfirmation: () => setShowDeleteConfirmation(true),
         }}
@@ -633,15 +643,6 @@ ViewJobProfileComponent.propTypes = {
   ENTITY_KEY: PropTypes.string, // eslint-disable-line
   actionMenuItems: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
   accordionStatusRef: PropTypes.object,
-};
-
-ViewJobProfileComponent.defaultProps = {
-  ENTITY_KEY: ENTITY_KEYS.JOB_PROFILES,
-  actionMenuItems: [
-    'edit',
-    'duplicate',
-    'delete',
-  ],
 };
 
 export const ViewJobProfile = compose(

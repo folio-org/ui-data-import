@@ -1,6 +1,9 @@
 # Change history for ui-data-import
 
-## [8.0.2] (IN PROGRESS)
+## [8.1.0] (IN PROGRESS)
+
+### Features added:
+* `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
 
 ### Bugs fixed:
 * Display placeholder in `Job profile` and `User` filters on the `View all` page after clicking on `Reset all` button. (UIDATIMP-1675)
