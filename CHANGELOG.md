@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [8.0.2] (IN PROGRESS)
+## [8.0.2](https://github.com/folio-org/ui-data-import/tree/v8.0.2) (2024-11-21)
 
 ### Bugs fixed:
 * Display placeholder in `Job profile` and `User` filters on the `View all` page after clicking on `Reset all` button. (UIDATIMP-1675)
