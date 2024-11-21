@@ -5,6 +5,8 @@
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
 
+## [8.0.2] (IN PROGRESS)
+
 ### Bugs fixed:
 * Display placeholder in `Job profile` and `User` filters on the `View all` page after clicking on `Reset all` button. (UIDATIMP-1675)
 
