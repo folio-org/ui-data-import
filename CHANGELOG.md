@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [8.1.0] (IN PROGRESS)
+
+### Features added:
+* `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
+
 ## [8.0.2] (IN PROGRESS)
 
 ### Bugs fixed:
