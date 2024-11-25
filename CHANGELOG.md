@@ -5,6 +5,11 @@
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
 
+## [8.0.3] (IN PROGRESS)
+
+### Bugs fixed:
+* Allow central tenant to create action profile for Orders and Invoices. (UIDATIMP-1679)
+
 ## [8.0.2] (IN PROGRESS)
 
 ### Bugs fixed:
