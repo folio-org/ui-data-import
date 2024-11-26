@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [8.0.3] (IN PROGRESS)
+
+### Bugs fixed:
+* Allow central tenant to create action profile for Orders and Invoices. (UIDATIMP-1679)
+
 ## [8.0.2](https://github.com/folio-org/ui-data-import/tree/v8.0.2) (2024-11-21)
 
 ### Bugs fixed:
@@ -36,6 +41,16 @@
 * Reset offset when open VievAllLogs page. (UIDATIMP-1645)
 * Add missing `source-storage.sourceRecords.get` permission. (UIDATIMP-1652)
 * Display correctly "Percentage" and "Currency" fields for orders and invoices. (UIDATIMP-1666)
+
+## [7.1.10](https://github.com/folio-org/ui-data-import/tree/v7.1.10) (2024-11-12)
+
+### Bugs fixed:
+* Change endpoint to get actual SRS MARC data (UIDATIMP-1597)
+
+## [7.1.9](https://github.com/folio-org/ui-data-import/tree/v7.1.9) (2024-09-16)
+
+### Bugs fixed:
+* Implement new Donor information section for Order field mapping profiles (UIDATIMP-1656)
 
 ## [7.1.8](https://github.com/folio-org/ui-data-import/tree/v7.1.8) (2024-05-09)
 
