@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.1.12] (IN PROGRESS)
+
+### Bugs fixed:
+* Allow central tenant to create filed mapping profile for Orders and Invoices. (UIDATIMP-1685)
+
 ## [7.1.11](https://github.com/folio-org/ui-data-import/tree/v7.1.11) (2024-12-17)
 
 ### Bugs fixed
