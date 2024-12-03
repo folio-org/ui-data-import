@@ -143,10 +143,11 @@ export const MappingProfilesFormComponent = ({
     dispatch(change(formName, 'profile.mappingDetails', newMappingDetails));
   };
 
-
   const MAPPING_PROFILES_FORM_FOLIO_RECORD_TYPES = isUserInCentralTenant ?
     pick(INITIAL_FOLIO_RECORD_TYPES, [
       FOLIO_RECORD_TYPES.INSTANCE.type,
+      FOLIO_RECORD_TYPES.ORDER.type,
+      FOLIO_RECORD_TYPES.INVOICE.type,
       FOLIO_RECORD_TYPES.MARC_BIBLIOGRAPHIC.type,
       FOLIO_RECORD_TYPES.MARC_AUTHORITY.type,
     ]) : INITIAL_FOLIO_RECORD_TYPES;

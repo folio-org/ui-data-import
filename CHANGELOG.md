@@ -9,6 +9,7 @@
 
 ### Bugs fixed:
 * Allow central tenant to create action profile for Orders and Invoices. (UIDATIMP-1679)
+* Allow central tenant to create filed mapping profile for Orders and Invoices. (UIDATIMP-1685)
 
 ## [8.0.2](https://github.com/folio-org/ui-data-import/tree/v8.0.2) (2024-11-21)
 
