@@ -9,15 +9,12 @@ import { STATUS_CODES } from '../constants';
 
 describe('getModuleVersion function', () => {
   it('returns module version of a module with given name', () => {
-    const testModules = [{
-      name: 'module1',
-      id: 'testId1',
-    }, {
-      name: 'module2',
-      id: 'testId2',
-    }];
+    const testModules = {
+      testId1: 'module1',
+      testId2: 'module2',
+    };
 
-    expect(getModuleVersion(testModules, 'module2')).toBe(testModules[1].id);
+    expect(getModuleVersion(testModules, 'module2')).toBe('testId2');
     expect(getModuleVersion(testModules, 'module3')).toBeUndefined();
   });
 });
