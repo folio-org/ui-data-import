@@ -1,7 +1,7 @@
 export const getModuleVersion = (modules, moduleName) => {
-  const version = modules.find(module => module.name === moduleName);
+  const version = Object.keys(modules).find(key => modules[key] === moduleName);
 
-  return version ? version.id : undefined;
+  return version || undefined;
 };
 
 export const fetchJsonSchema = async (path, module, okapi) => {
