@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [8.0.3] (IN PROGRESS)
+## [8.0.3](https://github.com/folio-org/ui-data-import/tree/v8.0.3) (2024-12-04)
 
 ### Bugs fixed:
 * Allow central tenant to create action profile for Orders and Invoices. (UIDATIMP-1679)
