@@ -237,16 +237,6 @@ export class MatchProfiles extends Component {
         staticFallback: { params: {} },
       },
     },
-    modules: {
-      type: 'okapi',
-      path: (queryParams, pathComponents, resourceData, logger, props) => {
-        const { stripes: { okapi: { tenant } } } = props;
-
-        return `_/proxy/tenants/${tenant}/modules`;
-      },
-      throwErrors: false,
-      GET: { params: { full: true } },
-    },
   });
 
   static propTypes = {
@@ -308,17 +298,17 @@ export class MatchProfiles extends Component {
   };
 
   async componentDidUpdate(prevProps) {
-    if (!isEqual(prevProps.resources.modules, this.props.resources.modules)
-      && !isEmpty(this.props.resources.modules.records)) {
+    if (!isEqual(prevProps.stripes.discovery.modules, this.props.stripes.discovery.modules)
+      && !isEmpty(this.props.stripes.discovery.modules)) {
       const {
         stripes,
         stripes: { okapi },
-        resources: { modules: { records } },
+        stripes: { discovery: { modules } },
       } = this.props;
 
-      const inventoryModuleVersion = getModuleVersion(records, 'Inventory Storage Module');
-      const ordersModuleVersion = getModuleVersion(records, 'Orders Business Logic Module');
-      const invoiceModuleVersion = getModuleVersion(records, 'Invoice business logic module');
+      const inventoryModuleVersion = getModuleVersion(modules, 'Inventory Storage Module');
+      const ordersModuleVersion = getModuleVersion(modules, 'Orders Business Logic Module');
+      const invoiceModuleVersion = getModuleVersion(modules, 'Invoice business logic module');
 
       const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
       const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
