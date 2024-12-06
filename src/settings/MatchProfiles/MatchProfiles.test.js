@@ -21,7 +21,11 @@ import { FIND_ALL_CQL } from '../../utils';
 import { matchProfilesShape } from '.';
 import { MatchProfiles } from './MatchProfiles';
 
-const stripes = buildStripes();
+const stripes = buildStripes({
+  discovery: {
+    modules: { 'Inventory Storage Module': '1.0.0' },
+  }
+});
 
 const history = createMemoryHistory();
 
