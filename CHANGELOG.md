@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Allow central tenant to create filed mapping profile for Orders and Invoices. (UIDATIMP-1685)
+* Populate "Existing records" field when create match profile. (UIDATIMP-1689)
 
 ## [8.0.3](https://github.com/folio-org/ui-data-import/tree/v8.0.3) (2024-12-04)
 

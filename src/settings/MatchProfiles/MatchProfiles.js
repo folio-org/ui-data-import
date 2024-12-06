@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  isEqual,
-  isEmpty,
-} from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
@@ -297,9 +294,8 @@ export class MatchProfiles extends Component {
     identifierTypes: [],
   };
 
-  async componentDidUpdate(prevProps) {
-    if (!isEqual(prevProps.stripes.discovery.modules, this.props.stripes.discovery.modules)
-      && !isEmpty(this.props.stripes.discovery.modules)) {
+  async componentDidMount() {
+    if (!isEmpty(this.props.stripes.discovery.modules)) {
       const {
         stripes,
         stripes: { okapi },
