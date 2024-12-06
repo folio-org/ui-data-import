@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import isEmpty from 'lodash/isEmpty';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
@@ -294,30 +295,32 @@ export class MatchProfiles extends Component {
   };
 
   async componentDidMount() {
-    const {
-      stripes,
-      stripes: { okapi },
-      stripes: { discovery: { modules } },
-    } = this.props;
+    if (!isEmpty(this.props.stripes.discovery.modules)) {
+      const {
+        stripes,
+        stripes: { okapi },
+        stripes: { discovery: { modules } },
+      } = this.props;
 
-    const inventoryModuleVersion = getModuleVersion(modules, 'Inventory Storage Module');
-    const ordersModuleVersion = getModuleVersion(modules, 'Orders Business Logic Module');
-    const invoiceModuleVersion = getModuleVersion(modules, 'Invoice business logic module');
+      const inventoryModuleVersion = getModuleVersion(modules, 'Inventory Storage Module');
+      const ordersModuleVersion = getModuleVersion(modules, 'Orders Business Logic Module');
+      const invoiceModuleVersion = getModuleVersion(modules, 'Invoice business logic module');
 
-    const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-    const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-    const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-    const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
-    const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
+      const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
+      const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
+      const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
+      const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
+      const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
 
-    await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
-    await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
-    await handleAllRequests(requestToAcquisitionsData, 'HOLDINGS', this.addToState);
-    await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
-    await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
-    await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
-    await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
-    await getIdentifierTypes(stripes).then(identifierTypes => this.setState({ identifierTypes }));
+      await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
+      await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'HOLDINGS', this.addToState);
+      await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
+      await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
+      await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
+      await getIdentifierTypes(stripes).then(identifierTypes => this.setState({ identifierTypes }));
+    }
   }
 
   addToState = (properties, stateKey) => {
