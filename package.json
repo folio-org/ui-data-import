@@ -206,7 +206,7 @@
           "invoice-storage.invoices.item.get",
           "metadata-provider.jobexecutions.get",
           "metadata-provider.logs.get",
-          "source-storage.records.get",
+          "source-storage.sourceRecords.get",
           "ui-data-import.view",
           "ui-orders.orders.view",
           "metadata-provider.incomingrecords.get"
@@ -224,7 +224,7 @@
           "data-import.uploaddefinitions.get",
           "metadata-provider.jobexecutions.get",
           "metadata-provider.logs.get",
-          "source-storage.records.get",
+          "source-storage.sourceRecords.get",
           "metadata-provider.incomingrecords.get"
         ],
         "visible": true
