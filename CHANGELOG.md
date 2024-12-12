@@ -12,6 +12,7 @@
 * Allow central tenant to create filed mapping profile for Orders and Invoices. (UIDATIMP-1685)
 * Replace `_/proxy/tenants/${tenant}/modules` with `stripes.discovery.modules` object. (UIDATIMP-1686)
 * Populate "Existing records" field when create match profile. (UIDATIMP-1689)
+* Trigger file selection window to open after click `Choose other files to upload` button. (UIDATIMP-1683)
 
 ## [8.0.2](https://github.com/folio-org/ui-data-import/tree/v8.0.2) (2024-11-21)
 
