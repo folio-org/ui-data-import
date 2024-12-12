@@ -5,14 +5,20 @@
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
 
-## [8.0.3] (IN PROGRESS)
+### Bugs fixed:
+* Trigger file selection window to open after click `Choose other files to upload` button. (UIDATIMP-1683)
+
+## [8.0.4](https://github.com/folio-org/ui-data-import/tree/v8.0.4) (2024-12-06)
+
+### Bugs fixed:
+* Allow central tenant to create filed mapping profile for Orders and Invoices. (UIDATIMP-1685)
+* Populate "Existing records" field when create match profile. (UIDATIMP-1689)
+
+## [8.0.3](https://github.com/folio-org/ui-data-import/tree/v8.0.3) (2024-12-04)
 
 ### Bugs fixed:
 * Allow central tenant to create action profile for Orders and Invoices. (UIDATIMP-1679)
-* Allow central tenant to create filed mapping profile for Orders and Invoices. (UIDATIMP-1685)
 * Replace `_/proxy/tenants/${tenant}/modules` with `stripes.discovery.modules` object. (UIDATIMP-1686)
-* Populate "Existing records" field when create match profile. (UIDATIMP-1689)
-* Trigger file selection window to open after click `Choose other files to upload` button. (UIDATIMP-1683)
 
 ## [8.0.2](https://github.com/folio-org/ui-data-import/tree/v8.0.2) (2024-11-21)
 
