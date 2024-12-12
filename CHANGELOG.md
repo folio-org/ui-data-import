@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [7.1.11] (IN PROGRESS)
+
+### Bugs fixed
+* Rename permission after refactoring request for getting SRS MARC data (UIDATIMP-1688)
+
 ## [7.1.10](https://github.com/folio-org/ui-data-import/tree/v7.1.10) (2024-11-12)
 
 ### Bugs fixed:
