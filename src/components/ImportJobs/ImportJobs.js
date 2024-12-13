@@ -356,7 +356,8 @@ export class ImportJobs extends Component {
             cancelLabel={<FormattedMessage id="ui-data-import.cancel" />}
             onConfirm={() => {
               this.hideFilesExtensionsModal();
-              openDialogWindow();
+              // Ensure that any changes or state updates are completed before the dialog is opened
+              setTimeout(openDialogWindow, 0);
             }}
             onCancel={this.hideFilesExtensionsModal}
           />

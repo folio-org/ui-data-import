@@ -207,7 +207,7 @@ describe('Import Jobs component', () => {
 
       ConfirmationModal.mock.calls[0][0].onConfirm();
 
-      expect(mockOpenDialogWindow).toHaveBeenCalled();
+      await waitFor(() => expect(mockOpenDialogWindow).toHaveBeenCalled());
     });
   });
 });
