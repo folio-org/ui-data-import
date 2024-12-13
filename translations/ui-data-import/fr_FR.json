@@ -289,7 +289,7 @@
     "from": "De",
     "to": "À",
     "settings.mappingProfiles.map.administrativeData.field.discoverySuppress": "Masquer dans l'outil de découverte",
-    "settings.mappingProfiles.map.administrativeData.field.staffSuppress": "Supprimer de la vue du personnel",
+    "settings.mappingProfiles.map.administrativeData.field.staffSuppress": "Masquer de l'interface professionnelle",
     "settings.mappingProfiles.map.administrativeData.field.previouslyHeld": "Précédemment réservé",
     "settings.mappingProfiles.map.administrativeData.field.statisticalCodes.legend": "Codes statistiques",
     "settings.mappingProfiles.map.administrativeData.field.statisticalCode": "Code statistique",
