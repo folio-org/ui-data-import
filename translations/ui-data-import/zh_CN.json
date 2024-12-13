@@ -418,7 +418,7 @@
     "settings.mappingProfiles.map.instance.descriptiveData.field.classifications.addLabel": "添加分类",
     "settings.mappingProfiles.map.instance.descriptiveData.field.classificationTypeId": "分类标识符类型",
     "settings.mappingProfiles.map.instance.descriptiveData.field.classificationNumber": "分类",
-    "settings.mappingProfiles.map.instance.relationship.section": "实例关系（分析和绑定）",
+    "settings.mappingProfiles.map.instance.relationship.section": "实例关系",
     "settings.mappingProfiles.map.instance.field.parentInstances.legend": "父实例",
     "settings.mappingProfiles.map.instance.field.parentInstances.addLabel": "添加父实例",
     "settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId": "父实例",
