@@ -357,7 +357,7 @@ export class ImportJobs extends Component {
             onConfirm={() => {
               this.hideFilesExtensionsModal();
               // Ensure that any changes or state updates are completed before the dialog is opened
-              setTimeout(() => openDialogWindow(), 0);
+              setTimeout(openDialogWindow, 0);
             }}
             onCancel={this.hideFilesExtensionsModal}
           />
