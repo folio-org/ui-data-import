@@ -5,6 +5,8 @@
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
 
+## [8.0.5](https://github.com/folio-org/ui-data-import/tree/v8.0.5) (2024-12-19)
+
 ### Bugs fixed:
 * Trigger file selection window to open after click `Choose other files to upload` button. (UIDATIMP-1683)
 
