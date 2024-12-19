@@ -54,6 +54,11 @@
 * Add missing `source-storage.sourceRecords.get` permission. (UIDATIMP-1652)
 * Display correctly "Percentage" and "Currency" fields for orders and invoices. (UIDATIMP-1666)
 
+## [7.1.11](https://github.com/folio-org/ui-data-import/tree/v7.1.11) (2024-12-17)
+
+### Bugs fixed
+* Rename permission after refactoring request for getting SRS MARC data (UIDATIMP-1688)
+
 ## [7.1.10](https://github.com/folio-org/ui-data-import/tree/v7.1.10) (2024-11-12)
 
 ### Bugs fixed:
