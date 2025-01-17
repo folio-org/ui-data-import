@@ -776,7 +776,7 @@
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.subTotal": "Subtotal",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.adjustmentsTotal": "Ajustes totais",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.total": "Montante total calculado",
-    "settings.mappingProfiles.map.invoice.invoiceInformation.field.isLockTotal": "Total de bloqueio",
+    "settings.mappingProfiles.map.invoice.invoiceInformation.field.isLockTotal": "Total de suspensão",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.lockTotal": "Montante total bloqueado",
     "settings.mappingProfiles.map.invoice.invoiceInformation.field.note": "Nota",
     "settings.mappingProfiles.map.invoice.invoiceAdjustments.section": "Ajustes na fatura",
