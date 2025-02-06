@@ -157,7 +157,7 @@ describe('MappingProfilesForm component', () => {
   });
 
   describe('when user is in central tenant', () => {
-    it('should render "Instance", "MARC Bibliographic" and "MARC Authority" folio record types', () => {
+    it('should render "Instance", "Order", "Invoice", "MARC Bibliographic" and "MARC Authority" folio record types', () => {
       spyOnCheckIfUserInCentralTenant.mockReturnValue(true);
 
       const { container } = renderMappingProfilesForm(mappingProfilesFormProps);
@@ -166,11 +166,11 @@ describe('MappingProfilesForm component', () => {
 
       expect(within(folioRecordTypesContainer).queryByText('Holdings')).not.toBeInTheDocument();
       expect(within(folioRecordTypesContainer).queryByText('Item')).not.toBeInTheDocument();
-      expect(within(folioRecordTypesContainer).queryByText('Order')).not.toBeInTheDocument();
-      expect(within(folioRecordTypesContainer).queryByText('Invoice')).not.toBeInTheDocument();
       expect(within(folioRecordTypesContainer).queryByText('MARC Holdings')).not.toBeInTheDocument();
 
       expect(within(folioRecordTypesContainer).getByText('Instance')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).queryByText('Order')).toBeInTheDocument();
+      expect(within(folioRecordTypesContainer).queryByText('Invoice')).toBeInTheDocument();
       expect(within(folioRecordTypesContainer).getByText('MARC Bibliographic')).toBeInTheDocument();
       expect(within(folioRecordTypesContainer).getByText('MARC Authority')).toBeInTheDocument();
     });

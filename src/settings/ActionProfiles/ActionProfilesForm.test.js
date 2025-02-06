@@ -161,19 +161,19 @@ describe('ActionProfilesForm component', () => {
     });
 
     describe('when user is in central tenant', () => {
-      it('should render "Instance", "MARC Bibliographic" and "MARC Authority" record types', () => {
+      it('should render "Instance", "Order", "Invoice", "MARC Bibliographic" and "MARC Authority" record types', () => {
         spyOnCheckIfUserInCentralTenant.mockReturnValue(true);
 
         const { container } = renderActionProfilesForm(actionProfilesFormProps());
 
         expect(container.querySelector('[value="INSTANCE"]')).toBeDefined();
+        expect(container.querySelector('[value="ORDER"]')).toBeDefined();
+        expect(container.querySelector('[value="INVOICE"]')).toBeDefined();
         expect(container.querySelector('[value="MARC_BIBLIOGRAPHIC"]')).toBeDefined();
         expect(container.querySelector('[value="MARC_HOLDINGS"]')).toBeDefined();
 
         expect(container.querySelector('[value="HOLDINGS"]')).not.toBeInTheDocument();
         expect(container.querySelector('[value="ITEM"]')).not.toBeInTheDocument();
-        expect(container.querySelector('[value="ORDER"]')).not.toBeInTheDocument();
-        expect(container.querySelector('[value="INVOICE"]')).not.toBeInTheDocument();
       });
     });
 
