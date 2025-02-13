@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "8.0.5",
+  "version": "8.1.5",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -170,7 +170,8 @@
     "okapiInterfaces": {
       "data-import": "3.2",
       "source-manager-job-executions": "3.4",
-      "data-import-converter-storage": "1.5"
+      "data-import-converter-storage": "1.5",
+      "settings": "1.0"
     },
     "permissionSets": [
       {
@@ -186,7 +187,7 @@
           "change-manager.jobExecutions.item.get",
           "change-manager.jobExecutions.children.collection.get",
           "change-manager.records.delete",
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
           "converter-storage.actionprofile.item.get",
           "converter-storage.actionprofile.collection.get",
           "converter-storage.jobprofile.item.get",
@@ -290,7 +291,7 @@
           "settings.data-import.enabled",
           "acquisitions-units.units.collection.get",
           "batch-groups.collection.get",
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
           "converter-storage.actionprofile.delete",
           "converter-storage.actionprofile.item.get",
           "converter-storage.actionprofile.collection.get",
@@ -368,7 +369,7 @@
           "settings.data-import.enabled",
           "acquisitions-units.units.collection.get",
           "batch-groups.collection.get",
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
           "converter-storage.actionprofile.item.get",
           "converter-storage.actionprofile.collection.get",
           "converter-storage.field-protection-settings.item.get",
