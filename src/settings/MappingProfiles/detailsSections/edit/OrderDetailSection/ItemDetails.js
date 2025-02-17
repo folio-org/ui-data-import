@@ -274,7 +274,6 @@ export const ItemDetails = ({
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor`} />}
                       name={ITEM_DETAILS_FIELDS_MAP.CONTRIBUTOR(index)}
                       validate={[validation]}
-                      required
                     />
                   )}
                 </WithValidation>
@@ -292,7 +291,6 @@ export const ItemDetails = ({
                     wrapperSourcePath: 'contributorNameTypes'
                   }]}
                   okapi={okapi}
-                  required
                 />
               </Col>
             </Row>
