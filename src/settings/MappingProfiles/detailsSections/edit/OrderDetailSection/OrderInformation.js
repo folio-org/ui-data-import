@@ -482,20 +482,20 @@ const OrderInformationComponent = ({
 OrderInformationComponent.manifest = Object.freeze({
   purchaseOrderLinesLimitSetting: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==poLines-limit)',
+    path: 'settings/entries?query=(scope==orders and key==poLines-limit)',
     accumulate: true,
   },
   isApprovalRequired: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==approvals)',
+    path: 'settings/entries?query=(scope==orders and key==approvals)',
   },
   userCanEditPONumber: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==orderNumber)',
+    path: 'settings/entries?query=(scope==orders and key==orderNumber)',
   },
   addresses: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==TENANT and configName==tenant.addresses) sortBy value',
+    path: 'settings/entries?query=(scope==orders and key==tenant.addresses) sortBy value',
   },
 });
 

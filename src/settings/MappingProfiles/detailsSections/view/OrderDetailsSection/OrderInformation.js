@@ -342,7 +342,7 @@ OrderInformation.propTypes = {
 OrderInformation.manifest = Object.freeze({
   purchaseOrderLinesLimitSetting: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==poLines-limit)',
+    path: 'settings/entries?query=(scope==orders and key==poLines-limit)',
   },
   user: {
     type: 'okapi',
@@ -353,7 +353,7 @@ OrderInformation.manifest = Object.freeze({
   },
   addresses: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==TENANT and configName==tenant.addresses) sortBy value',
+    path: 'settings/entries?query=(scope==tenant and key==tenant.addresses) sortBy value',
   },
 });
 
