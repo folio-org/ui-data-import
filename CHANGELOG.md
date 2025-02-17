@@ -4,6 +4,7 @@
 
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
+* Add `required: true` to contributor and vendorDetail fields to the Order Mapping Profile. (UIDATIMP-1709)
 
 ## [8.0.5](https://github.com/folio-org/ui-data-import/tree/v8.0.5) (2024-12-19)
 

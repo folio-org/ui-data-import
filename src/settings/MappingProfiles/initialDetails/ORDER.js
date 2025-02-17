@@ -151,11 +151,13 @@ const ORDER = {
       fields: [{
         name: 'contributor',
         enabled: true,
+        required: true,
         path: 'order.poLine.contributors[].contributor',
         value: '',
       }, {
         name: 'contributorNameTypeId',
         enabled: true,
+        required: true,
         path: 'order.poLine.contributors[].contributorNameTypeId',
         value: '',
       }],
@@ -301,11 +303,13 @@ const ORDER = {
       fields: [{
         name: 'refNumber',
         enabled: true,
+        required: true,
         path: 'order.poLine.vendorDetail.referenceNumbers[].refNumber',
         value: '',
       }, {
         name: 'refNumberType',
         enabled: true,
+        required: true,
         path: 'order.poLine.vendorDetail.referenceNumbers[].refNumberType',
         value: '',
       }],

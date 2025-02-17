@@ -123,6 +123,7 @@ export const Vendor = ({
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumber`} />}
                     name={VENDOR_FIELDS_MAP.VENDOR_REF_NUMBER(index)}
                     validate={[validation]}
+                    required
                   />
                 )}
               </WithValidation>
@@ -137,6 +138,7 @@ export const Vendor = ({
                 wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
                 acceptedValuesList={vendorRefTypeOptions}
                 okapi={okapi}
+                required
               />
             </Col>
           </Row>
