@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
+  flow,
   get,
   omit,
 } from 'lodash';
@@ -37,10 +38,7 @@ const mapStateToProps = state => {
   return { selectedRecord };
 };
 
-@withCheckboxList()
-@stripesConnect
-@connect(mapStateToProps)
-export class FileExtensions extends Component {
+class FileExtensionsComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: { initialValue: {} },
@@ -157,3 +155,9 @@ export class FileExtensions extends Component {
     return <ListView {...resultedProps} />;
   }
 }
+
+export const FileExtensions = flow([
+  () => withCheckboxList(FileExtensionsComponent),
+  stripesConnect,
+  connect(mapStateToProps),
+])();

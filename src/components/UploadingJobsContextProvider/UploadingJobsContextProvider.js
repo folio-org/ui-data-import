@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   every,
+  flow,
   isEmpty,
 } from 'lodash';
 
@@ -23,9 +24,7 @@ import { getStorageConfiguration } from '../../utils/multipartUpload';
 import * as API from '../../utils/upload';
 import { UploadingJobsContext } from '.';
 
-@withStripes
-@withOkapiKy
-export class UploadingJobsContextProvider extends Component {
+class UploadingJobsContextProviderComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     children: PropTypes.oneOfType([
@@ -139,3 +138,8 @@ export class UploadingJobsContextProvider extends Component {
     );
   }
 }
+
+export const UploadingJobsContextProvider = flow([
+  () => withStripes(UploadingJobsContextProviderComponent),
+  withOkapiKy,
+])();

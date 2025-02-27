@@ -9,6 +9,7 @@ import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import {
   debounce,
+  flow,
   get,
   upperFirst,
   noop,
@@ -48,9 +49,7 @@ import {
 
 import css from './SearchAndSort.css';
 
-@withRouter
-@withStripes
-export class SearchAndSort extends Component {
+class SearchAndSortComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     objectName: PropTypes.string.isRequired,
@@ -835,3 +834,8 @@ export class SearchAndSort extends Component {
     );
   }
 }
+
+export const SearchAndSort = flow([
+  () => withRouter(SearchAndSortComponent),
+  withStripes,
+])();

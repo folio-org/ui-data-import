@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
+  flow,
   get,
   forEach,
 } from 'lodash';
@@ -74,8 +75,7 @@ export function getJobSplittingURL(resources, splittingURL, nonSplitting) {
   return undefined;
 }
 
-@stripesConnect
-export class DataFetcher extends Component {
+class DataFetcherComponent extends Component {
   static manifest = Object.freeze({
     jobs: {
       type: 'okapi',
@@ -251,3 +251,5 @@ export class DataFetcher extends Component {
     );
   }
 }
+
+export const DataFetcher = stripesConnect(DataFetcherComponent);
