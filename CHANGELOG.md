@@ -5,6 +5,8 @@
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
 * Add `required: true` to contributor and vendorDetail fields to the Order Mapping Profile. (UIDATIMP-1709)
+* *BREAKING* Migrate stripes dependencies to their Sunflower versions. (UIDATIMP-1705)
+* *BREAKING* Migrate `react-intl` to v7. (UIDATIMP-1706)
 * CI: Switch to centralized/shared workflow. (UIDATIMP-1704)
 
 ## [8.0.5](https://github.com/folio-org/ui-data-import/tree/v8.0.5) (2024-12-19)
