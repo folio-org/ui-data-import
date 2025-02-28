@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router-dom';
+import { flow } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -107,8 +108,6 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
     ];
   const columnWidths = { name: '430px' };
 
-  @stripesConnect
-  @withRouter
   class JobProfiles extends Component {
     static manifest = Object.freeze({
       initializedFilterConfig: { initialValue: false },
@@ -217,5 +216,8 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
     }
   }
 
-  return JobProfiles;
+  return flow([
+    () => stripesConnect(JobProfiles),
+    withRouter,
+  ])();
 };

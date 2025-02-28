@@ -13,6 +13,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flow } from 'lodash';
 
 import {
   TitleManager,
@@ -131,10 +132,7 @@ const selectFormValues = state => {
   return { formValues: selector(state, 'items') };
 };
 
-@injectIntl
-@withStripes
-@connect(selectFormValues, mapDispatchToProps)
-export class MARCFieldProtection extends Component {
+class MARCFieldProtectionComponent extends Component {
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     intl: PropTypes.object.isRequired,
@@ -287,3 +285,9 @@ export class MARCFieldProtection extends Component {
     );
   }
 }
+
+export const MARCFieldProtection = flow([
+  () => injectIntl(MARCFieldProtectionComponent),
+  withStripes,
+  connect(selectFormValues, mapDispatchToProps),
+])();
