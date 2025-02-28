@@ -9,6 +9,7 @@
   "rules": {
     "import/prefer-default-export": "off",
     "import/no-cycle": "off",
+    "react/forbid-prop-types": "off", // TODO: Investigate possibility of using PropTypes.shape instead of PropTypes.object
     "react/prop-types": [
       "error",
       {
