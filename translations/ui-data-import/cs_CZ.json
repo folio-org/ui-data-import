@@ -325,7 +325,7 @@
     "settings.mappingProfiles.map.administrativeData.section": "Administrativní údaje",
     "settings.mappingProfiles.map.item.administrativeData.field.hrid": "HRID jednotky",
     "settings.mappingProfiles.map.item.administrativeData.field.barcode": "Čárový kód",
-    "settings.mappingProfiles.map.item.administrativeData.field.accessionNumber": "Přístupové číslo",
+    "settings.mappingProfiles.map.item.administrativeData.field.accessionNumber": "Přírůstkové číslo",
     "settings.mappingProfiles.map.identifiers.section": "Identifikátor",
     "settings.mappingProfiles.map.item.administrativeData.field.itemIdentifier": "Identifikátor jednotky",
     "settings.mappingProfiles.map.item.administrativeData.field.formerId.legend": "Původní identifikátory",
