@@ -9,6 +9,7 @@ import {
   Redirect,
 } from 'react-router';
 import {
+  flow,
   forEach,
   isEmpty,
 } from 'lodash';
@@ -41,9 +42,7 @@ import { permissions } from '../../utils';
 
 import sharedCss from '../../shared.css';
 
-@withRouter
-@withStripes
-export class ImportJobs extends Component {
+class ImportJobsComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
@@ -375,3 +374,8 @@ export class ImportJobs extends Component {
     );
   }
 }
+
+export const ImportJobs = flow([
+  () => withRouter(ImportJobsComponent),
+  withStripes,
+])();

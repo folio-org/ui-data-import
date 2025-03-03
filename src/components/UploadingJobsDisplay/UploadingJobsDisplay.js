@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import {
+  flow,
   isEmpty,
   map,
   omit,
@@ -48,11 +49,7 @@ import { MultipartUploader } from '../../utils/multipartUpload';
 import css from './UploadingJobsDisplay.css';
 import sharedCss from '../../shared.css';
 
-@withRouter
-@withStripes
-@withOkapiKy
-@injectIntl
-export class UploadingJobsDisplay extends Component {
+class UploadingJobsDisplayComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     history: PropTypes.shape({
@@ -664,3 +661,10 @@ export class UploadingJobsDisplay extends Component {
     );
   }
 }
+
+export const UploadingJobsDisplay = flow([
+  () => withRouter(UploadingJobsDisplayComponent),
+  withStripes,
+  withOkapiKy,
+  injectIntl,
+])();

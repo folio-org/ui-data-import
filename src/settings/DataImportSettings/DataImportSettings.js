@@ -7,6 +7,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flow } from 'lodash';
 
 import { Settings } from '@folio/stripes/smart-components';
 import { InfoPopover } from '@folio/stripes/components';
@@ -30,9 +31,7 @@ import {
 
 import css from './DataImportSettings.css';
 
-@injectIntl
-@withRoot
-export class DataImportSettings extends Component {
+class DataImportSettingsComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     root: PropTypes.shape({ addReducer: PropTypes.func.isRequired }).isRequired,
@@ -129,3 +128,8 @@ export class DataImportSettings extends Component {
     );
   }
 }
+
+export const DataImportSettings = flow([
+  () => injectIntl(DataImportSettingsComponent),
+  withRoot,
+])();

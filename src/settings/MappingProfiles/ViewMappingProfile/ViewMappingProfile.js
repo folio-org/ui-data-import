@@ -4,6 +4,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flow } from 'lodash';
 
 import {
   AppIcon,
@@ -70,10 +71,7 @@ import {
 
 import sharedCss from '../../../shared.css';
 
-@injectIntl
-@stripesConnect
-@withTags
-export class ViewMappingProfile extends Component {
+class ViewMappingProfileComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     mappingProfileView: {
@@ -444,3 +442,9 @@ export class ViewMappingProfile extends Component {
     );
   }
 }
+
+export const ViewMappingProfile = flow([
+  () => injectIntl(ViewMappingProfileComponent),
+  stripesConnect,
+  withTags,
+])();
