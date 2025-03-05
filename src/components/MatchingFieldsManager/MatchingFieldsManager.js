@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { flow, get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
@@ -16,9 +16,7 @@ import {
   PER_REQUEST_LIMIT,
 } from '../../utils';
 
-@injectIntl
-@stripesConnect
-export class MatchingFieldsManager extends Component {
+class MatchingFieldsManagerComponent extends Component {
   static manifest = Object.freeze({
     identifierTypes: {
       type: 'okapi',
@@ -175,3 +173,8 @@ export class MatchingFieldsManager extends Component {
     return this.props.children(contextData);
   }
 }
+
+export const MatchingFieldsManager = flow([
+  () => injectIntl(MatchingFieldsManagerComponent),
+  stripesConnect,
+]);

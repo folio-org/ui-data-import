@@ -7,8 +7,8 @@ import {
   isTranslationId,
 } from '../../utils';
 
-@injectIntl
-export class WithTranslation extends Component {
+
+class WithTranslationComponent extends Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
@@ -31,3 +31,5 @@ export class WithTranslation extends Component {
     return this.props.children(label);
   }
 }
+
+export const WithTranslation = injectIntl(WithTranslationComponent);

@@ -208,8 +208,7 @@ export const matchProfilesShape = {
   },
 };
 
-@stripesConnect
-export class MatchProfiles extends Component {
+class MatchProfilesComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: { initialValue: {} },
@@ -346,3 +345,6 @@ export class MatchProfiles extends Component {
     return <ListView {...resultedProps} />;
   }
 }
+
+export const MatchProfiles = stripesConnect(MatchProfilesComponent);
+

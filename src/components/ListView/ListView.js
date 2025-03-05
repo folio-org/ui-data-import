@@ -46,8 +46,7 @@ const defaultSelectedRecord = {
   hasLoaded: false,
 };
 
-@injectIntl
-export class ListView extends Component {
+class ListViewComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     resources: PropTypes.object.isRequired,
@@ -308,3 +307,5 @@ export class ListView extends Component {
     );
   }
 }
+
+export const ListView = injectIntl(ListViewComponent);

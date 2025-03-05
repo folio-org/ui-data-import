@@ -104,8 +104,7 @@ export const mappingProfilesShape = {
   },
 };
 
-@stripesConnect
-export class MappingProfiles extends Component {
+class MappingProfilesComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: { initialValue: {} },
@@ -201,3 +200,5 @@ export class MappingProfiles extends Component {
     return <ListView {...resultedProps} />;
   }
 }
+
+export const MappingProfiles = stripesConnect(MappingProfilesComponent);
