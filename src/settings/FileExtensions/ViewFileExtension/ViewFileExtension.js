@@ -39,9 +39,7 @@ import {
 
 import sharedCss from '../../../shared.css';
 
-@injectIntl
-@stripesConnect
-export class ViewFileExtension extends Component {
+class ViewFileExtensionComponent extends Component {
   static manifest = Object.freeze({
     fileExtension: {
       type: 'okapi',
@@ -288,3 +286,6 @@ export class ViewFileExtension extends Component {
     return this.renderFileExtension(record);
   }
 }
+
+export const ViewFileExtension = stripesConnect(injectIntl(ViewFileExtensionComponent));
+

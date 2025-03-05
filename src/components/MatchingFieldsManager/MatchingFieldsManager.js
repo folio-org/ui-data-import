@@ -16,9 +16,7 @@ import {
   PER_REQUEST_LIMIT,
 } from '../../utils';
 
-@injectIntl
-@stripesConnect
-export class MatchingFieldsManager extends Component {
+class MatchingFieldsManagerComponent extends Component {
   static manifest = Object.freeze({
     identifierTypes: {
       type: 'okapi',
@@ -175,3 +173,6 @@ export class MatchingFieldsManager extends Component {
     return this.props.children(contextData);
   }
 }
+
+export const MatchingFieldsManager = stripesConnect(injectIntl(MatchingFieldsManagerComponent));
+
