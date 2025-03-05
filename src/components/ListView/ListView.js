@@ -309,3 +309,4 @@ class ListViewComponent extends Component {
 }
 
 export const ListView = injectIntl(ListViewComponent);
+

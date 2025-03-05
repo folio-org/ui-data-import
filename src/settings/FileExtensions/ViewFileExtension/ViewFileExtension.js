@@ -4,7 +4,6 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { flow } from 'lodash';
 
 import {
   TitleManager,
@@ -289,3 +288,4 @@ class ViewFileExtensionComponent extends Component {
 }
 
 export const ViewFileExtension = stripesConnect(injectIntl(ViewFileExtensionComponent));
+

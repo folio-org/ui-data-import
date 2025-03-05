@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { flow, get } from 'lodash';
+import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {

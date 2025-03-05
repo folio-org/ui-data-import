@@ -33,3 +33,4 @@ class WithTranslationComponent extends Component {
 }
 
 export const WithTranslation = injectIntl(WithTranslationComponent);
+
