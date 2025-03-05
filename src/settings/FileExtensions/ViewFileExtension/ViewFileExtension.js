@@ -288,7 +288,4 @@ class ViewFileExtensionComponent extends Component {
   }
 }
 
-export const ViewFileExtension = flow([
-  () => injectIntl(ViewFileExtensionComponent),
-  stripesConnect,
-]);
+export const ViewFileExtension = stripesConnect(injectIntl(ViewFileExtensionComponent));

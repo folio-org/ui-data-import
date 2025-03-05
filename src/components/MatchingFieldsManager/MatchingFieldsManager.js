@@ -174,7 +174,5 @@ class MatchingFieldsManagerComponent extends Component {
   }
 }
 
-export const MatchingFieldsManager = flow([
-  () => injectIntl(MatchingFieldsManagerComponent),
-  stripesConnect,
-]);
+export const MatchingFieldsManager = stripesConnect(injectIntl(MatchingFieldsManagerComponent));
+
