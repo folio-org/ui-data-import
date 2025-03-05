@@ -144,7 +144,7 @@ describe('TextDate component', () => {
 
       const calendarContainer = container.querySelector('.calendar');
 
-      fireEvent.click(getByText('23'));
+      fireEvent.click(getByText('20'));
 
       expect(calendarContainer).not.toBeVisible();
     });
