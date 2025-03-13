@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [8.1.0] (IN PROGRESS)
+## [9.0.0](https://github.com/folio-org/ui-data-import/tree/v9.0.0) (2025-03-13)
 
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
@@ -9,6 +9,7 @@
 * *BREAKING* Migrate `react-intl` to v7. (UIDATIMP-1706)
 * CI: Switch to centralized/shared workflow. (UIDATIMP-1704)
 * Apply wrappers with `flow()` instead of annotations. (UIDATIMP-1712)
+* Make TextDate.test.js robust to March, 2025 (UIDATIMP-1715)
 
 ## [8.0.5](https://github.com/folio-org/ui-data-import/tree/v8.0.5) (2024-12-19)
 
