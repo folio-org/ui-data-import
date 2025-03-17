@@ -157,7 +157,7 @@ class FileExtensionsComponent extends Component {
 }
 
 export const FileExtensions = flow([
-  () => withCheckboxList()(FileExtensionsComponent),
-  stripesConnect,
+  () => stripesConnect(FileExtensionsComponent),
+  withCheckboxList(),
   connect(mapStateToProps),
 ])();

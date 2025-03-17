@@ -445,6 +445,6 @@ class ViewMappingProfileComponent extends Component {
 
 export const ViewMappingProfile = flow([
   () => injectIntl(ViewMappingProfileComponent),
-  stripesConnect,
   withTags,
+  stripesConnect,
 ])();

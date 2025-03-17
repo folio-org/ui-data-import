@@ -367,6 +367,6 @@ class ViewMatchProfileComponent extends Component {
 
 export const ViewMatchProfile = flow([
   () => injectIntl(ViewMatchProfileComponent),
+  withTags,
   stripesConnect,
-  withTags
 ])();
