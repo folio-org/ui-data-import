@@ -373,7 +373,7 @@ class ViewActionProfileComponent extends Component {
 
 export const ViewActionProfile = flow([
   () => injectIntl(ViewActionProfileComponent),
-  stripesConnect,
   withTags,
+  stripesConnect,
   withRouter,
 ])();
