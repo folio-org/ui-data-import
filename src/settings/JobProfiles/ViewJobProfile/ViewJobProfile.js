@@ -9,7 +9,10 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { get } from 'lodash';
+import {
+  flow,
+  get,
+} from 'lodash';
 
 import {
   Pane,
@@ -63,7 +66,6 @@ import {
   loadRecords,
   getEntity,
   getEntityTags,
-  compose,
   createUrlFromArray,
   FILE_STATUSES,
   showActionMenu,
@@ -645,7 +647,7 @@ ViewJobProfileComponent.propTypes = {
   accordionStatusRef: PropTypes.object,
 };
 
-export const ViewJobProfile = compose(
+export const ViewJobProfile = flow([
+  () => withTags(ViewJobProfileComponent),
   stripesConnect,
-  withTags,
-)(ViewJobProfileComponent);
+])();
