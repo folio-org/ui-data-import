@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [9.0.1] (IN PROGRESS)
+## [9.0.1](https://github.com/folio-org/ui-data-import/tree/v9.0.1) (2025-03-28)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
