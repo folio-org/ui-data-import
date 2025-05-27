@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
+* Fix stuck Progress Bar in import files. (UIDATIMP-1725)
 
 ## [9.0.0](https://github.com/folio-org/ui-data-import/tree/v9.0.0) (2025-03-13)
 
