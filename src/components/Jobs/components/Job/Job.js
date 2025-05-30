@@ -275,7 +275,7 @@ const JobComponent = ({
   const jobMeta = jobMetaTypes[uiStatus](job);
   const dateLabelId = `ui-data-import.${jobMeta.dateLabel}Running`;
   const isDeletionInProgress = showCancelJobModal || deletionInProgress;
-  const currentProgress = current <= total ? current : 100;
+  const currentProgress = current <= total ? current : total;
 
   return (
     <li
