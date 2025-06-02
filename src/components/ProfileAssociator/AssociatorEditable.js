@@ -41,6 +41,7 @@ export const AssociatorEditable = memo(({
   onLink = noop,
   onUnlink = noop,
   isEditMode = false,
+  filterByRecordType = '',
 }) => {
   const [currentData, setCurrentData] = useState([]);
   const [current, setCurrent] = useState(null);
@@ -158,6 +159,7 @@ export const AssociatorEditable = memo(({
         searchLabel={<FormattedMessage id="ui-data-import.settings.profile.select" />}
         searchButtonStyle="default"
         onLink={link}
+        filterByRecordType={filterByRecordType}
         entityKey={entityKey}
         parentType={parentType}
         masterType={masterType}
@@ -218,4 +220,5 @@ AssociatorEditable.propTypes = {
   onLink: PropTypes.func,
   onUnlink: PropTypes.func,
   isEditMode: PropTypes.bool,
+  filterByRecordType: PropTypes.string,
 };
