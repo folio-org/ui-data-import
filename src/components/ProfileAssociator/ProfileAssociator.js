@@ -37,6 +37,7 @@ export const ProfileAssociator = memo(({
   onUnlink = noop,
   dataAttributes = null,
   isEditMode = false,
+  filterByRecordType = '',
 }) => {
   const profiles = {
     [ENTITY_KEYS.JOB_PROFILES]: jobProfilesShape,
@@ -94,6 +95,7 @@ export const ProfileAssociator = memo(({
               onUnlink={onUnlink}
               dataAttributes={dataAttributes}
               isEditMode={isEditMode}
+              filterByRecordType={filterByRecordType}
             />
           )}
         </>
@@ -123,4 +125,5 @@ ProfileAssociator.propTypes = {
   relationsToDelete: PropTypes.arrayOf(PropTypes.object),
   onLink: PropTypes.func,
   onUnlink: PropTypes.func,
+  filterByRecordType: PropTypes.string,
 };

@@ -313,6 +313,7 @@ export const ActionProfilesFormComponent = ({
                 onLink={addRelations}
                 onUnlink={deleteRelations}
                 isEditMode={isEditMode}
+                filterByRecordType={folioRecord}
               />
               <Field
                 name="addedRelations"
