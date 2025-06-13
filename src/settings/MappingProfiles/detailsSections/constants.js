@@ -75,6 +75,7 @@ export const VENDOR_VISIBLE_COLUMNS = {
 };
 
 export const ALLOWED_PROD_ID_TYPE_NAMES = [
+  'LCCN',
   'ASIN',
   'CODEN',
   'DOI',

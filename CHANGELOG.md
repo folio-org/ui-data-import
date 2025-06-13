@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [9.0.2](https://github.com/folio-org/ui-data-import/tree/v9.0.2) (2025-06-26)
+
+### Bugs fixed:
+* Add "LCCN" accepted value for Product ID in Orders Field Mapping Profiles. (UIDATIMP-2737)
+
 ## [9.0.1](https://github.com/folio-org/ui-data-import/tree/v9.0.1) (2025-03-28)
 
 ### Bugs fixed:
