@@ -3,7 +3,8 @@
 ## [9.1.0] (IN PROGRESS)
 
 ### Features added:
-* Action profile: limit the list of linkable field mapping profiles based on FOLIO record type (UIDATIMP-1328)
+* Action profile: limit the list of linkable field mapping profiles based on FOLIO record type (UIDATIMP-1328).
+* Add "LCCN" accepted value for Product ID in Orders Field Mapping Profiles. (UIDATIMP-2737).
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
