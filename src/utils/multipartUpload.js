@@ -41,7 +41,7 @@ function finishUpload(eTags, key, uploadId, uploadDefinitionId, fileDefinitionId
 }
 
 export function trimLeadNumbers(name) {
-  return name ? name.replace(/^\d*-/, '') : '';
+  return name ? name.replace(/^\d+-/, '') : '';
 }
 
 export class MultipartUploader {
