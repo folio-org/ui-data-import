@@ -115,6 +115,10 @@ describe('trimLeadNumbers function', () => {
     expect(trimLeadNumbers('1930490-test')).toBe('test');
   });
 
+  it('removes first leading digits from string', () => {
+    expect(trimLeadNumbers('123123-1930490-test')).toBe('1930490-test');
+  });
+
   it('returns original for strings without lead numbers', () => {
     expect(trimLeadNumbers('test')).toBe('test');
   });

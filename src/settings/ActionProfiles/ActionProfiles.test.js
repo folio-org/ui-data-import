@@ -15,8 +15,7 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import { actionProfilesShape } from '.';
-import { ActionProfiles } from './ActionProfiles';
+import { ActionProfiles, actionProfilesShape } from './ActionProfiles';
 
 import {
   OCLC_CREATE_INSTANCE_ACTION_ID,

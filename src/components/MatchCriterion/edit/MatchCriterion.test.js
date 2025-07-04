@@ -10,12 +10,20 @@ import '../../../../test/jest/__mock__';
 
 import { MatchCriterion } from './MatchCriterion';
 
-jest.mock('.', () => ({
-  MARCFieldSection: () => <span>MARCFieldSection</span>,
-  IncomingSectionStatic: () => <span>IncomingSectionStatic</span>,
-  QualifierSection: () => <span>QualifierSection</span>,
-  QualifierPartSection: () => <span>QualifierPartSection</span>,
-  ExistingSectionFolio: () => <span>ExistingSectionFolio</span>,
+jest.mock('./MARCFieldSection', () => ({
+  MARCFieldSection: () => <span>MARCFieldSection</span>
+}));
+jest.mock('./IncomingSectionStatic', () => ({
+  IncomingSectionStatic: () => <span>IncomingSectionStatic</span>
+}));
+jest.mock('./QualifierSection', () => ({
+  QualifierSection: () => <span>QualifierSection</span>
+}));
+jest.mock('./QualifierPartSection', () => ({
+  QualifierPartSection: () => <span>QualifierPartSection</span>
+}));
+jest.mock('./ExistingRecordSections', () => ({
+  ExistingSectionFolio: () => <span>ExistingSectionFolio</span>
 }));
 
 const onEachChangeMock = jest.fn();

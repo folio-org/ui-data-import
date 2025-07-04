@@ -11,13 +11,11 @@ import {
 } from '@folio/stripes/components';
 
 import { Section } from '../..';
-import {
-  MARCFieldSection,
-  IncomingSectionStatic,
-  QualifierSection,
-  QualifierPartSection,
-  ExistingSectionFolio,
-} from '.';
+import { MARCFieldSection } from './MARCFieldSection';
+import { IncomingSectionStatic } from './IncomingSectionStatic';
+import { QualifierSection } from './QualifierSection';
+import { QualifierPartSection } from './QualifierPartSection';
+import { ExistingSectionFolio } from './ExistingRecordSections';
 
 import {
   CRITERION_TYPES_OPTIONS,

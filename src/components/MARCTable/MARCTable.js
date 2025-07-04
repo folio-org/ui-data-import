@@ -9,17 +9,12 @@ import {
   cloneDeep,
 } from 'lodash';
 
-import {
-  MARCTableHeader,
-  MARCTableRowContainer,
-} from '.';
+import { MARCTableHeader } from './MARCTableHeader';
+import { MARCTableRowContainer } from './MARCTableRowContainer';
 
 import css from './MARCTable.css';
 
-import {
-  fillEmptyFieldsWithValue,
-  mappingMARCFieldShape,
-} from '../../utils';
+import { mappingMARCFieldShape, fillEmptyFieldsWithValue } from '../../utils';
 
 const defaultColumnWidths = {
   arrows: '70px',

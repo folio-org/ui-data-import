@@ -13,10 +13,8 @@ import {
   Dropdown,
 } from '@folio/stripes/components';
 
-import {
-  LinkerMenu,
-  LinkerTrigger,
-} from '.';
+import { LinkerMenu } from './LinkerMenu';
+import { LinkerTrigger } from './LinkerTrigger';
 
 import {
   PROFILE_RELATION_TYPES,
