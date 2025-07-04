@@ -4,12 +4,14 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import {
+  isFormattedMessage,
+  isTranslationId,
+} from './formUtils';
+import {
   BOOLEAN_ACTIONS,
   ENTITY_KEYS,
   FORMS_SETTINGS,
-  isFormattedMessage,
-  isTranslationId,
-} from '.';
+} from './constants';
 
 export const getDecoratorValue = value => {
   const booleanActions = get(FORMS_SETTINGS, [ENTITY_KEYS.MAPPING_PROFILES, 'DECORATORS', 'BOOLEAN_ACTIONS'], []);

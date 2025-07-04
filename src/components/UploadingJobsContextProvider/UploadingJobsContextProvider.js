@@ -19,10 +19,9 @@ import {
 } from '@folio/stripes/core';
 import { createUrl } from '@folio/stripes-data-transfer-components';
 
-import { FILE_STATUSES } from '../../utils/constants';
-import { getStorageConfiguration } from '../../utils/multipartUpload';
+import { FILE_STATUSES, getStorageConfiguration } from '../../utils';
 import * as API from '../../utils/upload';
-import { UploadingJobsContext } from '.';
+import { UploadingJobsContext } from './UploadingJobsContext';
 
 class UploadingJobsContextProviderComponent extends Component {
   static propTypes = {

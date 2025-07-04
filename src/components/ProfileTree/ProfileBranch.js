@@ -24,10 +24,8 @@ import { Accordion } from '@folio/stripes/components';
 
 import { TreeLine } from '../TreeLine';
 
-import {
-  ProfileLabel,
-  ProfileLinker,
-} from '.';
+import { ProfileLabel } from './ProfileLabel';
+import { ProfileLinker } from './ProfileLinker';
 import { setCurrentProfileTreeContent } from '../../redux';
 
 import css from './ProfileTree.css';
