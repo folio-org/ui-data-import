@@ -10,6 +10,8 @@ import { trimLeadNumbers } from './multipartUpload';
 export const fileNameCellFormatter = (record, location, shouldTrimNumbers) => {
   const { pathname, search } = location;
 
+  const linkText = shouldTrimNumbers ? trimLeadNumbers(record.fileName) : record.fileName;
+
   return (
     <TextLink
       to={{
@@ -17,7 +19,7 @@ export const fileNameCellFormatter = (record, location, shouldTrimNumbers) => {
         state: { from: `${pathname}${search}` },
       }}
     >
-      {record.fileName ? (shouldTrimNumbers ? trimLeadNumbers(record.fileName) : record.fileName) : <NoValue />}
+      {record.fileName ? linkText : <NoValue />}
     </TextLink>
   );
 };
