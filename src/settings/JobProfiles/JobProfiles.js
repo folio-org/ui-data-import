@@ -7,11 +7,9 @@ import { flow } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { ListView } from '../../components';
-import {
-  ViewJobProfile,
-  CreateJobProfile,
-  EditJobProfile,
-} from '.';
+import { ViewJobProfile } from './ViewJobProfile';
+import { CreateJobProfile } from './CreateJobProfile';
+import { EditJobProfile } from './EditJobProfile';
 
 import {
   getSortQuery,

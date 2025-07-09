@@ -6,11 +6,9 @@ import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import { ListView } from '../../components';
-import {
-  ViewMappingProfile,
-  CreateMappingProfile,
-  EditMappingProfile,
-} from '.';
+import { ViewMappingProfile } from './ViewMappingProfile';
+import { CreateMappingProfile } from './CreateMappingProfile';
+import { EditMappingProfile } from './EditMappingProfile';
 
 import {
   getSortQuery,

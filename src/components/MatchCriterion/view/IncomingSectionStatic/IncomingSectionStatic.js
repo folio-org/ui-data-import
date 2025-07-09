@@ -9,12 +9,10 @@ import {
 } from '@folio/stripes/components';
 
 import { Section } from '../../..';
-import {
-  StaticValueText,
-  StaticValueNumber,
-  StaticValueDate,
-  StaticValueDateRange,
-} from '.';
+import { StaticValueText } from './StaticValueText';
+import { StaticValueNumber } from './StaticValueNumber';
+import { StaticValueDate } from './StaticValueDate';
+import { StaticValueDateRange } from './StaticValueDateRange';
 
 import {
   STATIC_VALUE_TYPES,

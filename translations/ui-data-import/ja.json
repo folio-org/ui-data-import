@@ -791,7 +791,7 @@
     "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.ByQuantity": "数量",
     "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.NotProrated": "Not prorated",
     "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.relationToTotal": "合計との関係",
-    "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.InAdditionTo": "In addition to",
+    "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.InAdditionTo": "In addition to（追加）",
     "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.IncludedIn": "Included in",
     "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.prorate.SeparateFrom": "Separate from",
     "settings.mappingProfiles.map.invoice.invoiceAdjustments.field.exportToAccounting": "会計にエクスポート",

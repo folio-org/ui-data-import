@@ -32,10 +32,8 @@ import {
   STATE_MANAGEMENT,
   okapiShape,
 } from '../../utils';
-import {
-  ProfileBranch,
-  ProfileLinker,
-} from '.';
+import { ProfileBranch } from './ProfileBranch';
+import { ProfileLinker } from './ProfileLinker';
 
 import css from './ProfileTree.css';
 

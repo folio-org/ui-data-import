@@ -14,9 +14,9 @@ import '../../../test/jest/__mock__';
 
 import {
   DataFetcher,
-  DataFetcherContext,
   getJobSplittingURL,
-} from '.';
+} from './DataFetcher';
+import { DataFetcherContext } from './DataFetcherContext';
 
 const reset = () => {};
 const successGET = () => new Promise((resolve, _) => process.nextTick(() => resolve()));

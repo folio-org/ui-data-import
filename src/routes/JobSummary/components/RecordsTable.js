@@ -32,7 +32,7 @@ import {
   OrderCell,
   InvoiceCell,
   ErrorCell,
-} from '.';
+} from './cells';
 import {
   BaseLineCell,
   groupAndSortDataForRender,

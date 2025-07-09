@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { isEmpty } from 'lodash';
 
-import { getTrimmedValue } from '.';
+import { getTrimmedValue } from './getTrimmedValue';
 
 const REMOVE_OPTION_VALUE = '###REMOVE###';
 
