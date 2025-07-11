@@ -15,6 +15,7 @@ import {
   stripesShape,
   TitleManager,
   withRoot,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 
 import { createJobProfiles } from '../JobProfiles';
@@ -50,6 +51,8 @@ class DataImportSettingsComponent extends Component {
     }
   }
 
+  shouldHideDefaultCreateHoldingProfile = checkIfUserInCentralTenant(this.props.stripes);
+
   sections = [
     {
       label: this.renderProfilesLabel(),
@@ -57,7 +60,7 @@ class DataImportSettingsComponent extends Component {
         {
           route: 'job-profiles',
           label: generateSettingsLabel('jobProfiles.title', 'jobProfiles'),
-          component: createJobProfiles(),
+          component: createJobProfiles(false, '', false, this.shouldHideDefaultCreateHoldingProfile),
         },
         {
           route: 'match-profiles',

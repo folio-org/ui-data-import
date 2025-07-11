@@ -20,6 +20,7 @@ import {
   OCLC_UPDATE_INSTANCE_JOB_ID,
   QUICKMARK_DERIVE_CREATE_BIB_JOB_ID,
   QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID,
+  DEFAULT_CREATE_HOLDINGS_JOB_ID,
 } from '../../utils';
 
 // big numbers to get rid of infinite scroll
@@ -95,7 +96,12 @@ export const jobProfilesShape = {
 };
 
 // TODO: this code could possibly be rewritten when https://issues.folio.org/browse/STCON-86 is done
-export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', hideDefaultProfiles = false) => {
+export const createJobProfiles = (
+  chooseJobProfile = false,
+  dataTypeQuery = '',
+  hideDefaultProfiles = false,
+  hideDefaultCreateHoldingProfile = false,
+) => {
   const visibleColumns = chooseJobProfile
     ? jobProfilesShape.visibleColumns
     : [
@@ -126,6 +132,9 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
           const withoutDefaultProfiles = hideDefaultProfiles
             ? `AND id<>(${OCLC_CREATE_INSTANCE_JOB_ID} AND ${OCLC_UPDATE_INSTANCE_JOB_ID} AND ${QUICKMARK_DERIVE_CREATE_BIB_JOB_ID} AND ${QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID})`
             : '';
+          const withoutDefaultCreateHoldingProfile = hideDefaultCreateHoldingProfile
+            ? `AND id<>${DEFAULT_CREATE_HOLDINGS_JOB_ID}`
+            : '';
           const queryTemplate = chooseJobProfile
             ? 'AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")'
             : '(name="%{query.query}*" OR tags.tagList="%{query.query}*")';
@@ -144,7 +153,7 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
           const search = _r?.query?.query;
           const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
           const searchQuery = search ? `${chooseJobProfile ? '' : 'AND '}${getSearchQuery(queryTemplate, search)}` : '';
-          const query = `${findAll} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
+          const query = `${findAll} ${withoutDefaultProfiles} ${withoutDefaultCreateHoldingProfile} ${searchQuery} ${sortQuery}`;
 
           return { query };
         },
