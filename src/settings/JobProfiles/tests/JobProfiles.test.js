@@ -18,10 +18,13 @@ import {
   translationsProperties,
 } from '../../../../test/jest/helpers';
 
+import { createJobProfiles, generateManifest } from '../JobProfiles';
 import {
-  createJobProfiles,
-  jobProfilesShape,
-} from '../JobProfiles';
+  DEFAULT_CREATE_HOLDINGS_JOB_ID,
+  FIND_ALL_CQL,
+  OCLC_CREATE_INSTANCE_JOB_ID,
+  QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID,
+} from '../../../utils';
 
 const history = createMemoryHistory();
 history.push = jest.fn();
@@ -77,7 +80,6 @@ const resources = {
     ],
     resource: 'jobProfiles',
   },
-
 };
 
 const jobProfilesProps = {
@@ -90,13 +92,7 @@ const jobProfilesProps = {
   label: <span>Job Profiles</span>,
   detailProps: { jsonSchemas: { identifierTypes: [] } },
 };
-const renderJobProfiles = ({
-  match,
-  location,
-  label,
-  refreshRemote,
-  detailProps,
-}) => {
+const renderJobProfiles = ({ match, location, label, refreshRemote, detailProps }) => {
   const JobProfiles = createJobProfiles();
 
   const component = () => (
@@ -143,26 +139,6 @@ describe('JobProfiles component', () => {
     expect(getByText(/1 job profile/i)).toBeInTheDocument();
   });
 
-  describe('query string', () => {
-    it('should return correct query string', () => {
-      const expected = 'cql.allRecords=1 AND' +
-        ' (name="testQuery*" OR' +
-        ' tags.tagList="testQuery*" OR' +
-        ' description="testQuery*") sortBy name';
-
-      const queryData = {
-        query: {
-          sort: 'name',
-          query: 'testQuery',
-        },
-      };
-
-      const { query } = jobProfilesShape.manifest.records.params(null, null, queryData, null);
-
-      expect(query).toEqual(expected);
-    });
-  });
-
   it('should have correct columns order', () => {
     const { getAllByRole } = renderJobProfiles(jobProfilesProps);
 
@@ -197,10 +173,7 @@ describe('JobProfiles component', () => {
 
   describe('when creating new job profile if user close', () => {
     it('confirmation modal should appear', async () => {
-      const {
-        findByRole,
-        getByText,
-      } = renderJobProfiles(jobProfilesProps);
+      const { findByRole, getByText } = renderJobProfiles(jobProfilesProps);
       const actionsButton = await findByRole('button', { name: /actions/i });
       fireEvent.click(actionsButton);
 
@@ -214,6 +187,68 @@ describe('JobProfiles component', () => {
       fireEvent.click(closeButton);
 
       expect(getByText('Are you sure?')).toBeInTheDocument();
+    });
+  });
+
+  describe('generateManifest', () => {
+    it('should generate default query when no options are passed', () => {
+      const manifest = generateManifest();
+      const result = manifest.jobProfiles.params(null, null, { query: {} }, null);
+
+      expect(result.query).toContain(FIND_ALL_CQL);
+    });
+
+    it('should include dataType when chooseJobProfile is true and dataTypeQuery is set', () => {
+      const manifest = generateManifest(true, 'MARC');
+      const result = manifest.jobProfiles.params(null, null, { query: {} }, null);
+
+      expect(result.query).toContain('dataType==MARC');
+    });
+
+    it('should exclude default profiles when hideDefaultProfiles is true', () => {
+      const manifest = generateManifest(false, '', true);
+      const result = manifest.jobProfiles.params(null, null, { query: {} }, null);
+
+      expect(result.query).toContain(`id<>(${OCLC_CREATE_INSTANCE_JOB_ID}`);
+      expect(result.query).toContain(QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID);
+    });
+
+    it('should exclude default holdings profile when hideDefaultCreateHoldingProfile is true', () => {
+      const manifest = generateManifest(false, '', false, true);
+      const result = manifest.jobProfiles.params(null, null, { query: {} }, null);
+
+      expect(result.query).toContain(`id<>${DEFAULT_CREATE_HOLDINGS_JOB_ID}`);
+    });
+
+    it('should include search query with AND when chooseJobProfile is false', () => {
+      const manifest = generateManifest(false);
+      const result = manifest.jobProfiles.params(null, null, { query: { query: 'import' } }, null);
+
+      expect(result.query).toContain('AND (name="import*" OR tags.tagList="import*")');
+    });
+
+    it('should include search query without AND when chooseJobProfile is true', () => {
+      const manifest = generateManifest(true);
+      const result = manifest.jobProfiles.params(null, null, { query: { query: 'import' } }, null);
+
+      expect(result.query).toContain('(name="import*" OR tags.tagList="import*" OR description="import*")');
+    });
+
+    it('should include sort clause when sort is defined', () => {
+      const manifest = generateManifest(true);
+      const result = manifest.jobProfiles.params(
+        null,
+        null,
+        {
+          query: {
+            sort: 'name',
+            query: 'abc',
+          },
+        },
+        null
+      );
+
+      expect(result.query).toContain('sortBy name');
     });
   });
 });
