@@ -7,7 +7,7 @@ import {
 
 import { trimLeadNumbers } from './multipartUpload';
 
-export const fileNameCellFormatter = (record, location, shouldTrimNumbers) => {
+export const fileNameCellFormatter = (record, location, shouldTrimNumbers = true) => {
   const { pathname, search } = location;
 
   const linkText = shouldTrimNumbers ? trimLeadNumbers(record.fileName) : record.fileName;
