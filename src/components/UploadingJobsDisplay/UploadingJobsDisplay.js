@@ -18,6 +18,7 @@ import {
   withStripes,
   stripesShape,
   withOkapiKy,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -553,8 +554,18 @@ class UploadingJobsDisplayComponent extends Component {
     const dataTypeQuery = dataTypes.length > 0
       ? `(${dataTypes.map(dataType => `"${dataType}"`).join(' OR ')})`
       : '';
+    
+    const shouldHideDefaultCreateHoldingProfile = checkIfUserInCentralTenant(this.props.stripes);
 
-    this.setState({ JobProfilesComponent: createJobProfiles(true, dataTypeQuery, true) });
+    this.setState({
+      JobProfilesComponent:
+        createJobProfiles(
+          true,
+          dataTypeQuery,
+          true,
+          shouldHideDefaultCreateHoldingProfile,
+        )
+    });
   }
 
   renderHeader = headerProps => (
