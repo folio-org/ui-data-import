@@ -18,7 +18,7 @@ import {
   translationsProperties,
 } from '../../../../test/jest/helpers';
 
-import { createJobProfiles, generateManifest } from '../JobProfiles';
+import { createJobProfiles, generateManifest, jobProfilesShape } from '../JobProfiles';
 import {
   DEFAULT_CREATE_HOLDINGS_JOB_ID,
   FIND_ALL_CQL,
@@ -137,6 +137,27 @@ describe('JobProfiles component', () => {
     const { getByText } = renderJobProfiles(jobProfilesProps);
 
     expect(getByText(/1 job profile/i)).toBeInTheDocument();
+  });
+
+  describe('query string', () => {
+    it('should return correct query string', () => {
+      const expected =
+        'cql.allRecords=1 AND' +
+        ' (name="testQuery*" OR' +
+        ' tags.tagList="testQuery*" OR' +
+        ' description="testQuery*") sortBy name';
+
+      const queryData = {
+        query: {
+          sort: 'name',
+          query: 'testQuery',
+        },
+      };
+
+      const { query } = jobProfilesShape.manifest.records.params(null, null, queryData, null);
+
+      expect(query).toEqual(expected);
+    });
   });
 
   it('should have correct columns order', () => {
