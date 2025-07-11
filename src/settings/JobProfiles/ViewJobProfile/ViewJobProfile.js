@@ -55,7 +55,7 @@ import {
   ProfileTree,
 } from '../../../components';
 
-import { NoJobProfilePane } from '.';
+import { NoJobProfilePane } from './NoJobProfilePane';
 
 import {
   ENTITY_KEYS,
@@ -73,10 +73,10 @@ import {
   BASE_URLS,
   fileNameCellFormatter,
   STATUS_CODES,
+  requestConfiguration,
 } from '../../../utils';
 
 import RunJobModal from './RunJobModal';
-import { requestConfiguration } from '../../../utils/multipartUpload';
 
 import sharedCss from '../../../shared.css';
 

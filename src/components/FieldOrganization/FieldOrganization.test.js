@@ -15,7 +15,7 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import { FieldOrganization } from '.';
+import FieldOrganization from './FieldOrganization';
 
 const organizationMock = {
   id: '1',

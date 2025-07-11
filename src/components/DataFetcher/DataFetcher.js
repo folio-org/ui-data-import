@@ -17,10 +17,10 @@ import {
   createUrlFromArray,
   NO_FILE_NAME,
   BULK_EDIT_JOB_PROFILE_NAME,
+  requestConfiguration,
 } from '../../utils';
 
-import { DataFetcherContext } from '.';
-import { requestConfiguration } from '../../utils/multipartUpload';
+import { DataFetcherContext } from './DataFetcherContext';
 
 const {
   RUNNING,

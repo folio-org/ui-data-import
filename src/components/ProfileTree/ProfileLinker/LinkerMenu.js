@@ -9,7 +9,7 @@ import {
   MenuSection,
 } from '@folio/stripes/components';
 
-import { LinkerButton } from '.';
+import { LinkerButton } from './LinkerButton';
 
 export const LinkerMenu = ({
   id,

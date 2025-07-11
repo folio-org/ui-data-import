@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import { MARCTableHeader } from '../MARCTable';
-import { MARCTableViewRowContainer } from '.';
+import { MARCTableViewRowContainer } from './MARCTableViewRowContainer';
 
 import css from '../MARCTable/MARCTable.css';
 
