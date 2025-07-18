@@ -20,6 +20,7 @@ import {
   OCLC_UPDATE_INSTANCE_JOB_ID,
   QUICKMARK_DERIVE_CREATE_BIB_JOB_ID,
   QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID,
+  DEFAULT_CREATE_HOLDINGS_JOB_ID,
 } from '../../utils';
 
 // big numbers to get rid of infinite scroll
@@ -50,7 +51,8 @@ export const jobProfilesShape = {
           updatedBy: 'userInfo.lastName userInfo.firstName userInfo.userName',
           description: 'description',
         };
-        const queryTemplate = '(name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")';
+        const queryTemplate =
+          '(name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")';
         const sort = _r?.query?.sort;
         const search = _r?.query?.query;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
@@ -61,20 +63,14 @@ export const jobProfilesShape = {
       },
     },
   },
-  visibleColumns: [
-    'name',
-    'description',
-    'tags',
-    'updated',
-    'updatedBy',
-  ],
+  visibleColumns: ['name', 'description', 'tags', 'updated', 'updatedBy'],
   columnWidths: {
     name: '300px',
     tags: '150px',
     updated: '100px',
     updatedBy: '250px',
   },
-  renderHeaders: props => {
+  renderHeaders: (props) => {
     let headers = {
       name: <FormattedMessage id="ui-data-import.name" />,
       description: <FormattedMessage id="ui-data-import.description" />,
@@ -94,62 +90,70 @@ export const jobProfilesShape = {
   },
 };
 
+export const generateManifest = (
+  chooseJobProfile = false,
+  dataTypeQuery = '',
+  hideDefaultProfiles = false,
+  hideDefaultCreateHoldingProfile = false
+) => ({
+  initializedFilterConfig: { initialValue: false },
+  query: { initialValue: {} },
+  resultCount: { initialValue: INITIAL_RESULT_COUNT },
+  jobProfiles: {
+    type: 'okapi',
+    perRequest: RESULT_COUNT_INCREMENT,
+    records: ENTITY_KEYS.JOB_PROFILES,
+    recordsRequired: '%{resultCount}',
+    path: 'data-import-profiles/jobProfiles',
+    clientGeneratePk: false,
+    throwErrors: false,
+    params: (_q, _p, _r, _l) => {
+      const findAll = chooseJobProfile && dataTypeQuery !== '' ? `dataType==${dataTypeQuery}` : FIND_ALL_CQL;
+      const withoutDefaultProfiles = hideDefaultProfiles
+        ? `AND id<>(${OCLC_CREATE_INSTANCE_JOB_ID} AND ${OCLC_UPDATE_INSTANCE_JOB_ID} AND ${QUICKMARK_DERIVE_CREATE_BIB_JOB_ID} AND ${QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID})`
+        : '';
+      const withoutDefaultCreateHoldingProfile = hideDefaultCreateHoldingProfile
+        ? `AND id<>${DEFAULT_CREATE_HOLDINGS_JOB_ID}`
+        : '';
+      const queryTemplate = chooseJobProfile
+        ? 'AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")'
+        : '(name="%{query.query}*" OR tags.tagList="%{query.query}*")';
+      const sortMap = {
+        name: 'name',
+        tags: 'tags.tagList',
+        updated: 'metadata.updatedDate',
+        updatedBy: 'userInfo.lastName userInfo.firstName userInfo.userName',
+      };
+
+      if (chooseJobProfile) {
+        sortMap.description = 'description';
+      }
+
+      const sort = _r?.query?.sort;
+      const search = _r?.query?.query;
+      const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
+      const searchQuery = search ? `${chooseJobProfile ? '' : 'AND '}${getSearchQuery(queryTemplate, search)}` : '';
+      const query = `${findAll} ${withoutDefaultProfiles} ${withoutDefaultCreateHoldingProfile} ${searchQuery} ${sortQuery}`;
+
+      return { query };
+    },
+  },
+});
+
 // TODO: this code could possibly be rewritten when https://issues.folio.org/browse/STCON-86 is done
-export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', hideDefaultProfiles = false) => {
-  const visibleColumns = chooseJobProfile
-    ? jobProfilesShape.visibleColumns
-    : [
-      'name',
-      'tags',
-      'updated',
-      'updatedBy',
-    ];
+export const createJobProfiles = (
+  chooseJobProfile = false,
+  dataTypeQuery = '',
+  hideDefaultProfiles = false,
+  hideDefaultCreateHoldingProfile = false
+) => {
+  const visibleColumns = chooseJobProfile ? jobProfilesShape.visibleColumns : ['name', 'tags', 'updated', 'updatedBy'];
   const columnWidths = { name: '430px' };
 
   class JobProfiles extends Component {
-    static manifest = Object.freeze({
-      initializedFilterConfig: { initialValue: false },
-      query: { initialValue: {} },
-      resultCount: { initialValue: INITIAL_RESULT_COUNT },
-      jobProfiles: {
-        type: 'okapi',
-        perRequest: RESULT_COUNT_INCREMENT,
-        records: ENTITY_KEYS.JOB_PROFILES,
-        recordsRequired: '%{resultCount}',
-        path: 'data-import-profiles/jobProfiles',
-        clientGeneratePk: false,
-        throwErrors: false,
-        params: (_q, _p, _r, _l) => {
-          const findAll = (chooseJobProfile && dataTypeQuery !== '')
-            ? `dataType==${dataTypeQuery}`
-            : FIND_ALL_CQL;
-          const withoutDefaultProfiles = hideDefaultProfiles
-            ? `AND id<>(${OCLC_CREATE_INSTANCE_JOB_ID} AND ${OCLC_UPDATE_INSTANCE_JOB_ID} AND ${QUICKMARK_DERIVE_CREATE_BIB_JOB_ID} AND ${QUICKMARK_DERIVE_CREATE_HOLDINGS_JOB_ID})`
-            : '';
-          const queryTemplate = chooseJobProfile
-            ? 'AND (name="%{query.query}*" OR tags.tagList="%{query.query}*" OR description="%{query.query}*")'
-            : '(name="%{query.query}*" OR tags.tagList="%{query.query}*")';
-          const sortMap = {
-            name: 'name',
-            tags: 'tags.tagList',
-            updated: 'metadata.updatedDate',
-            updatedBy: 'userInfo.lastName userInfo.firstName userInfo.userName',
-          };
-
-          if (chooseJobProfile) {
-            sortMap.description = 'description';
-          }
-
-          const sort = _r?.query?.sort;
-          const search = _r?.query?.query;
-          const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
-          const searchQuery = search ? `${chooseJobProfile ? '' : 'AND '}${getSearchQuery(queryTemplate, search)}` : '';
-          const query = `${findAll} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
-
-          return { query };
-        },
-      },
-    });
+    static manifest = Object.freeze(
+      generateManifest(chooseJobProfile, dataTypeQuery, hideDefaultProfiles, hideDefaultCreateHoldingProfile)
+    );
 
     static propTypes = {
       resources: PropTypes.object.isRequired,
@@ -214,8 +218,5 @@ export const createJobProfiles = (chooseJobProfile = false, dataTypeQuery = '', 
     }
   }
 
-  return flow([
-    () => stripesConnect(JobProfiles),
-    withRouter,
-  ])();
+  return flow([() => stripesConnect(JobProfiles), withRouter])();
 };
