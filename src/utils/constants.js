@@ -426,14 +426,14 @@ export const ACQ_DATA_RESOURCE_PATHS = [
 export const HOLDINGS_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
   'holdings-storage/holdingsRecord.json',
-  'holdings-storage/electronicAccessItem.json',
+  'common/electronicAccessItem.json',
   'holdings-storage/holdingsReceivingHistoryEntry.json',
   'holdings-storage/holdingsNote.json',
 ];
 
 export const ITEM_RESOURCE_PATHS = [
   'raml-util/schemas/metadata.schema',
-  'item.json',
+  'item-storage/item.json',
 ];
 
 export const INVOICE_RESOURCE_PATHS = [
