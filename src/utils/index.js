@@ -6,7 +6,6 @@ export * from './craftLayerURL';
 export * from './createOptionsList';
 export * from './createUrlFromArray';
 export * from './deleteJobExecutions';
-export * from './fetchJsonShemas';
 export * from './fieldCategoriesConfig';
 export * from './fieldsConfig';
 export * from './fileNameCellFormatter';
