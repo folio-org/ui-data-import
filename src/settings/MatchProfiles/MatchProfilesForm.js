@@ -138,7 +138,6 @@ export const MatchProfilesFormComponent = memo(({
   initialValues,
   handleSubmit,
   onCancel,
-  jsonSchemas,
   form,
   transitionToParams,
   accordionStatusRef,
@@ -161,8 +160,8 @@ export const MatchProfilesFormComponent = memo(({
   const staticValueTypes = FORMS_SETTINGS[ENTITY_KEYS.MATCH_PROFILES].MATCHING.STATIC_VALUE_TYPES;
 
   const currentStaticValueType = get(form.getState(), ['values', 'profile', 'matchDetails', '0', 'incomingMatchExpression', 'staticValueDetails', 'staticValueType'], null);
-  const currectIncomingRecordType = get(form.getState(), ['values', 'profile', 'incomingRecordType'], null);
-  const currectExistingRecordType = get(form.getState(), ['values', 'profile', 'existingRecordType'], null);
+  const currentIncomingRecordType = get(form.getState(), ['values', 'profile', 'incomingRecordType'], null);
+  const currentExistingRecordType = get(form.getState(), ['values', 'profile', 'existingRecordType'], null);
 
   const [incomingRecord, setIncomingRecord] = useState({});
   const [existingRecord, setExistingRecord] = useState({});
@@ -171,10 +170,10 @@ export const MatchProfilesFormComponent = memo(({
   const [isConfirmEditModalOpen, setConfirmModalOpen] = useState(false);
 
   useEffect(() => {
-    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[currectIncomingRecordType]);
-    setExistingRecord(FOLIO_RECORD_TYPES[currectExistingRecordType]);
+    setIncomingRecord(MATCH_INCOMING_RECORD_TYPES[currentIncomingRecordType]);
+    setExistingRecord(FOLIO_RECORD_TYPES[currentExistingRecordType]);
     setStaticValueType(currentStaticValueType);
-  }, [currectExistingRecordType, currectIncomingRecordType, currentStaticValueType]);
+  }, [currentExistingRecordType, currentIncomingRecordType, currentStaticValueType]);
 
   const isSubmitDisabled = pristine || submitting;
   const newLabel = <FormattedMessage id="ui-data-import.settings.matchProfiles.new" />;
@@ -191,7 +190,7 @@ export const MatchProfilesFormComponent = memo(({
 
   const getInitialFields = (matchFields, getDropdownOptions) => {
     if (isEditMode || isDuplicateMode) {
-      const matches = matchFields(jsonSchemas[initialExistingRecordType], initialExistingRecordType);
+      const matches = matchFields(initialExistingRecordType);
 
       return getDropdownOptions(matches);
     }
@@ -254,7 +253,7 @@ export const MatchProfilesFormComponent = memo(({
 
   const handleExistingRecordChange = (record, matchFields, getDropdownOptions) => {
     const { type } = record;
-    const matches = matchFields(jsonSchemas[type], type);
+    const matches = matchFields(type);
     const options = getDropdownOptions(matches);
 
     setExistingRecord(record);
@@ -420,13 +419,6 @@ MatchProfilesFormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   baseUrl: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
-  jsonSchemas: PropTypes.shape({
-    INSTANCE: PropTypes.object,
-    HOLDINGS: PropTypes.object,
-    ITEM: PropTypes.object,
-    ORDER: PropTypes.object,
-    INVOICE: PropTypes.object,
-  }).isRequired,
   form: PropTypes.shape({
     getState: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,

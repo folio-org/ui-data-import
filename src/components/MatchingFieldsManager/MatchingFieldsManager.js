@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
@@ -35,10 +34,8 @@ class MatchingFieldsManagerComponent extends Component {
     intl: PropTypes.object.isRequired,
   };
 
-  matchFields = (resources, recordType) => {
-    return fieldsConfig.filter(field => field.recordType
-      && field.recordType === recordType
-      && get(resources, field.id));
+  matchFields = (recordType) => {
+    return fieldsConfig.filter(field => field?.recordType === recordType);
   };
 
   getCategory = field => fieldCategoriesConfig.find(category => category.id === field.categoryId);

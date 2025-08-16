@@ -83,13 +83,13 @@ describe('MatchingFieldsManager component', () => {
   describe('when matchFields function is called', () => {
     it('should be rendered', () => {
       const matchFieldsChildren = record => {
-        const labelId = record.matchFields(resources, 'INSTANCE')[0].label;
+        const labelId = record.matchFields('INSTANCE')[0].label;
 
         return <span key={labelId}><FormattedMessage id={labelId} /></span>;
       };
       const { getByText } = renderMatchingFieldsManager({ children: matchFieldsChildren });
 
-      expect(getByText('Updated date and time')).toBeDefined();
+      expect(getByText('Instance UUID')).toBeDefined();
     });
   });
 
