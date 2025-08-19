@@ -286,7 +286,7 @@
     "modal.jobProfiles.delete.message.single": "\"{name}\" zostanie usunięty z tego profilu zadań i skasowany. Kontynuować?",
     "modal.jobProfiles.delete.message.children": "\"{name}\" i wszystkie podprofile zostaną usunięta z tego profil zadań i skasowane. Kontynuować?",
     "settings.fileExtensions.new": "Nowe rozszerzenie pliku",
-    "from": "Od",
+    "from": "Z",
     "to": "Do",
     "settings.mappingProfiles.map.administrativeData.field.discoverySuppress": "Ukryj w katalogu WWW",
     "settings.mappingProfiles.map.administrativeData.field.staffSuppress": "Ukryj przed personelem",
