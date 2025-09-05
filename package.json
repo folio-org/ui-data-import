@@ -190,7 +190,16 @@
       "holdings-note-types": "1.0",
       "item-note-types": "1.0",
       "item-damaged-statuses": "1.0",
-      "organizations.organizations": "1.2"
+      "organizations.organizations": "1.2",
+      "acquisitions-units": "1.1",
+      "configuration.prefixes": "1.2",
+      "configuration.suffixes": "1.2",
+      "acquisition-methods": "1.0",
+      "organizations-storage.organization-types": "1.0",
+      "batch-group": "1.1",
+      "finance.funds": "3.0",
+      "finance.expense-classes": "3.0",
+      "configuration": "2.0"
     },
     "permissionSets": [
       {
