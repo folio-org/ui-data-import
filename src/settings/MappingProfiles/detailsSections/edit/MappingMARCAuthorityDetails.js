@@ -20,8 +20,7 @@ export const MappingMARCAuthorityDetails = ({
         mappingMarcFieldProtectionFields={mappingMarcFieldProtectionFields}
         setReferenceTables={setReferenceTables}
         folioRecordType={folioRecordType}
-        isViewMode={false}
-        isEditable={false}
+        isEditable
       />
     </AccordionSet>
   );
