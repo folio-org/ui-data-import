@@ -7,6 +7,7 @@
 * Add "LCCN" accepted value for Product ID in Orders Field Mapping Profiles. (UIDATIMP-2737)
 * Display correctly file names with multinumber strings followed by `-`. (UIDATIMP-1729)
 * Hide `Default - Create Holdings and SRS MARC Holdings` job profile from Data import app on Central tenant. (UIDATIMP-1733)
+* MARC authority > Field mapping profile > allow a user to override default field protections. (UIDATIMP-1699)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
