@@ -273,7 +273,7 @@ export const ItemDetails = ({
                       component={TextField}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.contributor`} />}
                       name={ITEM_DETAILS_FIELDS_MAP.CONTRIBUTOR(index)}
-                      validate={[validation]}
+                      validate={[validation, validateRequiredField]}
                     />
                   )}
                 </WithValidation>
@@ -312,7 +312,7 @@ export const ItemDetails = ({
                       component={TextField}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.itemDetails.field.productId`} />}
                       name={ITEM_DETAILS_FIELDS_MAP.PRODUCT_ID(index)}
-                      validate={[validation]}
+                      validate={[validation, validateRequiredField]}
                     />
                   )}
                 </WithValidation>

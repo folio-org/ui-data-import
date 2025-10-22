@@ -46,6 +46,7 @@ import {
   getWrapperSourceLink,
   MATERIAL_SUPPLIER_FIELD,
   validateMARCWithDate,
+  validateRequiredField,
   VOLUMES_FIELD,
 } from '../../../../../utils';
 
@@ -234,7 +235,7 @@ export const PhysicalResourceDetails = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.physicalResourceDetails.field.volume`} />}
                     name={PHYSICAL_RESOURCE_DETAILS_FIELDS_MAP.VOLUME(index)}
-                    validate={[validation]}
+                    validate={[validation, validateRequiredField]}
                   />
                 )}
               </WithValidation>

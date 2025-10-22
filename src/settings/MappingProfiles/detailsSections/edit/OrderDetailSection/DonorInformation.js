@@ -27,7 +27,10 @@ import {
   onAdd,
   onRemove,
 } from '../../utils';
-import { DONORS_FIELD } from '../../../../../utils';
+import {
+  DONORS_FIELD,
+  validateRequiredField,
+} from '../../../../../utils';
 
 export const DonorInformation = ({
   initialFields,
@@ -90,7 +93,7 @@ export const DonorInformation = ({
                       allDonors={allDonorsList}
                       setReferenceTables={setReferenceTables}
                       label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.poLineDetails.field.donor`} />}
-                      validate={[validation]}
+                      validate={[validation, validateRequiredField]}
                     />
                   )}
                 </WithValidation>
