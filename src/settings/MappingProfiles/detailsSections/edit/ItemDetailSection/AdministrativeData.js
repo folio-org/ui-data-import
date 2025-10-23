@@ -32,6 +32,7 @@ import {
   getWrapperSourceLink,
   mappingProfileSubfieldShape,
   okapiShape,
+  validateRequiredField,
 } from '../../../../../utils';
 
 export const AdministrativeData = ({
@@ -149,7 +150,7 @@ export const AdministrativeData = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.administrativeData.field.formerId`} />}
                             name={getSubfieldName(5, 0, index)}
-                            validate={[validation]}
+                            validate={[validation, validateRequiredField]}
                           />
                         )}
                       </WithValidation>
@@ -191,6 +192,7 @@ export const AdministrativeData = ({
                     >
                       <AcceptedValuesField
                         component={TextField}
+                        validation={validateRequiredField}
                         name={getSubfieldName(6, 0, index)}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />}
                         optionValue="name"
@@ -248,7 +250,7 @@ export const AdministrativeData = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />}
                             name={getSubfieldName(7, 0, index)}
-                            validate={[validation]}
+                            validate={[validation, validateRequiredField]}
                           />
                         )}
                       </WithValidation>

@@ -143,6 +143,7 @@ export const InvoiceLineInformation = ({
             <Col xs={6}>
               <Field
                 component={TextField}
+                validate={[validateRequiredField]}
                 label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.invoice.invoiceLineInformation.field.vendorRefNo`} />}
                 name={INVOICE_LINE_INFO_FIELDS_MAP.VENDOR_REF_NO(index)}
               />

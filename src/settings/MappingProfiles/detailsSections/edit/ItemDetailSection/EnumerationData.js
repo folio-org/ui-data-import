@@ -25,7 +25,10 @@ import {
   onRemove,
 } from '../../utils';
 import { TRANSLATION_ID_PREFIX } from '../../constants';
-import { mappingProfileSubfieldShape } from '../../../../../utils';
+import {
+  mappingProfileSubfieldShape,
+  validateRequiredField,
+} from '../../../../../utils';
 
 export const EnumerationData = ({
   yearCaption,
@@ -117,7 +120,7 @@ export const EnumerationData = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.item.enumerationData.field.yearCaption`} />}
                             name={getSubfieldName(19, 0, index)}
-                            validate={[validation]}
+                            validate={[validation, validateRequiredField]}
                           />
                         )}
                       </WithValidation>
