@@ -10,6 +10,7 @@
 * Add `optionalOkapiInterfaces` with `inventory-storage` and `organization-storage` interfaces. (UIDATIMP-1739)
 * MARC authority > Field mapping profile > allow a user to override default field protections. (UIDATIMP-1699)
 * Field mapping profiles - add validation to repeatable fields to check empty fields. (UIDATIMP-1738)
+* Add 'Admin data: Set for deletion' to existing Instance record field options in Mapping profile. (UIDATIMP-1742)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
