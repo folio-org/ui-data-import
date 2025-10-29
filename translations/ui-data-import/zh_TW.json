@@ -1179,5 +1179,6 @@
     "uploadDefinitionError": "上傳定義已被其他使用者刪除。請再試一次。",
     "settings.mappingProfiles.map.order.donorInformation.section": "Donor information",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Add donor",
-    "settings.mappingProfiles.map.order.donorInformation.donor": "Donor"
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Donor",
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion"
 }

@@ -1179,5 +1179,6 @@
     "uploadDefinitionError": "Upload definition was deleted by another user. Please try again.",
     "settings.mappingProfiles.map.order.donorInformation.section": "معلومات الجهة المانحة",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "إضافة جهة مانحة",
-    "settings.mappingProfiles.map.order.donorInformation.donor": "الجهة المانحة"
+    "settings.mappingProfiles.map.order.donorInformation.donor": "الجهة المانحة",
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion"
 }

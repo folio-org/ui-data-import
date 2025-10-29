@@ -1179,5 +1179,6 @@
     "uploadDefinitionError": "Визначення завантаження видалене іншим користувачем. Спробуйте ще раз.",
     "settings.mappingProfiles.map.order.donorInformation.section": "Інформація про дарувальника",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Додати дарувальника",
-    "settings.mappingProfiles.map.order.donorInformation.donor": "Дарувальник"
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Дарувальник",
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion"
 }

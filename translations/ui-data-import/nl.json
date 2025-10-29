@@ -418,7 +418,7 @@
     "settings.mappingProfiles.map.instance.descriptiveData.field.classifications.addLabel": "Classificatie toevoegen",
     "settings.mappingProfiles.map.instance.descriptiveData.field.classificationTypeId": "Type identificatiekenmerk classificatie",
     "settings.mappingProfiles.map.instance.descriptiveData.field.classificationNumber": "Classificatie",
-    "settings.mappingProfiles.map.instance.relationship.section": "Instancerelatie (analytisch en verbonden aan)",
+    "settings.mappingProfiles.map.instance.relationship.section": "Instance-relatie",
     "settings.mappingProfiles.map.instance.field.parentInstances.legend": "Overkoepelende instance",
     "settings.mappingProfiles.map.instance.field.parentInstances.addLabel": "Overkoepelende instance toevoegen",
     "settings.mappingProfiles.map.instance.parentInstances.field.superInstanceId": "Overkoepelende instance",
@@ -878,7 +878,7 @@
     "settings.mappingProfiles.map.administrativeData.field.administrativeNotes.addLabel": "Administratieve opmerking toevoegen",
     "settings.mappingProfiles.map.item.acquisitionsData.field.purchaseOrderLineNumber": "PO-regel",
     "settings.mappingProfiles.map.item.acquisitionsData.field.vendorReferenceNumber": "Referentienummer leverancier",
-    "settings.mappingProfiles.map.instance.acquisitionsData.field.purchaseOrderLineNumber": "PO-regel",
+    "settings.mappingProfiles.map.instance.acquisitionsData.field.purchaseOrderLineNumber": "PO-regel (POL)",
     "settings.mappingProfiles.map.instance.acquisitionsData.field.vendorReferenceNumber": "Referentienummer leverancier",
     "settings.mappingProfiles.map.holdings.acquisitionsData.field.purchaseOrderLineNumber": "PO-regel",
     "settings.mappingProfiles.map.holdings.acquisitionsData.field.vendorReferenceNumber": "Referentienummer leverancier",
@@ -1179,5 +1179,6 @@
     "uploadDefinitionError": "De uploaddefinitie is verwijderd door een andere gebruiker. Probeer het opnieuw.",
     "settings.mappingProfiles.map.order.donorInformation.section": "Donateursinformatie",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Donateur toevoegen",
-    "settings.mappingProfiles.map.order.donorInformation.donor": "Donateur"
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Donateur",
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion"
 }

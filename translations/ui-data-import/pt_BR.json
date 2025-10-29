@@ -1179,5 +1179,6 @@
     "uploadDefinitionError": "A definição de carregar foi excluída por outro usuário. Por favor, tente novamente.",
     "settings.mappingProfiles.map.order.donorInformation.section": "Informações do doador",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Adicionar doador",
-    "settings.mappingProfiles.map.order.donorInformation.donor": "Doador"
+    "settings.mappingProfiles.map.order.donorInformation.donor": "Doador",
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Definido para exclusão"
 }
