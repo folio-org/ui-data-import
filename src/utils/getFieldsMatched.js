@@ -3,7 +3,7 @@ import {
   MARC_FIELD_CONSTITUENT,
 } from '@folio/stripes-data-transfer-components/lib/utils';
 
-import { fieldsConfig } from '.';
+import { fieldsConfig } from './fieldsConfig';
 
 const getFieldFromResources = (fieldFromConfig, resources, fields) => {
   const {

@@ -7,6 +7,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flow } from 'lodash';
 
 import { Settings } from '@folio/stripes/smart-components';
 import { InfoPopover } from '@folio/stripes/components';
@@ -14,6 +15,7 @@ import {
   stripesShape,
   TitleManager,
   withRoot,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 
 import { createJobProfiles } from '../JobProfiles';
@@ -30,9 +32,7 @@ import {
 
 import css from './DataImportSettings.css';
 
-@injectIntl
-@withRoot
-export class DataImportSettings extends Component {
+class DataImportSettingsComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     root: PropTypes.shape({ addReducer: PropTypes.func.isRequired }).isRequired,
@@ -51,6 +51,8 @@ export class DataImportSettings extends Component {
     }
   }
 
+  shouldHideDefaultCreateHoldingProfile = checkIfUserInCentralTenant(this.props.stripes);
+
   sections = [
     {
       label: this.renderProfilesLabel(),
@@ -58,7 +60,7 @@ export class DataImportSettings extends Component {
         {
           route: 'job-profiles',
           label: generateSettingsLabel('jobProfiles.title', 'jobProfiles'),
-          component: createJobProfiles(),
+          component: createJobProfiles(false, '', false, this.shouldHideDefaultCreateHoldingProfile),
         },
         {
           route: 'match-profiles',
@@ -129,3 +131,8 @@ export class DataImportSettings extends Component {
     );
   }
 }
+
+export const DataImportSettings = flow([
+  () => injectIntl(DataImportSettingsComponent),
+  withRoot,
+])();

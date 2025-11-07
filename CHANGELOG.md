@@ -1,10 +1,33 @@
 # Change history for ui-data-import
 
-## [8.1.0] (IN PROGRESS)
+## [9.1.0] (IN PROGRESS)
+
+### Features added:
+* Action profile: limit the list of linkable field mapping profiles based on FOLIO record type (UIDATIMP-1328)
+* Add "LCCN" accepted value for Product ID in Orders Field Mapping Profiles. (UIDATIMP-2737)
+* Display correctly file names with multinumber strings followed by `-`. (UIDATIMP-1729)
+* Hide `Default - Create Holdings and SRS MARC Holdings` job profile from Data import app on Central tenant. (UIDATIMP-1733)
+* Add `optionalOkapiInterfaces` with `inventory-storage` and `organization-storage` interfaces. (UIDATIMP-1739)
+* MARC authority > Field mapping profile > allow a user to override default field protections. (UIDATIMP-1699)
+* Field mapping profiles - add validation to repeatable fields to check empty fields. (UIDATIMP-1738)
+* Add 'Admin data: Set for deletion' to existing Instance record field options in Mapping profile. (UIDATIMP-1742)
+* *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. (UIDATIMP-1702)
+
+### Bugs fixed:
+* Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
+* Fix stuck Progress Bar in import files. (UIDATIMP-1725)
+* Fix the 'Existing record field' list does not contain criterion value types in the match profile. (UIDATIMP-1736)
+
+## [9.0.0](https://github.com/folio-org/ui-data-import/tree/v9.0.0) (2025-03-13)
 
 ### Features added:
 * `React v19`: refactor away from default props for functional components. (UIDATIMP-1634)
-* *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. (UIDATIMP-1702)
+* Add `required: true` to contributor and vendorDetail fields to the Order Mapping Profile. (UIDATIMP-1709)
+* *BREAKING* Migrate stripes dependencies to their Sunflower versions. (UIDATIMP-1705)
+* *BREAKING* Migrate `react-intl` to v7. (UIDATIMP-1706)
+* CI: Switch to centralized/shared workflow. (UIDATIMP-1704)
+* Apply wrappers with `flow()` instead of annotations. (UIDATIMP-1712)
+* Make TextDate.test.js robust to March, 2025 (UIDATIMP-1715)
 
 ## [8.0.5](https://github.com/folio-org/ui-data-import/tree/v8.0.5) (2024-12-19)
 

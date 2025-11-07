@@ -5,7 +5,10 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { get } from 'lodash';
+import {
+  flow,
+  get
+} from 'lodash';
 
 import {
   AppIcon,
@@ -56,11 +59,7 @@ import {
 
 import sharedCss from '../../../shared.css';
 
-@injectIntl
-@stripesConnect
-@withTags
-@withRouter
-export class ViewActionProfile extends Component {
+class ViewActionProfileComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     actionProfileView: {
@@ -371,3 +370,10 @@ export class ViewActionProfile extends Component {
     );
   }
 }
+
+export const ViewActionProfile = flow([
+  () => injectIntl(ViewActionProfileComponent),
+  withTags,
+  stripesConnect,
+  withRouter,
+])();

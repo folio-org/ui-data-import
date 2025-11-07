@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import isEmpty from 'lodash/isEmpty';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import {
-  fetchJsonSchema,
-  getModuleVersion,
-  handleAllRequests,
   getSearchQuery,
   getSortQuery,
   ENTITY_KEYS,
-  INSTANCE_RESOURCE_PATHS,
-  HOLDINGS_RESOURCE_PATHS,
-  ITEM_RESOURCE_PATHS,
-  INVOICE_RESOURCE_PATHS,
-  ACQ_DATA_RESOURCE_PATHS,
   FIND_ALL_CQL,
-  getIdentifierTypes,
 } from '../../utils';
 import { ListView } from '../../components';
 import { ViewMatchProfile } from './ViewMatchProfile';
@@ -208,8 +198,7 @@ export const matchProfilesShape = {
   },
 };
 
-@stripesConnect
-export class MatchProfiles extends Component {
+class MatchProfilesComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: { initialValue: {} },
@@ -285,64 +274,17 @@ export class MatchProfiles extends Component {
     defaultSort,
   };
 
-  state = {
-    INSTANCE: {},
-    HOLDINGS: {},
-    ITEM: {},
-    ORDER: {},
-    INVOICE: {},
-    identifierTypes: [],
-  };
-
-  async componentDidMount() {
-    if (!isEmpty(this.props.stripes.discovery.modules)) {
-      const {
-        stripes,
-        stripes: { okapi },
-        stripes: { discovery: { modules } },
-      } = this.props;
-
-      const inventoryModuleVersion = getModuleVersion(modules, 'Inventory Storage Module');
-      const ordersModuleVersion = getModuleVersion(modules, 'Orders Business Logic Module');
-      const invoiceModuleVersion = getModuleVersion(modules, 'Invoice business logic module');
-
-      const requestsToInstance = INSTANCE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-      const requestsToHoldings = HOLDINGS_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-      const requestsToItem = ITEM_RESOURCE_PATHS.map(path => fetchJsonSchema(path, inventoryModuleVersion, okapi));
-      const requestsToInvoice = INVOICE_RESOURCE_PATHS.map(path => fetchJsonSchema(path, invoiceModuleVersion, okapi));
-      const requestToAcquisitionsData = ACQ_DATA_RESOURCE_PATHS.map(path => fetchJsonSchema(path, ordersModuleVersion, okapi));
-
-      await handleAllRequests(requestsToInstance, 'INSTANCE', this.addToState);
-      await handleAllRequests(requestsToHoldings, 'HOLDINGS', this.addToState);
-      await handleAllRequests(requestToAcquisitionsData, 'HOLDINGS', this.addToState);
-      await handleAllRequests(requestsToItem, 'ITEM', this.addToState);
-      await handleAllRequests(requestToAcquisitionsData, 'INSTANCE', this.addToState);
-      await handleAllRequests(requestToAcquisitionsData, 'ITEM', this.addToState);
-      await handleAllRequests(requestsToInvoice, 'INVOICE', this.addToState);
-      await getIdentifierTypes(stripes).then(identifierTypes => this.setState({ identifierTypes }));
-    }
-  }
-
-  addToState = (properties, stateKey) => {
-    properties.forEach(item => {
-      this.setState(state => ({
-        [stateKey]: {
-          ...state[stateKey],
-          ...item,
-        },
-      }));
-    });
-  };
-
   renderHeaders = () => matchProfilesShape.renderHeaders(this.props);
 
   render() {
     const resultedProps = {
       ...this.props,
       renderHeaders: this.renderHeaders,
-      detailProps: { jsonSchemas: { ...this.state } },
     };
 
     return <ListView {...resultedProps} />;
   }
 }
+
+export const MatchProfiles = stripesConnect(MatchProfilesComponent);
+

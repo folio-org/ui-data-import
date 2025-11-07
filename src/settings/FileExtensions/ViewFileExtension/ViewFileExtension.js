@@ -4,6 +4,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flow } from 'lodash';
 
 import {
   TitleManager,
@@ -39,9 +40,7 @@ import {
 
 import sharedCss from '../../../shared.css';
 
-@injectIntl
-@stripesConnect
-export class ViewFileExtension extends Component {
+class ViewFileExtensionComponent extends Component {
   static manifest = Object.freeze({
     fileExtension: {
       type: 'okapi',
@@ -288,3 +287,9 @@ export class ViewFileExtension extends Component {
     return this.renderFileExtension(record);
   }
 }
+
+export const ViewFileExtension = flow([
+  () => injectIntl(ViewFileExtensionComponent),
+  stripesConnect,
+])();
+

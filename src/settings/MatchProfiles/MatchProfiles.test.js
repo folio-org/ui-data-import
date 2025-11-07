@@ -18,8 +18,7 @@ import {
 } from '../../../test/jest/helpers';
 
 import { FIND_ALL_CQL } from '../../utils';
-import { matchProfilesShape } from '.';
-import { MatchProfiles } from './MatchProfiles';
+import { MatchProfiles, matchProfilesShape } from './MatchProfiles';
 
 const stripes = buildStripes({
   discovery: {

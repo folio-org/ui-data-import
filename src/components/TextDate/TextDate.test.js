@@ -144,7 +144,7 @@ describe('TextDate component', () => {
 
       const calendarContainer = container.querySelector('.calendar');
 
-      fireEvent.click(getByText('23'));
+      fireEvent.click(getByText('20'));
 
       expect(calendarContainer).not.toBeVisible();
     });
@@ -159,7 +159,7 @@ describe('TextDate component', () => {
       const calendarIcon = container.querySelector('#datepicker-toggle-calendar-button-testId');
 
       fireEvent.click(calendarIcon);
-      fireEvent.click(getByText('23'));
+      fireEvent.click(getByText('20'));
       const clearIcon = container.querySelector('#datepicker-clear-button-testId');
 
       expect(clearIcon).toBeDefined();
@@ -183,15 +183,18 @@ describe('TextDate component', () => {
 
   describe('when double ckicking on calendar icon', () => {
     it('calendar should be closed', () => {
-      const { container } = renderTextDate(textDateProps(defaultTextDateProps));
+      const {
+        container,
+        getByTestId,
+      } = renderTextDate(textDateProps(defaultTextDateProps));
       const calendarIcon = container.querySelector('#datepicker-toggle-calendar-button-testId');
 
       fireEvent.click(calendarIcon);
 
       const calendarContainer = container.querySelector('.calendar');
-
       fireEvent.click(calendarContainer);
-      fireEvent.click(calendarIcon);
+
+      fireEvent.click(getByTestId('date-picker'));
 
       expect(calendarContainer).not.toBeVisible();
     });

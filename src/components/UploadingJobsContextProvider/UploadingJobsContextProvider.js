@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   every,
+  flow,
   isEmpty,
 } from 'lodash';
 
@@ -18,14 +19,11 @@ import {
 } from '@folio/stripes/core';
 import { createUrl } from '@folio/stripes-data-transfer-components';
 
-import { FILE_STATUSES } from '../../utils/constants';
-import { getStorageConfiguration } from '../../utils/multipartUpload';
+import { FILE_STATUSES, getStorageConfiguration } from '../../utils';
 import * as API from '../../utils/upload';
-import { UploadingJobsContext } from '.';
+import { UploadingJobsContext } from './UploadingJobsContext';
 
-@withStripes
-@withOkapiKy
-export class UploadingJobsContextProvider extends Component {
+class UploadingJobsContextProviderComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     children: PropTypes.oneOfType([
@@ -139,3 +137,8 @@ export class UploadingJobsContextProvider extends Component {
     );
   }
 }
+
+export const UploadingJobsContextProvider = flow([
+  () => withStripes(UploadingJobsContextProviderComponent),
+  withOkapiKy,
+])();

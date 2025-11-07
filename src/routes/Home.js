@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
+  flow,
   isEqual,
   get,
 } from 'lodash';
@@ -57,11 +58,7 @@ const mapDispatchToProps = dispatch => ({
   deselectRecord: () => dispatch(deselectRecord()),
 });
 
-@withCheckboxList({ pageKey: PAGE_KEYS.HOME })
-@withStripes
-@withRoot
-@connect(mapStateToProps, mapDispatchToProps)
-export class Home extends Component {
+class HomeComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     checkboxList: checkboxListShape.isRequired,
@@ -339,3 +336,10 @@ export class Home extends Component {
     );
   }
 }
+
+export const Home = flow([
+  () => withCheckboxList({ pageKey: PAGE_KEYS.HOME })(HomeComponent),
+  withStripes,
+  withRoot,
+  connect(mapStateToProps, mapDispatchToProps),
+])();

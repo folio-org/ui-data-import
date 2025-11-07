@@ -50,6 +50,12 @@ export const fieldsConfig = [
     value: 'instance.previouslyHeld',
     recordType: 'INSTANCE',
   }, {
+    id: 'deleted',
+    label: 'ui-data-import.settings.mappingProfiles.map.administrativeData.field.setForDeletion',
+    categoryId: 'admin-data',
+    value: 'instance.deleted',
+    recordType: 'INSTANCE',
+  }, {
     id: 'hrid',
     label: 'ui-data-import.settings.mappingProfiles.map.instance.administrationData.field.hrid',
     categoryId: 'admin-data',

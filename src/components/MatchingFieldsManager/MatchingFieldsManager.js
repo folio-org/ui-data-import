@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import {
@@ -16,9 +15,7 @@ import {
   PER_REQUEST_LIMIT,
 } from '../../utils';
 
-@injectIntl
-@stripesConnect
-export class MatchingFieldsManager extends Component {
+class MatchingFieldsManagerComponent extends Component {
   static manifest = Object.freeze({
     identifierTypes: {
       type: 'okapi',
@@ -37,10 +34,8 @@ export class MatchingFieldsManager extends Component {
     intl: PropTypes.object.isRequired,
   };
 
-  matchFields = (resources, recordType) => {
-    return fieldsConfig.filter(field => field.recordType
-      && field.recordType === recordType
-      && get(resources, field.id));
+  matchFields = (recordType) => {
+    return fieldsConfig.filter(field => field?.recordType === recordType);
   };
 
   getCategory = field => fieldCategoriesConfig.find(category => category.id === field.categoryId);
@@ -175,3 +170,6 @@ export class MatchingFieldsManager extends Component {
     return this.props.children(contextData);
   }
 }
+
+export const MatchingFieldsManager = stripesConnect(injectIntl(MatchingFieldsManagerComponent));
+

@@ -25,7 +25,6 @@ import { MappedHeader } from '..';
 import {
   MAPPING_DETAILS_HEADLINE,
   marcFieldProtectionSettingsShape,
-  MARC_TYPES,
 } from '../../utils';
 
 export const OverrideProtectedFieldsTable = ({
@@ -35,7 +34,6 @@ export const OverrideProtectedFieldsTable = ({
   folioRecordType,
   isEditable = false,
   isAccordionOpen = true,
-  isViewMode = true,
 }) => {
   const protectedFields = unionBy(mappingMarcFieldProtectionFields, marcFieldProtectionFields, 'id')
     .sort((a, b) => a.field.localeCompare(b.field));
@@ -132,15 +130,10 @@ export const OverrideProtectedFieldsTable = ({
         style={{ margin: 0 }}
       >
         <Col>
-          {isAccordionOpen && !noProtectedFieldsDefined && folioRecordType !== MARC_TYPES.MARC_AUTHORITY && (
+          {isAccordionOpen && !noProtectedFieldsDefined && (
             <span>
               <FormattedMessage id="ui-data-import.fieldMappingsForMarc.updatesOverrides.subtext" />
             </span>
-          )}
-          {!isViewMode && folioRecordType === MARC_TYPES.MARC_AUTHORITY && (
-            <div style={{ padding: '10px' }}>
-              <FormattedMessage id="ui-data-import.fieldMappingsForMarc.override.subtext" />
-            </div>
           )}
         </Col>
       </Row>
@@ -163,5 +156,4 @@ OverrideProtectedFieldsTable.propTypes = {
   folioRecordType: PropTypes.string,
   isEditable: PropTypes.bool,
   isAccordionOpen: PropTypes.bool,
-  isViewMode: PropTypes.bool,
 };

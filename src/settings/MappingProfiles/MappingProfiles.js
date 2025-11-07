@@ -6,11 +6,9 @@ import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import { ListView } from '../../components';
-import {
-  ViewMappingProfile,
-  CreateMappingProfile,
-  EditMappingProfile,
-} from '.';
+import { ViewMappingProfile } from './ViewMappingProfile';
+import { CreateMappingProfile } from './CreateMappingProfile';
+import { EditMappingProfile } from './EditMappingProfile';
 
 import {
   getSortQuery,
@@ -60,11 +58,13 @@ export const mappingProfilesShape = {
       params: (_q, _p, _r, _l) => {
         const sort = _r?.query?.sort;
         const search = _r?.query?.query;
+        const filterByRecordType = _r?.query?.filterByRecordType;
         const sortQuery = sort ? `sortBy ${getSortQuery(sortMap, sort)}` : '';
         const searchQuery = search ? `AND ${getSearchQuery(queryTemplate, search)}` : '';
+        const filterByRecordTypeQuery = filterByRecordType ? `AND existingRecordType="${filterByRecordType}"` : '';
 
         const withoutDefaultProfiles = `AND id<>(${OCLC_CREATE_INSTANCE_MAPPING_ID} AND ${OCLC_UPDATE_INSTANCE_MAPPING_ID} AND ${OCLC_CREATE_MARC_BIB_MAPPING_ID} AND ${QUICKMARK_DERIVE_CREATE_BIB_MAPPING_ID} AND ${QUICKMARK_DERIVE_CREATE_HOLDINGS_MAPPING_ID})`;
-        const query = `${FIND_ALL_CQL} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
+        const query = `${FIND_ALL_CQL} ${filterByRecordTypeQuery} ${withoutDefaultProfiles} ${searchQuery} ${sortQuery}`;
 
         return { query };
       },
@@ -104,8 +104,7 @@ export const mappingProfilesShape = {
   },
 };
 
-@stripesConnect
-export class MappingProfiles extends Component {
+class MappingProfilesComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: { initialValue: {} },
@@ -201,3 +200,5 @@ export class MappingProfiles extends Component {
     return <ListView {...resultedProps} />;
   }
 }
+
+export const MappingProfiles = stripesConnect(MappingProfilesComponent);

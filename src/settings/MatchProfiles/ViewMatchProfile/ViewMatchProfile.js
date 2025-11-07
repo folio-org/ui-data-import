@@ -4,7 +4,10 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { get } from 'lodash';
+import {
+  flow,
+  get
+} from 'lodash';
 
 import {
   AppIcon,
@@ -58,10 +61,7 @@ import {
 import sharedCss from '../../../shared.css';
 import styles from '../MatchProfiles.css';
 
-@injectIntl
-@stripesConnect
-@withTags
-export class ViewMatchProfile extends Component {
+class ViewMatchProfileComponent extends Component {
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     matchProfileView: {
@@ -364,3 +364,9 @@ export class ViewMatchProfile extends Component {
     );
   }
 }
+
+export const ViewMatchProfile = flow([
+  () => injectIntl(ViewMatchProfileComponent),
+  withTags,
+  stripesConnect,
+])();

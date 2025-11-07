@@ -9,7 +9,10 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { get } from 'lodash';
+import {
+  flow,
+  get,
+} from 'lodash';
 
 import {
   Pane,
@@ -52,7 +55,7 @@ import {
   ProfileTree,
 } from '../../../components';
 
-import { NoJobProfilePane } from '.';
+import { NoJobProfilePane } from './NoJobProfilePane';
 
 import {
   ENTITY_KEYS,
@@ -63,7 +66,6 @@ import {
   loadRecords,
   getEntity,
   getEntityTags,
-  compose,
   createUrlFromArray,
   FILE_STATUSES,
   showActionMenu,
@@ -71,10 +73,10 @@ import {
   BASE_URLS,
   fileNameCellFormatter,
   STATUS_CODES,
+  requestConfiguration,
 } from '../../../utils';
 
 import RunJobModal from './RunJobModal';
-import { requestConfiguration } from '../../../utils/multipartUpload';
 
 import sharedCss from '../../../shared.css';
 
@@ -645,7 +647,7 @@ ViewJobProfileComponent.propTypes = {
   accordionStatusRef: PropTypes.object,
 };
 
-export const ViewJobProfile = compose(
+export const ViewJobProfile = flow([
+  () => withTags(ViewJobProfileComponent),
   stripesConnect,
-  withTags,
-)(ViewJobProfileComponent);
+])();

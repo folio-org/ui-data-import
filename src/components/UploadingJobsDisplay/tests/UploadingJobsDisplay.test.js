@@ -42,30 +42,28 @@ const kyMock = () => ({
   post: kyPostMock,
 });
 
-const mockMultipart = (
-  uploadDefId = 'test', // eslint-disable-line
-  files = [], // eslint-disable-line
-  ky = kyMock,
-  errorHandler = jest.fn(),
-  progressHandler = jest.fn(),
-  successHandler = jest.fn()
-) => {
-  return {
-    init: () => {
-      try {
-        ky.post();
-        progressHandler({ current: 30, total: 100 });
-        successHandler();
-      } catch (error) {
-        errorHandler(error);
-      }
-    }
-  };
-};
-
 jest.mock('../../../utils/multipartUpload', () => ({
   ...jest.requireActual('../../../utils/multipartUpload'),
-  MultipartUploader: mockMultipart,
+  MultipartUploader: (
+    uploadDefId = 'test', // eslint-disable-line
+    files = [], // eslint-disable-line
+    ky = kyMock,
+    errorHandler = jest.fn(),
+    progressHandler = jest.fn(),
+    successHandler = jest.fn()
+  ) => {
+    return {
+      init: () => {
+        try {
+          ky.post();
+          progressHandler({ current: 30, total: 100 });
+          successHandler();
+        } catch (error) {
+          errorHandler(error);
+        }
+      }
+    };
+  },
 }));
 
 global.fetch = jest.fn(() => Promise.resolve({

@@ -34,7 +34,10 @@ import {
   handleRepeatableFieldAndActionAdd,
   handleRepeatableFieldAndActionClean,
 } from '../../utils';
-import { VENDOR_DETAILS_FIELD } from '../../../../../utils';
+import {
+  validateRequiredField,
+  VENDOR_DETAILS_FIELD,
+} from '../../../../../utils';
 
 export const Vendor = ({
   accountNumbers = [],
@@ -122,7 +125,7 @@ export const Vendor = ({
                     component={TextField}
                     label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.vendor.field.vendorRefNumber`} />}
                     name={VENDOR_FIELDS_MAP.VENDOR_REF_NUMBER(index)}
-                    validate={[validation]}
+                    validate={[validation, validateRequiredField]}
                   />
                 )}
               </WithValidation>

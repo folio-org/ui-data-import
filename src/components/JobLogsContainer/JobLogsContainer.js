@@ -75,7 +75,7 @@ const JobLogsContainer = props => {
         fieldsConfig,
         formatNumber,
       }),
-      fileName: record => fileNameCellFormatter(record, location),
+      fileName: record => fileNameCellFormatter(record, location, false),
       status: statusCellFormatter(formatMessage),
       jobProfileName: jobProfileNameCellFormatter,
       jobParts: record => formatMessage({ id: 'ui-data-import.logViewer.partOfTotal' }, { number: record.jobPartNumber, total: record.totalJobParts }),

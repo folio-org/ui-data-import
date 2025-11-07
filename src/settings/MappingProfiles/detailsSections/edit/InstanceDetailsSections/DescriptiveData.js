@@ -30,6 +30,7 @@ import {
   getWrapperSourceLink,
   mappingProfileSubfieldShape,
   okapiShape,
+  validateRequiredField,
 } from '../../../../../utils';
 
 export const DescriptiveData = ({
@@ -200,6 +201,7 @@ export const DescriptiveData = ({
                       <AcceptedValuesField
                         okapi={okapi}
                         component={TextField}
+                        validation={validateRequiredField}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.instance.descriptiveData.field.natureOfContentTermId`} />}
                         name={getSubfieldName(22, 0, index)}
                         optionValue="name"

@@ -25,6 +25,7 @@ import {
   validateMARCWithDate,
   mappingProfileSubfieldShape,
   okapiShape,
+  validateRequiredField,
 } from '../../../../../utils';
 import {
   onAdd,
@@ -189,6 +190,7 @@ export const AdministrativeData = ({
                       <AcceptedValuesField
                         okapi={okapi}
                         component={TextField}
+                        validation={validateRequiredField}
                         name={getSubfieldName(8, 0, index)}
                         label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.statisticalCode`} />}
                         optionLabel="name"
@@ -245,7 +247,7 @@ export const AdministrativeData = ({
                             component={TextField}
                             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.administrativeData.field.administrativeNote`} />}
                             name={getSubfieldName(9, 0, index)}
-                            validate={[validation]}
+                            validate={[validation, validateRequiredField]}
                           />
                         )}
                       </WithValidation>

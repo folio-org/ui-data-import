@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import {
+  flow,
   isEmpty,
   map,
   omit,
@@ -17,6 +18,7 @@ import {
   withStripes,
   stripesShape,
   withOkapiKy,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -48,11 +50,7 @@ import { MultipartUploader } from '../../utils/multipartUpload';
 import css from './UploadingJobsDisplay.css';
 import sharedCss from '../../shared.css';
 
-@withRouter
-@withStripes
-@withOkapiKy
-@injectIntl
-export class UploadingJobsDisplay extends Component {
+class UploadingJobsDisplayComponent extends Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     history: PropTypes.shape({
@@ -556,8 +554,18 @@ export class UploadingJobsDisplay extends Component {
     const dataTypeQuery = dataTypes.length > 0
       ? `(${dataTypes.map(dataType => `"${dataType}"`).join(' OR ')})`
       : '';
+    
+    const shouldHideDefaultCreateHoldingProfile = checkIfUserInCentralTenant(this.props.stripes);
 
-    this.setState({ JobProfilesComponent: createJobProfiles(true, dataTypeQuery, true) });
+    this.setState({
+      JobProfilesComponent:
+        createJobProfiles(
+          true,
+          dataTypeQuery,
+          true,
+          shouldHideDefaultCreateHoldingProfile,
+        )
+    });
   }
 
   renderHeader = headerProps => (
@@ -664,3 +672,10 @@ export class UploadingJobsDisplay extends Component {
     );
   }
 }
+
+export const UploadingJobsDisplay = flow([
+  () => withRouter(UploadingJobsDisplayComponent),
+  withStripes,
+  withOkapiKy,
+  injectIntl,
+])();
