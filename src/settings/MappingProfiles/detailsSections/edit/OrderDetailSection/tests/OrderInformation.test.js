@@ -47,27 +47,27 @@ const okapi = buildOkapi();
 const resourcesProp = {
   purchaseOrderLinesLimitSetting: {
     records: [{
-      configs: [{ value: 'test purchaseOrderLinesLimitSetting' }]
+      settings: [{ value: 'test purchaseOrderLinesLimitSetting' }]
     }],
     hasLoaded: true,
   },
   isApprovalRequired: {
     records: [{
-      configs: [{ value: '{ "isApprovalRequired": true }' }]
+      settings: [{ value: '{ "isApprovalRequired": true }' }]
     }],
     hasLoaded: true,
   },
   userCanEditPONumber: {
     records: [{
-      configs: [{ value: '{ "canUserEditOrderNumber": true }' }]
+      settings: [{ value: '{ "canUserEditOrderNumber": true }' }]
     }],
     hasLoaded: true,
   },
   addresses: {
     records: [{
-      configs: [
-        { value: '{ "name": "test address name","address": "test address" }' },
-        { value: '{ "name": "test address name2","address": "test address2" }' },
+      items: [
+        { value: { name: "test address name", address: "test address" } },
+        { value: { name: "test address name2", address: "test address2" } },
       ]
     }],
     hasLoaded: true,
