@@ -67,7 +67,11 @@ export const AcceptedValuesField = ({
       let currentOptionValue = optionTemplate ? updateValueWithTemplate(item, optionTemplate) : item[optionValue];
 
       if (parsedOptionValue) {
-        currentOptionValue = JSON.parse(currentOptionValue)[parsedOptionValue];
+        if (typeof currentOptionValue !== 'string') {
+          currentOptionValue = currentOptionValue[parsedOptionValue];
+        } else {
+          currentOptionValue = JSON.stringify(currentOptionValue);
+        }
       }
 
       acceptedValues = {
@@ -84,7 +88,11 @@ export const AcceptedValuesField = ({
       let currentOption = optionTemplate ? updateValueWithTemplate(option, optionTemplate) : option[optionLabel];
 
       if (parsedOptionLabel) {
-        currentOption = JSON.parse(currentOption)[parsedOptionLabel];
+        if (typeof currentOption !== 'string') {
+          currentOption = currentOption[parsedOptionLabel];
+        } else {
+          currentOption = JSON.stringify(currentOption);
+        }
       }
 
       return {
