@@ -164,14 +164,14 @@ const OrderInformationComponent = ({
     [userCanEditPONumber.hasLoaded, userCanEditPONumber.records],
   );
   const addressesValue = useMemo(() => {
-  if (!addresses.hasLoaded) return [];
+    if (!addresses.hasLoaded) return [];
 
-  const items = addresses.records?.[0]?.items;
+    const items = addresses.records?.[0]?.items;
 
-  return Array.isArray(items)
-    ? items.map(address => address.value)
-    : [];
-}, [addresses.hasLoaded, addresses.records]);
+    return Array.isArray(items)
+      ? items.map(address => address.value)
+      : [];
+  }, [addresses.hasLoaded, addresses.records]);
 
   const purchaseOrderStatusOptions = useMemo(
     () => {
