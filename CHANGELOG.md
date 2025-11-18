@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [9.1.0] (IN PROGRESS)
+## [10.0.0] (IN PROGRESS)
 
 ### Features added:
 * Action profile: limit the list of linkable field mapping profiles based on FOLIO record type (UIDATIMP-1328)
