@@ -63,6 +63,7 @@ import {
   MANUAL_PO_FIELD,
   VENDOR_FIELD,
   NOTES_FIELD,
+  ADDRESSES_SCOPE,
 } from '../../../../../utils';
 
 const OrderInformationComponent = ({
@@ -121,8 +122,8 @@ const OrderInformationComponent = ({
       .then(response => {
         let purchaseOrderLinesLimitValue = DEFAULT_PO_LINES_LIMIT_VALUE;
 
-        if (!isEmpty(response.configs)) {
-          purchaseOrderLinesLimitValue = response.configs[0]?.value;
+        if (!isEmpty(response.settings)) {
+          purchaseOrderLinesLimitValue = response.settings[0]?.value;
         }
 
         setReferenceTables(ORDER_INFO_FIELDS_MAP.PO_LINES_LIMIT, `"${purchaseOrderLinesLimitValue}"`);
@@ -140,8 +141,8 @@ const OrderInformationComponent = ({
 
   const isApprovalRequiredValue = useMemo(
     () => {
-      if (isApprovalRequired.hasLoaded && isApprovalRequired.records[0]?.configs[0]?.value) {
-        const parsedIsApprovalRequired = JSON.parse(isApprovalRequired.records[0]?.configs[0]?.value);
+      if (isApprovalRequired.hasLoaded && isApprovalRequired.records[0]?.settings[0]?.value) {
+        const parsedIsApprovalRequired = JSON.parse(isApprovalRequired.records[0]?.settings[0]?.value);
 
         return parsedIsApprovalRequired.isApprovalRequired;
       }
@@ -152,8 +153,8 @@ const OrderInformationComponent = ({
   );
   const userCanEditPONumberValue = useMemo(
     () => {
-      if (userCanEditPONumber.hasLoaded && userCanEditPONumber.records[0]?.configs[0]?.value) {
-        const parsedUserCanEditPONumber = JSON.parse(userCanEditPONumber.records[0]?.configs[0]?.value);
+      if (userCanEditPONumber.hasLoaded && userCanEditPONumber.records[0]?.settings[0]?.value) {
+        const parsedUserCanEditPONumber = JSON.parse(userCanEditPONumber.records[0]?.settings[0]?.value);
 
         return parsedUserCanEditPONumber.canUserEditOrderNumber;
       }
@@ -162,16 +163,16 @@ const OrderInformationComponent = ({
     },
     [userCanEditPONumber.hasLoaded, userCanEditPONumber.records],
   );
-  const addressesValue = useMemo(
-    () => {
-      if (addresses.hasLoaded) {
-        return addresses.records[0]?.configs.map(address => JSON.parse(address.value));
-      }
+  const addressesValue = useMemo(() => {
+    if (!addresses.hasLoaded) return [];
 
-      return [];
-    },
-    [addresses.hasLoaded, addresses.records],
-  );
+    const items = addresses.records?.[0]?.items;
+
+    return Array.isArray(items)
+      ? items.map(address => address.value)
+      : [];
+  }, [addresses.hasLoaded, addresses.records]);
+
   const purchaseOrderStatusOptions = useMemo(
     () => {
       if (isApprovalRequiredValue && !isApprovedChecked) {
@@ -379,7 +380,7 @@ const OrderInformationComponent = ({
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
               wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
-              wrapperSourcePath: 'configs',
+              wrapperSourcePath: 'items',
             }]}
             okapi={okapi}
             onChange={billToNameValue => {
@@ -409,7 +410,7 @@ const OrderInformationComponent = ({
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
               wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
-              wrapperSourcePath: 'configs',
+              wrapperSourcePath: 'items',
             }]}
             okapi={okapi}
             onChange={shipToNameValue => {
@@ -482,20 +483,20 @@ const OrderInformationComponent = ({
 OrderInformationComponent.manifest = Object.freeze({
   purchaseOrderLinesLimitSetting: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==poLines-limit)',
+    path: 'orders-storage/settings?query=(key==poLines-limit)',
     accumulate: true,
   },
   isApprovalRequired: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==approvals)',
+    path: 'orders-storage/settings?query=(key==approvals)',
   },
   userCanEditPONumber: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==orderNumber)',
+    path: 'orders-storage/settings?query=(key==orderNumber)',
   },
   addresses: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==TENANT and configName==tenant.addresses) sortBy value',
+    path: `settings/entries?query=(scope==${ADDRESSES_SCOPE}) sortBy value`,
   },
 });
 

@@ -29,7 +29,10 @@ import {
   renderCheckbox,
   transformSubfieldsData,
 } from '../../utils';
-import { mappingProfileFieldShape } from '../../../../../utils';
+import {
+  ADDRESSES_SCOPE,
+  mappingProfileFieldShape,
+} from '../../../../../utils';
 import { useOrganizationValue } from '../../hooks';
 
 const OrderInformation = ({
@@ -55,7 +58,7 @@ const OrderInformation = ({
   const purchaseOrderLinesLimitValue = useMemo(
     () => {
       if (purchaseOrderLinesLimitSetting.hasLoaded && !isEmpty(purchaseOrderLinesLimitSetting.records)) {
-        return purchaseOrderLinesLimitSetting.records[0]?.configs[0]?.value;
+        return purchaseOrderLinesLimitSetting.records[0]?.settings[0]?.value;
       }
 
       return '';
@@ -72,7 +75,7 @@ const OrderInformation = ({
     let addressesValue = [];
 
     if (addresses.hasLoaded) {
-      addressesValue = [...addresses.records[0]?.configs.map(address => JSON.parse(address.value))];
+      addressesValue = [...addresses.records[0]?.items.map(address => address.value)];
     }
 
     if (billTo) {
@@ -342,7 +345,7 @@ OrderInformation.propTypes = {
 OrderInformation.manifest = Object.freeze({
   purchaseOrderLinesLimitSetting: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==ORDERS and configName==poLines-limit)',
+    path: 'orders-storage/settings?query=(key==poLines-limit)',
   },
   user: {
     type: 'okapi',
@@ -353,7 +356,7 @@ OrderInformation.manifest = Object.freeze({
   },
   addresses: {
     type: 'okapi',
-    path: 'configurations/entries?query=(module==TENANT and configName==tenant.addresses) sortBy value',
+    path: `settings/entries?query=(scope==${ADDRESSES_SCOPE}) sortBy value`,
   },
 });
 

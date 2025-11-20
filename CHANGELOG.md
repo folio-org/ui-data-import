@@ -1,6 +1,6 @@
 # Change history for ui-data-import
 
-## [9.1.0] (IN PROGRESS)
+## [10.0.0] (IN PROGRESS)
 
 ### Features added:
 * Action profile: limit the list of linkable field mapping profiles based on FOLIO record type (UIDATIMP-1328)
@@ -11,6 +11,7 @@
 * MARC authority > Field mapping profile > allow a user to override default field protections. (UIDATIMP-1699)
 * Field mapping profiles - add validation to repeatable fields to check empty fields. (UIDATIMP-1738)
 * Add 'Admin data: Set for deletion' to existing Instance record field options in Mapping profile. (UIDATIMP-1742)
+* *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. (UIDATIMP-1702)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)

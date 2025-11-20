@@ -882,3 +882,5 @@ export const STATUS_CODES = {
 };
 
 export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
+
+export const ADDRESSES_SCOPE = 'ui-tenant-settings.addresses.manage';

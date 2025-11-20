@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -170,7 +170,9 @@
     "okapiInterfaces": {
       "data-import": "3.2",
       "source-manager-job-executions": "3.4",
-      "data-import-converter-storage": "1.5"
+      "data-import-converter-storage": "1.5",
+      "settings": "1.0",
+      "orders-storage.settings": "1.0"
     },
     "optionalOkapiInterfaces": {
       "loan-types": "2.3",
@@ -215,7 +217,9 @@
           "change-manager.jobExecutions.item.get",
           "change-manager.jobExecutions.children.collection.get",
           "change-manager.records.delete",
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
+          "mod-settings.global.read.ui-tenant-settings.addresses.manage",
+          "orders-storage.settings.collection.get",
           "converter-storage.actionprofile.item.get",
           "converter-storage.actionprofile.collection.get",
           "converter-storage.jobprofile.item.get",
@@ -319,7 +323,9 @@
           "settings.data-import.enabled",
           "acquisitions-units.units.collection.get",
           "batch-groups.collection.get",
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
+          "mod-settings.global.read.ui-tenant-settings.addresses.manage",
+          "orders-storage.settings.collection.get",
           "converter-storage.actionprofile.delete",
           "converter-storage.actionprofile.item.get",
           "converter-storage.actionprofile.collection.get",
@@ -397,7 +403,9 @@
           "settings.data-import.enabled",
           "acquisitions-units.units.collection.get",
           "batch-groups.collection.get",
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
+          "mod-settings.global.read.ui-tenant-settings.addresses.manage",
+          "orders-storage.settings.collection.get",
           "converter-storage.actionprofile.item.get",
           "converter-storage.actionprofile.collection.get",
           "converter-storage.field-protection-settings.item.get",
