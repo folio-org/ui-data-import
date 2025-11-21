@@ -51,7 +51,7 @@
     "recordsCount": "{count, plural, one {záznam} few {záznamů} many {záznamů} other {záznamy}}",
     "fileName": "Název souboru",
     "updated": "Aktualizováno",
-    "updatedBy": "Aktualizoval",
+    "updatedBy": "Aktualizoval/a",
     "runBy": "Provozuje",
     "cancel": "Zrušit",
     "close": "Zavřít",
@@ -1180,5 +1180,5 @@
     "settings.mappingProfiles.map.order.donorInformation.section": "Informace o dárci",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Přidat dárce",
     "settings.mappingProfiles.map.order.donorInformation.donor": "Dárce",
-    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion"
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Nastavit pro smazání"
 }
