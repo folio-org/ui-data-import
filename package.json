@@ -171,8 +171,7 @@
       "data-import": "3.2",
       "source-manager-job-executions": "3.4",
       "data-import-converter-storage": "1.5",
-      "settings": "1.0",
-      "orders-storage.settings": "1.0"
+      "settings": "1.0"
     },
     "optionalOkapiInterfaces": {
       "loan-types": "2.3",
@@ -201,7 +200,8 @@
       "batch-group": "1.1",
       "finance.funds": "3.0",
       "finance.expense-classes": "3.0",
-      "configuration": "2.0"
+      "configuration": "2.0",
+      "orders-storage.settings": "1.0"
     },
     "permissionSets": [
       {
