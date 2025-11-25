@@ -55,6 +55,7 @@ import {
   getEntityTags,
   showActionMenu,
   BASE_URLS,
+  TAGS_SCOPE,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -377,3 +378,7 @@ export const ViewActionProfile = flow([
   stripesConnect,
   withRouter,
 ])();
+
+ViewActionProfile.defaultProps = {
+  tagsScope: TAGS_SCOPE,
+};

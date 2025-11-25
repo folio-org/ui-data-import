@@ -74,6 +74,7 @@ import {
   fileNameCellFormatter,
   STATUS_CODES,
   requestConfiguration,
+  TAGS_SCOPE,
 } from '../../../utils';
 
 import RunJobModal from './RunJobModal';
@@ -651,3 +652,7 @@ export const ViewJobProfile = flow([
   () => withTags(ViewJobProfileComponent),
   stripesConnect,
 ])();
+
+ViewJobProfile.defaultProps = {
+  tagsScope: TAGS_SCOPE,
+};

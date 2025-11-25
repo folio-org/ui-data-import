@@ -56,6 +56,7 @@ import {
   showActionMenu,
   BASE_URLS,
   MATCH_INCOMING_RECORD_TYPES,
+  TAGS_SCOPE,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -370,3 +371,7 @@ export const ViewMatchProfile = flow([
   withTags,
   stripesConnect,
 ])();
+
+ViewMatchProfile.defaultProps = {
+  tagsScope: TAGS_SCOPE,
+};
