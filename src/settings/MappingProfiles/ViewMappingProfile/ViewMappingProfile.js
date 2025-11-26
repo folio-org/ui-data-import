@@ -67,6 +67,7 @@ import {
   isMARCType,
   BASE_URLS,
   INCOMING_RECORD_TYPES,
+  TAGS_SCOPE,
 } from '../../../utils';
 
 import sharedCss from '../../../shared.css';
@@ -448,3 +449,7 @@ export const ViewMappingProfile = flow([
   withTags,
   stripesConnect,
 ])();
+
+ViewMappingProfile.defaultProps = {
+  tagsScope: TAGS_SCOPE,
+};
