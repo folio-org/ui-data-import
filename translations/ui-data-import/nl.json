@@ -1180,5 +1180,5 @@
     "settings.mappingProfiles.map.order.donorInformation.section": "Donateursinformatie",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "Donateur toevoegen",
     "settings.mappingProfiles.map.order.donorInformation.donor": "Donateur",
-    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion"
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Instellen voor verwijdering"
 }
