@@ -1,7 +1,7 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .mappingForm {
-  max-width: 100%;
+  max-width: 100%!important;
 
   & [class|="kvRoot"] {
     margin-bottom: 0;
