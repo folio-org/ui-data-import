@@ -13,6 +13,7 @@
 * Add 'Admin data: Set for deletion' to existing Instance record field options in Mapping profile. (UIDATIMP-1742)
 * *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. (UIDATIMP-1702)
 * Migrate tag flag from `mod-configuration` to `mod-settings`. (UIDATIMP-1745)
+* Fix full screen field mapping form width become narrowed (UIDATIMP-1747)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
