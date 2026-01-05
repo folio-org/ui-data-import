@@ -1180,5 +1180,5 @@
     "settings.mappingProfiles.map.order.donorInformation.section": "捐赠者信息",
     "settings.mappingProfiles.map.order.donorInformation.field.donors.addLabel": "添加捐赠者",
     "settings.mappingProfiles.map.order.donorInformation.donor": "捐赠者",
-    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion"
+    "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "设置为删除"
 }
