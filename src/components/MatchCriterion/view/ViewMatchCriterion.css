@@ -59,3 +59,8 @@
     margin-bottom: 1rem;
   }
 }
+
+.matchLabel {
+  color: #ffffff;
+  padding-left: 1rem;
+}

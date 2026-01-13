@@ -1,18 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'react-final-form';
 import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import classnames from 'classnames';
 import { noop } from 'lodash';
 
 import {
   Accordion,
-  Row,
-  Col,
-  Select,
+  Headline,
 } from '@folio/stripes/components';
 import { FOLIO_RECORD_TYPES } from '@folio/stripes-data-transfer-components';
 
@@ -24,8 +20,6 @@ import { QualifierPartSection } from './QualifierPartSection';
 import { ExistingSectionFolio } from './ExistingRecordSections';
 
 import {
-  createOptionsList,
-  CRITERION_TYPES_OPTIONS,
   STATIC_VALUE_TYPES,
   matchDetailsShape,
   MATCH_INCOMING_RECORD_TYPES,
@@ -53,8 +47,6 @@ export const MatchCriterion = ({
     incomingMatchExpression,
     existingMatchExpression,
   } = matchDetails;
-
-  const matchCriterionOptions = createOptionsList(CRITERION_TYPES_OPTIONS, formatMessage);
 
   const incomingRecordLbl = formatMessage(
     { id: 'ui-data-import.match.incoming.record' },
@@ -188,28 +180,14 @@ export const MatchCriterion = ({
             {incomingRecordQualifierSections[incomingRecordType]}
             {incomingRecordQualifierPartSections[incomingRecordType]}
           </Section>
-          <Section
-            label={<FormattedMessage id="ui-data-import.match.criterion" />}
-            className={classnames(css.criterionSection, css.inputContainer)}
+          <Headline
+            size="large"
+            margin="none"
+            tag="h3"
+            className={css.matchLabel}
           >
-            <Row>
-              <Col
-                data-test-match-criterion
-                xs={12}
-              >
-                <FormattedMessage id="ui-data-import.match.criterion">
-                  {([ariaLabel]) => (
-                    <Field
-                      component={Select}
-                      name={`profile.matchDetails[${repeatableIndex}].matchCriterion`}
-                      dataOptions={matchCriterionOptions}
-                      aria-label={ariaLabel}
-                    />
-                  )}
-                </FormattedMessage>
-              </Col>
-            </Row>
-          </Section>
+            <FormattedMessage id="ui-data-import.match.criterion-type.exactly-matches" />
+          </Headline>
           <Section
             label={existingRecordLbl}
             className={css.existing}
