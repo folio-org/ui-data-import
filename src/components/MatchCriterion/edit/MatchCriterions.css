@@ -37,3 +37,8 @@
   margin-top: -14px;
   margin-bottom: -14px;
 }
+
+.matchLabel {
+  color: #ffffff;
+  padding-left: 1rem;
+}

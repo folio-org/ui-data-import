@@ -14,6 +14,7 @@
 * *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. (UIDATIMP-1702)
 * Migrate tag flag from `mod-configuration` to `mod-settings`. (UIDATIMP-1745)
 * Fix full screen field mapping form width become narrowed (UIDATIMP-1747)
+* Disable matching criteria other than Exactly Matches. (UIDATIMP-1743)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)

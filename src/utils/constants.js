@@ -201,41 +201,6 @@ export const QUALIFIER_TYPES_OPTIONS = [
   },
 ];
 
-export const CRITERION_TYPES_OPTIONS = [
-  {
-    value: CRITERION_TYPES.EXACTLY_MATCHES,
-    label: 'ui-data-import.match.criterion-type.exactly-matches',
-  }, {
-    value: CRITERION_TYPES.EXISTING_VALUE_CONTAINS_INCOMING_VALUE,
-    label: 'ui-data-import.match.criterion-type.existing-contains-incoming',
-  }, {
-    value: CRITERION_TYPES.INCOMING_VALUE_CONTAINS_EXISTING_VALUE,
-    label: 'ui-data-import.match.criterion-type.incoming-contains-existing',
-  }, {
-    value: CRITERION_TYPES.EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE,
-    label: 'ui-data-import.match.criterion-type.existing-begins-with-incoming',
-  }, {
-    value: CRITERION_TYPES.INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE,
-    label: 'ui-data-import.match.criterion-type.incoming-begins-with-existing',
-  }, {
-    value: CRITERION_TYPES.EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE,
-    label: 'ui-data-import.match.criterion-type.existing-ends-with-incoming',
-  }, {
-    value: CRITERION_TYPES.INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE,
-    label: 'ui-data-import.match.criterion-type.incoming-ends-with-existing',
-  },
-];
-
-export const VALUE_TYPES = [
-  {
-    value: 'VALUE_FROM_RECORD',
-    label: 'ui-data-import.match.value-type.value-from-record',
-  }, {
-    value: 'STATIC_VALUE',
-    label: 'ui-data-import.match.value-type.static-value',
-  },
-];
-
 export const BOOLEAN_ACTIONS = {
   ALL_TRUE: 'ALL_TRUE',
   ALL_FALSE: 'ALL_FALSE',
@@ -410,40 +375,6 @@ export const PROFILE_RELATION_TYPES = {
   MATCH: 'MATCH',
   NON_MATCH: 'NON_MATCH',
 };
-
-export const INSTANCE_RESOURCE_PATHS = [
-  'raml-util/schemas/metadata.schema',
-  'instance.json',
-  'instancerelationship.json',
-  'instanceprecedingsucceedingtitle.json',
-];
-
-export const ACQ_DATA_RESOURCE_PATHS = [
-  'acq-models/mod-orders-storage/schemas/po_line.json',
-  'acq-models/mod-orders-storage/schemas/vendor_detail.json',
-];
-
-export const HOLDINGS_RESOURCE_PATHS = [
-  'raml-util/schemas/metadata.schema',
-  'holdings-storage/holdingsRecord.json',
-  'common/electronicAccessItem.json',
-  'holdings-storage/holdingsReceivingHistoryEntry.json',
-  'holdings-storage/holdingsNote.json',
-];
-
-export const ITEM_RESOURCE_PATHS = [
-  'raml-util/schemas/metadata.schema',
-  'item-storage/item.json',
-];
-
-export const INVOICE_RESOURCE_PATHS = [
-  'raml-util/schemas/metadata.schema',
-  'acq-models/mod-invoice-storage/schemas/invoice.json',
-  'acq-models/mod-invoice-storage/schemas/adjustment.json',
-  'acq-models/mod-invoice-storage/schemas/document_metadata.json',
-  'acq-models/mod-invoice-storage/schemas/invoice_line.json',
-  'acq-models/mod-invoice-storage/schemas/fund_distribution.json',
-];
 
 export const FILTER_QUERY_PARAMS = {
   DEFAULT: 'cql.allRecords=1',

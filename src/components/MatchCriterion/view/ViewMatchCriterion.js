@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import classnames from 'classnames';
 
 import {
   Accordion,
-  Row,
-  Col,
-  NoValue,
+  Headline,
 } from '@folio/stripes/components';
 
 import { Section } from '../..';
@@ -17,10 +14,7 @@ import { QualifierSection } from './QualifierSection';
 import { QualifierPartSection } from './QualifierPartSection';
 import { ExistingSectionFolio } from './ExistingRecordSections';
 
-import {
-  CRITERION_TYPES_OPTIONS,
-  matchDetailsShape,
-} from '../../../utils';
+import { matchDetailsShape } from '../../../utils';
 
 import css from './ViewMatchCriterion.css';
 
@@ -35,7 +29,6 @@ export const ViewMatchCriterion = ({
     existingRecordType,
     incomingMatchExpression,
     existingMatchExpression,
-    matchCriterion,
   } = matchDetails;
 
   const incomingRecordLbl = (
@@ -160,8 +153,6 @@ export const ViewMatchCriterion = ({
     MARC_AUTHORITY: existingQualifierPartSectionElement,
   };
 
-  const matchCriterionLabelId = CRITERION_TYPES_OPTIONS.find(option => option.value === matchCriterion)?.label;
-
   return (
     <Section className={css.matchCriteria}>
       <Accordion
@@ -177,20 +168,14 @@ export const ViewMatchCriterion = ({
             {incomingRecordQualifierSections[incomingRecordType]}
             {incomingRecordQualifierPartSections[incomingRecordType]}
           </Section>
-          <Section
-            label={<FormattedMessage id="ui-data-import.match.criterion" />}
-            className={classnames(css.criterionSection, css.inputContainer)}
+          <Headline
+            size="large"
+            margin="none"
+            tag="h3"
+            className={css.matchLabel}
           >
-            <Row>
-              <Col
-                data-test-match-criterion
-                xs={12}
-                className={css.fieldValue}
-              >
-                {matchCriterionLabelId ? <FormattedMessage id={matchCriterionLabelId} /> : <NoValue />}
-              </Col>
-            </Row>
-          </Section>
+            <FormattedMessage id="ui-data-import.match.criterion-type.exactly-matches" />
+          </Headline>
           <Section
             label={existingRecordLbl}
             className={css.existing}
