@@ -87,7 +87,7 @@
 
 .contentContainer {
   position: relative;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap!important;
 
   & [class|=overlay] {transform: translate3d(0, 39px, 0px)!important;}
 }
