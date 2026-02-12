@@ -1064,7 +1064,7 @@
     "settings.mappingProfiles.map.order.poLineDetails.receiptDate": "Receipt date",
     "settings.mappingProfiles.map.order.poLineDetails.receiptStatus": "Receipt status",
     "settings.mappingProfiles.map.order.poLineDetails.paymentStatus": "支払ステータス",
-    "settings.mappingProfiles.map.order.poLineDetails.source": "Source",
+    "settings.mappingProfiles.map.order.poLineDetails.source": "ソース",
     "settings.mappingProfiles.map.order.poLineDetails.donor": "寄贈者",
     "settings.mappingProfiles.map.order.poLineDetails.selector": "Selector",
     "settings.mappingProfiles.map.order.poLineDetails.requester": "リクエスト者",

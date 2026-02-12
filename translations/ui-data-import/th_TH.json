@@ -346,7 +346,7 @@
     "settings.mappingProfiles.map.item.itemLoans.section": "Loan and availability",
     "settings.mappingProfiles.map.item.itemLoans.field.loanTypePermanentRequired": "Permanent loan type",
     "settings.mappingProfiles.map.item.itemLoans.field.loanTypeTemporary": "Temporary loan type",
-    "settings.mappingProfiles.map.item.itemLoans.field.loanStatus": "Status",
+    "settings.mappingProfiles.map.item.itemLoans.field.loanStatus": "สถานะ",
     "settings.mappingProfiles.map.instance": "Instance",
     "settings.mappingProfiles.map.instance.administrationData.field.hrid": "Instance HRID",
     "settings.mappingProfiles.map.instance.administrationData.field.source": "Metadata source",
