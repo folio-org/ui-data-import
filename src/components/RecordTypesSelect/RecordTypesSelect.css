@@ -85,9 +85,12 @@
   border-right: 1px solid var(--color-border);
 }
 
+.container .contentContainer {
+  flex-wrap: nowrap;
+}
+
 .contentContainer {
   position: relative;
-  flex-wrap: nowrap;
 
   & [class|=overlay] {transform: translate3d(0, 39px, 0px)!important;}
 }
