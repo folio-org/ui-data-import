@@ -63,7 +63,7 @@ import {
   MANUAL_PO_FIELD,
   VENDOR_FIELD,
   NOTES_FIELD,
-  ADDRESSES_SCOPE,
+  TENANT_ADDRESSES_API,
 } from '../../../../../utils';
 
 const OrderInformationComponent = ({
@@ -166,11 +166,7 @@ const OrderInformationComponent = ({
   const addressesValue = useMemo(() => {
     if (!addresses.hasLoaded) return [];
 
-    const items = addresses.records?.[0]?.items;
-
-    return Array.isArray(items)
-      ? items.map(address => address.value)
-      : [];
+    return addresses.records?.[0]?.addresses;
   }, [addresses.hasLoaded, addresses.records]);
 
   const purchaseOrderStatusOptions = useMemo(
@@ -373,14 +369,12 @@ const OrderInformationComponent = ({
             component={TextField}
             name={getFieldName(ORDER_INFO_FIELDS_MAP.BILL_TO_NAME)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.billToName`} />}
-            optionValue="value"
-            optionLabel="value"
-            parsedOptionValue="name"
-            parsedOptionLabel="name"
+            optionValue="name"
+            optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
               wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
-              wrapperSourcePath: 'items',
+              wrapperSourcePath: 'addresses',
             }]}
             okapi={okapi}
             onChange={billToNameValue => {
@@ -403,14 +397,12 @@ const OrderInformationComponent = ({
             component={TextField}
             name={getFieldName(ORDER_INFO_FIELDS_MAP.SHIP_TO_NAME)}
             label={<FormattedMessage id={`${TRANSLATION_ID_PREFIX}.order.orderInformation.field.shipToName`} />}
-            optionValue="value"
-            optionLabel="value"
-            parsedOptionValue="name"
-            parsedOptionLabel="name"
+            optionValue="name"
+            optionLabel="name"
             wrapperLabel={`${TRANSLATION_ID_PREFIX}.wrapper.acceptedValues`}
             wrapperSources={[{
               wrapperSourceLink: getWrapperSourceLink('ADDRESSES', requestLimit),
-              wrapperSourcePath: 'items',
+              wrapperSourcePath: 'addresses',
             }]}
             okapi={okapi}
             onChange={shipToNameValue => {
@@ -496,7 +488,7 @@ OrderInformationComponent.manifest = Object.freeze({
   },
   addresses: {
     type: 'okapi',
-    path: `settings/entries?query=(scope==${ADDRESSES_SCOPE}) sortBy value`,
+    path: `${TENANT_ADDRESSES_API}? sortBy name`,
   },
 });
 

@@ -15,6 +15,7 @@
 * Migrate tag flag from `mod-configuration` to `mod-settings`. (UIDATIMP-1745)
 * Fix full screen field mapping form width become narrowed (UIDATIMP-1747)
 * Disable matching criteria other than Exactly Matches. (UIDATIMP-1743)
+* Use GET/PUT /tenant-addresses to work with tenant addresses (UIDATIMP-1752)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
