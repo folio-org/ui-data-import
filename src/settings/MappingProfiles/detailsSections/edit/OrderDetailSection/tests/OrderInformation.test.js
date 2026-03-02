@@ -65,9 +65,9 @@ const resourcesProp = {
   },
   addresses: {
     records: [{
-      items: [
-        { value: { name: 'test address name', address: 'test address' } },
-        { value: { name: 'test address name2', address: 'test address2' } },
+      addresses: [
+        { name: 'test address name', address: 'test address' },
+        { name: 'test address name2', address: 'test address2' },
       ]
     }],
     hasLoaded: true,

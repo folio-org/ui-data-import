@@ -814,6 +814,5 @@ export const STATUS_CODES = {
 
 export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
 
-export const ADDRESSES_SCOPE = 'ui-tenant-settings.addresses.manage';
 export const TENANT_ADDRESSES_API = 'tenant-addresses';
 export const TAGS_SCOPE = 'ui-tags.tags.manage';
