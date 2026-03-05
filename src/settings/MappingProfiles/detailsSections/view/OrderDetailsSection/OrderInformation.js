@@ -30,8 +30,8 @@ import {
   transformSubfieldsData,
 } from '../../utils';
 import {
-  ADDRESSES_SCOPE,
   mappingProfileFieldShape,
+  TENANT_ADDRESSES_API,
 } from '../../../../../utils';
 import { useOrganizationValue } from '../../hooks';
 
@@ -75,7 +75,7 @@ const OrderInformation = ({
     let addressesValue = [];
 
     if (addresses.hasLoaded) {
-      addressesValue = [...addresses.records[0]?.items.map(address => address.value)];
+      addressesValue = [...addresses.records[0]?.addresses];
     }
 
     if (billTo) {
@@ -356,7 +356,7 @@ OrderInformation.manifest = Object.freeze({
   },
   addresses: {
     type: 'okapi',
-    path: `settings/entries?query=(scope==${ADDRESSES_SCOPE}) sortBy value`,
+    path: `${TENANT_ADDRESSES_API}? sortBy value`,
   },
 });
 

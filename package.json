@@ -171,7 +171,8 @@
       "data-import": "3.2",
       "source-manager-job-executions": "3.4",
       "data-import-converter-storage": "1.5",
-      "settings": "1.0"
+      "settings": "1.0",
+      "tenant-addresses": "1.0"
     },
     "optionalOkapiInterfaces": {
       "loan-types": "2.3",
@@ -218,7 +219,7 @@
           "change-manager.jobExecutions.children.collection.get",
           "change-manager.records.delete",
           "mod-settings.entries.collection.get",
-          "mod-settings.global.read.ui-tenant-settings.addresses.manage",
+          "tenant-addresses.collection.get",
           "mod-settings.global.read.ui-tags.tags.manage",
           "orders-storage.settings.collection.get",
           "converter-storage.actionprofile.item.get",
@@ -325,7 +326,7 @@
           "acquisitions-units.units.collection.get",
           "batch-groups.collection.get",
           "mod-settings.entries.collection.get",
-          "mod-settings.global.read.ui-tenant-settings.addresses.manage",
+          "tenant-addresses.collection.get",
           "mod-settings.global.read.ui-tags.tags.manage",
           "orders-storage.settings.collection.get",
           "converter-storage.actionprofile.delete",
@@ -406,7 +407,7 @@
           "acquisitions-units.units.collection.get",
           "batch-groups.collection.get",
           "mod-settings.entries.collection.get",
-          "mod-settings.global.read.ui-tenant-settings.addresses.manage",
+          "tenant-addresses.collection.get",
           "mod-settings.global.read.ui-tags.tags.manage",
           "orders-storage.settings.collection.get",
           "converter-storage.actionprofile.item.get",
