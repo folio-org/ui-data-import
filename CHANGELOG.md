@@ -16,6 +16,7 @@
 * Fix full screen field mapping form width become narrowed (UIDATIMP-1747)
 * Disable matching criteria other than Exactly Matches. (UIDATIMP-1743)
 * Use GET/PUT /tenant-addresses to work with tenant addresses (UIDATIMP-1752)
+* Add `stripes-core.settings.read` permission to app and settings permissions. (UIDATIMP-1744)
 
 ### Bugs fixed:
 * Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)

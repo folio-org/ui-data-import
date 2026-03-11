@@ -208,7 +208,8 @@
       {
         "permissionName": "module.data-import.enabled",
         "displayName": "UI: Data import module is enabled",
-        "visible": false
+        "visible": false,
+        "subPermissions": ["stripes-core.settings.read"]
       },
       {
         "permissionName": "ui-data-import.manage",
@@ -314,6 +315,7 @@
         "permissionName": "settings.data-import.enabled",
         "displayName": "Settings (Data import): Display list of settings pages for Data import",
         "subPermissions": [
+          "stripes-core.settings.read",
           "settings.enabled"
         ],
         "visible": false
