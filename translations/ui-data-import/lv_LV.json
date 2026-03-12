@@ -72,7 +72,7 @@
     "settings.fileExtensions.reset": "Reset all extension mappings to system defaults",
     "modal.fileExtensions.reset.header": "Reset all file extension mappings",
     "modal.fileExtensions.reset.message": "This will reset the file extension mappings to the system defaults",
-    "modal.fileExtensions.reset.actionButton": "Reset all",
+    "modal.fileExtensions.reset.actionButton": "Atiestatīt visu",
     "deleted": "deleted",
     "modal.fileExtension.delete.header": "Delete \"{extension}\" file extension?",
     "modal.fileExtension.delete.message": "Delete file extension?",
