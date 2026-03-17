@@ -82,6 +82,7 @@ import RunJobModal from './RunJobModal';
 import sharedCss from '../../../shared.css';
 
 const {
+  CANCELLED,
   COMMITTED,
   ERROR,
 } = FILE_STATUSES;
@@ -549,6 +550,7 @@ ViewJobProfileComponent.manifest = Object.freeze({
       const { id } = _p;
 
       const commonQueryParams = [
+        `statusAny=${CANCELLED}`,
         `statusAny=${COMMITTED}`,
         `statusAny=${ERROR}`,
         `profileIdAny=${id}`,
