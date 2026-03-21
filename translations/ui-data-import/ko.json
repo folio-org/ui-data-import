@@ -918,7 +918,7 @@
     "settings.mappingProfiles.map.order.orderInformation.field.reEncumber": "Re-encumber",
     "settings.mappingProfiles.map.order.orderInformation.field.true": "true",
     "settings.mappingProfiles.map.order.orderInformation.field.false": "false",
-    "settings.mappingProfiles.map.order.orderInformation.field.note.addLabel": "Add note",
+    "settings.mappingProfiles.map.order.orderInformation.field.note.addLabel": "노트 추가",
     "settings.mappingProfiles.map.order.orderInformation.field.note": "Note",
     "settings.mappingProfiles.map.order.orderLineInformation.section": "Order line information",
     "settings.mappingProfiles.map.order.itemDetails.section": "Item details",
