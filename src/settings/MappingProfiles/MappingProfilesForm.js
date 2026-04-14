@@ -91,6 +91,7 @@ export const formName = 'mappingProfilesForm';
 
 const INITIAL_FOLIO_RECORD_TYPES = {
   ...omit(FOLIO_RECORD_TYPES, [
+    FOLIO_RECORD_TYPES.LINKED_DATA.type,
     FOLIO_RECORD_TYPES.AUTHORITY.type,
     FOLIO_RECORD_TYPES.ITEMS.type,
     FOLIO_RECORD_TYPES.SRS.type,
