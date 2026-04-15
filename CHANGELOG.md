@@ -1,10 +1,10 @@
 # Change history for ui-data-import
 
-## [10.0.0] (IN PROGRESS)
+## [10.0.0](https://github.com/folio-org/ui-data-import/tree/v10.0.0) (2026-04-15)
+[Full Changelog](https://github.com/folio-org/ui-data-import/compare/v9.0.2...v10.0.0)
 
 ### Features added:
 * Action profile: limit the list of linkable field mapping profiles based on FOLIO record type (UIDATIMP-1328)
-* Add "LCCN" accepted value for Product ID in Orders Field Mapping Profiles. (UIDATIMP-2737)
 * Display correctly file names with multinumber strings followed by `-`. (UIDATIMP-1729)
 * Hide `Default - Create Holdings and SRS MARC Holdings` job profile from Data import app on Central tenant. (UIDATIMP-1733)
 * Add `optionalOkapiInterfaces` with `inventory-storage` and `organization-storage` interfaces. (UIDATIMP-1739)
@@ -19,12 +19,21 @@
 * Add `stripes-core.settings.read` permission to app and settings permissions. (UIDATIMP-1744)
 
 ### Bugs fixed:
-* Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
 * Fix stuck Progress Bar in import files. (UIDATIMP-1725)
 * Fix the 'Existing record field' list does not contain criterion value types in the match profile. (UIDATIMP-1736)
 * Match profiles details view: incoming -> existing record table view breaks when panel is narrowed (UIDATIMP-1751)
 * Data Import: Cancelled Data Import Jobs Do not show in the list of jobs using that profile in Data Import Settings. (UIDATIMP-1748)
 * Remove "Linked data" option from FOLIO record type select. (UIDATIMP-1755)
+
+## [9.0.2](https://github.com/folio-org/ui-data-import/tree/v9.0.2) (2025-06-26)
+
+### Bugs fixed:
+* Add "LCCN" accepted value for Product ID in Orders Field Mapping Profiles. (UIDATIMP-2737)
+
+## [9.0.1](https://github.com/folio-org/ui-data-import/tree/v9.0.1) (2025-03-28)
+
+### Bugs fixed:
+* Place wrappers in right order to not lose any data after applying `flow()`. (UIDATIMP-1716)
 
 ## [9.0.0](https://github.com/folio-org/ui-data-import/tree/v9.0.0) (2025-03-13)
 
