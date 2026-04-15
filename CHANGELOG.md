@@ -23,6 +23,7 @@
 * Fix the 'Existing record field' list does not contain criterion value types in the match profile. (UIDATIMP-1736)
 * Match profiles details view: incoming -> existing record table view breaks when panel is narrowed (UIDATIMP-1751)
 * Data Import: Cancelled Data Import Jobs Do not show in the list of jobs using that profile in Data Import Settings. (UIDATIMP-1748)
+* Remove "Linked data" option from FOLIO record type select. (UIDATIMP-1755)
 
 ## [9.0.2](https://github.com/folio-org/ui-data-import/tree/v9.0.2) (2025-06-26)
 
