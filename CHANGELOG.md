@@ -1,5 +1,10 @@
 # Change history for ui-data-import
 
+## [10.1.0] (IN PROGRESS)
+
+### Bugs fixed:
+* Fix translation for select placeholder. (UIDATIMP-1756)
+
 ## [10.0.0](https://github.com/folio-org/ui-data-import/tree/v10.0.0) (2026-04-15)
 [Full Changelog](https://github.com/folio-org/ui-data-import/compare/v9.0.2...v10.0.0)
 

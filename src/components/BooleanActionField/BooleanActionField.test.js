@@ -53,7 +53,7 @@ describe('Boolean action field component', () => {
     it('then component should render default placeholder', () => {
       const { getByText } = renderBooleanActionField({});
 
-      expect(getByText('Select сheckbox field mapping')).toBeDefined();
+      expect(getByText('Select checkbox field mapping')).toBeDefined();
     });
   });
 
