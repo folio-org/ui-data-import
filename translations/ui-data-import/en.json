@@ -564,7 +564,7 @@
   "settings.mappingProfiles.map.wrapper.fundDistributionSource.useFundDistributionFieldMappings": "Use fund distribution field mappings",
   "settings.mappingProfiles.map.administrativeData.field.discoverySuppress": "Suppress from discovery",
   "settings.mappingProfiles.map.administrativeData.field.setForDeletion": "Set for deletion",
-  "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Select сheckbox field mapping",
+  "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Select checkbox field mapping",
   "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords":"Mark for all affected records",
   "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords":"Unmark for all affected records",
   "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords":"Keep the existing value for all affected records",
