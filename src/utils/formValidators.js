@@ -1,8 +1,8 @@
 import React from 'react';
-import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
-
 import { isEmpty } from 'lodash';
+
+import { dayjs } from '@folio/stripes/components';
 
 import { getTrimmedValue } from './getTrimmedValue';
 
@@ -265,7 +265,7 @@ export const validateMARCWithDate = (value, isRemoveValueProhibited) => {
 
     if (dates) {
       const DATE_FORMAT = 'YYYY-MM-DD';
-      const isValidDate = dates.every(date => moment(date, DATE_FORMAT, true).isValid());
+      const isValidDate = dates.every(date => dayjs(date, DATE_FORMAT, true).isValid());
 
       if (!isValidDate) {
         return <FormattedMessage id="ui-data-import.validation.syntaxError" />;
