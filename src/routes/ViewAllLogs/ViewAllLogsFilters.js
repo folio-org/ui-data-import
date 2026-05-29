@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
 import {
   isEmpty,
   uniqBy,
@@ -13,6 +12,7 @@ import {
   FilterAccordionHeader,
   Selection,
   OptionSegment,
+  dayjs,
 } from '@folio/stripes/components';
 import {
   createClearFilterHandler,
@@ -36,8 +36,8 @@ const getDateRange = filterValue => {
 
   if (filterValue) {
     const [startDateString, endDateString] = filterValue[0].split(':');
-    const endDate = moment.utc(endDateString);
-    const startDate = moment.utc(startDateString);
+    const endDate = dayjs.utc(endDateString);
+    const startDate = dayjs.utc(startDateString);
 
     dateRange = {
       startDate: startDate.isValid()
@@ -53,7 +53,7 @@ const getDateRange = filterValue => {
 };
 
 const getDateFilter = (startDate, endDate) => {
-  const endDateCorrected = moment.utc(endDate).add(1, 'days').format(DATE_FORMAT);
+  const endDateCorrected = dayjs.utc(endDate).add(1, 'days').format(DATE_FORMAT);
 
   return `${startDate}:${endDateCorrected}`;
 };

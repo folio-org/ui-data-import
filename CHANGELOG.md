@@ -2,6 +2,9 @@
 
 ## [10.1.0] (IN PROGRESS)
 
+### Features added:
+* Replace moment with day.js (UIDATIMP-1714)
+
 ### Bugs fixed:
 * Fix translation for select placeholder. (UIDATIMP-1756)
 
