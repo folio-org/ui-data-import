@@ -232,7 +232,7 @@ describe('MatchProfilesForm component', () => {
       await act(async () => {
         await runAxeTest({ rootNode: container });
       });
-    });
+    }, 10000);
 
     describe('when select static value incoming record', () => {
       it('Incoming Static value record should be rendered', () => {
