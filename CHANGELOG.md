@@ -4,6 +4,7 @@
 
 ### Bugs fixed:
 * Fix translation for select placeholder. (UIDATIMP-1756)
+* Fix failed unit tests. (UIDATIM-1767)
 
 ## [10.0.0](https://github.com/folio-org/ui-data-import/tree/v10.0.0) (2026-04-15)
 [Full Changelog](https://github.com/folio-org/ui-data-import/compare/v9.0.2...v10.0.0)
