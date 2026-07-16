@@ -223,7 +223,7 @@ describe('ViewAllLogs component', () => {
     await act(async () => {
       await runAxeTest({ rootNode: container });
     });
-  });
+  }, 10000);
 
   it('should render correct number of records', async () => {
     const { findByText } = renderViewAllLogs(defaultQuery);

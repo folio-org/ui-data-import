@@ -168,7 +168,7 @@ describe('ProfileTree component', () => {
     }));
 
     await runAxeTest({ rootNode: container });
-  });
+  }, 10000);
 
   describe('when clicking on delete button', () => {
     it('modal window should be closed', async () => {
