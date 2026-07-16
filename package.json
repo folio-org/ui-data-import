@@ -1,6 +1,6 @@
 {
   "name": "@folio/data-import",
-  "version": "10.0.1",
+  "version": "11.0.0",
   "description": "Data Import manager",
   "main": "src/index.js",
   "repository": "folio-org/ui-data-import",
@@ -24,10 +24,10 @@
     "@babel/plugin-transform-runtime": "^7.22.15",
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
-    "@folio/stripes": "^10.1.0",
+    "@folio/stripes": "^10.2.0",
     "@folio/stripes-cli": "^4.0.0",
     "@folio/stripes-components": "^13.1.0",
-    "@folio/stripes-core": "^11.1.0",
+    "@folio/stripes-core": "^11.2.0",
     "@folio/stripes-final-form": "^9.0.0",
     "@folio/stripes-form": "^10.0.0",
     "@folio/stripes-smart-components": "^10.1.0",
@@ -63,22 +63,18 @@
     "final-form": "^4.18.2",
     "inflected": "^2.0.4",
     "lodash": "^4.18.0",
-    "moment": "~2.29.4",
     "prop-types": "^15.6.0",
     "react-final-form": "^6.3.0",
     "redux-form": "^8.3.7"
   },
   "peerDependencies": {
-    "@folio/stripes": "^10.1.0",
+    "@folio/stripes": "^10.2.0",
     "react": "^18.2.0",
     "react-intl": "^7.1.5",
     "react-redux": "^8.0.5",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5"
-  },
-  "resolutions": {
-    "moment": "~2.29.4"
   },
   "optionalDependencies": {
     "@folio/plugin-find-organization": "^6.0.0"

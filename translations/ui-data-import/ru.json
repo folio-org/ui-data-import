@@ -469,7 +469,7 @@
     "settings.mappingProfiles.map.wrapper.repeatableActions": "Выберите действие",
     "settings.mappingProfiles.map.wrapper.acceptedValues.today": "Сегодня",
     "settings.mappingProfiles.map.wrapper.acceptedValues.chooseDate": "Выбрать дату",
-    "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Select сheckbox field mapping",
+    "settings.mappingProfiles.map.administrativeData.field.selectCheckboxFieldMapping": "Select checkbox field mapping",
     "settings.mappingProfiles.map.administrativeData.field.markAllAffectedRecords": "Отметить для всех затронутых записей",
     "settings.mappingProfiles.map.administrativeData.field.unmarkAllAffectedRecords": "Убрать отметку для всех затронутых записей",
     "settings.mappingProfiles.map.administrativeData.field.keepAllAffectedRecords": "Сохранить существующее значение для всех затронутых записей",

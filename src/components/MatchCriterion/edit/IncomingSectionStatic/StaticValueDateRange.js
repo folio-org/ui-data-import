@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import moment from 'moment';
 
 import {
   Layout,
   Datepicker,
   Headline,
+  dayjs,
 } from '@folio/stripes/components';
 
 import { isFieldPristine } from '../../../../utils';
@@ -18,8 +18,8 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 
 export const StaticValueDateRange = ({ repeatableIndex }) => {
   const getDatesEqualState = (initialDate, newDate) => {
-    const initialFormattedDate = moment.utc(initialDate, DATE_FORMAT).format();
-    const newFormattedDate = moment.utc(newDate, DATE_FORMAT).format();
+    const initialFormattedDate = dayjs.utc(initialDate, DATE_FORMAT).format();
+    const newFormattedDate = dayjs.utc(newDate, DATE_FORMAT).format();
 
     return isFieldPristine(initialFormattedDate, newFormattedDate);
   };

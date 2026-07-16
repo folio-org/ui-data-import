@@ -19,6 +19,7 @@ import {
   stripesShape,
   withOkapiKy,
   checkIfUserInCentralTenant,
+  isGuardable,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -171,7 +172,20 @@ class UploadingJobsDisplayComponent extends Component {
     return null;
   };
 
-  handleNavigation = nextLocation => {
+  /**
+   * handleNavigation
+   * Prompt the user to confirm navigation away from an in-progress upload.
+   * Returns true to navigate; false to stay at the current location.
+   *
+   * @param {string} nextLocation
+   * @returns {boolean} true when navigation is allowed; false to prevent it
+   */
+  handleNavigation = (nextLocation) => {
+    // some nav (e.g. to `/logout` when a session ends) cannot be guarded
+    if (!isGuardable(nextLocation.pathname)) {
+      return true;
+    }
+
     const { location } = this.props;
 
     const jobProfilePathRegExp = /job-profile(?:\/view)?/g;
@@ -554,7 +568,7 @@ class UploadingJobsDisplayComponent extends Component {
     const dataTypeQuery = dataTypes.length > 0
       ? `(${dataTypes.map(dataType => `"${dataType}"`).join(' OR ')})`
       : '';
-    
+
     const shouldHideDefaultCreateHoldingProfile = checkIfUserInCentralTenant(this.props.stripes);
 
     this.setState({

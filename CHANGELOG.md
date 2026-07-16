@@ -1,10 +1,14 @@
 # Change history for ui-data-import
 
-## [10.1.0] (IN PROGRESS)
+## [11.0.0] (IN PROGRESS)
+
+### Features added:
+* Replace moment with day.js (UIDATIMP-1714)
+* Fix failed unit tests. (UIDATIM-1767)
 
 ### Bugs fixed:
 * Fix translation for select placeholder. (UIDATIMP-1756)
-* Fix failed unit tests. (UIDATIM-1767)
+* Always allow redirect to `/logout` on session termination. (UIDATIMP-1764)
 
 ## [10.0.0](https://github.com/folio-org/ui-data-import/tree/v10.0.0) (2026-04-15)
 [Full Changelog](https://github.com/folio-org/ui-data-import/compare/v9.0.2...v10.0.0)
