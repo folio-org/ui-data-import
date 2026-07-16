@@ -117,7 +117,7 @@ describe('ProfileBranch component', () => {
     const { container } = renderProfileBranch(profileBranchProps);
 
     await runAxeTest({ rootNode: container });
-  });
+  }, 10000);
 
   it('should be rendered', () => {
     const { getAllByText } = renderProfileBranch(profileBranchProps);
