@@ -453,7 +453,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-data-import.authority-records-delete.execute",
+        "permissionName": "ui-data-import.authority-records.delete",
         "displayName": "Data import: Delete authority records",
         "visible": true,
         "subPermissions": []
