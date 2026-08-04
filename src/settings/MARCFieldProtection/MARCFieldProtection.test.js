@@ -131,7 +131,7 @@ describe('MARCFieldProtection component', () => {
           getByPlaceholderText,
         } = renderMarcFieldProtection();
 
-        fireEvent.click(getByText('+ New'));
+        fireEvent.click(getByText('New'));
 
         const field = getByPlaceholderText('field');
 
@@ -150,7 +150,7 @@ describe('MARCFieldProtection component', () => {
             getByPlaceholderText,
           } = renderMarcFieldProtection();
 
-          fireEvent.click(getByText('+ New'));
+          fireEvent.click(getByText('New'));
 
           const field = getByPlaceholderText('field');
 
@@ -170,7 +170,7 @@ describe('MARCFieldProtection component', () => {
             getByPlaceholderText,
           } = renderMarcFieldProtection();
 
-          fireEvent.click(getByText('+ New'));
+          fireEvent.click(getByText('New'));
 
           const field = getByPlaceholderText('field');
           const data = getByPlaceholderText('data');
@@ -188,7 +188,7 @@ describe('MARCFieldProtection component', () => {
             getByPlaceholderText,
           } = renderMarcFieldProtection();
 
-          fireEvent.click(getByText('+ New'));
+          fireEvent.click(getByText('New'));
 
           const field = getByPlaceholderText('field');
           const indicator1 = getByPlaceholderText('indicator1');
@@ -213,7 +213,7 @@ describe('MARCFieldProtection component', () => {
           getByPlaceholderText,
         } = renderMarcFieldProtection();
 
-        fireEvent.click(getByText('+ New'));
+        fireEvent.click(getByText('New'));
 
         const field = getByPlaceholderText('field');
         const indicator1 = getByPlaceholderText('indicator1');
@@ -240,7 +240,7 @@ describe('MARCFieldProtection component', () => {
           getByPlaceholderText,
         } = renderMarcFieldProtection();
 
-        fireEvent.click(getByText('+ New'));
+        fireEvent.click(getByText('New'));
 
         const field = getByPlaceholderText('field');
         const indicator1 = getByPlaceholderText('indicator1');
@@ -263,7 +263,7 @@ describe('MARCFieldProtection component', () => {
           getByPlaceholderText,
         } = renderMarcFieldProtection();
 
-        fireEvent.click(getByText('+ New'));
+        fireEvent.click(getByText('New'));
 
         const field = getByPlaceholderText('field');
         const indicator1 = getByPlaceholderText('indicator1');
@@ -286,7 +286,7 @@ describe('MARCFieldProtection component', () => {
           getByPlaceholderText,
         } = renderMarcFieldProtection();
 
-        fireEvent.click(getByText('+ New'));
+        fireEvent.click(getByText('New'));
 
         const field = getByPlaceholderText('field');
         const indicator1 = getByPlaceholderText('indicator1');
