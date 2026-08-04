@@ -6,6 +6,7 @@
 * Replace moment with day.js (UIDATIMP-1714)
 * Fix failed unit tests. (UIDATIM-1767)
 * Create a capability: Data import: Delete authority records. (UIDATIMP-1731)
+* Disallow any actions for `Default - Delete MARC Authority records` action profile. (UIDATIMP-1768)
 
 ### Bugs fixed:
 * Fix translation for select placeholder. (UIDATIMP-1756)
