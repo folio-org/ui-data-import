@@ -30,6 +30,39 @@ const history = createMemoryHistory();
 
 history.push = jest.fn();
 
+const matchProfilesRecord = {
+  name: 'test1',
+  existingRecordType: 'INSTANCE',
+  field: 'field',
+  fieldMarc: 'fieldMarc',
+  fieldNonMarc: 'fieldNonMarc',
+  existingStaticValueType: 'STATIC',
+  tags: { tagList: ['tag1'] },
+  updated: '3/16/2021',
+  updatedBy: 'System',
+  metadata: {
+    createdByUserId: 'id1',
+    createdDate: '2023-02-16T21:48:26.558+00:00',
+    updatedByUserId: 'id2',
+    updatedDate: '2023-02-16T21:48:26.558+00:00',
+  },
+  userInfo: {
+    firstName: 'FirstName',
+    lastName: 'LastName',
+    userName: 'user_name',
+  },
+  matchDetails: [
+    {
+      existingMatchExpression: {
+        fields: [
+          { fieldName: 'field', fieldValue: 'value' },
+        ],
+      },
+    },
+  ],
+  id: 'testId1',
+};
+
 const mutator = buildMutator({
   matchProfiles: {
     POST: noop,
@@ -43,6 +76,20 @@ const mutator = buildMutator({
 });
 const matchProfilesProps = {
   resources: {
+    query: {
+      filters: 'testFilter',
+      notes: true,
+    },
+    resultCount: {
+      replace: jest.fn(),
+    },
+    matchProfiles: {
+      records: [matchProfilesRecord],
+      other: { totalRecords: 1 },
+      hasLoaded: true,
+      isPending: false,
+      successfulMutations: [{ record: { id: 'testId1' } }],
+    },
     modules: {
       records: [{
         name: 'Inventory Storage Module',
@@ -90,13 +137,13 @@ const renderMatchProfiles = props => {
 };
 
 describe('MatchProfiles component', () => {
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderMatchProfiles(matchProfilesProps);
 
     await act(async () => {
       await runAxeTest({ rootNode: container });
     });
-  });
+  }, 10000);
 
   it('should be rendered', () => {
     const { getByText } = renderMatchProfiles(matchProfilesProps);

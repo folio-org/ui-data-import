@@ -61,18 +61,40 @@ const resources = {
     other: { totalRecords: 1 },
     successfulMutations: [{ record: { id: 'testId1' } }],
   },
-  actionProfiles: { records: [
-    {
-      name: 'test1',
-      metadata: metadataMock,
-      userInfo: userInfoMock,
-    },
-    {
-      name: 'test2',
-      metadata: metadataMock,
-      userInfo: userInfoMock,
-    }
-  ] },
+  actionProfiles: {
+    records: [
+      {
+        name: 'test1',
+        metadata: metadataMock,
+        userInfo: userInfoMock,
+      },
+      {
+        name: 'test2',
+        metadata: metadataMock,
+        userInfo: userInfoMock,
+      }
+    ],
+    other: { totalRecords: 2 },
+    hasLoaded: true,
+    isPending: false,
+  },
+  fileExtensions: {
+    records: [
+      {
+        extension: '.dat',
+        importBlocked: false,
+        dataTypes: ['MARC'],
+        updated: '3/16/2021',
+        updatedBy: 'System',
+        metadata: metadataMock,
+        userInfo: userInfoMock,
+        id: 'fileExtId1',
+      },
+    ],
+    other: { totalRecords: 1 },
+    hasLoaded: true,
+    isPending: false,
+  },
 };
 
 const history = createMemoryHistory();
@@ -259,7 +281,7 @@ describe('ListView component', () => {
   });
 
   describe('when profile type is File extention', () => {
-    it.skip('should be rendered with no axe errors', async () => {
+    it('should be rendered with no axe errors', async () => {
       const { container } = renderListView({
         ...listViewProps,
         ...listViewPropsFileExtensions,
@@ -268,7 +290,7 @@ describe('ListView component', () => {
       await act(async () => {
         await runAxeTest({ rootNode: container });
       });
-    });
+    }, 10000);
 
     it('should render correct label', () => {
       const { getByText } = renderListView({

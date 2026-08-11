@@ -136,11 +136,11 @@ const renderMappingInvoiceDetails = () => {
 };
 
 describe('MappingInvoiceDetails view component', () => {
-  it.skip('should be rendered with no axe errors', async () => {
+  it('should be rendered with no axe errors', async () => {
     const { container } = renderMappingInvoiceDetails();
 
     await runAxeTest({ rootNode: container });
-  });
+  }, 10000);
 
   it('should have correct sections', () => {
     const { getByRole } = renderMappingInvoiceDetails();
