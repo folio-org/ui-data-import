@@ -5,6 +5,7 @@ import { menuTemplate } from './menuTemplate';
 import {
   DEFAULT_PROFILE_IDS,
   PROFILE_IDS_WITH_DISABLED_DUPLICATE_BUTTON,
+  PROFILE_IDS_WITH_DISABLED_DELETE_BUTTON,
   EDITABLE_DEFAULT_PROFILE_IDS,
 } from '../../utils';
 
@@ -18,6 +19,7 @@ export const ActionMenu = memo(({
   const isDefaultProfile = DEFAULT_PROFILE_IDS.includes(recordId);
   const isDuplicateButtonDisabled = PROFILE_IDS_WITH_DISABLED_DUPLICATE_BUTTON.includes(recordId);
   const isEditableDefaultProfile = EDITABLE_DEFAULT_PROFILE_IDS.includes(recordId);
+  const isDeleteButtonDisabled = PROFILE_IDS_WITH_DISABLED_DELETE_BUTTON.includes(recordId);
 
   const templates = menuTemplate({
     entity,
@@ -26,6 +28,7 @@ export const ActionMenu = memo(({
     isDefaultProfile,
     isDuplicateButtonDisabled,
     isEditableDefaultProfile,
+    isDeleteButtonDisabled,
   });
 
   return (

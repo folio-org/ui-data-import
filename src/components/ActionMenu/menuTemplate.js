@@ -19,6 +19,7 @@ import {
  * @param {boolean} isDefaultProfile
  * @param {boolean} isDuplicateButtonDisabled
  * @param {boolean} isEditableDefaultProfile
+ * @param {boolean} isDeleteButtonDisabled
  */
 export const menuTemplate = ({
   entity,
@@ -27,6 +28,7 @@ export const menuTemplate = ({
   isDefaultProfile,
   isDuplicateButtonDisabled = false,
   isEditableDefaultProfile = false,
+  isDeleteButtonDisabled = false,
 }) => {
   const {
     props: {
@@ -150,7 +152,7 @@ export const menuTemplate = ({
           caption="ui-data-import.delete"
           icon="trash"
           dataAttributes={{ 'data-test-delete-item-menu-button': '' }}
-          isDisabled={isDefaultProfile}
+          isDisabled={isDefaultProfile || isDeleteButtonDisabled}
           onClick={handleDelete}
         />
       );
