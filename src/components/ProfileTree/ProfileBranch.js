@@ -33,6 +33,7 @@ import {
   okapiShape,
   PROFILE_LABEL_IDS,
   PROFILE_RELATION_TYPES,
+  DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
   STATE_MANAGEMENT,
 } from '../../utils';
 
@@ -59,6 +60,7 @@ export const ProfileBranch = memo(({
   index = 0,
   parentIndex = '',
   parentProfilesRelationTypes = '',
+  setIsLinked = noop,
 }) => {
   const { childrenAllowed } = linkingRules;
   const {
@@ -91,6 +93,23 @@ export const ProfileBranch = memo(({
   const [nonMatchSectionOpen, setNonMatchSectionOpen] = useState(getSectionStatus('nonMatch'));
   const [matchData, setMatchData] = useState([]);
   const [nonMatchData, setNonMatchData] = useState([]);
+  const [isDefaultDeleteMarcAuthActionProfile, setIsDefaultDeleteMarcAuthActionProfile] = useState(false);
+
+  useEffect(() => {
+    const isDefaultActionProfile = currentRecord && currentRecord.id === DEFAULT_DELETE_MARC_AUTH_ACTION_ID;
+
+    setIsDefaultDeleteMarcAuthActionProfile(isDefaultActionProfile);
+
+    if (setIsLinked) {
+      setIsLinked(isDefaultActionProfile);
+    }
+
+    return () => {
+      if (setIsLinked) {
+        setIsLinked(false);
+      }
+    };
+  }, [currentRecord, setIsLinked]);
 
   useEffect(() => {
     const getSectionData = section => {
@@ -184,6 +203,7 @@ export const ProfileBranch = memo(({
                     onDelete={onDelete}
                     showLabelsAsHotLink={showLabelsAsHotLink}
                     resources={resources}
+                    setIsLinked={setIsDefaultDeleteMarcAuthActionProfile}
                   />
                 )) : (
                   <div>
@@ -203,7 +223,7 @@ export const ProfileBranch = memo(({
               fromAnchorOffset="15px"
               orientation="horizontal"
             />
-            {!record && (
+            {!record && !isDefaultDeleteMarcAuthActionProfile && (
               <ProfileLinker
                 id={`${currentProfilesRelationTypes}-${currentRecord.id}-${currentIndex}-match`}
                 linkingRules={linkingRules}
@@ -222,76 +242,78 @@ export const ProfileBranch = memo(({
               />
             )}
           </Accordion>
-          <Accordion
-            id={nonMatchSectionId}
-            label={<FormattedMessage id="ui-data-import.settings.profiles.linking.forNonMatches" />}
-            separator={false}
-            open={nonMatchSectionOpen}
-            onToggle={() => handleToggle('nonMatch', nonMatchSectionOpen, setNonMatchSectionOpen)}
-          >
-            <div className={css['branch-tree-container']}>
-              {nonMatchData && nonMatchData.length ?
-                nonMatchData.map((item, i) => (
-                  <ProfileBranch
-                    key={`profile-branch-${i}`}
-                    index={i}
-                    parentIndex={currentIndex}
-                    parentProfilesRelationTypes={currentProfilesRelationTypes}
-                    reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
-                    linkingRules={linkingRules}
-                    recordData={item}
-                    record={record}
-                    profileType={profileType}
-                    okapi={okapi}
-                    parentRecordData={recordData}
-                    parentSectionKey={nonMatchSectionKey}
-                    parentSectionData={nonMatchData}
-                    setParentSectionData={setNonMatchData}
-                    rootId={rootId}
-                    onChange={onChange}
-                    onLink={onLink}
-                    onUnlink={onUnlink}
-                    onDelete={onDelete}
-                    showLabelsAsHotLink={showLabelsAsHotLink}
-                    resources={resources}
-                  />
-                )) : (
-                  <div>
-                    <FormattedMessage
-                      id="ui-data-import.emptyMessage"
-                      values={{ type: <FormattedMessage id="ui-data-import.section" /> }}
+          {!isDefaultDeleteMarcAuthActionProfile && (
+            <Accordion
+              id={nonMatchSectionId}
+              label={<FormattedMessage id="ui-data-import.settings.profiles.linking.forNonMatches" />}
+              separator={false}
+              open={nonMatchSectionOpen}
+              onToggle={() => handleToggle('nonMatch', nonMatchSectionOpen, setNonMatchSectionOpen)}
+            >
+              <div className={css['branch-tree-container']}>
+                {nonMatchData && nonMatchData.length ?
+                  nonMatchData.map((item, i) => (
+                    <ProfileBranch
+                      key={`profile-branch-${i}`}
+                      index={i}
+                      parentIndex={currentIndex}
+                      parentProfilesRelationTypes={currentProfilesRelationTypes}
+                      reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
+                      linkingRules={linkingRules}
+                      recordData={item}
+                      record={record}
+                      profileType={profileType}
+                      okapi={okapi}
+                      parentRecordData={recordData}
+                      parentSectionKey={nonMatchSectionKey}
+                      parentSectionData={nonMatchData}
+                      setParentSectionData={setNonMatchData}
+                      rootId={rootId}
+                      onChange={onChange}
+                      onLink={onLink}
+                      onUnlink={onUnlink}
+                      onDelete={onDelete}
+                      showLabelsAsHotLink={showLabelsAsHotLink}
+                      resources={resources}
                     />
-                  </div>
-                )}
-            </div>
-            <TreeLine
-              from={`#branch-${branchMode}-${recordData.id}`}
-              to={`#${nonMatchSectionId} > :first-child`}
-              container={`#${containerId}`}
-              fromAnchor="left bottom"
-              toAnchor="left"
-              fromAnchorOffset="15px"
-              orientation="horizontal"
-            />
-            {!record && (
-              <ProfileLinker
-                id={`${currentProfilesRelationTypes}-${currentRecord.id}-${currentIndex}-non-match`}
-                linkingRules={linkingRules}
-                parentId={currentRecord.id}
-                masterWrapperId={recordData.profileWrapperId}
-                rootId={rootId}
-                parentType={entityKey}
-                profileType={profileType}
-                dataKey={nonMatchSectionKey}
-                initialData={nonMatchData}
-                setInitialData={setNonMatchData}
-                reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
-                onLink={onLink}
-                okapi={okapi}
-                {...dataAttributes}
+                  )) : (
+                    <div>
+                      <FormattedMessage
+                        id="ui-data-import.emptyMessage"
+                        values={{ type: <FormattedMessage id="ui-data-import.section" /> }}
+                      />
+                    </div>
+                  )}
+              </div>
+              <TreeLine
+                from={`#branch-${branchMode}-${recordData.id}`}
+                to={`#${nonMatchSectionId} > :first-child`}
+                container={`#${containerId}`}
+                fromAnchor="left bottom"
+                toAnchor="left"
+                fromAnchorOffset="15px"
+                orientation="horizontal"
               />
-            )}
-          </Accordion>
+              {!record && !isDefaultDeleteMarcAuthActionProfile && (
+                <ProfileLinker
+                  id={`${currentProfilesRelationTypes}-${currentRecord.id}-${currentIndex}-non-match`}
+                  linkingRules={linkingRules}
+                  parentId={currentRecord.id}
+                  masterWrapperId={recordData.profileWrapperId}
+                  rootId={rootId}
+                  parentType={entityKey}
+                  profileType={profileType}
+                  dataKey={nonMatchSectionKey}
+                  initialData={nonMatchData}
+                  setInitialData={setNonMatchData}
+                  reactTo={PROFILE_RELATION_TYPES.NON_MATCH}
+                  onLink={onLink}
+                  okapi={okapi}
+                  {...dataAttributes}
+                />
+              )}
+            </Accordion>
+          )}
         </div>
       )}
     </div>

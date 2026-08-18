@@ -10,6 +10,7 @@ import {
 import '../../../test/jest/__mock__';
 
 import { ProfileBranch } from './ProfileBranch';
+import { DEFAULT_DELETE_MARC_AUTH_ACTION_ID } from '../../utils';
 
 const profileBranchProps = {
   linkingRules: {
@@ -153,5 +154,24 @@ describe('ProfileBranch component', () => {
 
       expect(expandedBlock).not.toHaveClass('expanded');
     });
+  });
+
+  it('should hide match linker and non-match accordion for default delete MARC authority action profile', () => {
+    const defaultDeleteMarcAuthActionProfileProps = {
+      ...profileBranchProps,
+      recordData: {
+        contentType: 'actionProfile',
+        content: {
+          id: DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
+          name: 'Default delete MARC authority action profile',
+        },
+        childSnapshotWrappers: [],
+      },
+    };
+
+    const { container, queryByText } = renderProfileBranch(defaultDeleteMarcAuthActionProfileProps);
+
+    expect(container.querySelector('[data-test-plus-sign-button]')).toBeNull();
+    expect(queryByText('For non-matches')).not.toBeInTheDocument();
   });
 });

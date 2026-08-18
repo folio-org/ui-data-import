@@ -8,7 +8,8 @@
 * Create a capability: Data import: Delete authority records. (UIDATIMP-1731)
 * Disallow any actions for `Default - Delete MARC Authority records` action profile. (UIDATIMP-1768)
 * Fix failed accessibility tests. (UIDATIMP-1771)
-* `Default - Delete MARC authority` job and match profiles > Disable disallowed actions. (UIDATIMP-1774) 
+* `Default - Delete MARC authority` job and match profiles > Disable disallowed actions. (UIDATIMP-1774)
+* Limitations on Data Import delete job profiles creation. (UIDATIMP-1766)
 
 ### Bugs fixed:
 * Fix translation for select placeholder. (UIDATIMP-1756)
