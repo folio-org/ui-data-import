@@ -102,6 +102,14 @@ export const ProfileTree = memo(({
       && (rel.reactTo !== undefined ? rel.reactTo === reactTo : reactTo === null)));
   };
 
+  const getSubtreeProfileIds = (line, ids = []) => {
+    ids.push(line.content.id);
+
+    (line.childSnapshotWrappers || []).forEach(child => getSubtreeProfileIds(child, ids));
+
+    return ids;
+  };
+
   const composeRelations = ({
     lines,
     masterId,
@@ -193,6 +201,17 @@ export const ProfileTree = memo(({
     reactTo,
     localDataKey,
   }) => {
+    const subtreeProfileIds = getSubtreeProfileIds(line);
+    const relsToAdd = [...addedRelations].filter(rel => {
+      return !subtreeProfileIds.includes(rel.masterProfileId)
+        && !subtreeProfileIds.includes(rel.detailProfileId);
+    });
+
+    if (relsToAdd.length !== addedRelations.length) {
+      onLink(relsToAdd);
+      setAddedRelations(relsToAdd);
+    }
+
     // find unlinking profile index in section
     const index = sectionData.findIndex(item => item.content.id === line.content.id);
 
@@ -218,15 +237,15 @@ export const ProfileTree = memo(({
       // set unlinked relations to component state
       setDeletedRelations(relsToDel);
     } else {
-      const relsToAdd = [...addedRelations];
-
-      relsToAdd.splice(indexOfUnlinkedProfileInAddedProfiles, 1);
+      const remainingAddedRelations = [...addedRelations]
+        .filter(rel => !subtreeProfileIds.includes(rel.masterProfileId)
+          && !subtreeProfileIds.includes(rel.detailProfileId));
 
       // set added relations to form field
-      onLink(relsToAdd);
+      onLink(remainingAddedRelations);
 
       // set added relations to component state
-      setAddedRelations(relsToAdd);
+      setAddedRelations(remainingAddedRelations);
     }
 
     const newSectionData = [...sectionData];
