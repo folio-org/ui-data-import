@@ -1163,6 +1163,7 @@
   "logViewer.filter.invoice": "Invoice",
   "logLight.actionStatus.created": "Created",
   "logLight.actionStatus.updated": "Updated",
+  "logLight.actionStatus.deleted": "Deleted",
   "logLight.actionStatus.multiple": "Multiple",
   "logLight.actionStatus.noAction": "No action",
   "recordTypesSelect.compareExisting": "Which type of existing record would you like to compare to the incoming {type} record?",
