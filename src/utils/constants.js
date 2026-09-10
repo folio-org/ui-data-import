@@ -709,6 +709,7 @@ export const PROFILE_IDS_WITH_DISABLED_DUPLICATE_BUTTON = [
 export const RECORD_ACTION_STATUS = {
   CREATED: 'CREATED',
   UPDATED: 'UPDATED',
+  DELETED: 'DELETED',
   MULTIPLE: 'MULTIPLE',
   DISCARDED: 'DISCARDED',
   CANCELLED: 'CANCELLED',
@@ -717,6 +718,7 @@ export const RECORD_ACTION_STATUS = {
 export const RECORD_ACTION_STATUS_LABEL_IDS = {
   [RECORD_ACTION_STATUS.CREATED]: 'ui-data-import.logLight.actionStatus.created',
   [RECORD_ACTION_STATUS.UPDATED]: 'ui-data-import.logLight.actionStatus.updated',
+  [RECORD_ACTION_STATUS.DELETED]: 'ui-data-import.logLight.actionStatus.deleted',
   [RECORD_ACTION_STATUS.MULTIPLE]: 'ui-data-import.logLight.actionStatus.multiple',
   [RECORD_ACTION_STATUS.DISCARDED]: 'ui-data-import.logLight.actionStatus.noAction',
 };
