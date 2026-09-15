@@ -3,4 +3,5 @@ export const permissions = {
   SETTINGS_VIEW_ONLY: 'ui-data-import.settings.readOnly',
   DATA_IMPORT_MANAGE: 'ui-data-import.manage',
   DELETE_LOGS: 'ui-data-import.logs.delete',
+  DELETE_MARC_AUTH_ACTION: 'ui-data-import.authority-records.delete',
 };

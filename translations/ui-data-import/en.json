@@ -327,6 +327,7 @@
   "modal.jobProfile.run.header": "Are you sure you want to run this job?",
   "modal.jobProfile.run.message": "You have selected the <b>\"{name}\"</b> job profile to <b>Run</b> the uploaded files.",
   "modal.jobProfile.run.largeFileSplitting": "Large MARC files will be split into separate parts.",
+  "cannotRunImport": "Cannot run this data import job. User does not have the permission to delete authority records via data import.",
   "error.jobProfiles.action": "The job profile \"{name}\" was not {action}",
   "success.jobProfiles.action": "The job profile \"{name}\" was successfully {action}",
   "settings.matchProfiles.title": "Match profiles",

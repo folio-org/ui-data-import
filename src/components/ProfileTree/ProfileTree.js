@@ -31,6 +31,7 @@ import {
   PROFILE_RELATION_TYPES,
   STATE_MANAGEMENT,
   okapiShape,
+  DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
 } from '../../utils';
 import { ProfileBranch } from './ProfileBranch';
 import { ProfileLinker } from './ProfileLinker';
@@ -73,6 +74,10 @@ export const ProfileTree = memo(({
       [],
     );
   }, isEqualValues);
+
+  const isDefaultDeleteMarcAuthActionProfile = profileTreeContent.some(
+    profile => profile.content.id === DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
+  );
 
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
@@ -306,7 +311,7 @@ export const ProfileTree = memo(({
             </div>
           )}
         </div>
-        {!record && (
+        {!record && !isDefaultDeleteMarcAuthActionProfile && (
           <ProfileLinker
             id="linker-root"
             parentId={parentId}
