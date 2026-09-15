@@ -6,6 +6,11 @@ const transformIgnorePattern = config.transformIgnorePatterns[0]
 
 module.exports = {
   ...config,
+  collectCoverageFrom: [
+    '**/**/*.{js,jsx}',
+    '!**/node_modules/**',
+    '!**/test/jest/**',
+  ],
   transform: {
     ...acqConfigs.transform,
   },
