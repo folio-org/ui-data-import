@@ -243,6 +243,13 @@ const ViewJobProfileComponent = props => {
     await handleLoadRecords(record);
   };
 
+  const showCannotRunImportMessage = () => {
+    calloutRef.current.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-data-import.cannotRunImport" />,
+    });
+  };
+
   const renderActionMenu = menu => {
     const { record } = jobProfileData();
 
@@ -256,6 +263,7 @@ const ViewJobProfileComponent = props => {
           },
           showRunConfirmation: () => setShowRunConfirmation(true),
           showDeleteConfirmation: () => setShowDeleteConfirmation(true),
+          showCannotRunImportMessage,
         }}
         menu={menu}
         recordId={record?.id}

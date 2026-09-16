@@ -2,7 +2,11 @@ import React from 'react';
 
 import { IfPermission } from '@folio/stripes/core';
 
-import { permissions } from '../../utils';
+import {
+  permissions,
+  getFlattenProfileTreeContent,
+  DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
+} from '../../utils';
 
 import {
   LinkTo,
@@ -36,6 +40,12 @@ export const menuTemplate = ({
       checkboxList,
       location = {},
       match = {},
+      stripes,
+      resources: {
+        childWrappers: {
+          records: childWrapperRecords  = [],
+        } = {},
+      } = {},
     },
   } = entity;
   const { search } = location;
@@ -76,8 +86,18 @@ export const menuTemplate = ({
     ),
     run: key => {
       const handleRun = () => {
+        const isDefaultDeleteActionLinked = getFlattenProfileTreeContent(childWrapperRecords)
+          .some(item => item.content.id === DEFAULT_DELETE_MARC_AUTH_ACTION_ID);
+        const canRunProfile = stripes.hasPerm(permissions.DATA_IMPORT_MANAGE)
+          && (!isDefaultDeleteActionLinked || stripes.hasPerm(permissions.DELETE_MARC_AUTH_ACTION));
+
+        if (!canRunProfile) {
+          entity.showCannotRunImportMessage();
+        } else {
+          entity.showRunConfirmation();
+        }
+
         menu.onToggle();
-        entity.showRunConfirmation();
       };
 
       return (
