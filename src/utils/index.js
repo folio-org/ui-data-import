@@ -40,3 +40,4 @@ export * from './storage';
 export * from './multipartUpload';
 export * from './getWrapperSourceLink';
 export * from './validateSearchString';
+export * from './getFlattenProfileTreeContent';

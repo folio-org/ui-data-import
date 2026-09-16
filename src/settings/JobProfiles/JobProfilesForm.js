@@ -57,6 +57,7 @@ import {
   PROFILE_TYPES,
   LAYER_TYPES,
   isFieldPristine,
+  getFlattenProfileTreeContent,
 } from '../../utils';
 import {
   clearCurrentProfileTreeContent,
@@ -84,18 +85,6 @@ export const fetchAssociations = async (okapi, profileId) => {
   } catch (error) {
     return error;
   }
-};
-
-const getFlattenProfileTreeContent = function buildData(array) {
-  return array.reduce((acc, item) => {
-    if (item.childSnapshotWrappers.length) {
-      const children = buildData(item.childSnapshotWrappers);
-
-      return [...acc, item, ...children];
-    }
-
-    return [...acc, item];
-  }, []);
 };
 
 export const JobProfilesFormComponent = memo(({

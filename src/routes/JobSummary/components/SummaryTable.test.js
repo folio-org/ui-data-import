@@ -23,6 +23,7 @@ jest.mock('@folio/stripes/components', () => ({
 const entitySummary = {
   totalCreatedEntities: 100,
   totalUpdatedEntities: 0,
+  totalDeletedEntities: 0,
   totalDiscardedEntities: 0,
   totalErrors: 0,
 };
@@ -105,10 +106,11 @@ describe('SummaryTable component', () => {
   it('should have proper rows', () => {
     const { getByText } = renderSummaryTable();
 
-    const errorRow = document.querySelector('div[class^="mclRowContainer"] div[data-row-inner="3"]').firstChild;
+    const errorRow = document.querySelector('div[class^="mclRowContainer"] div[data-row-inner="4"]').firstChild;
 
     expect(getByText('Created')).toBeDefined();
     expect(getByText('Updated')).toBeDefined();
+    expect(getByText('Deleted')).toBeDefined();
     expect(getByText('No action')).toBeDefined();
     expect(errorRow.innerHTML).toEqual('Error');
   });

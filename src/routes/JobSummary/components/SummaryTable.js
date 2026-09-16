@@ -21,6 +21,7 @@ import {
 const summaryLabels = [
   <FormattedMessage id="ui-data-import.logLight.actionStatus.created" />,
   <FormattedMessage id="ui-data-import.logLight.actionStatus.updated" />,
+  <FormattedMessage id="ui-data-import.logLight.actionStatus.deleted" />,
   <FormattedMessage id="ui-data-import.logLight.actionStatus.noAction" />,
   <FormattedMessage id="ui-data-import.error" />,
 ];
@@ -44,7 +45,7 @@ const SummaryTableComponent = ({
     search,
   } = useLocation();
 
-  const contentData = new Array(4).fill({}).map((_, index) => ({
+  const contentData = new Array(5).fill({}).map((_, index) => ({
     summary: summaryLabels[index],
     ...jobSummaryRecords[0],
   }));
@@ -71,13 +72,19 @@ const SummaryTableComponent = ({
     error: <FormattedMessage id="ui-data-import.error" />,
   };
 
-  const isLastRow = rowIndex => rowIndex === 3;
+  const isLastRow = rowIndex => rowIndex === 4;
   const getResultsCellContent = (column, rowIndex, entity) => {
     if (!column) {
       return <NoValue />;
     }
 
-    const totalEntitiesKeys = ['totalCreatedEntities', 'totalUpdatedEntities', 'totalDiscardedEntities', 'totalErrors'];
+    const totalEntitiesKeys = [
+      'totalCreatedEntities',
+      'totalUpdatedEntities',
+      'totalDeletedEntities',
+      'totalDiscardedEntities',
+      'totalErrors',
+    ];
     const cellContent = column[totalEntitiesKeys[rowIndex]];
     const formattedCount = <FormattedNumber value={cellContent} />;
 

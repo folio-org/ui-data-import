@@ -32,10 +32,17 @@ const entity = {
       selectAll: jest.fn(),
       deselectAll: jest.fn(),
     },
+    resources: {
+      childWrappers: {
+        records: [],
+      },
+    },
+    stripes: { hasPerm: jest.fn(() => true) },
   },
   showRunConfirmation: jest.fn(),
   showDeleteConfirmation: jest.fn(),
   showRestoreConfirmation: jest.fn(),
+  showCannotRunImportMessage: jest.fn(),
   isDeleteAllLogsDisabled: () => false,
 };
 const menu = { onToggle: jest.fn() };

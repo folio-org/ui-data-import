@@ -62,6 +62,15 @@ describe('AuthorityCell component', () => {
     });
   });
 
+  describe('when authority was deleted', () => {
+    it('should render as plain text', () => {
+      const { container } = renderAuthorityCell('DELETED');
+      const authorityHotlink = container.querySelector('[data-test-entity-name="authority"]');
+
+      expect(authorityHotlink).toBeNull();
+    });
+  });
+
   describe('when authority is empty', () => {
     it('should render empty value', () => {
       const { getByText } = renderAuthorityCell();
