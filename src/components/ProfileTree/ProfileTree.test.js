@@ -16,6 +16,10 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
+import {
+  STATE_MANAGEMENT,
+  DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
+} from '../../utils';
 import { ProfileTree } from './ProfileTree';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -135,6 +139,7 @@ const renderProfileTree = ({
   setData,
   okapi,
   resources,
+  initialReduxState,
 }) => {
   const component = (
     <ProfileTree
@@ -148,7 +153,7 @@ const renderProfileTree = ({
     />
   );
 
-  return renderWithIntl(renderWithRedux(component), translationsProperties);
+  return renderWithIntl(renderWithRedux(component, initialReduxState), translationsProperties);
 };
 
 describe('ProfileTree component', () => {
@@ -189,6 +194,30 @@ describe('ProfileTree component', () => {
 
       await waitFor(() => expect(deleteButtonModal).not.toBeVisible());
     });
+  });
+
+  it('should not render ProfileLinker when default delete action is linked', () => {
+    const initialReduxState = {
+      [STATE_MANAGEMENT.REDUCER]: {
+        profileTreeData: [{
+          id: DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
+          content: {
+            id: DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
+          },
+          childSnapshotWrappers: [],
+        }],
+      },
+    };
+
+    const { container } = renderProfileTree({
+      ...profileTreeProps({
+        allowUnlink: true,
+        allowDelete: true,
+      }),
+      initialReduxState,
+    });
+
+    expect(container.querySelector('#type-selector-dropdown-linker-root')).not.toBeInTheDocument();
   });
 
   it('should be rendered', async () => {
