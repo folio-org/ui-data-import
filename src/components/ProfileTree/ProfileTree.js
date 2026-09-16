@@ -29,6 +29,7 @@ import {
   ENTITY_KEYS,
   PROFILE_TYPES,
   PROFILE_RELATION_TYPES,
+  DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
   STATE_MANAGEMENT,
   okapiShape,
 } from '../../utils';
@@ -73,6 +74,10 @@ export const ProfileTree = memo(({
       [],
     );
   }, isEqualValues);
+  
+  const hasLinkedDeleteMarcAuthActionProfile =
+    profileTreeContent.some(profile => profile.content.id === DEFAULT_DELETE_MARC_AUTH_ACTION_ID);
+  const isLinkerHidden = record || (!record && contentData.length && hasLinkedDeleteMarcAuthActionProfile);
 
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
@@ -306,7 +311,7 @@ export const ProfileTree = memo(({
             </div>
           )}
         </div>
-        {!record && (
+        {!isLinkerHidden && (
           <ProfileLinker
             id="linker-root"
             parentId={parentId}

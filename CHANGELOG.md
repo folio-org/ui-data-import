@@ -10,6 +10,7 @@
 * Fix failed accessibility tests. (UIDATIMP-1771)
 * `Default - Delete MARC authority` job and match profiles > Disable disallowed actions. (UIDATIMP-1774)
 * Limitations on Data Import delete job profiles creation. (UIDATIMP-1766)
+* Block new matches/actions for Delete Authority job profiles. (UIDATIMP-1780)
 
 ### Bugs fixed:
 * Fix translation for select placeholder. (UIDATIMP-1756)
