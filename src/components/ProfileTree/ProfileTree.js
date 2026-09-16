@@ -80,10 +80,6 @@ export const ProfileTree = memo(({
     profileTreeContent.some(profile => profile.content.id === DEFAULT_DELETE_MARC_AUTH_ACTION_ID);
   const isLinkerHidden = record || (!record && contentData.length && hasLinkedDeleteMarcAuthActionProfile);
 
-  const isDefaultDeleteMarcAuthActionProfile = profileTreeContent.some(
-    profile => profile.content.id === DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
-  );
-
   const [addedRelations, setAddedRelations] = useState([]);
   const [deletedRelations, setDeletedRelations] = useState([]);
 
