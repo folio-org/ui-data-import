@@ -1,4 +1,5 @@
 import React from 'react';
+import { Form } from 'react-final-form';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -41,6 +42,32 @@ const renderQualifierSection = ({
   );
 
   return renderWithIntl(renderWithFinalForm(component), translationsProperties);
+};
+
+const renderQualifierSectionWithValues = qualifier => {
+  const component = () => (
+    <QualifierSection
+      repeatableIndex={0}
+      recordFieldType="incoming"
+      isOpen
+      onChange={onChangeMock}
+    />
+  );
+
+  return renderWithIntl(
+    <Form
+      initialValues={{
+        profile: {
+          matchDetails: [{
+            incomingMatchExpression: { qualifier },
+          }],
+        },
+      }}
+      onSubmit={jest.fn()}
+      render={component}
+    />,
+    translationsProperties,
+  );
 };
 
 describe('QualifierSection edit component', () => {
@@ -89,6 +116,44 @@ describe('QualifierSection edit component', () => {
       expect(option1).toBeDefined();
       expect(option2).toBeDefined();
       expect(option3).toBeDefined();
+    });
+  });
+
+  describe('qualifier value validation', () => {
+    it('should display an error for an empty value when a qualifier type is selected', () => {
+      const { getByLabelText, getByText } = renderQualifierSectionWithValues({
+        qualifierType: 'BEGINS_WITH',
+        qualifierValue: '',
+      });
+      const qualifierValue = getByLabelText('Qualifier type text');
+
+      fireEvent.blur(qualifierValue);
+
+      expect(getByText('Please enter a value')).toBeDefined();
+    });
+
+    it('should display an error for a whitespace-only value', () => {
+      const { getByLabelText, getByText } = renderQualifierSectionWithValues({
+        qualifierType: 'BEGINS_WITH',
+        qualifierValue: '   ',
+      });
+      const qualifierValue = getByLabelText('Qualifier type text');
+
+      fireEvent.blur(qualifierValue);
+
+      expect(getByText('Please enter a value')).toBeDefined();
+    });
+
+    it('should not display an error when the qualifier is disabled', () => {
+      const { getByLabelText, queryByText } = renderQualifierSectionWithValues({
+        qualifierType: '',
+        qualifierValue: '',
+      });
+      const qualifierValue = getByLabelText('Qualifier type text');
+
+      fireEvent.blur(qualifierValue);
+
+      expect(queryByText('Please enter a value')).toBeNull();
     });
   });
 });
