@@ -13,6 +13,7 @@
 * FE -Data import - Job Summary page updates to support Delete authority records action (UIDATIMP-1575)
 * Block new matches/actions for Delete Authority job profiles. (UIDATIMP-1780)
 * Disable actions on the field mapping profile - `Default - Delete MARC Authority records`. (UIDATIMP-1775)
+* Add FE validation to Use a qualifier when the field is blank. (UIDATIMP-1779)
 
 ### Bugs fixed:
 * Fix translation for select placeholder. (UIDATIMP-1756)

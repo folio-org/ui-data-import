@@ -23,6 +23,18 @@ import {
 
 import css from '../MatchCriterions.css';
 
+const validateQualifierValue = (value, allValues, recordFieldType, repeatableIndex) => {
+  const qualifierType = allValues?.profile?.matchDetails?.[repeatableIndex]?.[
+    `${recordFieldType}MatchExpression`
+  ]?.qualifier?.qualifierType;
+
+  if (qualifierType && !value?.trim()) {
+    return <FormattedMessage id="ui-data-import.validation.enterValue" />;
+  }
+
+  return undefined;
+};
+
 export const QualifierSection = ({
   repeatableIndex,
   recordFieldType,
@@ -67,6 +79,12 @@ export const QualifierSection = ({
                   component={TextField}
                   name={`profile.matchDetails[${repeatableIndex}].${expressionType}.qualifier.qualifierValue`}
                   aria-label={ariaLabel}
+                  validate={(value, allValues) => validateQualifierValue(
+                    value,
+                    allValues,
+                    recordFieldType,
+                    repeatableIndex,
+                  )}
                 />
               )}
             </FormattedMessage>
