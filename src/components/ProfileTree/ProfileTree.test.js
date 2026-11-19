@@ -286,7 +286,7 @@ describe('ProfileTree component', () => {
       translationsProperties,
     );
 
-    fireEvent.click(container.querySelectorAll('[data-test-profile-unlink]')[1]);
+    fireEvent.click(container.querySelectorAll('button[data-test-profile-unlink]')[1]);
     fireEvent.click(await findByText('Confirm'));
 
     await waitFor(() => {
