@@ -107,13 +107,25 @@ export const ProfileTree = memo(({
       && (rel.reactTo !== undefined ? rel.reactTo === reactTo : reactTo === null)));
   };
 
-  const getSubtreeProfileIds = (line, ids = []) => {
-    ids.push(line.content.id);
+  const getSubtreeRelations = (line, masterProfileId, reactTo, relations = []) => {
+    relations.push({
+      masterProfileId,
+      detailProfileId: line.profileId || line.content.id,
+      reactTo,
+    });
 
-    (line.childSnapshotWrappers || []).forEach(child => getSubtreeProfileIds(child, ids));
+    (line.childSnapshotWrappers || []).forEach(child => {
+      if (child.contentType !== PROFILE_TYPES.MAPPING_PROFILE) {
+        getSubtreeRelations(child, child.profileId || child.content.id, child.reactTo, relations);
+      }
+    });
 
-    return ids;
+    return relations;
   };
+
+  const getRelationKey = ({ masterProfileId, detailProfileId, reactTo }) => (
+    JSON.stringify([masterProfileId, detailProfileId, reactTo || null])
+  );
 
   const composeRelations = ({
     lines,
@@ -206,10 +218,10 @@ export const ProfileTree = memo(({
     reactTo,
     localDataKey,
   }) => {
-    const subtreeProfileIds = getSubtreeProfileIds(line);
+    const subtreeRelations = getSubtreeRelations(line, masterId, reactTo);
+    const subtreeRelationKeys = new Set(subtreeRelations.map(getRelationKey));
     const relsToAdd = [...addedRelations].filter(rel => {
-      return !subtreeProfileIds.includes(rel.masterProfileId)
-        && !subtreeProfileIds.includes(rel.detailProfileId);
+      return !subtreeRelationKeys.has(getRelationKey(rel));
     });
 
     if (relsToAdd.length !== addedRelations.length) {
@@ -243,8 +255,7 @@ export const ProfileTree = memo(({
       setDeletedRelations(relsToDel);
     } else {
       const remainingAddedRelations = [...addedRelations]
-        .filter(rel => !subtreeProfileIds.includes(rel.masterProfileId)
-          && !subtreeProfileIds.includes(rel.detailProfileId));
+        .filter(rel => !subtreeRelationKeys.has(getRelationKey(rel)));
 
       // set added relations to form field
       onLink(remainingAddedRelations);
@@ -259,20 +270,17 @@ export const ProfileTree = memo(({
 
     setParentData(newSectionData);
 
-    const getNewProfileTreeData = function buildData(array, lineToCompare) {
-      return array.filter(item => {
-        if (lineToCompare.childSnapshotWrappers?.length) {
-          return buildData(lineToCompare.childSnapshotWrappers, item).length;
-        }
-
-        return item.id !== lineToCompare.id;
-      });
+    const subtreeProfiles = new Set();
+    const collectSubtreeProfiles = item => {
+      subtreeProfiles.add(item);
+      (item.childSnapshotWrappers || []).forEach(collectSubtreeProfiles);
     };
+    collectSubtreeProfiles(line);
 
     const sectionDataForStorage = set({}, localDataKey, newSectionData);
 
     dispatch(setCurrentProfileTreeContent(sectionDataForStorage));
-    dispatch(setProfileTreeContent(getNewProfileTreeData([...profileTreeContent], line)));
+    dispatch(setProfileTreeContent(profileTreeContent.filter(item => !subtreeProfiles.has(item))));
   };
 
   return (

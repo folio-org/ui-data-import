@@ -3,6 +3,8 @@ import {
   fireEvent,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { combineReducers, createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { noop } from 'lodash';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -20,6 +22,7 @@ import {
   STATE_MANAGEMENT,
   DEFAULT_DELETE_MARC_AUTH_ACTION_ID,
 } from '../../utils';
+import { reducer } from '../../redux';
 import { ProfileTree } from './ProfileTree';
 
 jest.mock('@folio/stripes/components', () => ({
@@ -218,6 +221,82 @@ describe('ProfileTree component', () => {
     });
 
     expect(container.querySelector('#type-selector-dropdown-linker-root')).not.toBeInTheDocument();
+  });
+
+  it('should only unlink the selected occurrence of a shared action profile', async () => {
+    const matchAction = {
+      id: 'action-id',
+      profileId: 'action-id',
+      contentType: 'ACTION_PROFILE',
+      reactTo: 'MATCH',
+      content: {
+        id: 'action-id',
+        name: 'Shared action',
+      },
+      childSnapshotWrappers: [],
+    };
+    const nonMatchAction = {
+      ...matchAction,
+      reactTo: 'NON_MATCH',
+    };
+    const matchProfile = {
+      id: 'match-id',
+      profileId: 'match-id',
+      contentType: 'MATCH_PROFILE',
+      content: {
+        id: 'match-id',
+        name: 'Parent match',
+      },
+      childSnapshotWrappers: [matchAction, nonMatchAction],
+    };
+    const matchRelation = {
+      masterProfileId: 'match-id',
+      detailProfileId: 'action-id',
+      reactTo: 'MATCH',
+    };
+    const nonMatchRelation = {
+      masterProfileId: 'match-id',
+      detailProfileId: 'action-id',
+      reactTo: 'NON_MATCH',
+    };
+    const onLink = jest.fn();
+    const initialState = {
+      [STATE_MANAGEMENT.REDUCER]: {
+        profileTreeData: [matchProfile, matchAction, nonMatchAction],
+        jobProfiles: {},
+      },
+    };
+    const store = createStore(
+      combineReducers({ [STATE_MANAGEMENT.REDUCER]: reducer }),
+      initialState,
+    );
+    const props = profileTreeProps({
+      allowUnlink: true,
+      allowDelete: false,
+    });
+    const { container, findByText } = renderWithIntl(
+      <Provider store={store}>
+        <ProfileTree
+          {...props}
+          contentData={[matchProfile]}
+          relationsToAdd={[matchRelation, nonMatchRelation]}
+          onLink={onLink}
+        />
+      </Provider>,
+      translationsProperties,
+    );
+
+    fireEvent.click(container.querySelectorAll('[data-test-profile-unlink]')[1]);
+    fireEvent.click(await findByText('Confirm'));
+
+    await waitFor(() => {
+      expect(onLink).toHaveBeenLastCalledWith([nonMatchRelation]);
+    });
+    expect(container.querySelectorAll('[data-test-profile-branch]')).toHaveLength(2);
+    expect(store.getState()[STATE_MANAGEMENT.REDUCER].profileTreeData).toEqual([
+      matchProfile,
+      nonMatchAction,
+    ]);
   });
 
   it('should be rendered', async () => {
