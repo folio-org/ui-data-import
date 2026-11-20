@@ -19,6 +19,7 @@
 * Fix translation for select placeholder. (UIDATIMP-1756)
 * Always allow redirect to `/logout` on session termination. (UIDATIMP-1764)
 * Fix error when user tries to save edited Job profile with `Delete MARC Authority` action. (UIDATIMP-1776)
+* Prevent deleting action profile from both places in Job profile when it is used twice and user deletes it in one place. (UIDATIMP-1794)
 
 ## [10.0.0](https://github.com/folio-org/ui-data-import/tree/v10.0.0) (2026-04-15)
 [Full Changelog](https://github.com/folio-org/ui-data-import/compare/v9.0.2...v10.0.0)
